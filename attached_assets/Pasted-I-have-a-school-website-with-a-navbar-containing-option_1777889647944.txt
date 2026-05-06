@@ -1,0 +1,70 @@
+I have a school website with a navbar containing options like Home, About, Academics, Facilities, Faculty, Achievements, and Gallery.
+
+Currently, each navbar link opens a separate page, but all pages have the same content as the homepage. I want each page to have completely different, well-structured, and visually attractive content.
+
+Requirements:
+- Each navbar page should have unique sections and content relevant to its title
+- Maintain consistent design (same navbar, footer, color theme)
+- Use modern UI/UX design with proper spacing, sections, and hierarchy
+- Make each page informative and engaging
+
+Page-wise structure:
+
+1. About Page:
+- Hero section with title "About Our School"
+- School introduction
+- Vision & Mission
+- Leadership / Principal Message
+- History of the school
+- Why choose us (highlight features)
+- Call-to-action section
+
+2. Academics Page:
+- Curriculum overview (CBSE)
+- Classes offered
+- Teaching methodology
+- Subjects and streams
+- Academic achievements
+- Learning approach (smart classes, practical learning)
+
+3. Facilities Page:
+- Classrooms
+- Science labs
+- Computer lab
+- Library
+- Sports facilities
+- Transport
+- Safety & security
+
+4. Faculty Page:
+- Introduction of teachers
+- Faculty cards (image, name, subject, qualification)
+- Experience highlights
+
+5. Achievements Page:
+- Student achievements
+- Awards & recognitions
+- Results (100% result, toppers)
+- Events and competitions
+
+6. Gallery Page:
+- Image gallery (grid layout)
+- School events photos
+- Campus images
+
+Design Instructions:
+- Each section should be visually separated with spacing
+- Use cards, grids, and icons
+- Add headings, subheadings, and short descriptions
+- Use attractive CTA buttons where needed
+- Keep blue and green theme consistent
+
+Technical:
+- Use separate HTML pages OR proper routing (if using React)
+- Do NOT reuse homepage content
+- Ensure each page has unique layout and sections
+
+Also provide:
+- Sample HTML structure for at least one page (About)
+- Reusable components (navbar, footer)
+- Section-wise layout suggestions

@@ -1,0 +1,63 @@
+import { Switch, Route, Router as WouterRouter } from "wouter";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "@/components/ui/toaster";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import NotFound from "@/pages/not-found";
+import Home from "@/pages/Home";
+import GalleryPage from "@/pages/Gallery";
+import AboutPage from "@/pages/AboutPage";
+import AcademicsPage from "@/pages/AcademicsPage";
+import FacilitiesPage from "@/pages/FacilitiesPage";
+import FacultyPage from "@/pages/FacultyPage";
+import AchievementsPage from "@/pages/AchievementsPage";
+import OurStoryPage from "@/pages/OurStoryPage";
+import OurDirectorsPage from "@/pages/OurDirectorsPage";
+import DivisionsPage from "@/pages/DivisionsPage";
+import TieupsPage from "@/pages/TieupsPage";
+import BackToTop from "@/components/ui/BackToTop";
+import PageLoader from "@/components/ui/PageLoader";
+import WhatsAppButton from "@/components/ui/WhatsAppButton";
+import PhoneButton from "@/components/ui/PhoneButton";
+
+const queryClient = new QueryClient();
+
+function Router() {
+  return (
+    <Switch>
+      <Route path="/" component={Home} />
+      {/* About Us sub-pages */}
+      <Route path="/about/story" component={OurStoryPage} />
+      <Route path="/about/directors" component={OurDirectorsPage} />
+      <Route path="/about/divisions" component={DivisionsPage} />
+      <Route path="/about/tieups" component={TieupsPage} />
+      {/* Legacy /about → redirect to Our Story */}
+      <Route path="/about" component={OurStoryPage} />
+      {/* Other pages */}
+      <Route path="/academics" component={AcademicsPage} />
+      <Route path="/facilities" component={FacilitiesPage} />
+      <Route path="/faculty" component={FacultyPage} />
+      <Route path="/achievements" component={AchievementsPage} />
+      <Route path="/gallery" component={GalleryPage} />
+      <Route component={NotFound} />
+    </Switch>
+  );
+}
+
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <PageLoader />
+        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+          <Router />
+        </WouterRouter>
+        <BackToTop />
+        <WhatsAppButton />
+        <PhoneButton />
+        <Toaster />
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+}
+
+export default App;
