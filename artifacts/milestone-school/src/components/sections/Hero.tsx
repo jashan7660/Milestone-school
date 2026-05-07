@@ -2,7 +2,6 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, BookOpen, Users, ChevronDown, GraduationCap, Star, Sparkles } from "lucide-react";
-import heroImage from "@assets/ChatGPT_Image_May_4,_2026,_03_57_48_PM_1777890956257.png";
 
 /* ── stagger helpers ── */
 const container = {
@@ -22,7 +21,7 @@ const fadeSlideUp = (delay = 0) => ({
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
-  const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
 
   const scrollTo = (id: string) =>
     document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
@@ -36,14 +35,18 @@ export default function Hero() {
   return (
     <section ref={sectionRef} className="relative min-h-[94vh] flex flex-col items-center justify-center overflow-hidden">
 
-      {/* ── Parallax background ── */}
-      <motion.div style={{ y: imgY }} className="absolute inset-0 z-0 scale-110">
-        <img
-          src={heroImage}
-          alt="The Milestone Sr. Sec. School campus"
-          className="w-full h-full object-cover object-center"
-        />
-      </motion.div>
+      {/* ── Video background ── */}
+      <div className="absolute inset-0 z-0">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-full object-cover pointer-events-none"
+        >
+          <source src="/hero-video.mp4" type="video/mp4" />
+        </video>
+      </div>
 
       {/* ── Overlay layers ── */}
       <div className="absolute inset-0 z-[1] bg-gradient-to-r from-primary/82 via-primary/50 to-primary/8" />
