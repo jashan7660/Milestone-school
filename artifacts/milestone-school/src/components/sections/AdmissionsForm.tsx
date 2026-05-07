@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import admissionsPosterImg from "@assets/109_1777975669135.jpg";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -64,21 +63,6 @@ export default function AdmissionsForm() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            {/* Admissions poster */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.97 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="rounded-2xl overflow-hidden shadow-xl mb-8"
-            >
-              <img
-                src={admissionsPosterImg}
-                alt="Admissions Open 2026–2027 — The Milestone Sr. Sec. School"
-                className="w-full object-cover"
-              />
-            </motion.div>
-
             <div className="section-label-green">Admissions 2026–2027</div>
             <h2 className="text-3xl md:text-5xl font-serif font-extrabold text-foreground mb-5 leading-[1.1] tracking-tight">
               Begin your child's <span className="text-gradient">journey with us</span>
