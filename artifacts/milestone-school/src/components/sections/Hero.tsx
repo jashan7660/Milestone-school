@@ -1,45 +1,20 @@
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowRight, ChevronDown, MapPin, Award } from "lucide-react";
 
-const slides = [
-  { src: "/slide1.png", alt: "The Milestone School Campus" },
-  { src: "/slide2.png", alt: "School Drama Performance" },
-  { src: "/slide3.png", alt: "Cultural Celebration" },
-  { src: "/slide4.png", alt: "Cycling Activity" },
-  { src: "/slide5.png", alt: "Assembly Hall" },
-];
-
 export default function Hero() {
-  const [current, setCurrent] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % slides.length);
-    }, 4000);
-    return () => clearInterval(timer);
-  }, []);
-
   const scrollTo = (id: string) =>
     document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
 
   return (
     <section className="relative w-full h-screen overflow-hidden flex items-center justify-center">
 
-      {/* ── Slideshow background ── */}
-      <AnimatePresence>
-        <motion.img
-          key={current}
-          src={slides[current].src}
-          alt={slides[current].alt}
-          initial={{ opacity: 0, scale: 1.06 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.97 }}
-          transition={{ duration: 1.1, ease: "easeInOut" }}
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-          style={{ zIndex: 0 }}
-        />
-      </AnimatePresence>
+      {/* ── Background image ── */}
+      <img
+        src="/slide1.png"
+        alt="The Milestone School Campus"
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        style={{ zIndex: 0 }}
+      />
 
       {/* ── Rich colour overlay — deep navy-to-forest-green, not plain black ── */}
       <div
@@ -59,30 +34,6 @@ export default function Hero() {
             "linear-gradient(to top, rgba(5,15,30,0.60) 0%, transparent 55%)",
         }}
       />
-
-      {/* ── Slide dots ── */}
-      <div
-        className="absolute bottom-20 left-1/2 -translate-x-1/2 flex gap-2"
-        style={{ zIndex: 3 }}
-      >
-        {slides.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setCurrent(i)}
-            aria-label={`Go to slide ${i + 1}`}
-            style={{
-              width: i === current ? "28px" : "8px",
-              height: "8px",
-              borderRadius: "999px",
-              background: i === current ? "#4ade80" : "rgba(255,255,255,0.40)",
-              border: "none",
-              cursor: "pointer",
-              transition: "all 0.35s ease",
-              padding: 0,
-            }}
-          />
-        ))}
-      </div>
 
       {/* ── Content ── */}
       <div
