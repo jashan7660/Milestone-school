@@ -1,4 +1,15 @@
+import { useEffect, useRef } from "react";
+
 export default function Hero() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+      videoRef.current.volume = 0;
+    }
+  }, []);
+
   return (
     <section
       style={{
@@ -13,10 +24,12 @@ export default function Hero() {
       }}
     >
       <video
+        ref={videoRef}
         autoPlay
         muted
         loop
         playsInline
+        volume={0}
         style={{
           width: "100%",
           height: "100%",
