@@ -77,24 +77,35 @@ export default function Academics() {
           ))}
         </div>
 
-        {/* Innovation in Action banner */}
+        {/* Innovation in Action — two-column: image left, text right */}
         <motion.div
-          className="mt-20 rounded-3xl overflow-hidden shadow-2xl relative"
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          className="mt-20 rounded-3xl overflow-hidden shadow-2xl"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
+          style={{ background: "linear-gradient(135deg, #0f2618 0%, #1a3a2a 100%)" }}
         >
-          <img
-            src={innovationImg}
-            alt="Innovation in Action — students working on projects"
-            className="w-full h-[400px] md:h-[500px] object-cover object-top"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent flex items-end p-8 md:p-12">
-            <div className="max-w-2xl text-white">
-              <h3 className="text-2xl md:text-3xl font-serif font-bold mb-3">Innovation in Action</h3>
-              <p className="text-white/80 text-lg font-light">
-                Students at The Milestone go beyond textbooks — collaborating, creating, and building real solutions through hands-on project-based learning.
+          <div className="grid grid-cols-1 lg:grid-cols-2">
+            {/* Image — full height, no overlay */}
+            <div className="h-72 lg:h-auto min-h-[320px] overflow-hidden">
+              <img
+                src={innovationImg}
+                alt="Innovation in Action"
+                className="w-full h-full object-cover object-top"
+              />
+            </div>
+            {/* Text content — clean, no overlap with image */}
+            <div className="flex flex-col justify-center p-8 md:p-12">
+              <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-widest mb-4"
+                style={{ background: "rgba(74,222,128,0.18)", color: "#4ade80", border: "1px solid rgba(74,222,128,0.35)" }}>
+                Innovation in Action
+              </span>
+              <h3 className="text-2xl md:text-3xl font-serif font-bold text-white mb-4 leading-snug">
+                Learning That Goes Beyond the Textbook
+              </h3>
+              <p className="text-white/70 text-base font-light leading-relaxed">
+                Students at The Milestone collaborate, create, and build real solutions through hands-on project-based learning — developing the skills that matter most for tomorrow.
               </p>
             </div>
           </div>
@@ -109,15 +120,19 @@ export default function Academics() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.12 }}
-              className="rounded-2xl overflow-hidden shadow-lg group relative"
+              className="rounded-2xl overflow-hidden shadow-lg group"
             >
-              <img
-                src={item.src}
-                alt={item.alt}
-                className="w-full h-56 object-cover object-top transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-4">
-                <span className="text-white font-semibold text-sm">{item.label}</span>
+              {/* Image — clean, full visibility */}
+              <div className="overflow-hidden h-52">
+                <img
+                  src={item.src}
+                  alt={item.alt}
+                  className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
+              {/* Label below image — not on top of it */}
+              <div className="bg-card px-4 py-3 border-t border-border">
+                <span className="text-sm font-semibold text-foreground">{item.label}</span>
               </div>
             </motion.div>
           ))}

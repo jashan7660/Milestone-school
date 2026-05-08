@@ -12,7 +12,6 @@ const WhyChooseUs = lazy(() => import("@/components/sections/WhyChooseUs"));
 const Faculty = lazy(() => import("@/components/sections/Faculty"));
 const Testimonials = lazy(() => import("@/components/sections/Testimonials"));
 const AdmissionsForm = lazy(() => import("@/components/sections/AdmissionsForm"));
-const FAQ = lazy(() => import("@/components/sections/FAQ"));
 const Contact = lazy(() => import("@/components/sections/Contact"));
 
 const SectionSkeleton = () => (
@@ -36,7 +35,6 @@ export default function Home() {
           <WhyChooseUs />
           <Faculty />
           <Testimonials />
-          <FAQ />
           <AdmissionsForm />
           <Contact />
         </Suspense>
