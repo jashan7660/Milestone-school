@@ -1,16 +1,23 @@
-import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ChevronDown, MapPin, Award } from "lucide-react";
 
+const slides = [
+  { src: "/slide1.png", alt: "The Milestone School Campus" },
+  { src: "/slide2.png", alt: "School Drama Performance" },
+  { src: "/slide3.png", alt: "Cultural Celebration" },
+  { src: "/slide4.png", alt: "Cycling Activity" },
+  { src: "/slide5.png", alt: "Assembly Hall" },
+];
+
 export default function Hero() {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const [current, setCurrent] = useState(0);
 
   useEffect(() => {
-    const v = videoRef.current;
-    if (!v) return;
-    v.muted = true;
-    v.volume = 0;
-    v.play().catch(() => {});
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % slides.length);
+    }, 4000);
+    return () => clearInterval(timer);
   }, []);
 
   const scrollTo = (id: string) =>
@@ -19,36 +26,69 @@ export default function Hero() {
   return (
     <section className="relative w-full h-screen overflow-hidden flex items-center justify-center">
 
-      {/* ── Video ── */}
-      <video
-        ref={videoRef}
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-        style={{ zIndex: 0 }}
-      >
-        <source src="/hero-video.mp4" type="video/mp4" />
-      </video>
+      {/* ── Slideshow background ── */}
+      <AnimatePresence>
+        <motion.img
+          key={current}
+          src={slides[current].src}
+          alt={slides[current].alt}
+          initial={{ opacity: 0, scale: 1.06 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.97 }}
+          transition={{ duration: 1.1, ease: "easeInOut" }}
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+          style={{ zIndex: 0 }}
+        />
+      </AnimatePresence>
 
-      {/* ── Strong multi-layer overlay so text never merges with video ── */}
-      <div className="absolute inset-0" style={{ zIndex: 1, background: "rgba(0,0,0,0.62)" }} />
+      {/* ── Rich colour overlay — deep navy-to-forest-green, not plain black ── */}
       <div
         className="absolute inset-0"
         style={{
           zIndex: 1,
           background:
-            "linear-gradient(160deg, rgba(15,30,15,0.55) 0%, rgba(0,0,0,0.30) 50%, rgba(10,20,40,0.55) 100%)",
+            "linear-gradient(160deg, rgba(10,24,48,0.75) 0%, rgba(8,40,22,0.65) 50%, rgba(15,30,50,0.72) 100%)",
         }}
       />
+      {/* Subtle bottom darkening so bottom text stays readable */}
+      <div
+        className="absolute inset-0"
+        style={{
+          zIndex: 1,
+          background:
+            "linear-gradient(to top, rgba(5,15,30,0.60) 0%, transparent 55%)",
+        }}
+      />
+
+      {/* ── Slide dots ── */}
+      <div
+        className="absolute bottom-20 left-1/2 -translate-x-1/2 flex gap-2"
+        style={{ zIndex: 3 }}
+      >
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            aria-label={`Go to slide ${i + 1}`}
+            style={{
+              width: i === current ? "28px" : "8px",
+              height: "8px",
+              borderRadius: "999px",
+              background: i === current ? "#4ade80" : "rgba(255,255,255,0.40)",
+              border: "none",
+              cursor: "pointer",
+              transition: "all 0.35s ease",
+              padding: 0,
+            }}
+          />
+        ))}
+      </div>
 
       {/* ── Content ── */}
       <div
         className="relative flex flex-col items-center justify-center text-center px-6 max-w-4xl mx-auto"
         style={{ zIndex: 2 }}
       >
-
         {/* Pill badge */}
         <motion.div
           initial={{ opacity: 0, y: -16 }}
@@ -90,7 +130,14 @@ export default function Hero() {
           initial={{ scaleX: 0, opacity: 0 }}
           animate={{ scaleX: 1, opacity: 1 }}
           transition={{ duration: 0.7, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          style={{ originX: 0.5, height: "2px", width: "80px", borderRadius: "999px", marginBottom: "1.25rem", background: "linear-gradient(90deg, transparent, #4ade80, transparent)" }}
+          style={{
+            originX: 0.5,
+            height: "2px",
+            width: "80px",
+            borderRadius: "999px",
+            marginBottom: "1.25rem",
+            background: "linear-gradient(90deg, transparent, #4ade80, transparent)",
+          }}
         />
 
         {/* Tagline */}
@@ -109,24 +156,24 @@ export default function Hero() {
           Where Every Child's Potential Becomes Their Greatest Achievement
         </motion.p>
 
-        {/* Sub-description */}
+        {/* Sub-description pills */}
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65, delay: 0.88 }}
           className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 mb-10"
         >
-          <span className="flex items-center gap-1.5 text-sm font-medium" style={{ color: "rgba(255,255,255,0.70)" }}>
+          <span className="flex items-center gap-1.5 text-sm font-medium" style={{ color: "rgba(255,255,255,0.75)" }}>
             <Award size={13} style={{ color: "#4ade80" }} />
             CBSE Affiliated School
           </span>
           <span className="text-white/25">|</span>
-          <span className="flex items-center gap-1.5 text-sm font-medium" style={{ color: "rgba(255,255,255,0.70)" }}>
+          <span className="flex items-center gap-1.5 text-sm font-medium" style={{ color: "rgba(255,255,255,0.75)" }}>
             <MapPin size={13} style={{ color: "#4ade80" }} />
             Kaithal, Haryana
           </span>
           <span className="text-white/25">|</span>
-          <span className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.70)" }}>
+          <span className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.75)" }}>
             Nursery – Class XII
           </span>
         </motion.div>
