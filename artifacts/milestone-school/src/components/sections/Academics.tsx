@@ -1,44 +1,98 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { BookOpen, MonitorPlay, FlaskConical, Languages } from "lucide-react";
+import { BookOpen, MonitorPlay, FlaskConical, Languages, ChevronLeft, ChevronRight } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import innovationImg from "@assets/76_1777975616532.jpg";
 import lifeSkillImg from "@assets/6_1777975518232.jpg";
 import cylinderImg from "@assets/765_1777975658620.jpg";
 import bestWasteImg from "@assets/23_1777975648648.jpg";
 
+const features = [
+  { title: "CBSE Curriculum",   description: "Rigorous curriculum from Nursery to Class 12 following CBSE guidelines.",             icon: <BookOpen    className="w-8 h-8 text-secondary" /> },
+  { title: "Smart Classrooms",  description: "Interactive digital boards and multimedia content to make learning engaging.",         icon: <MonitorPlay className="w-8 h-8 text-secondary" /> },
+  { title: "Diverse Streams",   description: "PCM, PCB, Commerce, and Arts streams for 11th and 12th standard students.",           icon: <FlaskConical className="w-8 h-8 text-secondary" /> },
+  { title: "English Medium",    description: "Dedicated focus on English communication to prepare students for global opportunities.", icon: <Languages   className="w-8 h-8 text-secondary" /> },
+];
+
+const lifeSkills = [
+  { src: lifeSkillImg, label: "Learning Beyond Books",   alt: "Life Skill Activity" },
+  { src: cylinderImg,  label: "Practical Life Skills",   alt: "Cylinder Regulator Activity" },
+  { src: bestWasteImg, label: "Best Out of Waste",       alt: "Recycling & Creativity" },
+];
+
+function LifeSkillsSlider() {
+  const [current, setCurrent] = useState(0);
+  const prev = () => setCurrent((c) => (c - 1 + lifeSkills.length) % lifeSkills.length);
+  const next = () => setCurrent((c) => (c + 1) % lifeSkills.length);
+
+  return (
+    <div className="relative mt-10">
+      <div className="overflow-hidden rounded-2xl shadow-xl">
+        <div
+          className="flex transition-transform duration-500 ease-in-out"
+          style={{ transform: `translateX(-${current * 100}%)` }}
+        >
+          {lifeSkills.map((item, i) => (
+            <div key={i} className="min-w-full">
+              <img
+                src={item.src}
+                alt={item.alt}
+                className="w-full h-72 object-cover object-top"
+              />
+              <div className="bg-card px-6 py-4 border-t border-border">
+                <span className="text-base font-semibold text-foreground">{item.label}</span>
+                <p className="text-xs text-muted-foreground mt-0.5">The Milestone Sr. Sec. School</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Arrow buttons */}
+      <button
+        onClick={prev}
+        className="absolute left-3 top-[calc(50%-24px)] -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 shadow-lg flex items-center justify-center hover:bg-white transition-colors"
+        aria-label="Previous"
+      >
+        <ChevronLeft size={20} className="text-foreground" />
+      </button>
+      <button
+        onClick={next}
+        className="absolute right-3 top-[calc(50%-24px)] -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 shadow-lg flex items-center justify-center hover:bg-white transition-colors"
+        aria-label="Next"
+      >
+        <ChevronRight size={20} className="text-foreground" />
+      </button>
+
+      {/* Dots */}
+      <div className="flex justify-center gap-2 mt-4">
+        {lifeSkills.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            aria-label={`Go to slide ${i + 1}`}
+            className="transition-all duration-300 rounded-full"
+            style={{
+              width: i === current ? "24px" : "8px",
+              height: "8px",
+              background: i === current ? "var(--color-primary)" : "var(--color-border)",
+              border: "none",
+              padding: 0,
+              cursor: "pointer",
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Academics() {
-  const features = [
-    {
-      title: "CBSE Curriculum",
-      description: "Rigorous and comprehensive curriculum from Nursery to Class 12 following CBSE guidelines.",
-      icon: <BookOpen className="w-8 h-8 text-secondary" />
-    },
-    {
-      title: "Smart Classrooms",
-      description: "Interactive digital boards and multimedia content to make learning engaging and visual.",
-      icon: <MonitorPlay className="w-8 h-8 text-secondary" />
-    },
-    {
-      title: "Diverse Streams",
-      description: "Offering PCM, PCB, Commerce, and Arts streams for 11th and 12th standard students.",
-      icon: <FlaskConical className="w-8 h-8 text-secondary" />
-    },
-    {
-      title: "English Medium",
-      description: "Dedicated focus on English communication skills to prepare students for global opportunities.",
-      icon: <Languages className="w-8 h-8 text-secondary" />
-    }
-  ];
-
-  const lifeSkills = [
-    { src: lifeSkillImg,  alt: "Life Skill Activity — Learning Beyond Books",       label: "Learning Beyond Books" },
-    { src: cylinderImg,   alt: "Cylinder Regulator Change — Practical Life Skills", label: "Practical Life Skills" },
-    { src: bestWasteImg,  alt: "Best Out of Waste — Recycling & Creativity",        label: "Best Out of Waste" },
-  ];
-
   return (
     <section id="academics" className="py-24 bg-muted/30">
       <div className="container mx-auto px-4 md:px-6">
+
+        {/* Heading */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-6 uppercase tracking-wider">
             Academic Excellence
@@ -51,6 +105,7 @@ export default function Academics() {
           </p>
         </div>
 
+        {/* Feature cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {features.map((feature, index) => (
             <motion.div
@@ -77,63 +132,44 @@ export default function Academics() {
           ))}
         </div>
 
-        {/* Innovation in Action label + 4-image grid */}
-        <div className="mt-20">
-          <div className="flex items-center gap-3 mb-7">
-            <span
-              className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest"
-              style={{ background: "linear-gradient(135deg, #0f2618 0%, #1a3a2a 100%)", color: "#4ade80", border: "1px solid rgba(74,222,128,0.35)" }}
-            >
-              Innovation in Action
-            </span>
-            <div className="flex-1 h-px bg-border" />
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-            {/* Innovation image — first card */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0 }}
-              className="rounded-2xl overflow-hidden shadow-lg group"
-            >
-              <div className="overflow-hidden h-52">
-                <img
-                  src={innovationImg}
-                  alt="Innovation in Action"
-                  className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                />
-              </div>
-              <div className="bg-card px-4 py-3 border-t border-border">
-                <span className="text-sm font-semibold text-foreground">Innovation in Action</span>
-              </div>
-            </motion.div>
-
-            {/* Life skill images */}
-            {lifeSkills.map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: (i + 1) * 0.1 }}
-                className="rounded-2xl overflow-hidden shadow-lg group"
+        {/* Innovation in Action — full-width banner with dark green overlay text */}
+        <motion.div
+          className="mt-20 rounded-3xl overflow-hidden shadow-2xl relative"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+        >
+          <img
+            src={innovationImg}
+            alt="Innovation in Action"
+            className="w-full h-[420px] object-cover object-top"
+          />
+          {/* Dark green overlay card — sits on top of image */}
+          <div
+            className="absolute inset-0 flex items-end"
+            style={{ background: "linear-gradient(to top, rgba(8,30,16,0.92) 0%, rgba(10,35,20,0.60) 45%, transparent 100%)" }}
+          >
+            <div className="w-full px-8 md:px-14 py-10">
+              <span
+                className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest mb-4"
+                style={{ background: "rgba(74,222,128,0.18)", color: "#4ade80", border: "1px solid rgba(74,222,128,0.4)" }}
               >
-                <div className="overflow-hidden h-52">
-                  <img
-                    src={item.src}
-                    alt={item.alt}
-                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                  />
-                </div>
-                <div className="bg-card px-4 py-3 border-t border-border">
-                  <span className="text-sm font-semibold text-foreground">{item.label}</span>
-                </div>
-              </motion.div>
-            ))}
+                Innovation in Action
+              </span>
+              <h3 className="text-2xl md:text-4xl font-serif font-bold text-white mb-3 leading-snug max-w-2xl">
+                Learning That Goes Beyond the Textbook
+              </h3>
+              <p className="text-white/75 text-base md:text-lg font-light leading-relaxed max-w-2xl">
+                Students at The Milestone collaborate, create, and build real solutions through hands-on project-based learning — developing the skills that matter most for tomorrow.
+              </p>
+            </div>
           </div>
-        </div>
+        </motion.div>
+
+        {/* Life Skills slider */}
+        <LifeSkillsSlider />
+
       </div>
     </section>
   );
