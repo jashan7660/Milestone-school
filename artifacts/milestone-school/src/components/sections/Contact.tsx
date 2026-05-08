@@ -105,7 +105,7 @@ export default function Contact() {
             style={{ minHeight: "440px" }}
           >
             <iframe
-              src="https://maps.google.com/maps?q=Opp+Pawan+Vatika+Khurana+Road+Kaithal+Haryana+136027+India&output=embed&z=15"
+              src="https://maps.google.com/maps?q=Khurana+Rd+Chiranjeev+Colony+Kaithal+Haryana+136027&output=embed&z=16"
               width="100%"
               height="100%"
               style={{ border: 0, minHeight: "440px" }}
