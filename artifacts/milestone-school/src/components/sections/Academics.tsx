@@ -132,7 +132,7 @@ export default function Academics() {
           ))}
         </div>
 
-        {/* Innovation in Action — full-width banner with dark green overlay text */}
+        {/* Innovation in Action — full-width image with single centred headline */}
         <motion.div
           className="mt-20 rounded-3xl overflow-hidden shadow-2xl relative"
           initial={{ opacity: 0, y: 24 }}
@@ -145,25 +145,18 @@ export default function Academics() {
             alt="Innovation in Action"
             className="w-full h-[420px] object-cover object-top"
           />
-          {/* Dark green overlay card — sits on top of image */}
+          {/* Subtle gradient + centred attractive text */}
           <div
-            className="absolute inset-0 flex items-end"
-            style={{ background: "linear-gradient(to top, rgba(8,30,16,0.92) 0%, rgba(10,35,20,0.60) 45%, transparent 100%)" }}
+            className="absolute inset-0 flex items-center justify-center"
+            style={{ background: "linear-gradient(135deg, rgba(5,20,10,0.55) 0%, rgba(0,0,0,0.38) 100%)" }}
           >
-            <div className="w-full px-8 md:px-14 py-10">
-              <span
-                className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest mb-4"
-                style={{ background: "rgba(74,222,128,0.18)", color: "#4ade80", border: "1px solid rgba(74,222,128,0.4)" }}
-              >
-                Innovation in Action
-              </span>
-              <h3 className="text-2xl md:text-4xl font-serif font-bold text-white mb-3 leading-snug max-w-2xl">
-                Learning That Goes Beyond the Textbook
-              </h3>
-              <p className="text-white/75 text-base md:text-lg font-light leading-relaxed max-w-2xl">
-                Students at The Milestone collaborate, create, and build real solutions through hands-on project-based learning — developing the skills that matter most for tomorrow.
-              </p>
-            </div>
+            <h3
+              className="text-3xl md:text-5xl font-serif font-extrabold text-white text-center px-6 leading-tight drop-shadow-2xl"
+              style={{ textShadow: "0 4px 32px rgba(0,0,0,0.7)" }}
+            >
+              Where Curiosity Meets<br />
+              <span style={{ color: "#4ade80" }}>Innovation</span>
+            </h3>
           </div>
         </motion.div>
 
