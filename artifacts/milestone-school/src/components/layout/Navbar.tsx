@@ -1,11 +1,12 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useLocation } from "wouter";
 import {
-  Menu, X, Phone, Mail, MapPin,
+  Menu, X, Phone, MapPin,
   Home, BookOpen, Building2, Trophy, Image, ChevronDown, ChevronRight,
   BookText, Users, LayoutGrid, Handshake, User2,
   Sun, Moon,
 } from "lucide-react";
+import { FaWhatsapp, FaInstagram, FaFacebook, FaYoutube } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import logoUrl from "@assets/image_1777543805589.png";
 import { motion, AnimatePresence } from "framer-motion";
@@ -80,13 +81,61 @@ export default function Navbar() {
     <>
       {/* ── Top info bar ── */}
       <div className="hidden md:flex bg-primary text-primary-foreground text-xs py-2 px-6 justify-between items-center">
-        <div className="flex gap-6">
-          <span className="flex items-center gap-1.5"><MapPin size={13} /> Opp. Pawan Vatika, Khurana Rd, Kaithal</span>
-          <span className="flex items-center gap-1.5"><Phone size={13} /> +91 98125-74766</span>
+        {/* Left: location & contact */}
+        <div className="flex items-center gap-5">
+          <a
+            href="https://maps.google.com/?q=Opp.+Pawan+Vatika,+Khurana+Rd,+Kaithal"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 hover:text-white/80 transition-colors"
+          >
+            <MapPin size={13} /> Opp. Pawan Vatika, Khurana Rd, Kaithal
+          </a>
+          <a
+            href="tel:+919812574766"
+            className="flex items-center gap-1.5 hover:text-white/80 transition-colors"
+          >
+            <Phone size={13} /> +91 98125-74766
+          </a>
         </div>
-        <div className="flex gap-6">
-          <span className="flex items-center gap-1.5"><Mail size={13} /> themilestoneKtl@gmail.com</span>
-          <span>Mon – Sat &nbsp;|&nbsp; 7:30 AM – 2:30 PM</span>
+        {/* Right: social media icons */}
+        <div className="flex items-center gap-4">
+          <a
+            href="https://wa.me/919812574766"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="WhatsApp"
+            className="hover:text-green-300 transition-colors"
+          >
+            <FaWhatsapp size={15} />
+          </a>
+          <a
+            href="https://www.instagram.com/the_milestone_sr_sec_school?igsh=MTZtYmk4aHN3dWxjNA=="
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+            className="hover:text-pink-300 transition-colors"
+          >
+            <FaInstagram size={15} />
+          </a>
+          <a
+            href="https://www.facebook.com/themilestoneschoolkaithal/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook"
+            className="hover:text-blue-300 transition-colors"
+          >
+            <FaFacebook size={15} />
+          </a>
+          <a
+            href="https://www.youtube.com/channel/UCOJitGDAsBRroJF_hNdVONg"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="YouTube"
+            className="hover:text-red-300 transition-colors"
+          >
+            <FaYoutube size={15} />
+          </a>
         </div>
       </div>
 
