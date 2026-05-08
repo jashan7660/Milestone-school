@@ -77,65 +77,62 @@ export default function Academics() {
           ))}
         </div>
 
-        {/* Innovation in Action — two-column: image left, text right */}
-        <motion.div
-          className="mt-20 rounded-3xl overflow-hidden shadow-2xl"
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          style={{ background: "linear-gradient(135deg, #0f2618 0%, #1a3a2a 100%)" }}
-        >
-          <div className="grid grid-cols-1 lg:grid-cols-2">
-            {/* Image — full height, no overlay */}
-            <div className="h-72 lg:h-auto min-h-[320px] overflow-hidden">
-              <img
-                src={innovationImg}
-                alt="Innovation in Action"
-                className="w-full h-full object-cover object-top"
-              />
-            </div>
-            {/* Text content — clean, no overlap with image */}
-            <div className="flex flex-col justify-center p-8 md:p-12">
-              <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-widest mb-4"
-                style={{ background: "rgba(74,222,128,0.18)", color: "#4ade80", border: "1px solid rgba(74,222,128,0.35)" }}>
-                Innovation in Action
-              </span>
-              <h3 className="text-2xl md:text-3xl font-serif font-bold text-white mb-4 leading-snug">
-                Learning That Goes Beyond the Textbook
-              </h3>
-              <p className="text-white/70 text-base font-light leading-relaxed">
-                Students at The Milestone collaborate, create, and build real solutions through hands-on project-based learning — developing the skills that matter most for tomorrow.
-              </p>
-            </div>
+        {/* Innovation in Action label + 4-image grid */}
+        <div className="mt-20">
+          <div className="flex items-center gap-3 mb-7">
+            <span
+              className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest"
+              style={{ background: "linear-gradient(135deg, #0f2618 0%, #1a3a2a 100%)", color: "#4ade80", border: "1px solid rgba(74,222,128,0.35)" }}
+            >
+              Innovation in Action
+            </span>
+            <div className="flex-1 h-px bg-border" />
           </div>
-        </motion.div>
 
-        {/* Life Skills strip */}
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-          {lifeSkills.map((item, i) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            {/* Innovation image — first card */}
             <motion.div
-              key={i}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.12 }}
+              transition={{ duration: 0.5, delay: 0 }}
               className="rounded-2xl overflow-hidden shadow-lg group"
             >
-              {/* Image — clean, full visibility */}
               <div className="overflow-hidden h-52">
                 <img
-                  src={item.src}
-                  alt={item.alt}
+                  src={innovationImg}
+                  alt="Innovation in Action"
                   className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
-              {/* Label below image — not on top of it */}
               <div className="bg-card px-4 py-3 border-t border-border">
-                <span className="text-sm font-semibold text-foreground">{item.label}</span>
+                <span className="text-sm font-semibold text-foreground">Innovation in Action</span>
               </div>
             </motion.div>
-          ))}
+
+            {/* Life skill images */}
+            {lifeSkills.map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: (i + 1) * 0.1 }}
+                className="rounded-2xl overflow-hidden shadow-lg group"
+              >
+                <div className="overflow-hidden h-52">
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
+                <div className="bg-card px-4 py-3 border-t border-border">
+                  <span className="text-sm font-semibold text-foreground">{item.label}</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
