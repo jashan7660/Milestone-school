@@ -1,0 +1,130 @@
+Design a modern, premium, and highly attractive animated navbar for “The Milestone Sr. Sec. School”. The navbar should feel luxurious, futuristic, interactive, and visually stunning like Apple, Stripe, Vercel, and premium international university websites.
+
+STYLE & UI:
+
+Use glassmorphism design with blur background
+Smooth shadows and floating effect
+Sticky navbar on scroll
+Rounded corners
+Premium spacing and alignment
+Modern typography using Poppins or Inter
+Fully responsive design
+
+PREMIUM COLOR THEME:
+
+Primary Blue: #2563EB
+Dark Navy: #0F172A
+Emerald Green Accent: #10B981
+Light Background: #F8FAFC
+Hover Blue: #1D4ED8
+Text Dark: #111827
+
+Use premium gradients and glowing effects throughout the navbar.
+
+LEFT SECTION:
+
+Animated school logo
+Logo should slightly rotate or glow on hover
+School name:
+“The Milestone”
+Subtitle: “Sr. Sec. School • CBSE”
+Add smooth text reveal animation
+
+CENTER MENU:
+Create stylish navigation links:
+
+Home
+About Us
+Academics
+Facilities
+Achievements
+Gallery
+Admissions
+Faculty
+Events
+Contact
+
+NAV LINK ANIMATIONS:
+
+Smooth underline slide animation
+Hover glow effect
+Text lift animation on hover
+Active menu indicator with animated pill background
+Smooth color transitions
+Magnetic hover interaction
+
+DROPDOWN MENUS:
+Add animated dropdowns for:
+
+About Us
+Academics
+Facilities
+
+Dropdown Effects:
+
+Fade + slide down animation
+Glassmorphism dropdown panel
+Smooth stagger animation for items
+Icons beside menu items
+Hover scale animation
+Soft shadow and blur effects
+
+RIGHT SECTION FEATURES:
+
+“Admissions Open 2025” Button
+Gradient animated background
+Pulse glow effect
+Hover scale animation
+Shine sweep animation on hover
+Rounded pill shape
+Search Icon
+Animated search popup
+Smooth expand transition
+Dark/Light Mode Toggle
+Smooth morph animation
+Notification Bell
+Ring animation on hover
+Small glowing notification dot
+Student Portal Button
+Minimal premium outline style
+Hover fill animation
+
+ADVANCED ANIMATIONS:
+
+Navbar should smoothly hide and reappear on scroll
+Floating shadow while scrolling
+Smooth blur transition on scroll
+Mouse-follow glow effect
+Framer Motion style animations
+Smooth entrance animation when page loads
+Soft floating particles in background
+Subtle moving gradient border
+
+MOBILE NAVBAR:
+
+Animated hamburger icon
+Fullscreen slide-in menu
+Smooth accordion dropdowns
+Large touch-friendly buttons
+Smooth menu reveal animations
+Sticky mobile admissions button
+
+EXTRA PREMIUM FEATURES:
+
+Announcement ticker above navbar
+Social media icons with hover animations
+Language switcher
+Quick contact button
+Optional AI chatbot floating icon
+
+The navbar should feel:
+
+Ultra modern
+Premium
+Futuristic
+Interactive
+Smooth
+Elegant
+High-end
+
+Avoid simple or outdated school website design. Focus heavily on smooth premium animations and world-class UI/UX.
