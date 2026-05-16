@@ -22,7 +22,7 @@ export default function About() {
             transition={{ duration: 0.7 }}
             className="relative flex justify-center"
           >
-            <div className="relative w-full max-w-sm">
+            <div className="relative w-full max-w-md">
               {/* Decorative blobs */}
               <div className="absolute -bottom-6 -left-6 w-48 h-48 bg-secondary/10 rounded-full blur-3xl -z-10" />
               <div className="absolute -top-6 -right-6 w-48 h-48 bg-primary/10 rounded-full blur-3xl -z-10" />
