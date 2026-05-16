@@ -116,7 +116,7 @@ function getBotResponse(input: string): string {
 
 type Mode = "idle" | "tour" | "chat";
 interface ChatMessage { from: "user" | "bot"; text: string; }
-const TOUR_DURATION = 42000;
+const TOUR_DURATION = 10000;
 
 /* ═══════════════════════════════════════════════════════════════
    MAIN COMPONENT
@@ -132,29 +132,73 @@ export default function AIGuide() {
   const [, navigate]                = useLocation();
   const timerRef                    = useRef<ReturnType<typeof setTimeout> | null>(null);
   const progressRef                 = useRef<ReturnType<typeof setInterval> | null>(null);
+  const scrollRafRef                = useRef<number | null>(null);
+  const scrollTimerRef              = useRef<ReturnType<typeof setTimeout> | null>(null);
   const chatEndRef                  = useRef<HTMLDivElement>(null);
 
-  const clearTimers = useCallback(() => {
-    if (timerRef.current)   clearTimeout(timerRef.current);
-    if (progressRef.current) clearInterval(progressRef.current);
+  const cancelScroll = useCallback(() => {
+    if (scrollRafRef.current)   cancelAnimationFrame(scrollRafRef.current);
+    if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current);
+    scrollRafRef.current  = null;
+    scrollTimerRef.current = null;
   }, []);
+
+  const clearTimers = useCallback(() => {
+    if (timerRef.current)    clearTimeout(timerRef.current);
+    if (progressRef.current) clearInterval(progressRef.current);
+    cancelScroll();
+  }, [cancelScroll]);
+
+  /* Slowly scroll page from top → bottom over `duration` ms */
+  const startAutoScroll = useCallback((duration: number) => {
+    cancelScroll();
+    /* Wait a tick for the new page to mount, then scroll */
+    scrollTimerRef.current = setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+
+      const scrollDuration = duration - 600; /* leave 600 ms for nav/mount */
+      const startTime      = performance.now();
+
+      const tick = (now: number) => {
+        const elapsed  = now - startTime;
+        const progress = Math.min(elapsed / scrollDuration, 1);
+        /* ease-in-out so it feels cinematic */
+        const eased    = progress < 0.5
+          ? 2 * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+        const maxScroll =
+          document.documentElement.scrollHeight - window.innerHeight;
+        window.scrollTo(0, maxScroll * eased);
+        if (progress < 1) scrollRafRef.current = requestAnimationFrame(tick);
+      };
+
+      scrollRafRef.current = requestAnimationFrame(tick);
+    }, 350);
+  }, [cancelScroll]);
 
   const startStep = useCallback((step: number) => {
     if (step >= TOUR_STEPS.length) {
-      setMode("idle"); setTourStep(0); setProgress(0); navigate("/"); return;
+      setMode("idle"); setTourStep(0); setProgress(0); navigate("/");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
     }
     clearTimers();
     setTourStep(step); setProgress(0);
     navigate(TOUR_STEPS[step].path);
+    startAutoScroll(TOUR_DURATION);
     const t0 = Date.now();
     progressRef.current = setInterval(() => {
       setProgress(Math.min(((Date.now() - t0) / TOUR_DURATION) * 100, 100));
-    }, 200);
+    }, 150);
     timerRef.current = setTimeout(() => { clearTimers(); startStep(step + 1); }, TOUR_DURATION);
-  }, [clearTimers, navigate]);
+  }, [clearTimers, navigate, startAutoScroll]);
 
   const startTour = useCallback(() => { setMode("tour"); startStep(0); }, [startStep]);
-  const stopTour  = useCallback(() => { clearTimers(); setMode("idle"); setTourStep(0); setProgress(0); }, [clearTimers]);
+  const stopTour  = useCallback(() => {
+    clearTimers();
+    setMode("idle"); setTourStep(0); setProgress(0);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [clearTimers]);
   const nextStep  = useCallback(() => { clearTimers(); startStep(tourStep + 1); }, [clearTimers, startStep, tourStep]);
   const prevStep  = useCallback(() => { clearTimers(); startStep(Math.max(0, tourStep - 1)); }, [clearTimers, startStep, tourStep]);
 
