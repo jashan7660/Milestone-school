@@ -166,13 +166,13 @@ export default function AIGuide() {
   const step    = TOUR_STEPS[tourStep];
   const secLeft = Math.max(0, Math.round((TOUR_DURATION*(1-progress/100))/1000));
 
-  /* shared panel style — dark navy glass matching website header */
+  /* shared panel style — light glass */
   const panelStyle: React.CSSProperties = {
-    background: "rgba(10,22,50,0.92)",
+    background: "rgba(255,255,255,0.97)",
     backdropFilter: "blur(20px)",
     WebkitBackdropFilter: "blur(20px)",
-    border: "1px solid rgba(37,99,235,0.35)",
-    boxShadow: "0 8px 40px rgba(0,0,0,0.45), 0 0 0 1px rgba(37,99,235,0.12)",
+    border: "1px solid rgba(37,99,235,0.2)",
+    boxShadow: "0 12px 48px rgba(37,99,235,0.18), 0 2px 8px rgba(0,0,0,0.08)",
   };
 
   return (
@@ -186,53 +186,53 @@ export default function AIGuide() {
             initial={{ opacity:0, y:24, scale:0.93 }} animate={{ opacity:1, y:0, scale:1 }}
             exit={{ opacity:0, y:16, scale:0.93 }}
             transition={{ type:"spring", stiffness:320, damping:26 }}
-            className="w-[290px] rounded-2xl overflow-hidden"
+            className="w-[330px] rounded-2xl overflow-hidden"
             style={panelStyle}>
 
             {/* header */}
             <div className="flex items-center justify-between px-4 py-2.5"
-                 style={{ background:"rgba(37,99,235,0.15)", borderBottom:"1px solid rgba(37,99,235,0.2)" }}>
+                 style={{ background:`linear-gradient(90deg,${BLUE}15,${GREEN}10)`, borderBottom:"1px solid rgba(37,99,235,0.12)" }}>
               <div className="flex items-center gap-2">
-                <motion.div className="w-6 h-6 rounded-full flex items-center justify-center text-[11px]"
+                <motion.div className="w-7 h-7 rounded-full flex items-center justify-center text-[12px]"
                   style={{ background:`linear-gradient(135deg,${BLUE},${GREEN})` }}
-                  animate={{ boxShadow:[`0 0 6px ${BLUE}80`,`0 0 14px ${BLUE}60`,`0 0 6px ${BLUE}80`] }}
+                  animate={{ boxShadow:[`0 0 6px ${BLUE}60`,`0 0 14px ${BLUE}40`,`0 0 6px ${BLUE}60`] }}
                   transition={{ repeat:Infinity, duration:2 }}>
                   🤖
                 </motion.div>
-                <span style={{ fontWeight:700, fontSize:11.5, color:"rgba(255,255,255,0.9)" }}>
+                <span style={{ fontWeight:700, fontSize:12, color:"#1e293b" }}>
                   Millie — Website Tour
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <span style={{ fontSize:10, color:"rgba(255,255,255,0.4)", fontWeight:600 }}>
+                <span style={{ fontSize:10, color:"#94a3b8", fontWeight:600 }}>
                   {tourStep+1}/{TOUR_STEPS.length}
                 </span>
                 <button onClick={stopTour}
-                  className="w-5 h-5 rounded-full flex items-center justify-center hover:bg-red-500/20 transition-all"
-                  style={{ color:"rgba(255,255,255,0.35)" }}><X size={11}/></button>
+                  className="w-5 h-5 rounded-full flex items-center justify-center hover:bg-red-100 transition-all"
+                  style={{ color:"#94a3b8" }}><X size={11}/></button>
               </div>
             </div>
 
             <div className="px-4 pt-3 pb-4">
               <motion.p key={tourStep+"-t"} initial={{ opacity:0, x:-8 }} animate={{ opacity:1, x:0 }}
-                className="font-bold mb-2.5" style={{ fontSize:12.5, color:GREEN }}>
+                className="font-bold mb-2.5" style={{ fontSize:13, color:BLUE }}>
                 {step.title}
               </motion.p>
 
               <div className="rounded-xl p-3 mb-3" style={{
-                background:"rgba(37,99,235,0.08)",
-                border:"1px solid rgba(37,99,235,0.15)",
-                minHeight:95, maxHeight:125, overflowY:"auto",
-                scrollbarWidth:"thin", scrollbarColor:"rgba(37,99,235,0.3) transparent" }}>
+                background:`${BLUE}08`,
+                border:`1px solid ${BLUE}18`,
+                minHeight:100, maxHeight:130, overflowY:"auto",
+                scrollbarWidth:"thin", scrollbarColor:`${BLUE}40 transparent` }}>
                 <TypewriterText key={tourStep} text={step.message}/>
               </div>
 
               <div className="mb-3">
-                <div className="flex justify-between mb-1">
-                  <span style={{ fontSize:9.5, color:"rgba(255,255,255,0.35)" }}>Page {tourStep+1} of {TOUR_STEPS.length}</span>
-                  <span style={{ fontSize:9.5, color:GREEN, fontWeight:600 }}>Next in {secLeft}s</span>
+                <div className="flex justify-between mb-1.5">
+                  <span style={{ fontSize:10, color:"#64748b" }}>Page {tourStep+1} of {TOUR_STEPS.length}</span>
+                  <span style={{ fontSize:10, color:BLUE, fontWeight:700 }}>Next in {secLeft}s</span>
                 </div>
-                <div className="w-full h-1.5 rounded-full overflow-hidden" style={{ background:"rgba(255,255,255,0.08)" }}>
+                <div className="w-full h-2 rounded-full overflow-hidden" style={{ background:"#e2e8f0" }}>
                   <motion.div className="h-full rounded-full"
                     style={{ width:`${progress}%`, background:`linear-gradient(90deg,${BLUE},${GREEN})` }}/>
                 </div>
@@ -240,17 +240,17 @@ export default function AIGuide() {
 
               <div className="flex gap-2">
                 <button onClick={prevStep} disabled={tourStep===0}
-                  className="flex-1 flex items-center justify-center gap-1 py-2 rounded-xl text-[11px] font-semibold transition-all disabled:opacity-20 hover:scale-105"
-                  style={{ background:"rgba(37,99,235,0.12)", color:"rgba(255,255,255,0.7)", border:"1px solid rgba(37,99,235,0.2)" }}>
-                  <ChevronLeft size={12}/> Prev
+                  className="flex-1 flex items-center justify-center gap-1 py-2 rounded-xl text-[12px] font-semibold transition-all disabled:opacity-25 hover:scale-105"
+                  style={{ background:"#f1f5f9", color:"#475569", border:"1px solid #e2e8f0" }}>
+                  <ChevronLeft size={13}/> Prev
                 </button>
                 <button onClick={nextStep}
-                  className="flex-1 flex items-center justify-center gap-1 py-2 rounded-xl text-[11px] font-bold transition-all hover:scale-105"
+                  className="flex-1 flex items-center justify-center gap-1 py-2 rounded-xl text-[12px] font-bold transition-all hover:scale-105"
                   style={{ background:`linear-gradient(90deg,${BLUE},${GREEN})`,
-                           color:"white", boxShadow:`0 4px 14px rgba(37,99,235,0.4)` }}>
+                           color:"white", boxShadow:`0 4px 14px rgba(37,99,235,0.35)` }}>
                   {tourStep===TOUR_STEPS.length-1
-                    ? <><RotateCcw size={11}/> Finish</>
-                    : <>Next <ChevronRight size={11}/></>}
+                    ? <><RotateCcw size={12}/> Finish</>
+                    : <>Next <ChevronRight size={12}/></>}
                 </button>
               </div>
             </div>
@@ -263,49 +263,51 @@ export default function AIGuide() {
             initial={{ opacity:0, y:24, scale:0.93 }} animate={{ opacity:1, y:0, scale:1 }}
             exit={{ opacity:0, y:16, scale:0.93 }}
             transition={{ type:"spring", stiffness:320, damping:26 }}
-            className="w-[290px] rounded-2xl overflow-hidden flex flex-col"
-            style={{ height:455, ...panelStyle }}>
+            className="w-[330px] rounded-2xl overflow-hidden flex flex-col"
+            style={{ height:490, ...panelStyle }}>
 
             {/* header */}
             <div className="flex items-center justify-between px-4 py-3 flex-shrink-0"
-                 style={{ background:"rgba(37,99,235,0.15)", borderBottom:"1px solid rgba(37,99,235,0.2)" }}>
+                 style={{ background:`linear-gradient(90deg,${BLUE}15,${GREEN}10)`, borderBottom:`1px solid ${BLUE}18` }}>
               <div className="flex items-center gap-2.5">
-                <motion.div className="relative w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0"
+                <motion.div className="relative w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
                   style={{ background:`linear-gradient(135deg,${BLUE},${GREEN})` }}
-                  animate={{ boxShadow:[`0 0 0 2px rgba(37,99,235,0.4)`,`0 0 0 5px rgba(37,99,235,0.1)`,`0 0 0 2px rgba(37,99,235,0.4)`] }}
+                  animate={{ boxShadow:[`0 0 0 2px ${BLUE}50`,`0 0 0 6px ${BLUE}18`,`0 0 0 2px ${BLUE}50`] }}
                   transition={{ repeat:Infinity, duration:2.2 }}>
-                  <img src="/ai-robot.png" alt="Millie" className="w-8 h-8 object-contain rounded-full"/>
-                  <motion.div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2"
-                    style={{ background:GREEN, borderColor:"rgba(10,22,50,0.92)" }}
+                  <img src="/ai-robot.png" alt="Millie" className="w-9 h-9 object-contain rounded-full"/>
+                  <motion.div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-white"
+                    style={{ background:GREEN }}
                     animate={{ scale:[1,1.3,1] }} transition={{ repeat:Infinity, duration:1.5 }}/>
                 </motion.div>
                 <div>
-                  <p style={{ fontWeight:700, fontSize:12.5, color:"rgba(255,255,255,0.95)", lineHeight:1 }}>Millie</p>
-                  <p style={{ fontSize:9.5, color:GREEN, marginTop:2 }}>● AI Guide — Online</p>
+                  <p style={{ fontWeight:700, fontSize:13, color:"#1e293b", lineHeight:1 }}>Millie</p>
+                  <p style={{ fontSize:10, color:GREEN, marginTop:2, fontWeight:600 }}>● AI Guide — Online</p>
                 </div>
               </div>
               <button onClick={()=>setMode("idle")}
-                className="w-6 h-6 rounded-full flex items-center justify-center hover:bg-red-500/20 transition-all"
-                style={{ color:"rgba(255,255,255,0.35)" }}><X size={13}/></button>
+                className="w-7 h-7 rounded-full flex items-center justify-center hover:bg-red-100 transition-all"
+                style={{ color:"#94a3b8" }}><X size={14}/></button>
             </div>
 
             {/* messages */}
             <div className="flex-1 overflow-y-auto px-3 py-3 space-y-2.5"
-                 style={{ scrollbarWidth:"thin", scrollbarColor:"rgba(37,99,235,0.3) transparent" }}>
+                 style={{ background:"#f8fafc", scrollbarWidth:"thin", scrollbarColor:`${BLUE}30 transparent` }}>
               {messages.map((msg,i) => (
                 <motion.div key={i} initial={{ opacity:0, y:5 }} animate={{ opacity:1, y:0 }}
                   transition={{ duration:0.2 }}
                   className={`flex ${msg.from==="user"?"justify-end":"justify-start"} items-end gap-1.5`}>
                   {msg.from==="bot" && (
-                    <div className="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center text-[10px]"
+                    <div className="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center text-[11px]"
                          style={{ background:`linear-gradient(135deg,${BLUE},${GREEN})` }}>🤖</div>
                   )}
-                  <div className="max-w-[83%] px-3 py-2.5 rounded-2xl text-[11.5px] leading-relaxed whitespace-pre-line"
+                  <div className="max-w-[83%] px-3 py-2.5 rounded-2xl text-[12px] leading-relaxed whitespace-pre-line"
                        style={msg.from==="bot"
-                         ? { background:"rgba(255,255,255,0.07)", color:"rgba(255,255,255,0.88)",
-                             border:"1px solid rgba(37,99,235,0.2)", borderBottomLeftRadius:4 }
+                         ? { background:"white", color:"#1e293b",
+                             border:"1px solid #e2e8f0",
+                             boxShadow:"0 1px 4px rgba(0,0,0,0.06)",
+                             borderBottomLeftRadius:4 }
                          : { background:`linear-gradient(135deg,${BLUE},#1d4ed8)`,
-                             color:"white", boxShadow:`0 4px 12px rgba(37,99,235,0.4)`,
+                             color:"white", boxShadow:`0 4px 12px rgba(37,99,235,0.35)`,
                              borderBottomRightRadius:4 }}>
                     {msg.text}
                   </div>
@@ -316,14 +318,14 @@ export default function AIGuide() {
                 {thinking && (
                   <motion.div initial={{ opacity:0, y:4 }} animate={{ opacity:1, y:0 }}
                     exit={{ opacity:0 }} className="flex items-end gap-1.5">
-                    <div className="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center text-[10px]"
+                    <div className="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center text-[11px]"
                          style={{ background:`linear-gradient(135deg,${BLUE},${GREEN})` }}>🤖</div>
                     <div className="px-3 py-2.5 rounded-2xl flex gap-1 items-center"
-                         style={{ background:"rgba(255,255,255,0.07)", border:"1px solid rgba(37,99,235,0.2)", borderBottomLeftRadius:4 }}>
-                      {[0,0.15,0.3].map((d,i) => (
-                        <motion.div key={i} className="w-1.5 h-1.5 rounded-full"
-                          style={{ background:GREEN }}
-                          animate={{ y:[0,-4,0], opacity:[0.5,1,0.5] }}
+                         style={{ background:"white", border:"1px solid #e2e8f0", boxShadow:"0 1px 4px rgba(0,0,0,0.06)", borderBottomLeftRadius:4 }}>
+                      {[0,0.15,0.3].map((d,k) => (
+                        <motion.div key={k} className="w-2 h-2 rounded-full"
+                          style={{ background:BLUE }}
+                          animate={{ y:[0,-5,0], opacity:[0.4,1,0.4] }}
                           transition={{ repeat:Infinity, duration:0.8, delay:d }}/>
                       ))}
                     </div>
@@ -333,38 +335,42 @@ export default function AIGuide() {
               <div ref={chatEndRef}/>
             </div>
 
-            {/* suggestions */}
-            <div className="px-3 pt-2 pb-1.5 flex flex-wrap gap-1.5 flex-shrink-0"
-                 style={{ borderTop:"1px solid rgba(37,99,235,0.15)" }}>
-              {SUGGESTIONS.map(s => (
-                <motion.button key={s.text} onClick={()=>sendMessage(s.text)}
-                  whileHover={{ scale:1.06, y:-1 }} whileTap={{ scale:0.96 }}
-                  className="flex items-center gap-1 text-[10px] px-2.5 py-1 rounded-full font-medium"
-                  style={{ background:"rgba(37,99,235,0.12)", color:"rgba(255,255,255,0.75)",
-                           border:"1px solid rgba(37,99,235,0.25)" }}>
-                  <span style={{ color:GREEN }}>{s.icon}</span>
-                  {s.text}
-                </motion.button>
-              ))}
+            {/* suggestions — single horizontal scrollable row */}
+            <div className="flex-shrink-0 px-3 pt-2.5 pb-2"
+                 style={{ borderTop:"1px solid #e2e8f0", background:"white" }}>
+              <p style={{ fontSize:9.5, color:"#94a3b8", fontWeight:600, marginBottom:6, textTransform:"uppercase", letterSpacing:"0.06em" }}>Quick questions</p>
+              <div className="flex gap-2 overflow-x-auto pb-1"
+                   style={{ scrollbarWidth:"none", msOverflowStyle:"none" }}>
+                {SUGGESTIONS.map(s => (
+                  <motion.button key={s.text} onClick={()=>sendMessage(s.text)}
+                    whileHover={{ scale:1.05, y:-1 }} whileTap={{ scale:0.96 }}
+                    className="flex items-center gap-1.5 text-[11px] px-3 py-1.5 rounded-full font-semibold flex-shrink-0"
+                    style={{ background:`${BLUE}10`, color:BLUE,
+                             border:`1px solid ${BLUE}25` }}>
+                    <span style={{ color:GREEN }}>{s.icon}</span>
+                    {s.text}
+                  </motion.button>
+                ))}
+              </div>
             </div>
 
             {/* input */}
-            <div className="px-3 py-2.5 flex gap-2 flex-shrink-0"
-                 style={{ borderTop:"1px solid rgba(37,99,235,0.15)" }}>
-              <div className="flex-1 flex items-center gap-2 px-3 py-2 rounded-xl"
-                   style={{ background:"rgba(255,255,255,0.06)", border:"1.5px solid rgba(37,99,235,0.3)" }}>
+            <div className="px-3 py-3 flex gap-2 flex-shrink-0"
+                 style={{ borderTop:"1px solid #e2e8f0", background:"white" }}>
+              <div className="flex-1 flex items-center gap-2 px-3 py-2.5 rounded-xl"
+                   style={{ background:"#f8fafc", border:`1.5px solid ${BLUE}30` }}>
                 <input value={input} onChange={e=>setInput(e.target.value)}
                        onKeyDown={e=>e.key==="Enter"&&sendMessage()}
                        placeholder="Ask me anything…"
-                       className="flex-1 text-[11.5px] outline-none bg-transparent"
-                       style={{ color:"rgba(255,255,255,0.85)" }}/>
+                       className="flex-1 text-[12px] outline-none bg-transparent"
+                       style={{ color:"#1e293b" }}/>
               </div>
               <motion.button onClick={()=>sendMessage()}
                 whileHover={{ scale:1.1 }} whileTap={{ scale:0.9 }}
-                className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
                 style={{ background:`linear-gradient(135deg,${BLUE},${GREEN})`,
                          boxShadow:`0 4px 14px rgba(37,99,235,0.4)` }}>
-                <Send size={13} color="white"/>
+                <Send size={15} color="white"/>
               </motion.button>
             </div>
           </motion.div>
@@ -383,17 +389,18 @@ export default function AIGuide() {
               <motion.button onClick={startTour}
                 initial={{ opacity:0, x:14 }} animate={{ opacity:1, x:0 }} transition={{ delay:0.05 }}
                 whileHover={{ scale:1.05, x:-2 }} whileTap={{ scale:0.95 }}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-full text-[12px] font-bold text-white"
+                className="flex items-center gap-2 px-4 py-2.5 rounded-full text-[12px] font-bold"
                 style={{
-                  background:"rgba(10,22,50,0.90)",
+                  background:"rgba(255,255,255,0.96)",
                   backdropFilter:"blur(12px)",
-                  border:"1px solid rgba(37,99,235,0.4)",
-                  boxShadow:"0 4px 20px rgba(0,0,0,0.35), 0 0 0 1px rgba(37,99,235,0.1)",
+                  border:`1.5px solid ${BLUE}40`,
+                  boxShadow:`0 4px 20px rgba(37,99,235,0.18), 0 1px 0 white inset`,
+                  color:"#1e3a8a",
                 }}>
                 <motion.span animate={{ rotate:[0,360] }}
                   transition={{ repeat:Infinity, duration:4, ease:"linear" }}
                   style={{ display:"inline-block" }}>🚀</motion.span>
-                <span style={{ color:"rgba(255,255,255,0.9)" }}>Start Tour</span>
+                <span>Start Tour</span>
                 <motion.div className="w-1.5 h-1.5 rounded-full ml-1"
                   animate={{ opacity:[1,0.3,1] }} transition={{ repeat:Infinity, duration:1.2 }}
                   style={{ background:GREEN }}/>
@@ -458,7 +465,7 @@ function TypewriterText({ text }: { text:string }) {
     return () => clearInterval(iv);
   }, [text]);
   return (
-    <p style={{ color:"rgba(255,255,255,0.82)", fontSize:11.5, lineHeight:1.7 }}>
+    <p style={{ color:"#334155", fontSize:12, lineHeight:1.75 }}>
       {shown}
       <motion.span animate={{ opacity:[1,0] }} transition={{ repeat:Infinity, duration:0.55 }}
         style={{ display:"inline-block", width:2, height:11, background:GREEN,

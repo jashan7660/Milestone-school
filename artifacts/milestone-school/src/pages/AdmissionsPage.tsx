@@ -79,132 +79,93 @@ export default function AdmissionsPage() {
       <Navbar />
 
       {/* ── HERO ───────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden py-20 md:py-32"
-               style={{ background:"linear-gradient(135deg,#060f2a 0%,#0d1f4a 40%,#0a2e1e 100%)" }}>
+      <section className="relative overflow-hidden py-20 md:py-28"
+               style={{ background:"linear-gradient(160deg,#1a3a7c 0%,#1e5799 35%,#1a6b45 100%)" }}>
 
-        {/* grid overlay */}
-        <div className="absolute inset-0 pointer-events-none opacity-[0.04]"
-             style={{ backgroundImage:"linear-gradient(rgba(255,255,255,0.6) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.6) 1px,transparent 1px)", backgroundSize:"48px 48px" }}/>
+        {/* soft light overlay */}
+        <div className="absolute inset-0 pointer-events-none"
+             style={{ background:"radial-gradient(ellipse at 50% 0%,rgba(255,255,255,0.12) 0%,transparent 65%)" }}/>
 
         {/* animated blobs */}
-        <motion.div className="absolute top-[-100px] left-[-80px] w-[500px] h-[500px] rounded-full pointer-events-none"
-          style={{ background:"radial-gradient(circle,rgba(37,99,235,0.18),transparent 70%)" }}
-          animate={{ scale:[1,1.12,1], x:[0,25,0] }} transition={{ repeat:Infinity, duration:7, ease:"easeInOut" }}/>
-        <motion.div className="absolute bottom-[-80px] right-[-60px] w-[420px] h-[420px] rounded-full pointer-events-none"
-          style={{ background:"radial-gradient(circle,rgba(16,185,129,0.18),transparent 70%)" }}
-          animate={{ scale:[1,1.18,1], x:[0,-20,0] }} transition={{ repeat:Infinity, duration:9, ease:"easeInOut" }}/>
-        <motion.div className="absolute top-[40%] left-[50%] w-64 h-64 rounded-full pointer-events-none"
-          style={{ background:"radial-gradient(circle,rgba(139,92,246,0.12),transparent 70%)" }}
-          animate={{ scale:[1,1.3,1], opacity:[0.5,0.9,0.5] }} transition={{ repeat:Infinity, duration:6 }}/>
+        <motion.div className="absolute top-[-60px] left-[-60px] w-96 h-96 rounded-full pointer-events-none opacity-30"
+          style={{ background:"radial-gradient(circle,#3b82f6,transparent 70%)" }}
+          animate={{ scale:[1,1.15,1] }} transition={{ repeat:Infinity, duration:7, ease:"easeInOut" }}/>
+        <motion.div className="absolute bottom-[-40px] right-[-40px] w-80 h-80 rounded-full pointer-events-none opacity-25"
+          style={{ background:"radial-gradient(circle,#34d399,transparent 70%)" }}
+          animate={{ scale:[1,1.2,1] }} transition={{ repeat:Infinity, duration:9, ease:"easeInOut" }}/>
 
-        <div className="container mx-auto px-4 md:px-6 relative z-10">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+        <div className="container mx-auto px-4 md:px-6 relative z-10 text-center">
 
-            {/* Left — text */}
-            <motion.div className="flex-1 text-center lg:text-left"
-              initial={{ opacity:0, y:36 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.75 }}>
+          {/* badge */}
+          <motion.div className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold mb-6 uppercase tracking-wider"
+            style={{ background:"rgba(255,255,255,0.15)", border:"1px solid rgba(255,255,255,0.35)", color:"white", backdropFilter:"blur(8px)" }}
+            initial={{ opacity:0, y:-10 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.5 }}>
+            <motion.span animate={{ scale:[1,1.2,1] }} transition={{ repeat:Infinity, duration:1.8 }}>🎓</motion.span>
+            Admissions Open — Session 2026–27
+            <motion.span className="w-2 h-2 rounded-full bg-green-300"
+              animate={{ opacity:[1,0.3,1] }} transition={{ repeat:Infinity, duration:1 }}/>
+          </motion.div>
 
-              {/* badge */}
-              <motion.div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold mb-6 uppercase tracking-wider"
-                style={{ background:"rgba(37,99,235,0.2)", border:"1px solid rgba(37,99,235,0.45)", color:"#93c5fd" }}
-                animate={{ boxShadow:["0 0 0 0 rgba(37,99,235,0.4)","0 0 0 10px rgba(37,99,235,0)"] }}
-                transition={{ repeat:Infinity, duration:2.2 }}>
-                <motion.span animate={{ rotate:[0,15,-15,0] }} transition={{ repeat:Infinity, duration:2 }}>🎓</motion.span>
-                Admissions Open — Session 2026–27
-              </motion.div>
+          {/* school name */}
+          <motion.p className="text-white/80 text-sm font-semibold tracking-[0.2em] uppercase mb-3"
+            initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:0.2 }}>
+            The Milestone Sr. Sec. School · Kaithal, Haryana
+          </motion.p>
 
-              {/* headline */}
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-extrabold text-white leading-[1.1] mb-5 tracking-tight">
-                Shape Your Child's
-                <br/>
-                <span style={{ background:"linear-gradient(90deg,#60a5fa,#34d399,#60a5fa)", backgroundSize:"200%", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>
-                  Bright Future
-                </span>
-              </h1>
+          {/* headline */}
+          <motion.h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-extrabold text-white leading-[1.08] mb-6 tracking-tight"
+            initial={{ opacity:0, y:28 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.7, delay:0.1 }}>
+            Shape Your Child's
+            <br/>
+            <span style={{ background:"linear-gradient(90deg,#bfdbfe,#6ee7b7)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>
+              Bright Future
+            </span>
+          </motion.h1>
 
-              <p className="text-white/65 text-base md:text-lg leading-relaxed mb-4 max-w-lg mx-auto lg:mx-0">
-                Join <strong className="text-white/90">Kaithal's most trusted CBSE school.</strong> 15+ years of academic excellence, 
-                world-class facilities, and a nurturing environment where every child thrives.
-              </p>
+          <motion.p className="text-white/75 text-base md:text-xl leading-relaxed mb-8 max-w-2xl mx-auto"
+            initial={{ opacity:0, y:16 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.6, delay:0.25 }}>
+            Join <strong className="text-white font-bold">Kaithal's most trusted CBSE school</strong> — 15+ years of academic
+            excellence, modern facilities, and a nurturing environment where every child thrives.
+          </motion.p>
 
-              {/* small chips */}
-              <div className="flex flex-wrap gap-2 mb-8 justify-center lg:justify-start">
-                {["CBSE Affiliated","Nursery to Class XII","100% Board Results","Safe Campus"].map(t => (
-                  <span key={t} className="text-[11px] font-semibold px-3 py-1 rounded-full"
-                    style={{ background:"rgba(255,255,255,0.07)", color:"rgba(255,255,255,0.65)", border:"1px solid rgba(255,255,255,0.12)" }}>
-                    ✓ {t}
-                  </span>
-                ))}
-              </div>
+          {/* chips row */}
+          <motion.div className="flex flex-wrap justify-center gap-2 mb-10"
+            initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:0.35 }}>
+            {[
+              { emoji:"✅", text:"CBSE Affiliated" },
+              { emoji:"📚", text:"Nursery to Class XII" },
+              { emoji:"🏆", text:"100% Board Results" },
+              { emoji:"🚌", text:"Safe Bus Transport" },
+              { emoji:"⭐", text:"15+ Years Excellence" },
+            ].map(({ emoji, text }) => (
+              <span key={text} className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold text-white"
+                style={{ background:"rgba(255,255,255,0.13)", border:"1px solid rgba(255,255,255,0.25)", backdropFilter:"blur(6px)" }}>
+                {emoji} {text}
+              </span>
+            ))}
+          </motion.div>
 
-              {/* CTAs */}
-              <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
-                <motion.a href="#apply-form" whileHover={{ scale:1.04 }} whileTap={{ scale:0.97 }}
-                  className="flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-white text-sm relative overflow-hidden group"
-                  style={{ background:"linear-gradient(135deg,#2563EB,#10B981)", boxShadow:"0 6px 28px rgba(37,99,235,0.55)" }}>
-                  <span className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent"/>
-                  <GraduationCap size={16}/> Apply Now — Free
-                </motion.a>
-                <motion.a href="tel:+919812574766" whileHover={{ scale:1.04 }} whileTap={{ scale:0.97 }}
-                  className="flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-sm"
-                  style={{ background:"rgba(255,255,255,0.08)", color:"white", border:"1.5px solid rgba(255,255,255,0.18)", backdropFilter:"blur(8px)" }}>
-                  <Phone size={15}/> +91 98125-74766
-                </motion.a>
-              </div>
-            </motion.div>
+          {/* CTAs */}
+          <motion.div className="flex flex-wrap gap-4 justify-center"
+            initial={{ opacity:0, y:16 }} animate={{ opacity:1, y:0 }} transition={{ delay:0.45, duration:0.5 }}>
+            <motion.a href="#apply-form" whileHover={{ scale:1.05, y:-2 }} whileTap={{ scale:0.97 }}
+              className="flex items-center gap-2 px-8 py-4 rounded-full font-bold text-white text-base relative overflow-hidden group shadow-2xl"
+              style={{ background:"linear-gradient(135deg,#1d4ed8,#059669)", boxShadow:"0 8px 32px rgba(29,78,216,0.5)" }}>
+              <span className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-white/25 to-transparent"/>
+              <GraduationCap size={18}/> Apply Now — Free Enquiry
+            </motion.a>
+            <motion.a href="tel:+919812574766" whileHover={{ scale:1.05, y:-2 }} whileTap={{ scale:0.97 }}
+              className="flex items-center gap-2 px-8 py-4 rounded-full font-bold text-white text-base"
+              style={{ background:"rgba(255,255,255,0.15)", border:"2px solid rgba(255,255,255,0.4)", backdropFilter:"blur(8px)" }}>
+              <Phone size={16}/> +91 98125-74766
+            </motion.a>
+          </motion.div>
+        </div>
 
-            {/* Right — logo orb */}
-            <motion.div className="flex-shrink-0 flex items-center justify-center"
-              initial={{ opacity:0, scale:0.75, rotate:-8 }} animate={{ opacity:1, scale:1, rotate:0 }}
-              transition={{ duration:0.9, delay:0.25, type:"spring", stiffness:120 }}>
-              <div className="relative w-52 h-52 md:w-72 md:h-72">
-
-                {/* outer pulse ring */}
-                <motion.div className="absolute inset-0 rounded-full pointer-events-none"
-                  style={{ border:"2px solid rgba(37,99,235,0.35)" }}
-                  animate={{ scale:[1,1.12,1], opacity:[0.7,0.2,0.7] }}
-                  transition={{ repeat:Infinity, duration:3 }}/>
-
-                {/* spinning dashed ring */}
-                <motion.div className="absolute -inset-3 rounded-full pointer-events-none"
-                  style={{ border:"1.5px dashed rgba(16,185,129,0.4)" }}
-                  animate={{ rotate:360 }} transition={{ repeat:Infinity, duration:12, ease:"linear" }}/>
-
-                {/* second spinning ring — reverse */}
-                <motion.div className="absolute -inset-6 rounded-full pointer-events-none"
-                  style={{ border:"1px dashed rgba(37,99,235,0.25)" }}
-                  animate={{ rotate:-360 }} transition={{ repeat:Infinity, duration:18, ease:"linear" }}/>
-
-                {/* glow center */}
-                <div className="absolute inset-4 rounded-full pointer-events-none"
-                     style={{ background:"radial-gradient(circle,rgba(37,99,235,0.25) 0%,transparent 70%)" }}/>
-
-                {/* logo — no background */}
-                <motion.img src="/logo-nobg.png" alt="The Milestone Sr. Sec. School"
-                  animate={{ y:[0,-10,0] }} transition={{ repeat:Infinity, duration:4, ease:"easeInOut" }}
-                  className="absolute inset-0 w-full h-full object-contain p-6"
-                  style={{ filter:"drop-shadow(0 8px 32px rgba(37,99,235,0.5)) drop-shadow(0 0 16px rgba(16,185,129,0.3))" }}/>
-
-                {/* CBSE badge */}
-                <motion.div className="absolute -top-2 -right-2 px-2.5 py-1 rounded-full text-[10px] font-extrabold text-white flex items-center gap-1"
-                  style={{ background:"linear-gradient(135deg,#2563EB,#1d4ed8)", boxShadow:"0 4px 14px rgba(37,99,235,0.6)" }}
-                  animate={{ scale:[1,1.08,1] }} transition={{ repeat:Infinity, duration:2 }}>
-                  ✓ CBSE
-                </motion.div>
-
-                {/* 15+ badge */}
-                <motion.div className="absolute -bottom-2 -left-2 px-3 py-1.5 rounded-full text-[10px] font-extrabold text-white flex items-center gap-1"
-                  style={{ background:"linear-gradient(135deg,#059669,#10B981)", boxShadow:"0 4px 14px rgba(16,185,129,0.6)" }}
-                  animate={{ scale:[1,1.08,1] }} transition={{ repeat:Infinity, duration:2.4 }}>
-                  ⭐ 15+ Years
-                </motion.div>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* quick stats */}
-          <motion.div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-14"
-            initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ delay:0.55, duration:0.6 }}>
+        {/* quick stats */}
+        <motion.div className="container mx-auto px-4 md:px-6 mt-16"
+          initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ delay:0.55, duration:0.6 }}>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {[
               { val:"15+",         label:"Years of Excellence", icon:"🏆" },
               { val:"100%",        label:"Board Pass Rate",     icon:"📈" },
@@ -213,17 +174,16 @@ export default function AdmissionsPage() {
             ].map((s,i) => (
               <motion.div key={i} whileHover={{ y:-4, scale:1.02 }}
                 className="text-center py-5 px-3 rounded-2xl"
-                style={{ background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.1)", backdropFilter:"blur(8px)" }}>
-                <div className="text-xl mb-1">{s.icon}</div>
-                <p className="text-2xl md:text-3xl font-serif font-extrabold"
-                   style={{ background:"linear-gradient(90deg,#60a5fa,#34d399)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>
+                style={{ background:"rgba(255,255,255,0.12)", border:"1px solid rgba(255,255,255,0.2)", backdropFilter:"blur(10px)" }}>
+                <div className="text-2xl mb-1">{s.icon}</div>
+                <p className="text-2xl md:text-3xl font-serif font-extrabold text-white">
                   {s.val}
                 </p>
-                <p className="text-white/55 text-[11px] mt-1 font-medium">{s.label}</p>
+                <p className="text-white/65 text-[11px] mt-1 font-medium">{s.label}</p>
               </motion.div>
             ))}
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
       </section>
 
       {/* ── ADMISSION PROCESS ────────────────────────────────── */}
