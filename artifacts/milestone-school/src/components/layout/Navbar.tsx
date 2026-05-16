@@ -62,14 +62,9 @@ export default function Navbar() {
 
   const navigate = useCallback((href: string) => {
     setMobileOpen(false); setMobileAbout(false); setDesktopAbout(false);
-    if (href === "#admissions") {
-      if (location !== "/") { setLocation("/"); setTimeout(() => document.querySelector("#admissions")?.scrollIntoView({ behavior: "smooth" }), 350); }
-      else document.querySelector("#admissions")?.scrollIntoView({ behavior: "smooth" });
-      return;
-    }
     setLocation(href);
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [setLocation, location]);
+  }, [setLocation]);
 
   const isActive = (href: string) => href === "/" ? location === "/" : location.startsWith(href);
   const isAboutActive = ABOUT_ITEMS.some(i => location.startsWith(i.href)) || location === "/about";
@@ -222,7 +217,7 @@ export default function Navbar() {
 
             {/* Admissions Open — glowing CTA */}
             <button
-              onClick={() => navigate("#admissions")}
+              onClick={() => navigate("/admissions")}
               className="hidden md:flex items-center gap-2 px-5 h-9 rounded-full text-sm font-bold text-white relative overflow-hidden group"
               style={{ background: "linear-gradient(135deg, #2563EB 0%, #10B981 100%)", boxShadow: "0 4px 20px rgba(37,99,235,0.40)" }}
             >
@@ -320,7 +315,7 @@ export default function Navbar() {
               ))}
 
               <button
-                onClick={() => navigate("#admissions")}
+                onClick={() => navigate("/admissions")}
                 className="mt-3 w-full flex items-center justify-center gap-2 h-11 rounded-xl text-sm font-bold text-white relative overflow-hidden"
                 style={{ background: "linear-gradient(135deg, #2563EB, #10B981)", boxShadow: "0 4px 16px rgba(37,99,235,0.35)" }}
               >

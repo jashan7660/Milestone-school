@@ -14,6 +14,7 @@ import OurStoryPage from "@/pages/OurStoryPage";
 import OurDirectorsPage from "@/pages/OurDirectorsPage";
 import DivisionsPage from "@/pages/DivisionsPage";
 import TieupsPage from "@/pages/TieupsPage";
+import AdmissionsPage from "@/pages/AdmissionsPage";
 import BackToTop from "@/components/ui/BackToTop";
 import PageLoader from "@/components/ui/PageLoader";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
@@ -39,6 +40,7 @@ function Router() {
       <Route path="/faculty" component={FacultyPage} />
       <Route path="/achievements" component={AchievementsPage} />
       <Route path="/gallery" component={GalleryPage} />
+      <Route path="/admissions" component={AdmissionsPage} />
       <Route component={NotFound} />
     </Switch>
   );
