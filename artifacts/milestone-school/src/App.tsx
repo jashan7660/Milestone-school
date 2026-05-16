@@ -18,6 +18,7 @@ import BackToTop from "@/components/ui/BackToTop";
 import PageLoader from "@/components/ui/PageLoader";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import PhoneButton from "@/components/ui/PhoneButton";
+import AIGuide from "@/components/ui/AIGuide";
 
 const queryClient = new QueryClient();
 
@@ -50,6 +51,7 @@ function App() {
         <PageLoader />
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
           <Router />
+          <AIGuide />
         </WouterRouter>
         <BackToTop />
         <WhatsAppButton />
