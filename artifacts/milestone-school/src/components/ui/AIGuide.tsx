@@ -3,28 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "wouter";
 import { X, Send, ChevronRight, ChevronLeft, RotateCcw, Sparkles, BookOpen, Clock, Phone, MapPin, Bus, Trophy, Image } from "lucide-react";
 
-/* ─── Cartesia TTS helper ─────────────────────────────────── */
-async function speakText(text: string): Promise<HTMLAudioElement | null> {
-  try {
-    const apiBase = import.meta.env.DEV
-      ? `${window.location.protocol}//${window.location.hostname}:8080`
-      : "";
-    const res = await fetch(`${apiBase}/api/tts`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text }),
-    });
-    if (!res.ok) return null;
-    const blob = await res.blob();
-    const url  = URL.createObjectURL(blob);
-    const audio = new Audio(url);
-    audio.onended = () => URL.revokeObjectURL(url);
-    return audio;
-  } catch {
-    return null;
-  }
-}
-
 /* ─── School theme palette (matches website primary/secondary) ── */
 const BLUE  = "#1252b9";   /* hsl(218, 90%, 42%) — website primary  */
 const GREEN = "#1da565";   /* hsl(152, 70%, 38%) — website secondary */
@@ -99,7 +77,6 @@ function getBotResponse(input: string): string {
 
 type Mode = "idle" | "tour" | "chat";
 interface ChatMsg { from: "user" | "bot"; text: string; }
-const TOUR_DURATION = 10000;
 
 /* ════════════════════════════════════════════════════════════════
    MAIN COMPONENT
@@ -107,95 +84,59 @@ const TOUR_DURATION = 10000;
 export default function AIGuide() {
   const [mode, setMode]         = useState<Mode>("idle");
   const [tourStep, setTourStep] = useState(0);
-  const [progress, setProgress] = useState(0);
   const [messages, setMessages] = useState<ChatMsg[]>([
     { from:"bot", text:"👋 Namaste! I'm Millie, your AI Guide!\n\nAsk me anything about The Milestone Sr. Sec. School — admissions, timings, facilities, academics, and more." },
   ]);
   const [input, setInput]       = useState("");
   const [thinking, setThinking] = useState(false);
-  const [speakingIdx, setSpeakingIdx]   = useState<number | null>(null);
   const [, navigate]            = useLocation();
 
   const audioRef       = useRef<HTMLAudioElement | null>(null);
-  const timerRef       = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const progressRef    = useRef<ReturnType<typeof setInterval> | null>(null);
-  const scrollRafRef   = useRef<number | null>(null);
-  const scrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const nextStepRef    = useRef<() => void>(() => {});
   const chatEndRef     = useRef<HTMLDivElement>(null);
 
   /* Stop any playing audio */
   const stopAudio = useCallback(() => {
     if (audioRef.current) {
       audioRef.current.pause();
+      audioRef.current.onended = null;
       audioRef.current = null;
     }
-    setSpeakingIdx(null);
   }, []);
 
   useEffect(() => () => { stopAudio(); }, [stopAudio]);
 
-  const cancelScroll = useCallback(() => {
-    if (scrollRafRef.current)   cancelAnimationFrame(scrollRafRef.current);
-    if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current);
-    scrollRafRef.current = scrollTimerRef.current = null;
-  }, []);
-
-  const clearTimers = useCallback(() => {
-    if (timerRef.current)    clearTimeout(timerRef.current);
-    if (progressRef.current) clearInterval(progressRef.current);
-    cancelScroll();
-  }, [cancelScroll]);
-
-  const startAutoScroll = useCallback((duration: number) => {
-    cancelScroll();
-    scrollTimerRef.current = setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
-      const scrollDur = duration - 600;
-      const t0 = performance.now();
-      const tick = (now: number) => {
-        const p = Math.min((now - t0) / scrollDur, 1);
-        const e = p < 0.5 ? 2*p*p : 1 - Math.pow(-2*p+2,2)/2;
-        const max = document.documentElement.scrollHeight - window.innerHeight;
-        window.scrollTo(0, max * e);
-        if (p < 1) scrollRafRef.current = requestAnimationFrame(tick);
-      };
-      scrollRafRef.current = requestAnimationFrame(tick);
-    }, 350);
-  }, [cancelScroll]);
+  /* Play pre-generated audio from public/audio/tour-{step}.mp3 */
+  const playTourAudio = useCallback((step: number) => {
+    stopAudio();
+    const audio = new Audio(`/audio/tour-${step}.mp3`);
+    audioRef.current = audio;
+    audio.onended = () => { audioRef.current = null; nextStepRef.current(); };
+    audio.play().catch(() => {});
+  }, [stopAudio]);
 
   const startStep = useCallback((step: number) => {
     if (step >= TOUR_STEPS.length) {
       stopAudio();
-      setMode("idle"); setTourStep(0); setProgress(0); navigate("/");
+      setMode("idle"); setTourStep(0); navigate("/");
       window.scrollTo({ top:0, behavior:"smooth" }); return;
     }
-    clearTimers(); stopAudio(); setTourStep(step); setProgress(0);
+    stopAudio(); setTourStep(step);
     navigate(TOUR_STEPS[step].path);
-    startAutoScroll(TOUR_DURATION);
-    /* Auto-speak the tour step message */
-    const cleanMsg = TOUR_STEPS[step].message.replace(/[^\p{L}\p{N}\s.,!?:@+\-]/gu, " ").trim();
-    speakText(cleanMsg).then(audio => {
-      if (!audio) return;
-      audioRef.current = audio;
-      setSpeakingIdx(step);
-      audio.onended = () => { setSpeakingIdx(null); audioRef.current = null; };
-      audio.play();
-    });
-    const t0 = Date.now();
-    progressRef.current = setInterval(() =>
-      setProgress(Math.min(((Date.now()-t0)/TOUR_DURATION)*100,100)), 150);
-    timerRef.current = setTimeout(() => { clearTimers(); startStep(step+1); }, TOUR_DURATION);
-  }, [clearTimers, navigate, startAutoScroll, stopAudio]);
+    window.scrollTo({ top:0, behavior:"smooth" });
+    /* Update nextStepRef before playing so onended calls the right function */
+    nextStepRef.current = () => startStep(step + 1);
+    playTourAudio(step);
+  }, [navigate, playTourAudio, stopAudio]);
 
   const startTour = useCallback(() => { setMode("tour"); startStep(0); }, [startStep]);
   const stopTour  = useCallback(() => {
-    clearTimers(); stopAudio(); setMode("idle"); setTourStep(0); setProgress(0);
+    stopAudio(); setMode("idle"); setTourStep(0);
     window.scrollTo({ top:0, behavior:"smooth" });
-  }, [clearTimers, stopAudio]);
-  const nextStep = useCallback(() => { clearTimers(); startStep(tourStep+1); }, [clearTimers, startStep, tourStep]);
-  const prevStep = useCallback(() => { clearTimers(); startStep(Math.max(0,tourStep-1)); }, [clearTimers, startStep, tourStep]);
+  }, [stopAudio]);
+  const nextStep = useCallback(() => { startStep(tourStep + 1); }, [startStep, tourStep]);
+  const prevStep = useCallback(() => { startStep(Math.max(0, tourStep - 1)); }, [startStep, tourStep]);
 
-  useEffect(() => () => clearTimers(), [clearTimers]);
   useEffect(() => { chatEndRef.current?.scrollIntoView({ behavior:"smooth" }); }, [messages]);
 
   const sendMessage = (text?: string) => {
@@ -209,8 +150,7 @@ export default function AIGuide() {
     }, 700);
   };
 
-  const step    = TOUR_STEPS[tourStep];
-  const secLeft = Math.max(0, Math.round((TOUR_DURATION*(1-progress/100))/1000));
+  const step = TOUR_STEPS[tourStep];
 
   /* Panel style — matches website's card style */
   const panelStyle: React.CSSProperties = {
@@ -280,20 +220,9 @@ export default function AIGuide() {
               <div className="rounded-xl p-3 mb-3" style={{
                 background:`${BLUE}06`,
                 border:`1px solid ${BLUE}20`,
-                minHeight:100, maxHeight:130, overflowY:"auto",
+                minHeight:100, maxHeight:150, overflowY:"auto",
                 scrollbarWidth:"thin", scrollbarColor:`${BLUE}40 transparent` }}>
                 <TypewriterText key={tourStep} text={step.message}/>
-              </div>
-
-              <div className="mb-3">
-                <div className="flex justify-between mb-1.5">
-                  <span style={{ fontSize:10, color:"#64748b" }}>Page {tourStep+1} of {TOUR_STEPS.length}</span>
-                  <span style={{ fontSize:10, color:BLUE, fontWeight:700 }}>Next in {secLeft}s</span>
-                </div>
-                <div className="w-full h-2 rounded-full overflow-hidden" style={{ background:"#e2e8f0" }}>
-                  <motion.div className="h-full rounded-full"
-                    style={{ width:`${progress}%`, background:`linear-gradient(90deg,${BLUE},${GREEN})` }}/>
-                </div>
               </div>
 
               <div className="flex gap-2">
