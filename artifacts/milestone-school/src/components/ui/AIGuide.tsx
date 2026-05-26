@@ -3,23 +3,25 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "wouter";
 import { X, Send, ChevronRight, ChevronLeft, RotateCcw, Sparkles, BookOpen, Clock, Phone, MapPin, Bus, Trophy, Image } from "lucide-react";
 
-/* ─── School theme palette (matches website primary/secondary) ── */
-const BLUE  = "#1252b9";   /* hsl(218, 90%, 42%) — website primary  */
-const GREEN = "#1da565";   /* hsl(152, 70%, 38%) — website secondary */
-const NAVY  = "#0d3b8c";   /* darker shade for headers              */
+/* ─── Futuristic neon palette ──────────────────────────────── */
+const NEON  = "#00ff88";   /* neon green glow                 */
+const CYAN  = "#00d9ff";   /* cyan accent                     */
+const BLUE  = "#1145b5";   /* deep blue                       */
+const GLASS = "rgba(8,12,28,0.88)";
+const GLASS_LIGHT = "rgba(8,12,28,0.72)";
 
-/* ─── Tour steps ─────────────────────────────────────────────── */
+/* ─── Tour steps ────────────────────────────────────────────── */
 const TOUR_STEPS = [
-  { path: "/",                title: "🏠 Home",           message: "Welcome to The Milestone Sr. Sec. School – a CBSE-affiliated school in Kaithal, Haryana! The Home page shows our key highlights: 15+ years of excellence, 100% board pass rate, smart classrooms, experienced faculty, and vibrant campus life. Scroll down to explore admissions, stats, and milestones!" },
-  { path: "/about/story",     title: "📖 Our Story",      message: "Every great school starts with a vision! Founded with a deep commitment to quality education and character building, Milestone has grown into one of the most trusted CBSE schools in Kaithal district. Our story is one of dedication – to our students, their families, and the community." },
-  { path: "/about/directors", title: "🎓 Directors",      message: "Meet the visionary leaders behind The Milestone School! Our directors bring decades of experience in education. Under their leadership the school has achieved outstanding CBSE results, expanded infrastructure, and introduced smart classrooms and modern teaching methods." },
-  { path: "/about/divisions", title: "🏫 Divisions",      message: "The Milestone School has well-defined academic divisions: Pre-Primary & Primary wings nurture curiosity through play-based learning; Middle School bridges childhood and adolescence; Senior Secondary (XI–XII) offers Science, Commerce, and Arts streams to prepare students for competitive exams and higher education." },
-  { path: "/about/tieups",    title: "🤝 Tie-Ups",        message: "Education thrives through collaboration! Our Tie-Ups page showcases partnerships with leading organizations, coaching institutes, tech providers, and community bodies. Career counseling, sports academy partnerships, and CBSE resource center connections keep students and teachers updated." },
-  { path: "/academics",       title: "📚 Academics",      message: "The Academics section is the core of what we do! CBSE curriculum from Nursery to Class XII, NCERT textbooks supplemented with digital resources and practical experiments. Our academic calendar balances rigorous study with co-curricular activities. Board exam preparation is our special strength!" },
-  { path: "/facilities",      title: "🏗️ Facilities",    message: "Best-equipped school in Kaithal! Physics, Chemistry & Biology labs; Computer lab with latest tech; Smart classrooms with interactive whiteboards; Well-stocked library; Sports ground, basketball & volleyball courts; Art room, music room, activity halls, and safe school bus transport." },
-  { path: "/faculty",         title: "👩‍🏫 Faculty",     message: "Our incredible educators are selected for subject expertise and passion! Faculty undergoes continuous professional development per CBSE guidelines. Specialist teachers for every subject, great faculty-to-student ratio, and personalized attention ensure no child falls behind. Our teachers are mentors, role models, and friends!" },
-  { path: "/achievements",    title: "🏆 Achievements",   message: "Students have won academic, sports, cultural, and community service awards! CBSE board results consistently see students scoring above 90% with district and state toppers. Sports teams win inter-school competitions across Haryana. Science fairs, debates, quiz bowls – Milestone students shine everywhere!" },
-  { path: "/gallery",         title: "🖼️ Gallery",        message: "A visual celebration of life at Milestone! See vibrant classrooms, science experiments, cultural programs, Sports Day, Annual Day, and everyday school magic. Joy on students' faces, concentration of young scientists in labs, and creativity in art rooms. Thank you for completing the tour – we hope to welcome you!" },
+  { path: "/",                icon:"🏠", title:"Home",          message:"Welcome to The Milestone Sr. Sec. School – a CBSE-affiliated school in Kaithal, Haryana! The Home page shows our key highlights: 15+ years of excellence, 100% board pass rate, smart classrooms, experienced faculty, and vibrant campus life. Scroll down to explore admissions, stats, and milestones!" },
+  { path: "/about/story",     icon:"📖", title:"Our Story",     message:"Every great school starts with a vision! Founded with a deep commitment to quality education and character building, Milestone has grown into one of the most trusted CBSE schools in Kaithal district. Our story is one of dedication – to our students, their families, and the community." },
+  { path: "/about/directors", icon:"🎓", title:"Directors",     message:"Meet the visionary leaders behind The Milestone School! Our directors bring decades of experience in education. Under their leadership the school has achieved outstanding CBSE results, expanded infrastructure, and introduced smart classrooms and modern teaching methods." },
+  { path: "/about/divisions", icon:"🏫", title:"Divisions",     message:"The Milestone School has well-defined academic divisions: Pre-Primary & Primary wings nurture curiosity through play-based learning; Middle School bridges childhood and adolescence; Senior Secondary (XI–XII) offers Science, Commerce, and Arts streams to prepare students for competitive exams and higher education." },
+  { path: "/about/tieups",    icon:"🤝", title:"Tie-Ups",       message:"Education thrives through collaboration! Our Tie-Ups page showcases partnerships with leading organizations, coaching institutes, tech providers, and community bodies. Career counseling, sports academy partnerships, and CBSE resource center connections keep students and teachers updated." },
+  { path: "/academics",       icon:"📚", title:"Academics",     message:"The Academics section is the core of what we do! CBSE curriculum from Nursery to Class XII, NCERT textbooks supplemented with digital resources and practical experiments. Our academic calendar balances rigorous study with co-curricular activities. Board exam preparation is our special strength!" },
+  { path: "/facilities",      icon:"🏗️", title:"Facilities",   message:"Best-equipped school in Kaithal! Physics, Chemistry & Biology labs; Computer lab with latest tech; Smart classrooms with interactive whiteboards; Well-stocked library; Sports ground, basketball & volleyball courts; Art room, music room, activity halls, and safe school bus transport." },
+  { path: "/faculty",         icon:"👩‍🏫", title:"Faculty",   message:"Our incredible educators are selected for subject expertise and passion! Faculty undergoes continuous professional development per CBSE guidelines. Specialist teachers for every subject, great faculty-to-student ratio, and personalized attention ensure no child falls behind. Our teachers are mentors, role models, and friends!" },
+  { path: "/achievements",    icon:"🏆", title:"Achievements",  message:"Students have won academic, sports, cultural, and community service awards! CBSE board results consistently see students scoring above 90% with district and state toppers. Sports teams win inter-school competitions across Haryana. Science fairs, debates, quiz bowls – Milestone students shine everywhere!" },
+  { path: "/gallery",         icon:"🖼️", title:"Gallery",       message:"A visual celebration of life at Milestone! See vibrant classrooms, science experiments, cultural programs, Sports Day, Annual Day, and everyday school magic. Joy on students' faces, concentration of young scientists in labs, and creativity in art rooms. Thank you for completing the tour – we hope to welcome you!" },
 ];
 
 /* ─── Chat responses ─────────────────────────────────────────── */
@@ -30,8 +32,8 @@ const CHAT_RESPONSES: { keywords: string[]; response: string }[] = [
     response: "💰 For the complete fee structure and payment schedule, contact us directly:\n📞 +91 98125-74766\n✉️ themilestoneKtl@gmail.com\n\nOur admissions team will share a transparent breakdown." },
   { keywords: ["timing","time","schedule","hours","open","samay","समय","kab"],
     response: "⏰ School Timings:\nMonday – Saturday: 7:30 AM – 2:30 PM\n\nClosed on Sundays and national holidays.\n\nOffice timings: 8:00 AM – 3:00 PM." },
-  { keywords: ["cbse","board","affiliation","affiliated","curriculum","board"],
-    response: "✅ Fully affiliated with CBSE, New Delhi!\n\nNCSRT curriculum for Nursery to Class XII.\nBoard exams: Class X & XII (CBSE pattern)." },
+  { keywords: ["cbse","board","affiliation","affiliated","curriculum"],
+    response: "✅ Fully affiliated with CBSE, New Delhi!\n\nNCERT curriculum for Nursery to Class XII.\nBoard exams: Class X & XII (CBSE pattern)." },
   { keywords: ["class","stream","science","commerce","arts","subject","pcm","pcb","कक्षा"],
     response: "📚 Classes: Nursery to Class XII\n\nSenior Secondary (XI–XII) streams:\n• Science (PCM / PCB)\n• Commerce\n• Arts / Humanities\n\nAll with carefully chosen subject combinations!" },
   { keywords: ["faculty","teacher","staff","sir","ma'am","शिक्षक"],
@@ -45,7 +47,7 @@ const CHAT_RESPONSES: { keywords: string[]; response: string }[] = [
   { keywords: ["result","results","board","percentage","score","rank","topper","परिणाम"],
     response: "🏆 Outstanding CBSE Results every year!\n\n✅ 100% pass rate consistently\n⭐ Many students score above 90%\n🥇 District & State level toppers\n\nAcademic excellence is our hallmark!" },
   { keywords: ["tour","guide","explore","show","dikhao"],
-    response: "🚀 Click the glowing 'Start Tour' button! I'll guide you through every page — Home, Academics, Facilities, Faculty, Achievements, Gallery, and more. Each page auto-scrolls so you see everything!" },
+    response: "🚀 Click the glowing 'Start Tour' button! I'll guide you through every page — Home, Academics, Facilities, Faculty, Achievements, Gallery, and more!" },
   { keywords: ["hello","hi","hey","namaste","hii","helo","नमस्ते"],
     response: "👋 Namaste! I'm Millie, your AI Guide for The Milestone Sr. Sec. School!\n\nI can help with admissions, fees, timings, facilities, academics, and more.\n\nOr click 'Start Tour' for a guided website tour! 🚀" },
   { keywords: ["achievement","award","prize","trophy","win","gold","medal"],
@@ -53,18 +55,18 @@ const CHAT_RESPONSES: { keywords: string[]; response: string }[] = [
   { keywords: ["transport","bus","van","pick","drop","vehicle","गाड़ी"],
     response: "🚌 Safe, reliable school bus transport covering all major areas of Kaithal!\n\nCall +91 98125-74766 for route details and timings." },
   { keywords: ["year","found","start","establish","history","2008","कब"],
-    response: "📅 The Milestone Sr. Sec. School was established with a vision to provide quality CBSE education in Kaithal.\n\n15+ years of excellence, trusted by hundreds of families across Kaithal and nearby areas!" },
+    response: "📅 The Milestone Sr. Sec. School was established with a vision to provide quality CBSE education in Kaithal.\n\n15+ years of excellence, trusted by hundreds of families!" },
 ];
 
 const SUGGESTIONS = [
-  { icon: <BookOpen size={12}/>, text: "Admission enquiry?" },
-  { icon: <Clock size={12}/>,    text: "School timings?" },
-  { icon: <Trophy size={12}/>,   text: "Board results?" },
-  { icon: <MapPin size={12}/>,   text: "School location?" },
-  { icon: <Bus size={12}/>,      text: "Transport/bus?" },
-  { icon: <Phone size={12}/>,    text: "Contact details?" },
-  { icon: <Image size={12}/>,    text: "Gallery & events?" },
-  { icon: <Sparkles size={12}/>, text: "Fee structure?" },
+  { icon: <BookOpen size={11}/>, text: "Admission enquiry?" },
+  { icon: <Clock size={11}/>,    text: "School timings?" },
+  { icon: <Trophy size={11}/>,   text: "Board results?" },
+  { icon: <MapPin size={11}/>,   text: "School location?" },
+  { icon: <Bus size={11}/>,      text: "Transport/bus?" },
+  { icon: <Phone size={11}/>,    text: "Contact details?" },
+  { icon: <Image size={11}/>,    text: "Gallery & events?" },
+  { icon: <Sparkles size={11}/>, text: "Fee structure?" },
 ];
 
 function getBotResponse(input: string): string {
@@ -91,11 +93,10 @@ export default function AIGuide() {
   const [thinking, setThinking] = useState(false);
   const [, navigate]            = useLocation();
 
-  const audioRef       = useRef<HTMLAudioElement | null>(null);
-  const nextStepRef    = useRef<() => void>(() => {});
-  const chatEndRef     = useRef<HTMLDivElement>(null);
+  const audioRef    = useRef<HTMLAudioElement | null>(null);
+  const nextStepRef = useRef<() => void>(() => {});
+  const chatEndRef  = useRef<HTMLDivElement>(null);
 
-  /* Stop any playing audio */
   const stopAudio = useCallback(() => {
     if (audioRef.current) {
       audioRef.current.pause();
@@ -106,7 +107,6 @@ export default function AIGuide() {
 
   useEffect(() => () => { stopAudio(); }, [stopAudio]);
 
-  /* Play pre-generated audio from public/audio/tour-{step}.mp3 */
   const playTourAudio = useCallback((step: number) => {
     stopAudio();
     const audio = new Audio(`/audio/tour-${step}.mp3`);
@@ -124,7 +124,6 @@ export default function AIGuide() {
     stopAudio(); setTourStep(step);
     navigate(TOUR_STEPS[step].path);
     window.scrollTo({ top:0, behavior:"smooth" });
-    /* Update nextStepRef before playing so onended calls the right function */
     nextStepRef.current = () => startStep(step + 1);
     playTourAudio(step);
   }, [navigate, playTourAudio, stopAudio]);
@@ -152,94 +151,152 @@ export default function AIGuide() {
 
   const step = TOUR_STEPS[tourStep];
 
-  /* Panel style — matches website's card style */
-  const panelStyle: React.CSSProperties = {
-    background: "rgba(255,255,255,0.98)",
-    backdropFilter: "blur(20px)",
-    WebkitBackdropFilter: "blur(20px)",
-    border: `1px solid ${BLUE}30`,
-    boxShadow: `0 16px 56px rgba(18,82,185,0.20), 0 2px 8px rgba(0,0,0,0.08)`,
-    borderRadius: 16,
-  };
-
-  /* Header style — matches website navbar */
-  const headerStyle: React.CSSProperties = {
-    background: `linear-gradient(90deg, ${NAVY} 0%, ${BLUE} 100%)`,
-    borderBottom: `2px solid ${GREEN}`,
-  };
-
   return (
     <div className="fixed bottom-5 right-4 z-[9998] flex flex-col items-end gap-3 select-none"
          style={{ fontFamily:"'Poppins',sans-serif" }}>
 
-      {/* ══ TOUR PANEL ══════════════════════════════════════════ */}
+      {/* ══ TOUR PANEL ═══════════════════════════════════════════ */}
       <AnimatePresence>
         {mode === "tour" && (
           <motion.div key="tour"
-            initial={{ opacity:0, y:24, scale:0.93 }} animate={{ opacity:1, y:0, scale:1 }}
-            exit={{ opacity:0, y:16, scale:0.93 }}
-            transition={{ type:"spring", stiffness:320, damping:26 }}
-            className="w-[330px] overflow-hidden"
-            style={panelStyle}>
+            initial={{ opacity:0, y:28, scale:0.88 }}
+            animate={{ opacity:1, y:0, scale:1 }}
+            exit={{ opacity:0, y:20, scale:0.90 }}
+            transition={{ type:"spring", stiffness:340, damping:28 }}
+            className="w-[340px] overflow-hidden relative"
+            style={{
+              background: GLASS,
+              backdropFilter:"blur(28px)",
+              WebkitBackdropFilter:"blur(28px)",
+              borderRadius:22,
+              border:`1px solid rgba(0,255,136,0.25)`,
+              boxShadow:`0 0 0 1px rgba(0,217,255,0.08), 0 20px 60px rgba(0,0,0,0.60), 0 0 40px rgba(0,255,136,0.08)`,
+            }}>
 
-            {/* header — navbar style */}
-            <div className="flex items-center justify-between px-4 py-2.5" style={headerStyle}>
-              <div className="flex items-center gap-2">
-                <motion.div className="w-7 h-7 rounded-full flex items-center justify-center text-[12px]"
-                  style={{ background:`linear-gradient(135deg,${GREEN},#22c55e)`,
-                           boxShadow:`0 0 0 2px rgba(255,255,255,0.3)` }}
-                  animate={{ boxShadow:[`0 0 6px ${GREEN}80`,`0 0 14px ${GREEN}50`,`0 0 6px ${GREEN}80`] }}
+            {/* Animated neon border top */}
+            <motion.div className="absolute top-0 left-0 right-0 h-[2px] rounded-t-[22px]"
+              style={{ background:`linear-gradient(90deg,transparent,${NEON},${CYAN},${NEON},transparent)` }}
+              animate={{ opacity:[0.6,1,0.6] }} transition={{ repeat:Infinity, duration:2.5 }}/>
+
+            {/* Header */}
+            <div className="flex items-center justify-between px-4 py-3"
+                 style={{ borderBottom:`1px solid rgba(255,255,255,0.06)` }}>
+              <div className="flex items-center gap-2.5">
+                {/* Animated AI orb in header */}
+                <motion.div className="relative w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
+                  style={{ background:`linear-gradient(135deg,${BLUE},#0a2a7a)`,
+                           boxShadow:`0 0 12px ${NEON}60, 0 0 24px ${CYAN}30` }}
+                  animate={{ boxShadow:[`0 0 10px ${NEON}50,0 0 20px ${CYAN}20`,`0 0 18px ${NEON}80,0 0 36px ${CYAN}40`,`0 0 10px ${NEON}50,0 0 20px ${CYAN}20`] }}
                   transition={{ repeat:Infinity, duration:2 }}>
-                  🤖
+                  <span style={{ fontSize:15 }}>🤖</span>
+                  {/* Blinking eye dots */}
+                  <motion.div className="absolute bottom-1 left-1.5 w-1 h-1 rounded-full"
+                    style={{ background:NEON }}
+                    animate={{ scaleY:[1,0.1,1] }} transition={{ repeat:Infinity, duration:3.5, delay:0.3 }}/>
+                  <motion.div className="absolute bottom-1 right-1.5 w-1 h-1 rounded-full"
+                    style={{ background:NEON }}
+                    animate={{ scaleY:[1,0.1,1] }} transition={{ repeat:Infinity, duration:3.5, delay:0.5 }}/>
                 </motion.div>
                 <div>
-                  <span style={{ fontWeight:700, fontSize:12, color:"white", letterSpacing:"0.01em" }}>
+                  <div style={{ fontWeight:800, fontSize:11.5, color:"white", letterSpacing:"0.01em", lineHeight:1.2 }}>
                     Millie — Website Tour
-                  </span>
-                  <div style={{ fontSize:9, color:`${GREEN}`, fontWeight:600, letterSpacing:"0.05em" }}>
-                    THE MILESTONE SR. SEC. SCHOOL
+                  </div>
+                  <div style={{ fontSize:8.5, color:NEON, fontWeight:700, letterSpacing:"0.08em", marginTop:1 }}>
+                    AI GUIDE · MILESTONE SCHOOL
                   </div>
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <span style={{ fontSize:10, color:"rgba(255,255,255,0.7)", fontWeight:600 }}>
-                  {tourStep+1}/{TOUR_STEPS.length}
-                </span>
-                <button onClick={stopTour}
-                  className="w-5 h-5 rounded-full flex items-center justify-center transition-all hover:bg-white/20"
-                  style={{ color:"rgba(255,255,255,0.8)" }}><X size={11}/></button>
+                {/* Step counter pill */}
+                <div className="px-2 py-0.5 rounded-full text-[10px] font-bold"
+                     style={{ background:`rgba(0,255,136,0.12)`, color:NEON, border:`1px solid ${NEON}40` }}>
+                  {tourStep+1} / {TOUR_STEPS.length}
+                </div>
+                <motion.button onClick={stopTour} whileHover={{ scale:1.15 }} whileTap={{ scale:0.9 }}
+                  className="w-6 h-6 rounded-full flex items-center justify-center"
+                  style={{ background:"rgba(255,255,255,0.07)", color:"rgba(255,255,255,0.55)" }}>
+                  <X size={11}/>
+                </motion.button>
               </div>
             </div>
 
             <div className="px-4 pt-3 pb-4">
-              <motion.p key={tourStep+"-t"} initial={{ opacity:0, x:-8 }} animate={{ opacity:1, x:0 }}
-                className="font-bold mb-2.5" style={{ fontSize:13, color:NAVY }}>
-                {step.title}
-              </motion.p>
+              {/* Step icon + title */}
+              <motion.div key={tourStep+"-title"}
+                initial={{ opacity:0, x:-12 }} animate={{ opacity:1, x:0 }}
+                transition={{ duration:0.35 }}
+                className="flex items-center gap-2 mb-3">
+                <motion.div className="w-9 h-9 rounded-xl flex items-center justify-center text-[18px] flex-shrink-0"
+                  style={{ background:`linear-gradient(135deg,rgba(0,255,136,0.15),rgba(0,217,255,0.10))`,
+                           border:`1px solid rgba(0,255,136,0.25)`,
+                           boxShadow:`0 0 14px rgba(0,255,136,0.15)` }}
+                  animate={{ boxShadow:[`0 0 10px rgba(0,255,136,0.10)`,`0 0 22px rgba(0,255,136,0.25)`,`0 0 10px rgba(0,255,136,0.10)`] }}
+                  transition={{ repeat:Infinity, duration:2.2 }}>
+                  {step.icon}
+                </motion.div>
+                <div>
+                  <div style={{ fontSize:14, fontWeight:800, color:"white", lineHeight:1.2 }}>{step.title}</div>
+                  <div style={{ fontSize:9.5, color:"rgba(255,255,255,0.35)", fontWeight:500 }}>
+                    Page {tourStep+1} of {TOUR_STEPS.length}
+                  </div>
+                </div>
+              </motion.div>
 
-              <div className="rounded-xl p-3 mb-3" style={{
-                background:`${BLUE}06`,
-                border:`1px solid ${BLUE}20`,
-                minHeight:100, maxHeight:150, overflowY:"auto",
-                scrollbarWidth:"thin", scrollbarColor:`${BLUE}40 transparent` }}>
+              {/* Message box */}
+              <motion.div key={tourStep+"-msg"}
+                initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ duration:0.3 }}
+                className="rounded-[14px] p-3 mb-3"
+                style={{
+                  background:"rgba(255,255,255,0.04)",
+                  border:`1px solid rgba(255,255,255,0.08)`,
+                  minHeight:90, maxHeight:150, overflowY:"auto",
+                  scrollbarWidth:"thin",
+                  scrollbarColor:`${NEON}30 transparent`,
+                }}>
                 <TypewriterText key={tourStep} text={step.message}/>
+              </motion.div>
+
+              {/* Step dots */}
+              <div className="flex justify-center gap-1.5 mb-3">
+                {TOUR_STEPS.map((_, i) => (
+                  <motion.div key={i}
+                    onClick={() => startStep(i)}
+                    className="cursor-pointer rounded-full"
+                    style={{
+                      width: i === tourStep ? 18 : 6,
+                      height: 6,
+                      background: i === tourStep
+                        ? `linear-gradient(90deg,${NEON},${CYAN})`
+                        : i < tourStep ? `${NEON}60` : "rgba(255,255,255,0.15)",
+                      boxShadow: i === tourStep ? `0 0 8px ${NEON}80` : "none",
+                      transition: "all 0.3s ease",
+                    }}/>
+                ))}
               </div>
 
+              {/* Prev / Next buttons */}
               <div className="flex gap-2">
-                <button onClick={prevStep} disabled={tourStep===0}
-                  className="flex-1 flex items-center justify-center gap-1 py-2 rounded-xl text-[12px] font-semibold transition-all disabled:opacity-25 hover:scale-105"
-                  style={{ background:"#f1f5f9", color:"#475569", border:"1px solid #e2e8f0" }}>
+                <motion.button onClick={prevStep} disabled={tourStep===0}
+                  whileHover={{ scale:1.04 }} whileTap={{ scale:0.95 }}
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-[12px] text-[12px] font-semibold disabled:opacity-25 transition-all"
+                  style={{ background:"rgba(255,255,255,0.06)", color:"rgba(255,255,255,0.65)",
+                           border:"1px solid rgba(255,255,255,0.10)" }}>
                   <ChevronLeft size={13}/> Prev
-                </button>
-                <button onClick={nextStep}
-                  className="flex-1 flex items-center justify-center gap-1 py-2 rounded-xl text-[12px] font-bold transition-all hover:scale-105"
-                  style={{ background:`linear-gradient(90deg,${NAVY},${BLUE})`,
-                           color:"white", boxShadow:`0 4px 14px rgba(18,82,185,0.40)`,
-                           borderBottom:`2px solid ${GREEN}` }}>
+                </motion.button>
+                <motion.button onClick={nextStep}
+                  whileHover={{ scale:1.04 }} whileTap={{ scale:0.95 }}
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-[12px] text-[12px] font-bold relative overflow-hidden"
+                  style={{ background:`linear-gradient(135deg,${BLUE},#0d2d9c)`,
+                           color:"white",
+                           boxShadow:`0 4px 18px rgba(17,69,181,0.55), 0 0 0 1px ${NEON}30`,
+                           border:`1px solid ${NEON}40` }}>
+                  <motion.div className="absolute inset-0"
+                    style={{ background:`linear-gradient(135deg,transparent,${NEON}15,transparent)` }}
+                    animate={{ x:["-100%","100%"] }} transition={{ repeat:Infinity, duration:2.5, ease:"linear" }}/>
                   {tourStep===TOUR_STEPS.length-1
                     ? <><RotateCcw size={12}/> Finish</>
                     : <>Next <ChevronRight size={12}/></>}
-                </button>
+                </motion.button>
               </div>
             </div>
           </motion.div>
@@ -248,60 +305,79 @@ export default function AIGuide() {
         {/* ══ CHAT PANEL ══════════════════════════════════════════ */}
         {mode === "chat" && (
           <motion.div key="chat"
-            initial={{ opacity:0, y:24, scale:0.93 }} animate={{ opacity:1, y:0, scale:1 }}
-            exit={{ opacity:0, y:16, scale:0.93 }}
-            transition={{ type:"spring", stiffness:320, damping:26 }}
-            className="w-[330px] flex flex-col overflow-hidden"
-            style={{ height:490, ...panelStyle }}>
+            initial={{ opacity:0, y:28, scale:0.88 }}
+            animate={{ opacity:1, y:0, scale:1 }}
+            exit={{ opacity:0, y:20, scale:0.90 }}
+            transition={{ type:"spring", stiffness:340, damping:28 }}
+            className="w-[340px] flex flex-col overflow-hidden relative"
+            style={{ height:500,
+                     background:GLASS,
+                     backdropFilter:"blur(28px)", WebkitBackdropFilter:"blur(28px)",
+                     borderRadius:22,
+                     border:`1px solid rgba(0,255,136,0.22)`,
+                     boxShadow:`0 0 0 1px rgba(0,217,255,0.06), 0 20px 60px rgba(0,0,0,0.60), 0 0 40px rgba(0,255,136,0.06)` }}>
 
-            {/* header — navbar style */}
-            <div className="flex items-center justify-between px-4 py-3 flex-shrink-0" style={headerStyle}>
+            {/* neon top edge */}
+            <motion.div className="absolute top-0 left-0 right-0 h-[2px] rounded-t-[22px] z-10"
+              style={{ background:`linear-gradient(90deg,transparent,${CYAN},${NEON},${CYAN},transparent)` }}
+              animate={{ opacity:[0.5,1,0.5] }} transition={{ repeat:Infinity, duration:2.8 }}/>
+
+            {/* Chat header */}
+            <div className="flex items-center justify-between px-4 py-3 flex-shrink-0"
+                 style={{ borderBottom:`1px solid rgba(255,255,255,0.06)` }}>
               <div className="flex items-center gap-2.5">
-                <motion.div className="relative w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
-                  style={{ background:`linear-gradient(135deg,${GREEN},#22c55e)`,
-                           boxShadow:`0 0 0 2px rgba(255,255,255,0.3)` }}
-                  animate={{ boxShadow:[`0 0 0 2px rgba(255,255,255,0.3)`,`0 0 0 5px rgba(255,255,255,0.1)`,`0 0 0 2px rgba(255,255,255,0.3)`] }}
+                <motion.div className="relative w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0"
+                  style={{ background:`linear-gradient(135deg,${BLUE},#0a1e6e)`,
+                           boxShadow:`0 0 14px ${NEON}50, 0 0 28px ${CYAN}25` }}
+                  animate={{ boxShadow:[`0 0 12px ${NEON}40,0 0 24px ${CYAN}20`,`0 0 22px ${NEON}70,0 0 44px ${CYAN}35`,`0 0 12px ${NEON}40,0 0 24px ${CYAN}20`] }}
                   transition={{ repeat:Infinity, duration:2.2 }}>
-                  <img src="/ai-robot.png" alt="Millie" className="w-9 h-9 object-contain rounded-full"/>
-                  <motion.div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-white"
-                    style={{ background:GREEN }}
-                    animate={{ scale:[1,1.3,1] }} transition={{ repeat:Infinity, duration:1.5 }}/>
+                  <img src="/ai-robot.png" alt="Millie" className="w-10 h-10 object-contain rounded-full"/>
+                  <motion.div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2"
+                    style={{ background:NEON, borderColor:GLASS }}
+                    animate={{ scale:[1,1.35,1], boxShadow:[`0 0 4px ${NEON}`,`0 0 10px ${NEON}`,`0 0 4px ${NEON}`] }}
+                    transition={{ repeat:Infinity, duration:1.4 }}/>
                 </motion.div>
                 <div>
-                  <p style={{ fontWeight:700, fontSize:13, color:"white", lineHeight:1.1 }}>Millie</p>
-                  <p style={{ fontSize:9, color:GREEN, marginTop:2, fontWeight:700, letterSpacing:"0.05em" }}>
-                    THE MILESTONE SR. SEC. SCHOOL
+                  <p style={{ fontWeight:800, fontSize:13, color:"white", lineHeight:1.1 }}>Millie</p>
+                  <p style={{ fontSize:8.5, color:NEON, fontWeight:700, letterSpacing:"0.07em", marginTop:1 }}>
+                    AI GUIDE · MILESTONE SCHOOL
                   </p>
-                  <p style={{ fontSize:9.5, color:"rgba(255,255,255,0.7)", fontWeight:500 }}>● AI Guide — Online</p>
+                  <div className="flex items-center gap-1 mt-0.5">
+                    <motion.div className="w-1.5 h-1.5 rounded-full" style={{ background:NEON }}
+                      animate={{ opacity:[1,0.3,1] }} transition={{ repeat:Infinity, duration:1.2 }}/>
+                    <p style={{ fontSize:9, color:"rgba(255,255,255,0.40)", fontWeight:500 }}>Online — Ready to help</p>
+                  </div>
                 </div>
               </div>
-              <button onClick={()=>setMode("idle")}
-                className="w-7 h-7 rounded-full flex items-center justify-center transition-all hover:bg-white/20"
-                style={{ color:"rgba(255,255,255,0.8)" }}><X size={14}/></button>
+              <motion.button onClick={()=>setMode("idle")} whileHover={{ scale:1.15 }} whileTap={{ scale:0.9 }}
+                className="w-7 h-7 rounded-full flex items-center justify-center"
+                style={{ background:"rgba(255,255,255,0.07)", color:"rgba(255,255,255,0.50)" }}>
+                <X size={13}/>
+              </motion.button>
             </div>
 
-            {/* messages */}
+            {/* Messages */}
             <div className="flex-1 overflow-y-auto px-3 py-3 space-y-2.5"
-                 style={{ background:"#f8fafc", scrollbarWidth:"thin", scrollbarColor:`${BLUE}30 transparent` }}>
-              {messages.map((msg,i) => (
-                <motion.div key={i} initial={{ opacity:0, y:5 }} animate={{ opacity:1, y:0 }}
-                  transition={{ duration:0.2 }}
+                 style={{ scrollbarWidth:"thin", scrollbarColor:`${NEON}25 transparent` }}>
+              {messages.map((msg, i) => (
+                <motion.div key={i} initial={{ opacity:0, y:6 }} animate={{ opacity:1, y:0 }}
+                  transition={{ duration:0.22 }}
                   className={`flex ${msg.from==="user"?"justify-end":"justify-start"} items-end gap-1.5`}>
                   {msg.from==="bot" && (
-                    <div className="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center text-[11px]"
-                         style={{ background:`linear-gradient(135deg,${NAVY},${BLUE})` }}>🤖</div>
+                    <div className="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center text-[11px] flex-shrink-0"
+                         style={{ background:`linear-gradient(135deg,${BLUE},#091d6b)`,
+                                  boxShadow:`0 0 8px ${NEON}30` }}>🤖</div>
                   )}
-                  <div className="max-w-[83%] px-3 py-2.5 rounded-2xl text-[12px] leading-relaxed whitespace-pre-line"
+                  <div className="max-w-[83%] px-3 py-2.5 rounded-2xl text-[11.5px] leading-relaxed whitespace-pre-line"
                        style={msg.from==="bot"
-                         ? { background:"white", color:"#1e293b",
-                             border:`1px solid ${BLUE}18`,
-                             boxShadow:"0 1px 4px rgba(0,0,0,0.06)",
-                             borderBottomLeftRadius:4 }
-                         : { background:`linear-gradient(135deg,${NAVY},${BLUE})`,
+                         ? { background:"rgba(255,255,255,0.07)", color:"rgba(255,255,255,0.88)",
+                             border:`1px solid rgba(255,255,255,0.10)`,
+                             borderBottomLeftRadius:5, backdropFilter:"blur(4px)" }
+                         : { background:`linear-gradient(135deg,${BLUE}cc,#0d2d9c)`,
                              color:"white",
-                             boxShadow:`0 4px 12px rgba(18,82,185,0.40)`,
-                             borderBottomRightRadius:4,
-                             borderBottom:`2px solid ${GREEN}` }}>
+                             boxShadow:`0 4px 16px rgba(17,69,181,0.50), 0 0 0 1px ${NEON}25`,
+                             border:`1px solid ${NEON}30`,
+                             borderBottomRightRadius:5 }}>
                     {msg.text}
                   </div>
                 </motion.div>
@@ -312,14 +388,14 @@ export default function AIGuide() {
                   <motion.div initial={{ opacity:0, y:4 }} animate={{ opacity:1, y:0 }}
                     exit={{ opacity:0 }} className="flex items-end gap-1.5">
                     <div className="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center text-[11px]"
-                         style={{ background:`linear-gradient(135deg,${NAVY},${BLUE})` }}>🤖</div>
-                    <div className="px-3 py-2.5 rounded-2xl flex gap-1 items-center"
-                         style={{ background:"white", border:`1px solid ${BLUE}18`, boxShadow:"0 1px 4px rgba(0,0,0,0.06)", borderBottomLeftRadius:4 }}>
-                      {[0,0.15,0.3].map((d,k) => (
+                         style={{ background:`linear-gradient(135deg,${BLUE},#091d6b)`, boxShadow:`0 0 8px ${NEON}30` }}>🤖</div>
+                    <div className="px-3 py-2.5 rounded-2xl flex gap-1.5 items-center"
+                         style={{ background:"rgba(255,255,255,0.07)", border:`1px solid rgba(255,255,255,0.10)`, borderBottomLeftRadius:5 }}>
+                      {[0, 0.18, 0.36].map((d, k) => (
                         <motion.div key={k} className="w-2 h-2 rounded-full"
-                          style={{ background:BLUE }}
-                          animate={{ y:[0,-5,0], opacity:[0.4,1,0.4] }}
-                          transition={{ repeat:Infinity, duration:0.8, delay:d }}/>
+                          style={{ background:NEON }}
+                          animate={{ y:[0,-5,0], opacity:[0.3,1,0.3] }}
+                          transition={{ repeat:Infinity, duration:0.85, delay:d }}/>
                       ))}
                     </div>
                   </motion.div>
@@ -328,150 +404,181 @@ export default function AIGuide() {
               <div ref={chatEndRef}/>
             </div>
 
-            {/* suggestions — single horizontal scrollable row */}
-            <div className="flex-shrink-0 px-3 pt-2.5 pb-2"
-                 style={{ borderTop:`1px solid ${BLUE}18`, background:"white" }}>
-              <p style={{ fontSize:9.5, color:`${BLUE}99`, fontWeight:700, marginBottom:6, textTransform:"uppercase", letterSpacing:"0.06em" }}>Quick questions</p>
-              <div className="flex gap-2 overflow-x-auto pb-1"
-                   style={{ scrollbarWidth:"none", msOverflowStyle:"none" }}>
+            {/* Quick suggestions */}
+            <div className="flex-shrink-0 px-3 pt-2 pb-1.5"
+                 style={{ borderTop:`1px solid rgba(255,255,255,0.06)` }}>
+              <p style={{ fontSize:9, color:`${NEON}80`, fontWeight:700, marginBottom:6,
+                          textTransform:"uppercase", letterSpacing:"0.08em" }}>Quick questions</p>
+              <div className="flex gap-1.5 overflow-x-auto pb-1" style={{ scrollbarWidth:"none" }}>
                 {SUGGESTIONS.map(s => (
                   <motion.button key={s.text} onClick={()=>sendMessage(s.text)}
-                    whileHover={{ scale:1.05, y:-1 }} whileTap={{ scale:0.96 }}
-                    className="flex items-center gap-1.5 text-[11px] px-3 py-1.5 rounded-full font-semibold flex-shrink-0"
-                    style={{ background:`${BLUE}0d`, color:BLUE,
-                             border:`1px solid ${BLUE}25` }}>
-                    <span style={{ color:GREEN }}>{s.icon}</span>
+                    whileHover={{ scale:1.05, y:-1 }} whileTap={{ scale:0.95 }}
+                    className="flex items-center gap-1.5 text-[10px] px-2.5 py-1.5 rounded-full font-semibold flex-shrink-0"
+                    style={{ background:"rgba(0,255,136,0.07)", color:NEON,
+                             border:`1px solid rgba(0,255,136,0.22)` }}>
+                    <span style={{ opacity:0.8 }}>{s.icon}</span>
                     {s.text}
                   </motion.button>
                 ))}
               </div>
             </div>
 
-            {/* input */}
+            {/* Input */}
             <div className="px-3 py-3 flex gap-2 flex-shrink-0"
-                 style={{ borderTop:`1px solid ${BLUE}18`, background:"white" }}>
-              <div className="flex-1 flex items-center gap-2 px-3 py-2.5 rounded-xl"
-                   style={{ background:"#f8fafc", border:`1.5px solid ${BLUE}35` }}>
+                 style={{ borderTop:`1px solid rgba(255,255,255,0.06)` }}>
+              <div className="flex-1 flex items-center gap-2 px-3 py-2.5 rounded-[12px]"
+                   style={{ background:"rgba(255,255,255,0.05)",
+                            border:`1.5px solid rgba(0,255,136,0.20)` }}>
                 <input value={input} onChange={e=>setInput(e.target.value)}
                        onKeyDown={e=>e.key==="Enter"&&sendMessage()}
                        placeholder="Ask me anything…"
                        className="flex-1 text-[12px] outline-none bg-transparent"
-                       style={{ color:"#1e293b" }}/>
+                       style={{ color:"rgba(255,255,255,0.85)",
+                                caretColor: NEON }}/>
               </div>
               <motion.button onClick={()=>sendMessage()}
                 whileHover={{ scale:1.1 }} whileTap={{ scale:0.9 }}
-                className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                style={{ background:`linear-gradient(135deg,${NAVY},${BLUE})`,
-                         boxShadow:`0 4px 14px rgba(18,82,185,0.45)`,
-                         borderBottom:`2px solid ${GREEN}` }}>
-                <Send size={15} color="white"/>
+                className="w-10 h-10 rounded-[12px] flex items-center justify-center flex-shrink-0 relative overflow-hidden"
+                style={{ background:`linear-gradient(135deg,${BLUE},#0d2d9c)`,
+                         boxShadow:`0 4px 16px rgba(17,69,181,0.50), 0 0 0 1px ${NEON}35` }}>
+                <motion.div className="absolute inset-0"
+                  style={{ background:`linear-gradient(135deg,transparent,${NEON}20,transparent)` }}
+                  animate={{ x:["-100%","100%"] }} transition={{ repeat:Infinity, duration:2, ease:"linear" }}/>
+                <Send size={14} color="white" className="relative z-10"/>
               </motion.button>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* ══ IDLE — FLOATING LABEL + BUTTONS + ROBOT ══════════════ */}
+      {/* ══ IDLE BUTTONS + FLOATING ROBOT ═══════════════════════ */}
       <div className="flex flex-col items-end gap-2.5">
         <AnimatePresence>
           {mode === "idle" && (
             <motion.div key="idle-btns"
-              initial={{ opacity:0, y:10, scale:0.95 }} animate={{ opacity:1, y:0, scale:1 }}
-              exit={{ opacity:0, y:8, scale:0.95 }} className="flex flex-col items-end gap-2">
+              initial={{ opacity:0, y:12, scale:0.93 }}
+              animate={{ opacity:1, y:0, scale:1 }}
+              exit={{ opacity:0, y:8, scale:0.93 }}
+              className="flex flex-col items-end gap-2">
 
-              {/* School label chip */}
-              <motion.div
-                initial={{ opacity:0, x:14 }} animate={{ opacity:1, x:0 }} transition={{ delay:0.0 }}
+              {/* AI Guide label */}
+              <motion.div initial={{ opacity:0, x:14 }} animate={{ opacity:1, x:0 }}
                 className="flex items-center gap-1.5 px-3 py-1 rounded-full"
-                style={{
-                  background:`linear-gradient(90deg,${NAVY},${BLUE})`,
-                  boxShadow:`0 2px 10px rgba(18,82,185,0.35)`,
-                  borderBottom:`1.5px solid ${GREEN}`,
-                }}>
-                <motion.div className="w-1.5 h-1.5 rounded-full" style={{ background:GREEN }}
-                  animate={{ opacity:[1,0.3,1] }} transition={{ repeat:Infinity, duration:1.2 }}/>
-                <span style={{ fontSize:10, fontWeight:700, color:"white", letterSpacing:"0.04em" }}>
-                  THE MILESTONE — AI GUIDE
+                style={{ background:GLASS_LIGHT, backdropFilter:"blur(16px)",
+                         border:`1px solid ${NEON}35`,
+                         boxShadow:`0 0 14px ${NEON}20, 0 4px 20px rgba(0,0,0,0.4)` }}>
+                <motion.div className="w-1.5 h-1.5 rounded-full" style={{ background:NEON }}
+                  animate={{ opacity:[1,0.2,1], boxShadow:[`0 0 4px ${NEON}`,`0 0 10px ${NEON}`,`0 0 4px ${NEON}`] }}
+                  transition={{ repeat:Infinity, duration:1.3 }}/>
+                <span style={{ fontSize:9.5, fontWeight:800, color:"white", letterSpacing:"0.06em" }}>
+                  MILESTONE — AI GUIDE
                 </span>
               </motion.div>
 
-              {/* Start Tour pill */}
+              {/* Start Tour button */}
               <motion.button onClick={startTour}
                 initial={{ opacity:0, x:14 }} animate={{ opacity:1, x:0 }} transition={{ delay:0.06 }}
-                whileHover={{ scale:1.05, x:-2 }} whileTap={{ scale:0.95 }}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-full text-[12px] font-bold"
-                style={{
-                  background:"rgba(255,255,255,0.97)",
-                  backdropFilter:"blur(12px)",
-                  border:`1.5px solid ${BLUE}45`,
-                  boxShadow:`0 4px 20px rgba(18,82,185,0.20), 0 1px 0 white inset`,
-                  color:NAVY,
-                }}>
+                whileHover={{ scale:1.06, x:-2 }} whileTap={{ scale:0.94 }}
+                className="flex items-center gap-2.5 px-5 py-2.5 rounded-full text-[12px] font-bold relative overflow-hidden"
+                style={{ background:GLASS_LIGHT, backdropFilter:"blur(16px)",
+                         border:`1px solid ${NEON}40`,
+                         boxShadow:`0 0 18px ${NEON}25, 0 8px 32px rgba(0,0,0,0.45)`,
+                         color:"white" }}>
+                {/* Shimmer sweep */}
+                <motion.div className="absolute inset-0 rounded-full"
+                  style={{ background:`linear-gradient(90deg,transparent,${NEON}18,transparent)` }}
+                  animate={{ x:["-100%","100%"] }} transition={{ repeat:Infinity, duration:2.4, ease:"linear" }}/>
                 <motion.span animate={{ rotate:[0,360] }}
                   transition={{ repeat:Infinity, duration:4, ease:"linear" }}
                   style={{ display:"inline-block" }}>🚀</motion.span>
-                <span>Start Tour</span>
-                <motion.div className="w-1.5 h-1.5 rounded-full ml-1"
-                  animate={{ opacity:[1,0.3,1] }} transition={{ repeat:Infinity, duration:1.2 }}
-                  style={{ background:GREEN }}/>
+                <span className="relative">Start Tour</span>
+                <motion.div className="w-1.5 h-1.5 rounded-full"
+                  style={{ background:NEON, boxShadow:`0 0 6px ${NEON}` }}
+                  animate={{ opacity:[1,0.2,1] }} transition={{ repeat:Infinity, duration:1.2 }}/>
               </motion.button>
 
-              {/* Chat with AI pill */}
+              {/* Chat with AI button */}
               <motion.button onClick={()=>setMode("chat")}
                 initial={{ opacity:0, x:14 }} animate={{ opacity:1, x:0 }} transition={{ delay:0.12 }}
-                whileHover={{ scale:1.05, x:-2 }} whileTap={{ scale:0.95 }}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-full text-[12px] font-bold text-white"
-                style={{
-                  background:`linear-gradient(90deg,${NAVY},${BLUE})`,
-                  boxShadow:`0 4px 20px rgba(18,82,185,0.50)`,
-                  borderBottom:`2px solid ${GREEN}`,
-                }}>
-                <motion.span animate={{ scale:[1,1.15,1] }} transition={{ repeat:Infinity, duration:1.6 }}
+                whileHover={{ scale:1.06, x:-2 }} whileTap={{ scale:0.94 }}
+                className="flex items-center gap-2.5 px-5 py-2.5 rounded-full text-[12px] font-bold relative overflow-hidden"
+                style={{ background:`linear-gradient(135deg,${BLUE}dd,#091d6bdd)`,
+                         backdropFilter:"blur(16px)",
+                         border:`1px solid ${CYAN}40`,
+                         boxShadow:`0 0 18px ${CYAN}25, 0 8px 32px rgba(17,69,181,0.45)`,
+                         color:"white" }}>
+                <motion.div className="absolute inset-0 rounded-full"
+                  style={{ background:`linear-gradient(90deg,transparent,${CYAN}18,transparent)` }}
+                  animate={{ x:["-100%","100%"] }} transition={{ repeat:Infinity, duration:2.8, ease:"linear" }}/>
+                <motion.span animate={{ scale:[1,1.2,1] }} transition={{ repeat:Infinity, duration:1.8 }}
                   style={{ display:"inline-block" }}>
-                  <Sparkles size={13} color="white"/>
+                  <Sparkles size={13} color={CYAN}/>
                 </motion.span>
-                Chat with AI
+                <span className="relative">Chat with AI</span>
               </motion.button>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Robot orb — floating */}
+        {/* Floating Robot Orb */}
         <motion.button
           onClick={()=>{ if(mode==="tour") stopTour(); else if(mode==="chat") setMode("idle"); }}
-          animate={{ y:[0,-7,0] }} transition={{ repeat:Infinity, duration:2.8, ease:"easeInOut" }}
+          animate={{ y:[0,-8,0] }} transition={{ repeat:Infinity, duration:2.8, ease:"easeInOut" }}
           whileHover={{ scale:1.1 }} whileTap={{ scale:0.93 }}
           className="relative cursor-pointer" title="Millie — AI Guide">
 
-          {/* ambient glow */}
-          <motion.div className="absolute -inset-3 rounded-full pointer-events-none"
-            animate={{ opacity:[0.5,0.12,0.5] }} transition={{ repeat:Infinity, duration:2.5 }}
-            style={{ background:`radial-gradient(circle,${BLUE}55 0%,transparent 70%)` }}/>
+          {/* Outer ambient glow */}
+          <motion.div className="absolute -inset-5 rounded-full pointer-events-none"
+            animate={{ opacity:[0.25,0.08,0.25], scale:[1,1.08,1] }}
+            transition={{ repeat:Infinity, duration:3 }}
+            style={{ background:`radial-gradient(circle,${NEON}50 0%,${CYAN}20 40%,transparent 70%)` }}/>
 
-          {/* spinning ring — school blue */}
-          <motion.div className="absolute -inset-1 rounded-full pointer-events-none"
-            animate={{ rotate:360 }} transition={{ repeat:Infinity, duration:8, ease:"linear" }}
-            style={{ border:`2px dashed ${BLUE}55`, borderRadius:"50%" }}/>
-
-          {/* green accent ring */}
+          {/* Spinning neon ring */}
           <motion.div className="absolute -inset-2 rounded-full pointer-events-none"
-            animate={{ rotate:-360 }} transition={{ repeat:Infinity, duration:12, ease:"linear" }}
+            animate={{ rotate:360 }} transition={{ repeat:Infinity, duration:6, ease:"linear" }}
             style={{ border:`1.5px solid transparent`,
-                     borderTop:`1.5px solid ${GREEN}70`,
-                     borderRadius:"50%" }}/>
+                     borderTop:`1.5px solid ${NEON}90`, borderRight:`1.5px solid ${CYAN}60`,
+                     borderRadius:"50%",
+                     boxShadow:`0 0 8px ${NEON}40` }}/>
+
+          {/* Counter-spin ring */}
+          <motion.div className="absolute -inset-3.5 rounded-full pointer-events-none"
+            animate={{ rotate:-360 }} transition={{ repeat:Infinity, duration:10, ease:"linear" }}
+            style={{ border:`1px dashed rgba(0,217,255,0.30)`, borderRadius:"50%" }}/>
+
+          {/* Glowing background disc */}
+          <motion.div className="absolute inset-0 rounded-full pointer-events-none"
+            animate={{ boxShadow:[`0 0 16px ${NEON}60,0 0 32px ${CYAN}30`,`0 0 28px ${NEON}90,0 0 56px ${CYAN}50`,`0 0 16px ${NEON}60,0 0 32px ${CYAN}30`] }}
+            transition={{ repeat:Infinity, duration:2.2 }}
+            style={{ background:`radial-gradient(circle,${BLUE}cc,#050c22)`, borderRadius:"50%", width:"100%", height:"100%" }}/>
 
           <img src="/ai-robot.png" alt="Millie AI Guide"
                className="relative z-10"
-               style={{ width:82, height:82, objectFit:"contain",
-                        filter:`drop-shadow(0 4px 16px rgba(18,82,185,0.60)) drop-shadow(0 0 8px rgba(29,165,101,0.35))` }}/>
+               style={{ width:86, height:86, objectFit:"contain",
+                        filter:`drop-shadow(0 0 12px ${NEON}80) drop-shadow(0 0 24px ${CYAN}50) drop-shadow(0 4px 16px rgba(0,0,0,0.60))` }}/>
+
+          {/* Particle sparks */}
+          {[0,1,2].map(i => (
+            <motion.div key={i}
+              className="absolute w-1 h-1 rounded-full pointer-events-none"
+              style={{ background: i%2===0 ? NEON : CYAN,
+                       top:"50%", left:"50%",
+                       boxShadow:`0 0 4px ${i%2===0?NEON:CYAN}` }}
+              animate={{
+                x:[0, (i===0?-28:i===1?20:8)],
+                y:[0, (i===0?-20:i===1?-28:22)],
+                opacity:[0,1,0], scale:[0,1.2,0],
+              }}
+              transition={{ repeat:Infinity, duration:2.2, delay:i*0.7, ease:"easeOut" }}/>
+          ))}
         </motion.button>
       </div>
     </div>
   );
 }
 
-/* ── Typewriter with cursor ─────────────────────────────────── */
-function TypewriterText({ text }: { text:string }) {
+/* ── Typewriter with neon cursor ────────────────────────────── */
+function TypewriterText({ text }: { text: string }) {
   const [shown, setShown] = useState("");
   const idx = useRef(0);
   useEffect(() => {
@@ -479,15 +586,16 @@ function TypewriterText({ text }: { text:string }) {
     const iv = setInterval(() => {
       if (idx.current < text.length) setShown(text.slice(0, ++idx.current));
       else clearInterval(iv);
-    }, 18);
+    }, 16);
     return () => clearInterval(iv);
   }, [text]);
   return (
-    <p style={{ color:"#334155", fontSize:12, lineHeight:1.75 }}>
+    <p style={{ color:"rgba(255,255,255,0.78)", fontSize:11.5, lineHeight:1.8, fontWeight:400 }}>
       {shown}
       <motion.span animate={{ opacity:[1,0] }} transition={{ repeat:Infinity, duration:0.55 }}
-        style={{ display:"inline-block", width:2, height:11, background:GREEN,
-                 marginLeft:2, verticalAlign:"middle", borderRadius:1 }}/>
+        style={{ display:"inline-block", width:2, height:12, background:NEON,
+                 marginLeft:2, verticalAlign:"middle", borderRadius:1,
+                 boxShadow:`0 0 6px ${NEON}` }}/>
     </p>
   );
 }
