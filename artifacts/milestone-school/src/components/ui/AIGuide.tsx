@@ -3,9 +3,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "wouter";
 import { X, Send, ChevronRight, ChevronLeft, RotateCcw, Sparkles, BookOpen, Clock, Phone, MapPin, Bus, Trophy, Image } from "lucide-react";
 
-/* ─── School theme palette ──────────────────────────────────── */
-const BLUE = "#2563EB";
-const GREEN = "#10B981";
+/* ─── School theme palette (matches website primary/secondary) ── */
+const BLUE  = "#1252b9";   /* hsl(218, 90%, 42%) — website primary  */
+const GREEN = "#1da565";   /* hsl(152, 70%, 38%) — website secondary */
+const NAVY  = "#0d3b8c";   /* darker shade for headers              */
 
 /* ─── Tour steps ─────────────────────────────────────────────── */
 const TOUR_STEPS = [
@@ -166,13 +167,20 @@ export default function AIGuide() {
   const step    = TOUR_STEPS[tourStep];
   const secLeft = Math.max(0, Math.round((TOUR_DURATION*(1-progress/100))/1000));
 
-  /* shared panel style — light glass */
+  /* Panel style — matches website's card style */
   const panelStyle: React.CSSProperties = {
-    background: "rgba(255,255,255,0.97)",
+    background: "rgba(255,255,255,0.98)",
     backdropFilter: "blur(20px)",
     WebkitBackdropFilter: "blur(20px)",
-    border: "1px solid rgba(37,99,235,0.2)",
-    boxShadow: "0 12px 48px rgba(37,99,235,0.18), 0 2px 8px rgba(0,0,0,0.08)",
+    border: `1px solid ${BLUE}30`,
+    boxShadow: `0 16px 56px rgba(18,82,185,0.20), 0 2px 8px rgba(0,0,0,0.08)`,
+    borderRadius: 16,
+  };
+
+  /* Header style — matches website navbar */
+  const headerStyle: React.CSSProperties = {
+    background: `linear-gradient(90deg, ${NAVY} 0%, ${BLUE} 100%)`,
+    borderBottom: `2px solid ${GREEN}`,
   };
 
   return (
@@ -186,42 +194,47 @@ export default function AIGuide() {
             initial={{ opacity:0, y:24, scale:0.93 }} animate={{ opacity:1, y:0, scale:1 }}
             exit={{ opacity:0, y:16, scale:0.93 }}
             transition={{ type:"spring", stiffness:320, damping:26 }}
-            className="w-[330px] rounded-2xl overflow-hidden"
+            className="w-[330px] overflow-hidden"
             style={panelStyle}>
 
-            {/* header */}
-            <div className="flex items-center justify-between px-4 py-2.5"
-                 style={{ background:`linear-gradient(90deg,${BLUE}15,${GREEN}10)`, borderBottom:"1px solid rgba(37,99,235,0.12)" }}>
+            {/* header — navbar style */}
+            <div className="flex items-center justify-between px-4 py-2.5" style={headerStyle}>
               <div className="flex items-center gap-2">
                 <motion.div className="w-7 h-7 rounded-full flex items-center justify-center text-[12px]"
-                  style={{ background:`linear-gradient(135deg,${BLUE},${GREEN})` }}
-                  animate={{ boxShadow:[`0 0 6px ${BLUE}60`,`0 0 14px ${BLUE}40`,`0 0 6px ${BLUE}60`] }}
+                  style={{ background:`linear-gradient(135deg,${GREEN},#22c55e)`,
+                           boxShadow:`0 0 0 2px rgba(255,255,255,0.3)` }}
+                  animate={{ boxShadow:[`0 0 6px ${GREEN}80`,`0 0 14px ${GREEN}50`,`0 0 6px ${GREEN}80`] }}
                   transition={{ repeat:Infinity, duration:2 }}>
                   🤖
                 </motion.div>
-                <span style={{ fontWeight:700, fontSize:12, color:"#1e293b" }}>
-                  Millie — Website Tour
-                </span>
+                <div>
+                  <span style={{ fontWeight:700, fontSize:12, color:"white", letterSpacing:"0.01em" }}>
+                    Millie — Website Tour
+                  </span>
+                  <div style={{ fontSize:9, color:`${GREEN}`, fontWeight:600, letterSpacing:"0.05em" }}>
+                    THE MILESTONE SR. SEC. SCHOOL
+                  </div>
+                </div>
               </div>
               <div className="flex items-center gap-2">
-                <span style={{ fontSize:10, color:"#94a3b8", fontWeight:600 }}>
+                <span style={{ fontSize:10, color:"rgba(255,255,255,0.7)", fontWeight:600 }}>
                   {tourStep+1}/{TOUR_STEPS.length}
                 </span>
                 <button onClick={stopTour}
-                  className="w-5 h-5 rounded-full flex items-center justify-center hover:bg-red-100 transition-all"
-                  style={{ color:"#94a3b8" }}><X size={11}/></button>
+                  className="w-5 h-5 rounded-full flex items-center justify-center transition-all hover:bg-white/20"
+                  style={{ color:"rgba(255,255,255,0.8)" }}><X size={11}/></button>
               </div>
             </div>
 
             <div className="px-4 pt-3 pb-4">
               <motion.p key={tourStep+"-t"} initial={{ opacity:0, x:-8 }} animate={{ opacity:1, x:0 }}
-                className="font-bold mb-2.5" style={{ fontSize:13, color:BLUE }}>
+                className="font-bold mb-2.5" style={{ fontSize:13, color:NAVY }}>
                 {step.title}
               </motion.p>
 
               <div className="rounded-xl p-3 mb-3" style={{
-                background:`${BLUE}08`,
-                border:`1px solid ${BLUE}18`,
+                background:`${BLUE}06`,
+                border:`1px solid ${BLUE}20`,
                 minHeight:100, maxHeight:130, overflowY:"auto",
                 scrollbarWidth:"thin", scrollbarColor:`${BLUE}40 transparent` }}>
                 <TypewriterText key={tourStep} text={step.message}/>
@@ -246,8 +259,9 @@ export default function AIGuide() {
                 </button>
                 <button onClick={nextStep}
                   className="flex-1 flex items-center justify-center gap-1 py-2 rounded-xl text-[12px] font-bold transition-all hover:scale-105"
-                  style={{ background:`linear-gradient(90deg,${BLUE},${GREEN})`,
-                           color:"white", boxShadow:`0 4px 14px rgba(37,99,235,0.35)` }}>
+                  style={{ background:`linear-gradient(90deg,${NAVY},${BLUE})`,
+                           color:"white", boxShadow:`0 4px 14px rgba(18,82,185,0.40)`,
+                           borderBottom:`2px solid ${GREEN}` }}>
                   {tourStep===TOUR_STEPS.length-1
                     ? <><RotateCcw size={12}/> Finish</>
                     : <>Next <ChevronRight size={12}/></>}
@@ -263,16 +277,16 @@ export default function AIGuide() {
             initial={{ opacity:0, y:24, scale:0.93 }} animate={{ opacity:1, y:0, scale:1 }}
             exit={{ opacity:0, y:16, scale:0.93 }}
             transition={{ type:"spring", stiffness:320, damping:26 }}
-            className="w-[330px] rounded-2xl overflow-hidden flex flex-col"
+            className="w-[330px] flex flex-col overflow-hidden"
             style={{ height:490, ...panelStyle }}>
 
-            {/* header */}
-            <div className="flex items-center justify-between px-4 py-3 flex-shrink-0"
-                 style={{ background:`linear-gradient(90deg,${BLUE}15,${GREEN}10)`, borderBottom:`1px solid ${BLUE}18` }}>
+            {/* header — navbar style */}
+            <div className="flex items-center justify-between px-4 py-3 flex-shrink-0" style={headerStyle}>
               <div className="flex items-center gap-2.5">
                 <motion.div className="relative w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
-                  style={{ background:`linear-gradient(135deg,${BLUE},${GREEN})` }}
-                  animate={{ boxShadow:[`0 0 0 2px ${BLUE}50`,`0 0 0 6px ${BLUE}18`,`0 0 0 2px ${BLUE}50`] }}
+                  style={{ background:`linear-gradient(135deg,${GREEN},#22c55e)`,
+                           boxShadow:`0 0 0 2px rgba(255,255,255,0.3)` }}
+                  animate={{ boxShadow:[`0 0 0 2px rgba(255,255,255,0.3)`,`0 0 0 5px rgba(255,255,255,0.1)`,`0 0 0 2px rgba(255,255,255,0.3)`] }}
                   transition={{ repeat:Infinity, duration:2.2 }}>
                   <img src="/ai-robot.png" alt="Millie" className="w-9 h-9 object-contain rounded-full"/>
                   <motion.div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-white"
@@ -280,13 +294,16 @@ export default function AIGuide() {
                     animate={{ scale:[1,1.3,1] }} transition={{ repeat:Infinity, duration:1.5 }}/>
                 </motion.div>
                 <div>
-                  <p style={{ fontWeight:700, fontSize:13, color:"#1e293b", lineHeight:1 }}>Millie</p>
-                  <p style={{ fontSize:10, color:GREEN, marginTop:2, fontWeight:600 }}>● AI Guide — Online</p>
+                  <p style={{ fontWeight:700, fontSize:13, color:"white", lineHeight:1.1 }}>Millie</p>
+                  <p style={{ fontSize:9, color:GREEN, marginTop:2, fontWeight:700, letterSpacing:"0.05em" }}>
+                    THE MILESTONE SR. SEC. SCHOOL
+                  </p>
+                  <p style={{ fontSize:9.5, color:"rgba(255,255,255,0.7)", fontWeight:500 }}>● AI Guide — Online</p>
                 </div>
               </div>
               <button onClick={()=>setMode("idle")}
-                className="w-7 h-7 rounded-full flex items-center justify-center hover:bg-red-100 transition-all"
-                style={{ color:"#94a3b8" }}><X size={14}/></button>
+                className="w-7 h-7 rounded-full flex items-center justify-center transition-all hover:bg-white/20"
+                style={{ color:"rgba(255,255,255,0.8)" }}><X size={14}/></button>
             </div>
 
             {/* messages */}
@@ -298,17 +315,19 @@ export default function AIGuide() {
                   className={`flex ${msg.from==="user"?"justify-end":"justify-start"} items-end gap-1.5`}>
                   {msg.from==="bot" && (
                     <div className="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center text-[11px]"
-                         style={{ background:`linear-gradient(135deg,${BLUE},${GREEN})` }}>🤖</div>
+                         style={{ background:`linear-gradient(135deg,${NAVY},${BLUE})` }}>🤖</div>
                   )}
                   <div className="max-w-[83%] px-3 py-2.5 rounded-2xl text-[12px] leading-relaxed whitespace-pre-line"
                        style={msg.from==="bot"
                          ? { background:"white", color:"#1e293b",
-                             border:"1px solid #e2e8f0",
+                             border:`1px solid ${BLUE}18`,
                              boxShadow:"0 1px 4px rgba(0,0,0,0.06)",
                              borderBottomLeftRadius:4 }
-                         : { background:`linear-gradient(135deg,${BLUE},#1d4ed8)`,
-                             color:"white", boxShadow:`0 4px 12px rgba(37,99,235,0.35)`,
-                             borderBottomRightRadius:4 }}>
+                         : { background:`linear-gradient(135deg,${NAVY},${BLUE})`,
+                             color:"white",
+                             boxShadow:`0 4px 12px rgba(18,82,185,0.40)`,
+                             borderBottomRightRadius:4,
+                             borderBottom:`2px solid ${GREEN}` }}>
                     {msg.text}
                   </div>
                 </motion.div>
@@ -319,9 +338,9 @@ export default function AIGuide() {
                   <motion.div initial={{ opacity:0, y:4 }} animate={{ opacity:1, y:0 }}
                     exit={{ opacity:0 }} className="flex items-end gap-1.5">
                     <div className="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center text-[11px]"
-                         style={{ background:`linear-gradient(135deg,${BLUE},${GREEN})` }}>🤖</div>
+                         style={{ background:`linear-gradient(135deg,${NAVY},${BLUE})` }}>🤖</div>
                     <div className="px-3 py-2.5 rounded-2xl flex gap-1 items-center"
-                         style={{ background:"white", border:"1px solid #e2e8f0", boxShadow:"0 1px 4px rgba(0,0,0,0.06)", borderBottomLeftRadius:4 }}>
+                         style={{ background:"white", border:`1px solid ${BLUE}18`, boxShadow:"0 1px 4px rgba(0,0,0,0.06)", borderBottomLeftRadius:4 }}>
                       {[0,0.15,0.3].map((d,k) => (
                         <motion.div key={k} className="w-2 h-2 rounded-full"
                           style={{ background:BLUE }}
@@ -337,15 +356,15 @@ export default function AIGuide() {
 
             {/* suggestions — single horizontal scrollable row */}
             <div className="flex-shrink-0 px-3 pt-2.5 pb-2"
-                 style={{ borderTop:"1px solid #e2e8f0", background:"white" }}>
-              <p style={{ fontSize:9.5, color:"#94a3b8", fontWeight:600, marginBottom:6, textTransform:"uppercase", letterSpacing:"0.06em" }}>Quick questions</p>
+                 style={{ borderTop:`1px solid ${BLUE}18`, background:"white" }}>
+              <p style={{ fontSize:9.5, color:`${BLUE}99`, fontWeight:700, marginBottom:6, textTransform:"uppercase", letterSpacing:"0.06em" }}>Quick questions</p>
               <div className="flex gap-2 overflow-x-auto pb-1"
                    style={{ scrollbarWidth:"none", msOverflowStyle:"none" }}>
                 {SUGGESTIONS.map(s => (
                   <motion.button key={s.text} onClick={()=>sendMessage(s.text)}
                     whileHover={{ scale:1.05, y:-1 }} whileTap={{ scale:0.96 }}
                     className="flex items-center gap-1.5 text-[11px] px-3 py-1.5 rounded-full font-semibold flex-shrink-0"
-                    style={{ background:`${BLUE}10`, color:BLUE,
+                    style={{ background:`${BLUE}0d`, color:BLUE,
                              border:`1px solid ${BLUE}25` }}>
                     <span style={{ color:GREEN }}>{s.icon}</span>
                     {s.text}
@@ -356,9 +375,9 @@ export default function AIGuide() {
 
             {/* input */}
             <div className="px-3 py-3 flex gap-2 flex-shrink-0"
-                 style={{ borderTop:"1px solid #e2e8f0", background:"white" }}>
+                 style={{ borderTop:`1px solid ${BLUE}18`, background:"white" }}>
               <div className="flex-1 flex items-center gap-2 px-3 py-2.5 rounded-xl"
-                   style={{ background:"#f8fafc", border:`1.5px solid ${BLUE}30` }}>
+                   style={{ background:"#f8fafc", border:`1.5px solid ${BLUE}35` }}>
                 <input value={input} onChange={e=>setInput(e.target.value)}
                        onKeyDown={e=>e.key==="Enter"&&sendMessage()}
                        placeholder="Ask me anything…"
@@ -368,8 +387,9 @@ export default function AIGuide() {
               <motion.button onClick={()=>sendMessage()}
                 whileHover={{ scale:1.1 }} whileTap={{ scale:0.9 }}
                 className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                style={{ background:`linear-gradient(135deg,${BLUE},${GREEN})`,
-                         boxShadow:`0 4px 14px rgba(37,99,235,0.4)` }}>
+                style={{ background:`linear-gradient(135deg,${NAVY},${BLUE})`,
+                         boxShadow:`0 4px 14px rgba(18,82,185,0.45)`,
+                         borderBottom:`2px solid ${GREEN}` }}>
                 <Send size={15} color="white"/>
               </motion.button>
             </div>
@@ -377,7 +397,7 @@ export default function AIGuide() {
         )}
       </AnimatePresence>
 
-      {/* ══ IDLE — FLOATING BUTTONS + ROBOT ══════════════════ */}
+      {/* ══ IDLE — FLOATING LABEL + BUTTONS + ROBOT ══════════════ */}
       <div className="flex flex-col items-end gap-2.5">
         <AnimatePresence>
           {mode === "idle" && (
@@ -385,17 +405,33 @@ export default function AIGuide() {
               initial={{ opacity:0, y:10, scale:0.95 }} animate={{ opacity:1, y:0, scale:1 }}
               exit={{ opacity:0, y:8, scale:0.95 }} className="flex flex-col items-end gap-2">
 
+              {/* School label chip */}
+              <motion.div
+                initial={{ opacity:0, x:14 }} animate={{ opacity:1, x:0 }} transition={{ delay:0.0 }}
+                className="flex items-center gap-1.5 px-3 py-1 rounded-full"
+                style={{
+                  background:`linear-gradient(90deg,${NAVY},${BLUE})`,
+                  boxShadow:`0 2px 10px rgba(18,82,185,0.35)`,
+                  borderBottom:`1.5px solid ${GREEN}`,
+                }}>
+                <motion.div className="w-1.5 h-1.5 rounded-full" style={{ background:GREEN }}
+                  animate={{ opacity:[1,0.3,1] }} transition={{ repeat:Infinity, duration:1.2 }}/>
+                <span style={{ fontSize:10, fontWeight:700, color:"white", letterSpacing:"0.04em" }}>
+                  THE MILESTONE — AI GUIDE
+                </span>
+              </motion.div>
+
               {/* Start Tour pill */}
               <motion.button onClick={startTour}
-                initial={{ opacity:0, x:14 }} animate={{ opacity:1, x:0 }} transition={{ delay:0.05 }}
+                initial={{ opacity:0, x:14 }} animate={{ opacity:1, x:0 }} transition={{ delay:0.06 }}
                 whileHover={{ scale:1.05, x:-2 }} whileTap={{ scale:0.95 }}
                 className="flex items-center gap-2 px-4 py-2.5 rounded-full text-[12px] font-bold"
                 style={{
-                  background:"rgba(255,255,255,0.96)",
+                  background:"rgba(255,255,255,0.97)",
                   backdropFilter:"blur(12px)",
-                  border:`1.5px solid ${BLUE}40`,
-                  boxShadow:`0 4px 20px rgba(37,99,235,0.18), 0 1px 0 white inset`,
-                  color:"#1e3a8a",
+                  border:`1.5px solid ${BLUE}45`,
+                  boxShadow:`0 4px 20px rgba(18,82,185,0.20), 0 1px 0 white inset`,
+                  color:NAVY,
                 }}>
                 <motion.span animate={{ rotate:[0,360] }}
                   transition={{ repeat:Infinity, duration:4, ease:"linear" }}
@@ -412,8 +448,9 @@ export default function AIGuide() {
                 whileHover={{ scale:1.05, x:-2 }} whileTap={{ scale:0.95 }}
                 className="flex items-center gap-2 px-4 py-2.5 rounded-full text-[12px] font-bold text-white"
                 style={{
-                  background:`linear-gradient(135deg,${BLUE},${GREEN})`,
-                  boxShadow:`0 4px 20px rgba(37,99,235,0.5)`,
+                  background:`linear-gradient(90deg,${NAVY},${BLUE})`,
+                  boxShadow:`0 4px 20px rgba(18,82,185,0.50)`,
+                  borderBottom:`2px solid ${GREEN}`,
                 }}>
                 <motion.span animate={{ scale:[1,1.15,1] }} transition={{ repeat:Infinity, duration:1.6 }}
                   style={{ display:"inline-block" }}>
@@ -435,17 +472,24 @@ export default function AIGuide() {
           {/* ambient glow */}
           <motion.div className="absolute -inset-3 rounded-full pointer-events-none"
             animate={{ opacity:[0.5,0.12,0.5] }} transition={{ repeat:Infinity, duration:2.5 }}
-            style={{ background:`radial-gradient(circle,${BLUE}50 0%,transparent 70%)` }}/>
+            style={{ background:`radial-gradient(circle,${BLUE}55 0%,transparent 70%)` }}/>
 
-          {/* spinning ring */}
+          {/* spinning ring — school blue */}
           <motion.div className="absolute -inset-1 rounded-full pointer-events-none"
             animate={{ rotate:360 }} transition={{ repeat:Infinity, duration:8, ease:"linear" }}
-            style={{ border:`1.5px dashed rgba(37,99,235,0.45)`, borderRadius:"50%" }}/>
+            style={{ border:`2px dashed ${BLUE}55`, borderRadius:"50%" }}/>
+
+          {/* green accent ring */}
+          <motion.div className="absolute -inset-2 rounded-full pointer-events-none"
+            animate={{ rotate:-360 }} transition={{ repeat:Infinity, duration:12, ease:"linear" }}
+            style={{ border:`1.5px solid transparent`,
+                     borderTop:`1.5px solid ${GREEN}70`,
+                     borderRadius:"50%" }}/>
 
           <img src="/ai-robot.png" alt="Millie AI Guide"
                className="relative z-10"
                style={{ width:82, height:82, objectFit:"contain",
-                        filter:`drop-shadow(0 4px 16px rgba(37,99,235,0.55)) drop-shadow(0 0 8px rgba(16,185,129,0.3))` }}/>
+                        filter:`drop-shadow(0 4px 16px rgba(18,82,185,0.60)) drop-shadow(0 0 8px rgba(29,165,101,0.35))` }}/>
         </motion.button>
       </div>
     </div>
