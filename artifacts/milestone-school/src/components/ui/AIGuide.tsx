@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "wouter";
-import { X, Send, ChevronRight, ChevronLeft, RotateCcw, Sparkles, BookOpen, Clock, Phone, MapPin, Bus, Trophy, Image, Volume2, VolumeX, Loader2 } from "lucide-react";
+import { X, Send, ChevronRight, ChevronLeft, RotateCcw, Sparkles, BookOpen, Clock, Phone, MapPin, Bus, Trophy, Image } from "lucide-react";
 
 /* ─── Cartesia TTS helper ─────────────────────────────────── */
 async function speakText(text: string): Promise<HTMLAudioElement | null> {
@@ -114,7 +114,6 @@ export default function AIGuide() {
   const [input, setInput]       = useState("");
   const [thinking, setThinking] = useState(false);
   const [speakingIdx, setSpeakingIdx]   = useState<number | null>(null);
-  const [loadingIdx, setLoadingIdx]     = useState<number | null>(null);
   const [, navigate]            = useLocation();
 
   const audioRef       = useRef<HTMLAudioElement | null>(null);
@@ -131,23 +130,7 @@ export default function AIGuide() {
       audioRef.current = null;
     }
     setSpeakingIdx(null);
-    setLoadingIdx(null);
   }, []);
-
-  /* Speak a bot message by index */
-  const handleSpeak = useCallback(async (text: string, idx: number) => {
-    if (speakingIdx === idx) { stopAudio(); return; }
-    stopAudio();
-    setLoadingIdx(idx);
-    const cleanText = text.replace(/[^\p{L}\p{N}\s.,!?:@+\-]/gu, " ").trim();
-    const audio = await speakText(cleanText);
-    setLoadingIdx(null);
-    if (!audio) return;
-    audioRef.current = audio;
-    setSpeakingIdx(idx);
-    audio.onended = () => { setSpeakingIdx(null); audioRef.current = null; };
-    audio.play();
-  }, [speakingIdx, stopAudio]);
 
   useEffect(() => () => { stopAudio(); }, [stopAudio]);
 
@@ -182,23 +165,33 @@ export default function AIGuide() {
 
   const startStep = useCallback((step: number) => {
     if (step >= TOUR_STEPS.length) {
+      stopAudio();
       setMode("idle"); setTourStep(0); setProgress(0); navigate("/");
       window.scrollTo({ top:0, behavior:"smooth" }); return;
     }
-    clearTimers(); setTourStep(step); setProgress(0);
+    clearTimers(); stopAudio(); setTourStep(step); setProgress(0);
     navigate(TOUR_STEPS[step].path);
     startAutoScroll(TOUR_DURATION);
+    /* Auto-speak the tour step message */
+    const cleanMsg = TOUR_STEPS[step].message.replace(/[^\p{L}\p{N}\s.,!?:@+\-]/gu, " ").trim();
+    speakText(cleanMsg).then(audio => {
+      if (!audio) return;
+      audioRef.current = audio;
+      setSpeakingIdx(step);
+      audio.onended = () => { setSpeakingIdx(null); audioRef.current = null; };
+      audio.play();
+    });
     const t0 = Date.now();
     progressRef.current = setInterval(() =>
       setProgress(Math.min(((Date.now()-t0)/TOUR_DURATION)*100,100)), 150);
     timerRef.current = setTimeout(() => { clearTimers(); startStep(step+1); }, TOUR_DURATION);
-  }, [clearTimers, navigate, startAutoScroll]);
+  }, [clearTimers, navigate, startAutoScroll, stopAudio]);
 
   const startTour = useCallback(() => { setMode("tour"); startStep(0); }, [startStep]);
   const stopTour  = useCallback(() => {
-    clearTimers(); setMode("idle"); setTourStep(0); setProgress(0);
+    clearTimers(); stopAudio(); setMode("idle"); setTourStep(0); setProgress(0);
     window.scrollTo({ top:0, behavior:"smooth" });
-  }, [clearTimers]);
+  }, [clearTimers, stopAudio]);
   const nextStep = useCallback(() => { clearTimers(); startStep(tourStep+1); }, [clearTimers, startStep, tourStep]);
   const prevStep = useCallback(() => { clearTimers(); startStep(Math.max(0,tourStep-1)); }, [clearTimers, startStep, tourStep]);
 
@@ -369,39 +362,18 @@ export default function AIGuide() {
                     <div className="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center text-[11px]"
                          style={{ background:`linear-gradient(135deg,${NAVY},${BLUE})` }}>🤖</div>
                   )}
-                  <div className="flex flex-col gap-1 max-w-[83%]">
-                    <div className="px-3 py-2.5 rounded-2xl text-[12px] leading-relaxed whitespace-pre-line"
-                         style={msg.from==="bot"
-                           ? { background:"white", color:"#1e293b",
-                               border:`1px solid ${BLUE}18`,
-                               boxShadow:"0 1px 4px rgba(0,0,0,0.06)",
-                               borderBottomLeftRadius:4 }
-                           : { background:`linear-gradient(135deg,${NAVY},${BLUE})`,
-                               color:"white",
-                               boxShadow:`0 4px 12px rgba(18,82,185,0.40)`,
-                               borderBottomRightRadius:4,
-                               borderBottom:`2px solid ${GREEN}` }}>
-                      {msg.text}
-                    </div>
-                    {/* Speaker button — only for bot messages */}
-                    {msg.from==="bot" && (
-                      <motion.button
-                        onClick={()=>handleSpeak(msg.text, i)}
-                        whileHover={{ scale:1.1 }} whileTap={{ scale:0.9 }}
-                        title={speakingIdx===i ? "Stop" : "Sunne ke liye click karein"}
-                        className="self-start flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-semibold transition-all"
-                        style={{
-                          background: speakingIdx===i ? `${GREEN}22` : `${BLUE}0d`,
-                          border: `1px solid ${speakingIdx===i ? GREEN : BLUE}30`,
-                          color: speakingIdx===i ? GREEN : BLUE,
-                        }}>
-                        {loadingIdx===i
-                          ? <><Loader2 size={10} className="animate-spin"/> Loading…</>
-                          : speakingIdx===i
-                            ? <><VolumeX size={10}/> Stop</>
-                            : <><Volume2 size={10}/> Sunein</>}
-                      </motion.button>
-                    )}
+                  <div className="max-w-[83%] px-3 py-2.5 rounded-2xl text-[12px] leading-relaxed whitespace-pre-line"
+                       style={msg.from==="bot"
+                         ? { background:"white", color:"#1e293b",
+                             border:`1px solid ${BLUE}18`,
+                             boxShadow:"0 1px 4px rgba(0,0,0,0.06)",
+                             borderBottomLeftRadius:4 }
+                         : { background:`linear-gradient(135deg,${NAVY},${BLUE})`,
+                             color:"white",
+                             boxShadow:`0 4px 12px rgba(18,82,185,0.40)`,
+                             borderBottomRightRadius:4,
+                             borderBottom:`2px solid ${GREEN}` }}>
+                    {msg.text}
                   </div>
                 </motion.div>
               ))}
