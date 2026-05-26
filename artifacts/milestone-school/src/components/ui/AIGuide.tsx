@@ -93,9 +93,32 @@ export default function AIGuide() {
   const [thinking, setThinking] = useState(false);
   const [, navigate]            = useLocation();
 
-  const audioRef    = useRef<HTMLAudioElement | null>(null);
-  const nextStepRef = useRef<() => void>(() => {});
-  const chatEndRef  = useRef<HTMLDivElement>(null);
+  const audioRef      = useRef<HTMLAudioElement | null>(null);
+  const nextStepRef   = useRef<() => void>(() => {});
+  const chatEndRef    = useRef<HTMLDivElement>(null);
+  const msgBoxRef     = useRef<HTMLDivElement>(null);
+  const scrollRafRef  = useRef<number | null>(null);
+
+  const cancelPageScroll = useCallback(() => {
+    if (scrollRafRef.current) { cancelAnimationFrame(scrollRafRef.current); scrollRafRef.current = null; }
+  }, []);
+
+  const startPageScroll = useCallback((durationSec: number) => {
+    cancelPageScroll();
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+      const totalMs = Math.max(durationSec * 1000, 1000);
+      const t0 = performance.now();
+      const tick = (now: number) => {
+        const p = Math.min((now - t0) / totalMs, 1);
+        const e = p < 0.5 ? 2*p*p : 1 - Math.pow(-2*p+2, 2)/2;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        if (max > 0) window.scrollTo(0, max * e);
+        if (p < 1) scrollRafRef.current = requestAnimationFrame(tick);
+      };
+      scrollRafRef.current = requestAnimationFrame(tick);
+    }, 600);
+  }, [cancelPageScroll]);
 
   const stopAudio = useCallback(() => {
     if (audioRef.current) {
@@ -103,17 +126,23 @@ export default function AIGuide() {
       audioRef.current.onended = null;
       audioRef.current = null;
     }
-  }, []);
+    cancelPageScroll();
+  }, [cancelPageScroll]);
 
   useEffect(() => () => { stopAudio(); }, [stopAudio]);
+
+  const scrollMsgBox = useCallback(() => {
+    if (msgBoxRef.current) msgBoxRef.current.scrollTop = msgBoxRef.current.scrollHeight;
+  }, []);
 
   const playTourAudio = useCallback((step: number) => {
     stopAudio();
     const audio = new Audio(`/audio/tour-${step}.mp3`);
     audioRef.current = audio;
     audio.onended = () => { audioRef.current = null; nextStepRef.current(); };
+    audio.addEventListener("loadedmetadata", () => { startPageScroll(audio.duration); });
     audio.play().catch(() => {});
-  }, [stopAudio]);
+  }, [stopAudio, startPageScroll]);
 
   const startStep = useCallback((step: number) => {
     if (step >= TOUR_STEPS.length) {
@@ -123,7 +152,6 @@ export default function AIGuide() {
     }
     stopAudio(); setTourStep(step);
     navigate(TOUR_STEPS[step].path);
-    window.scrollTo({ top:0, behavior:"smooth" });
     nextStepRef.current = () => startStep(step + 1);
     playTourAudio(step);
   }, [navigate, playTourAudio, stopAudio]);
@@ -245,6 +273,7 @@ export default function AIGuide() {
               {/* Message box */}
               <motion.div key={tourStep+"-msg"}
                 initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ duration:0.3 }}
+                ref={msgBoxRef}
                 className="rounded-[14px] p-3 mb-3"
                 style={{
                   background:"rgba(255,255,255,0.04)",
@@ -253,7 +282,7 @@ export default function AIGuide() {
                   scrollbarWidth:"thin",
                   scrollbarColor:`${NEON}30 transparent`,
                 }}>
-                <TypewriterText key={tourStep} text={step.message}/>
+                <TypewriterText key={tourStep} text={step.message} onScroll={scrollMsgBox}/>
               </motion.div>
 
               {/* Step dots */}
@@ -461,20 +490,6 @@ export default function AIGuide() {
               exit={{ opacity:0, y:8, scale:0.93 }}
               className="flex flex-col items-end gap-2">
 
-              {/* AI Guide label */}
-              <motion.div initial={{ opacity:0, x:14 }} animate={{ opacity:1, x:0 }}
-                className="flex items-center gap-1.5 px-3 py-1 rounded-full"
-                style={{ background:GLASS_LIGHT, backdropFilter:"blur(16px)",
-                         border:`1px solid ${NEON}35`,
-                         boxShadow:`0 0 14px ${NEON}20, 0 4px 20px rgba(0,0,0,0.4)` }}>
-                <motion.div className="w-1.5 h-1.5 rounded-full" style={{ background:NEON }}
-                  animate={{ opacity:[1,0.2,1], boxShadow:[`0 0 4px ${NEON}`,`0 0 10px ${NEON}`,`0 0 4px ${NEON}`] }}
-                  transition={{ repeat:Infinity, duration:1.3 }}/>
-                <span style={{ fontSize:9.5, fontWeight:800, color:"white", letterSpacing:"0.06em" }}>
-                  MILESTONE — AI GUIDE
-                </span>
-              </motion.div>
-
               {/* Start Tour button */}
               <motion.button onClick={startTour}
                 initial={{ opacity:0, x:14 }} animate={{ opacity:1, x:0 }} transition={{ delay:0.06 }}
@@ -546,11 +561,6 @@ export default function AIGuide() {
             animate={{ rotate:-360 }} transition={{ repeat:Infinity, duration:10, ease:"linear" }}
             style={{ border:`1px dashed rgba(0,217,255,0.30)`, borderRadius:"50%" }}/>
 
-          {/* Glowing background disc */}
-          <motion.div className="absolute inset-0 rounded-full pointer-events-none"
-            animate={{ boxShadow:[`0 0 16px ${NEON}60,0 0 32px ${CYAN}30`,`0 0 28px ${NEON}90,0 0 56px ${CYAN}50`,`0 0 16px ${NEON}60,0 0 32px ${CYAN}30`] }}
-            transition={{ repeat:Infinity, duration:2.2 }}
-            style={{ background:`radial-gradient(circle,${BLUE}cc,#050c22)`, borderRadius:"50%", width:"100%", height:"100%" }}/>
 
           <img src="/ai-robot.png" alt="Millie AI Guide"
                className="relative z-10"
@@ -578,17 +588,19 @@ export default function AIGuide() {
 }
 
 /* ── Typewriter with neon cursor ────────────────────────────── */
-function TypewriterText({ text }: { text: string }) {
+function TypewriterText({ text, onScroll }: { text: string; onScroll?: () => void }) {
   const [shown, setShown] = useState("");
   const idx = useRef(0);
   useEffect(() => {
     setShown(""); idx.current = 0;
     const iv = setInterval(() => {
-      if (idx.current < text.length) setShown(text.slice(0, ++idx.current));
-      else clearInterval(iv);
-    }, 16);
+      if (idx.current < text.length) {
+        setShown(text.slice(0, ++idx.current));
+        onScroll?.();
+      } else clearInterval(iv);
+    }, 35);
     return () => clearInterval(iv);
-  }, [text]);
+  }, [text, onScroll]);
   return (
     <p style={{ color:"rgba(255,255,255,0.78)", fontSize:11.5, lineHeight:1.8, fontWeight:400 }}>
       {shown}
