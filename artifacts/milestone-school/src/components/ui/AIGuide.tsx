@@ -1,7 +1,29 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "wouter";
-import { X, Send, ChevronRight, ChevronLeft, RotateCcw, Sparkles, BookOpen, Clock, Phone, MapPin, Bus, Trophy, Image } from "lucide-react";
+import { X, Send, ChevronRight, ChevronLeft, RotateCcw, Sparkles, BookOpen, Clock, Phone, MapPin, Bus, Trophy, Image, Volume2, VolumeX, Loader2 } from "lucide-react";
+
+/* ─── Cartesia TTS helper ─────────────────────────────────── */
+async function speakText(text: string): Promise<HTMLAudioElement | null> {
+  try {
+    const apiBase = import.meta.env.DEV
+      ? `${window.location.protocol}//${window.location.hostname}:8080`
+      : "";
+    const res = await fetch(`${apiBase}/api/tts`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text }),
+    });
+    if (!res.ok) return null;
+    const blob = await res.blob();
+    const url  = URL.createObjectURL(blob);
+    const audio = new Audio(url);
+    audio.onended = () => URL.revokeObjectURL(url);
+    return audio;
+  } catch {
+    return null;
+  }
+}
 
 /* ─── School theme palette (matches website primary/secondary) ── */
 const BLUE  = "#1252b9";   /* hsl(218, 90%, 42%) — website primary  */
@@ -91,13 +113,43 @@ export default function AIGuide() {
   ]);
   const [input, setInput]       = useState("");
   const [thinking, setThinking] = useState(false);
+  const [speakingIdx, setSpeakingIdx]   = useState<number | null>(null);
+  const [loadingIdx, setLoadingIdx]     = useState<number | null>(null);
   const [, navigate]            = useLocation();
 
+  const audioRef       = useRef<HTMLAudioElement | null>(null);
   const timerRef       = useRef<ReturnType<typeof setTimeout> | null>(null);
   const progressRef    = useRef<ReturnType<typeof setInterval> | null>(null);
   const scrollRafRef   = useRef<number | null>(null);
   const scrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const chatEndRef     = useRef<HTMLDivElement>(null);
+
+  /* Stop any playing audio */
+  const stopAudio = useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+    }
+    setSpeakingIdx(null);
+    setLoadingIdx(null);
+  }, []);
+
+  /* Speak a bot message by index */
+  const handleSpeak = useCallback(async (text: string, idx: number) => {
+    if (speakingIdx === idx) { stopAudio(); return; }
+    stopAudio();
+    setLoadingIdx(idx);
+    const cleanText = text.replace(/[^\p{L}\p{N}\s.,!?:@+\-]/gu, " ").trim();
+    const audio = await speakText(cleanText);
+    setLoadingIdx(null);
+    if (!audio) return;
+    audioRef.current = audio;
+    setSpeakingIdx(idx);
+    audio.onended = () => { setSpeakingIdx(null); audioRef.current = null; };
+    audio.play();
+  }, [speakingIdx, stopAudio]);
+
+  useEffect(() => () => { stopAudio(); }, [stopAudio]);
 
   const cancelScroll = useCallback(() => {
     if (scrollRafRef.current)   cancelAnimationFrame(scrollRafRef.current);
@@ -317,18 +369,39 @@ export default function AIGuide() {
                     <div className="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center text-[11px]"
                          style={{ background:`linear-gradient(135deg,${NAVY},${BLUE})` }}>🤖</div>
                   )}
-                  <div className="max-w-[83%] px-3 py-2.5 rounded-2xl text-[12px] leading-relaxed whitespace-pre-line"
-                       style={msg.from==="bot"
-                         ? { background:"white", color:"#1e293b",
-                             border:`1px solid ${BLUE}18`,
-                             boxShadow:"0 1px 4px rgba(0,0,0,0.06)",
-                             borderBottomLeftRadius:4 }
-                         : { background:`linear-gradient(135deg,${NAVY},${BLUE})`,
-                             color:"white",
-                             boxShadow:`0 4px 12px rgba(18,82,185,0.40)`,
-                             borderBottomRightRadius:4,
-                             borderBottom:`2px solid ${GREEN}` }}>
-                    {msg.text}
+                  <div className="flex flex-col gap-1 max-w-[83%]">
+                    <div className="px-3 py-2.5 rounded-2xl text-[12px] leading-relaxed whitespace-pre-line"
+                         style={msg.from==="bot"
+                           ? { background:"white", color:"#1e293b",
+                               border:`1px solid ${BLUE}18`,
+                               boxShadow:"0 1px 4px rgba(0,0,0,0.06)",
+                               borderBottomLeftRadius:4 }
+                           : { background:`linear-gradient(135deg,${NAVY},${BLUE})`,
+                               color:"white",
+                               boxShadow:`0 4px 12px rgba(18,82,185,0.40)`,
+                               borderBottomRightRadius:4,
+                               borderBottom:`2px solid ${GREEN}` }}>
+                      {msg.text}
+                    </div>
+                    {/* Speaker button — only for bot messages */}
+                    {msg.from==="bot" && (
+                      <motion.button
+                        onClick={()=>handleSpeak(msg.text, i)}
+                        whileHover={{ scale:1.1 }} whileTap={{ scale:0.9 }}
+                        title={speakingIdx===i ? "Stop" : "Sunne ke liye click karein"}
+                        className="self-start flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-semibold transition-all"
+                        style={{
+                          background: speakingIdx===i ? `${GREEN}22` : `${BLUE}0d`,
+                          border: `1px solid ${speakingIdx===i ? GREEN : BLUE}30`,
+                          color: speakingIdx===i ? GREEN : BLUE,
+                        }}>
+                        {loadingIdx===i
+                          ? <><Loader2 size={10} className="animate-spin"/> Loading…</>
+                          : speakingIdx===i
+                            ? <><VolumeX size={10}/> Stop</>
+                            : <><Volume2 size={10}/> Sunein</>}
+                      </motion.button>
+                    )}
                   </div>
                 </motion.div>
               ))}

@@ -20494,27 +20494,27 @@ var require_router = __commonJS({
     var slice = Array.prototype.slice;
     var flatten = Array.prototype.flat;
     var methods = METHODS.map((method) => method.toLowerCase());
-    module.exports = Router3;
+    module.exports = Router4;
     module.exports.Route = Route;
-    function Router3(options) {
-      if (!(this instanceof Router3)) {
-        return new Router3(options);
+    function Router4(options) {
+      if (!(this instanceof Router4)) {
+        return new Router4(options);
       }
       const opts = options || {};
-      function router3(req, res, next) {
-        router3.handle(req, res, next);
+      function router4(req, res, next) {
+        router4.handle(req, res, next);
       }
-      Object.setPrototypeOf(router3, this);
-      router3.caseSensitive = opts.caseSensitive;
-      router3.mergeParams = opts.mergeParams;
-      router3.params = {};
-      router3.strict = opts.strict;
-      router3.stack = [];
-      return router3;
+      Object.setPrototypeOf(router4, this);
+      router4.caseSensitive = opts.caseSensitive;
+      router4.mergeParams = opts.mergeParams;
+      router4.params = {};
+      router4.strict = opts.strict;
+      router4.stack = [];
+      return router4;
     }
-    Router3.prototype = function() {
+    Router4.prototype = function() {
     };
-    Router3.prototype.param = function param(name, fn) {
+    Router4.prototype.param = function param(name, fn) {
       if (!name) {
         throw new TypeError("argument name is required");
       }
@@ -20534,7 +20534,7 @@ var require_router = __commonJS({
       params.push(fn);
       return this;
     };
-    Router3.prototype.handle = function handle(req, res, callback) {
+    Router4.prototype.handle = function handle(req, res, callback) {
       if (!callback) {
         throw new TypeError("argument callback is required");
       }
@@ -20661,7 +20661,7 @@ var require_router = __commonJS({
         }
       }
     };
-    Router3.prototype.use = function use(handler) {
+    Router4.prototype.use = function use(handler) {
       let offset = 0;
       let path = "/";
       if (typeof handler !== "function") {
@@ -20694,7 +20694,7 @@ var require_router = __commonJS({
       }
       return this;
     };
-    Router3.prototype.route = function route(path) {
+    Router4.prototype.route = function route(path) {
       const route2 = new Route(path);
       const layer = new Layer(path, {
         sensitive: this.caseSensitive,
@@ -20709,7 +20709,7 @@ var require_router = __commonJS({
       return route2;
     };
     methods.concat("all").forEach(function(method) {
-      Router3.prototype[method] = function(path) {
+      Router4.prototype[method] = function(path) {
         const route = this.route(path);
         route[method].apply(route, slice.call(arguments, 1));
         return this;
@@ -20892,13 +20892,13 @@ var require_application = __commonJS({
     var compileTrust = require_utils3().compileTrust;
     var resolve = __require("node:path").resolve;
     var once = require_once();
-    var Router3 = require_router();
+    var Router4 = require_router();
     var slice = Array.prototype.slice;
     var flatten = Array.prototype.flat;
     var app2 = exports = module.exports = {};
     var trustProxyDefaultSymbol = "@@symbol:trust_proxy_default";
     app2.init = function init() {
-      var router3 = null;
+      var router4 = null;
       this.cache = /* @__PURE__ */ Object.create(null);
       this.engines = /* @__PURE__ */ Object.create(null);
       this.settings = /* @__PURE__ */ Object.create(null);
@@ -20907,13 +20907,13 @@ var require_application = __commonJS({
         configurable: true,
         enumerable: true,
         get: function getrouter() {
-          if (router3 === null) {
-            router3 = new Router3({
+          if (router4 === null) {
+            router4 = new Router4({
               caseSensitive: this.enabled("case sensitive routing"),
               strict: this.enabled("strict routing")
             });
           }
-          return router3;
+          return router4;
         }
       });
     };
@@ -20984,15 +20984,15 @@ var require_application = __commonJS({
       if (fns.length === 0) {
         throw new TypeError("app.use() requires a middleware function");
       }
-      var router3 = this.router;
+      var router4 = this.router;
       fns.forEach(function(fn2) {
         if (!fn2 || !fn2.handle || !fn2.set) {
-          return router3.use(path, fn2);
+          return router4.use(path, fn2);
         }
         debug(".use app under %s", path);
         fn2.mountpath = path;
         fn2.parent = this;
-        router3.use(path, function mounted_app(req, res, next) {
+        router4.use(path, function mounted_app(req, res, next) {
           var orig = req.app;
           fn2.handle(req, res, function(err) {
             Object.setPrototypeOf(req, orig.request);
@@ -23565,7 +23565,7 @@ var require_express = __commonJS({
     var EventEmitter = __require("node:events").EventEmitter;
     var mixin = require_merge_descriptors();
     var proto = require_application();
-    var Router3 = require_router();
+    var Router4 = require_router();
     var req = require_request();
     var res = require_response();
     exports = module.exports = createApplication;
@@ -23587,8 +23587,8 @@ var require_express = __commonJS({
     exports.application = proto;
     exports.request = req;
     exports.response = res;
-    exports.Route = Router3.Route;
-    exports.Router = Router3;
+    exports.Route = Router4.Route;
+    exports.Router = Router4;
     exports.json = bodyParser.json;
     exports.raw = bodyParser.raw;
     exports.static = require_serve_static();
@@ -28447,12 +28447,12 @@ var require_logger = __commonJS({
 });
 
 // src/app.ts
-var import_express3 = __toESM(require_express2(), 1);
+var import_express4 = __toESM(require_express2(), 1);
 var import_cors = __toESM(require_lib3(), 1);
 var import_pino_http = __toESM(require_logger(), 1);
 
 // src/routes/index.ts
-var import_express2 = __toESM(require_express2(), 1);
+var import_express3 = __toESM(require_express2(), 1);
 
 // src/routes/health.ts
 var import_express = __toESM(require_express2(), 1);
@@ -32346,10 +32346,67 @@ router.get("/healthz", (_req, res) => {
 });
 var health_default = router;
 
-// src/routes/index.ts
+// src/routes/tts.ts
+var import_express2 = __toESM(require_express2(), 1);
 var router2 = (0, import_express2.Router)();
-router2.use(health_default);
-var routes_default = router2;
+var CARTESIA_API_KEY = process.env["CARTESIA_API_KEY"] ?? "";
+var VOICE_ID = "4877b818-c7fe-4c89-b1cf-eadf8e23da72";
+router2.post("/tts", async (req, res) => {
+  const { text } = req.body;
+  if (!text || typeof text !== "string" || text.trim().length === 0) {
+    res.status(400).json({ error: "text is required" });
+    return;
+  }
+  if (!CARTESIA_API_KEY) {
+    res.status(500).json({ error: "CARTESIA_API_KEY not configured" });
+    return;
+  }
+  try {
+    const cartesiaRes = await fetch("https://api.cartesia.ai/tts/bytes", {
+      method: "POST",
+      headers: {
+        "Cartesia-Version": "2024-06-10",
+        "X-API-Key": CARTESIA_API_KEY,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model_id: "sonic-2",
+        transcript: text.trim(),
+        voice: {
+          mode: "id",
+          id: VOICE_ID
+        },
+        output_format: {
+          container: "mp3",
+          encoding: "mp3",
+          sample_rate: 44100
+        }
+      })
+    });
+    if (!cartesiaRes.ok) {
+      const errText = await cartesiaRes.text();
+      res.status(cartesiaRes.status).json({ error: errText });
+      return;
+    }
+    const audioBuffer = await cartesiaRes.arrayBuffer();
+    res.set({
+      "Content-Type": "audio/mpeg",
+      "Content-Length": audioBuffer.byteLength.toString(),
+      "Cache-Control": "no-cache"
+    });
+    res.send(Buffer.from(audioBuffer));
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    res.status(500).json({ error: "TTS request failed", detail: msg });
+  }
+});
+var tts_default = router2;
+
+// src/routes/index.ts
+var router3 = (0, import_express3.Router)();
+router3.use(health_default);
+router3.use(tts_default);
+var routes_default = router3;
 
 // src/lib/logger.ts
 var import_pino = __toESM(require_pino(), 1);
@@ -32370,7 +32427,7 @@ var logger = (0, import_pino.default)({
 });
 
 // src/app.ts
-var app = (0, import_express3.default)();
+var app = (0, import_express4.default)();
 app.use(
   (0, import_pino_http.default)({
     logger,
@@ -32391,8 +32448,8 @@ app.use(
   })
 );
 app.use((0, import_cors.default)());
-app.use(import_express3.default.json());
-app.use(import_express3.default.urlencoded({ extended: true }));
+app.use(import_express4.default.json());
+app.use(import_express4.default.urlencoded({ extended: true }));
 app.use("/api", routes_default);
 var app_default = app;
 
