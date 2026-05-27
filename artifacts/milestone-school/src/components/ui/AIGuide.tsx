@@ -94,6 +94,12 @@ export default function AIGuide() {
   const [thinking, setThinking] = useState(false);
   const [, navigate]            = useLocation();
   const { lang, setLang }       = useLanguage();
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 640);
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 640);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   const audioRef      = useRef<HTMLAudioElement | null>(null);
   const nextStepRef   = useRef<() => void>(() => {});
@@ -181,8 +187,10 @@ export default function AIGuide() {
 
   const step = TOUR_STEPS[tourStep];
 
+  const panelWidth = isMobile ? Math.min(window.innerWidth - 24, 320) : 340;
+
   return (
-    <div className="fixed bottom-5 right-4 z-[9998] flex flex-col items-end gap-3 select-none"
+    <div className="fixed bottom-4 right-3 sm:bottom-5 sm:right-4 z-[9998] flex flex-col items-end gap-2 sm:gap-3 select-none"
          style={{ fontFamily:"'Poppins',sans-serif" }}>
 
       {/* ══ TOUR PANEL ═══════════════════════════════════════════ */}
@@ -193,8 +201,9 @@ export default function AIGuide() {
             animate={{ opacity:1, y:0, scale:1 }}
             exit={{ opacity:0, y:20, scale:0.90 }}
             transition={{ type:"spring", stiffness:340, damping:28 }}
-            className="w-[340px] overflow-hidden relative"
+            className="overflow-hidden relative"
             style={{
+              width: panelWidth,
               background: GLASS,
               backdropFilter:"blur(28px)",
               WebkitBackdropFilter:"blur(28px)",
@@ -340,8 +349,9 @@ export default function AIGuide() {
             animate={{ opacity:1, y:0, scale:1 }}
             exit={{ opacity:0, y:20, scale:0.90 }}
             transition={{ type:"spring", stiffness:340, damping:28 }}
-            className="w-[340px] flex flex-col overflow-hidden relative"
-            style={{ height:500,
+            className="flex flex-col overflow-hidden relative"
+            style={{ width: panelWidth,
+                     height: isMobile ? 420 : 500,
                      background:GLASS,
                      backdropFilter:"blur(28px)", WebkitBackdropFilter:"blur(28px)",
                      borderRadius:22,
@@ -496,7 +506,7 @@ export default function AIGuide() {
               <motion.button onClick={startTour}
                 initial={{ opacity:0, x:14 }} animate={{ opacity:1, x:0 }} transition={{ delay:0.06 }}
                 whileHover={{ scale:1.06, x:-2 }} whileTap={{ scale:0.94 }}
-                className="flex items-center gap-2.5 px-5 py-2.5 rounded-full text-[12px] font-bold relative overflow-hidden"
+                className={`flex items-center gap-2 rounded-full font-bold relative overflow-hidden ${isMobile ? "px-4 py-2 text-[11px]" : "px-5 py-2.5 text-[12px]"}`}
                 style={{ background:GLASS_LIGHT, backdropFilter:"blur(16px)",
                          border:`1px solid ${NEON}40`,
                          boxShadow:`0 0 18px ${NEON}25, 0 8px 32px rgba(0,0,0,0.45)`,
@@ -518,7 +528,7 @@ export default function AIGuide() {
               <motion.button onClick={()=>setMode("chat")}
                 initial={{ opacity:0, x:14 }} animate={{ opacity:1, x:0 }} transition={{ delay:0.12 }}
                 whileHover={{ scale:1.06, x:-2 }} whileTap={{ scale:0.94 }}
-                className="flex items-center gap-2.5 px-5 py-2.5 rounded-full text-[12px] font-bold relative overflow-hidden"
+                className={`flex items-center gap-2 rounded-full font-bold relative overflow-hidden ${isMobile ? "px-4 py-2 text-[11px]" : "px-5 py-2.5 text-[12px]"}`}
                 style={{ background:`linear-gradient(135deg,${BLUE}dd,#091d6bdd)`,
                          backdropFilter:"blur(16px)",
                          border:`1px solid ${CYAN}40`,
@@ -594,7 +604,7 @@ export default function AIGuide() {
 
           <img src="/ai-robot.png" alt="Millie AI Guide"
                className="relative z-10"
-               style={{ width:86, height:86, objectFit:"contain",
+               style={{ width: isMobile ? 66 : 86, height: isMobile ? 66 : 86, objectFit:"contain",
                         filter:`drop-shadow(0 0 12px ${NEON}80) drop-shadow(0 0 24px ${CYAN}50) drop-shadow(0 4px 16px rgba(0,0,0,0.60))` }}/>
 
           {/* Particle sparks */}
