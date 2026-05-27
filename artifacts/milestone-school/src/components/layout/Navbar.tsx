@@ -10,6 +10,7 @@ import { FaWhatsapp, FaInstagram, FaFacebook, FaYoutube } from "react-icons/fa";
 import logoUrl from "@assets/image_1777543805589.png";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "@/hooks/useTheme";
+import { useLanguage } from "@/context/LanguageContext";
 
 const TICKER_ITEMS = [
   "🎉 Admissions Open for Session 2026–27 — Limited Seats",
@@ -42,6 +43,7 @@ export default function Navbar() {
   const [hidden, setHidden]             = useState(false);
   const [location, setLocation]         = useLocation();
   const { theme, toggle: toggleTheme }  = useTheme();
+  const { lang, setLang }               = useLanguage();
   const aboutRef                        = useRef<HTMLDivElement>(null);
   const hoverTimeout                    = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastScrollY                     = useRef(0);
@@ -104,6 +106,32 @@ export default function Navbar() {
             <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}
               className={`transition-all duration-200 ${hover} hover:scale-110`}>{icon}</a>
           ))}
+
+          {/* ── Language Toggle ── */}
+          <span className="w-px h-3.5 bg-white/20 mx-1" />
+          <div className="flex items-center rounded-full overflow-hidden border border-white/20"
+               style={{ background: "rgba(255,255,255,0.08)" }}>
+            <button
+              onClick={() => setLang("en")}
+              className={`px-2.5 py-0.5 text-[11px] font-bold tracking-wide transition-all duration-200 ${
+                lang === "en"
+                  ? "bg-white text-[#1e3a5f]"
+                  : "text-white/60 hover:text-white"
+              }`}
+            >
+              EN
+            </button>
+            <button
+              onClick={() => setLang("hi")}
+              className={`px-2.5 py-0.5 text-[11px] font-bold tracking-wide transition-all duration-200 ${
+                lang === "hi"
+                  ? "bg-white text-[#1e3a5f]"
+                  : "text-white/60 hover:text-white"
+              }`}
+            >
+              हिं
+            </button>
+          </div>
         </div>
       </div>
 

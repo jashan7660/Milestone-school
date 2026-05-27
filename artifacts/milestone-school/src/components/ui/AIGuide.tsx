@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "wouter";
-import { X, Send, ChevronRight, ChevronLeft, RotateCcw, Sparkles, BookOpen, Clock, Phone, MapPin, Bus, Trophy, Image } from "lucide-react";
+import { X, Send, ChevronRight, ChevronLeft, RotateCcw, Sparkles, BookOpen, Clock, Phone, MapPin, Bus, Trophy, Image, Languages } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 /* ─── Futuristic neon palette ──────────────────────────────── */
 const NEON  = "#00ff88";   /* neon green glow                 */
@@ -92,6 +93,7 @@ export default function AIGuide() {
   const [input, setInput]       = useState("");
   const [thinking, setThinking] = useState(false);
   const [, navigate]            = useLocation();
+  const { lang, setLang }       = useLanguage();
 
   const audioRef      = useRef<HTMLAudioElement | null>(null);
   const nextStepRef   = useRef<() => void>(() => {});
@@ -529,8 +531,36 @@ export default function AIGuide() {
                   style={{ display:"inline-block" }}>
                   <Sparkles size={13} color={CYAN}/>
                 </motion.span>
-                <span className="relative">Chat with AI</span>
+                <span className="relative">
+                  {lang === "hi" ? "AI से बात करें" : "Chat with AI"}
+                </span>
               </motion.button>
+
+              {/* Language Toggle */}
+              <motion.div
+                initial={{ opacity:0, x:14 }} animate={{ opacity:1, x:0 }} transition={{ delay:0.18 }}
+                className="flex items-center gap-1.5 px-1 py-1 rounded-full"
+                style={{ background:"rgba(8,12,28,0.70)", backdropFilter:"blur(16px)",
+                         border:"1px solid rgba(255,255,255,0.12)",
+                         boxShadow:"0 4px 20px rgba(0,0,0,0.35)" }}>
+                <Languages size={11} style={{ color:"rgba(255,255,255,0.40)", marginLeft:6 }}/>
+                <button
+                  onClick={() => setLang("en")}
+                  className="px-3 py-1 rounded-full text-[11px] font-bold transition-all duration-200"
+                  style={lang === "en"
+                    ? { background:`linear-gradient(135deg,${NEON},${CYAN})`, color:"#060e1a" }
+                    : { color:"rgba(255,255,255,0.45)" }}>
+                  EN
+                </button>
+                <button
+                  onClick={() => setLang("hi")}
+                  className="px-3 py-1 rounded-full text-[11px] font-bold transition-all duration-200"
+                  style={lang === "hi"
+                    ? { background:`linear-gradient(135deg,${NEON},${CYAN})`, color:"#060e1a" }
+                    : { color:"rgba(255,255,255,0.45)" }}>
+                  हिं
+                </button>
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
