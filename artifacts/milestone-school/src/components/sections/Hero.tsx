@@ -1,14 +1,18 @@
 import { motion } from "framer-motion";
 import { ArrowRight, MapPin, Award } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
+import { SITE } from "@/i18n/translations";
 
 export default function Hero() {
+  const { lang } = useLanguage();
+  const t = SITE[lang].hero;
+
   const scrollTo = (id: string) =>
     document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
 
   return (
     <section className="relative w-full min-h-screen overflow-hidden flex items-center justify-center">
 
-      {/* ── Background image ── */}
       <img
         src="/slide1.png"
         alt="The Milestone School Campus"
@@ -16,25 +20,21 @@ export default function Hero() {
         style={{ zIndex: 0 }}
       />
 
-      {/* ── Rich colour overlay ── */}
       <div
         className="absolute inset-0"
         style={{
           zIndex: 1,
-          background:
-            "linear-gradient(160deg, rgba(10,24,48,0.80) 0%, rgba(8,40,22,0.70) 50%, rgba(15,30,50,0.78) 100%)",
+          background: "linear-gradient(160deg, rgba(10,24,48,0.80) 0%, rgba(8,40,22,0.70) 50%, rgba(15,30,50,0.78) 100%)",
         }}
       />
       <div
         className="absolute inset-0"
         style={{
           zIndex: 1,
-          background:
-            "linear-gradient(to top, rgba(5,15,30,0.65) 0%, transparent 55%)",
+          background: "linear-gradient(to top, rgba(5,15,30,0.65) 0%, transparent 55%)",
         }}
       />
 
-      {/* ── Content ── */}
       <div
         className="relative flex flex-col items-center justify-center text-center w-full max-w-4xl mx-auto px-4 sm:px-6 py-16 sm:py-0"
         style={{ zIndex: 2 }}
@@ -44,6 +44,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: -16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.15 }}
+          key={t.badge}
           className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-1.5 sm:py-2 rounded-full mb-4 sm:mb-7"
           style={{
             background: "rgba(255,255,255,0.10)",
@@ -56,7 +57,7 @@ export default function Hero() {
             <span className="relative inline-flex h-2 w-2 rounded-full bg-green-400" />
           </span>
           <span className="text-white/90 text-xs sm:text-sm font-medium tracking-wide">
-            Admissions Open — Session 2026–27
+            {t.badge}
           </span>
         </motion.div>
 
@@ -65,20 +66,18 @@ export default function Hero() {
           initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          key={t.title1}
           className="font-serif font-extrabold text-white leading-tight tracking-tight mb-3 drop-shadow-2xl"
-          style={{
-            fontSize: "clamp(1.75rem, 6vw, 4.5rem)",
-            textShadow: "0 4px 24px rgba(0,0,0,0.7)",
-          }}
+          style={{ fontSize: "clamp(1.75rem, 6vw, 4.5rem)", textShadow: "0 4px 24px rgba(0,0,0,0.7)" }}
         >
-          The Milestone
+          {t.title1}
           <br />
           <span style={{ color: "#4ade80", textShadow: "0 0 40px rgba(74,222,128,0.45)" }}>
-            Sr. Sec. School
+            {t.title2}
           </span>
         </motion.h1>
 
-        {/* Divider line */}
+        {/* Divider */}
         <motion.div
           initial={{ scaleX: 0, opacity: 0 }}
           animate={{ scaleX: 1, opacity: 1 }}
@@ -98,6 +97,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.72 }}
+          key={t.tagline}
           className="font-light leading-relaxed mb-3 px-2 sm:px-0"
           style={{
             fontSize: "clamp(0.9rem, 2.2vw, 1.35rem)",
@@ -106,28 +106,29 @@ export default function Hero() {
             letterSpacing: "0.01em",
           }}
         >
-          Where Every Child's Potential Becomes Their Greatest Achievement
+          {t.tagline}
         </motion.p>
 
-        {/* Sub-description pills */}
+        {/* Sub-description */}
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65, delay: 0.88 }}
+          key={t.cbse}
           className="flex flex-wrap items-center justify-center gap-x-3 sm:gap-x-5 gap-y-1.5 mb-6 sm:mb-10"
         >
           <span className="flex items-center gap-1.5 text-xs sm:text-sm font-medium" style={{ color: "rgba(255,255,255,0.80)" }}>
             <Award size={12} style={{ color: "#4ade80" }} />
-            CBSE Affiliated School
+            {t.cbse}
           </span>
           <span className="text-white/25 hidden xs:inline">|</span>
           <span className="flex items-center gap-1.5 text-xs sm:text-sm font-medium" style={{ color: "rgba(255,255,255,0.80)" }}>
             <MapPin size={12} style={{ color: "#4ade80" }} />
-            Kaithal, Haryana
+            {t.location}
           </span>
           <span className="text-white/25 hidden xs:inline">|</span>
           <span className="text-xs sm:text-sm font-medium" style={{ color: "rgba(255,255,255,0.80)" }}>
-            Nursery – Class XII
+            {t.classes}
           </span>
         </motion.div>
 
@@ -136,6 +137,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65, delay: 1.0 }}
+          key={t.apply}
           className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto"
         >
           <button
@@ -146,7 +148,7 @@ export default function Hero() {
               boxShadow: "0 6px 28px rgba(34,197,94,0.50)",
             }}
           >
-            Apply Now
+            {t.apply}
             <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
           </button>
 
@@ -159,7 +161,7 @@ export default function Hero() {
               backdropFilter: "blur(10px)",
             }}
           >
-            Discover More
+            {t.discover}
           </button>
         </motion.div>
       </div>

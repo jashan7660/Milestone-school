@@ -1,15 +1,17 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import { GraduationCap, Users, BookOpen, Star } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
+import { SITE } from "@/i18n/translations";
 
-const stats = [
-  { end: 15,   suffix: "+", label: "Years of Excellence",  icon: Star,          color: "#facc15" },
-  { end: 1200, suffix: "+", label: "Happy Students",       icon: Users,         color: "#4ade80" },
-  { end: 80,   suffix: "+", label: "Qualified Teachers",   icon: BookOpen,      color: "#60a5fa" },
-  { end: 100,  suffix: "%", label: "Pass Percentage",      icon: GraduationCap, color: "#f472b6" },
+const STAT_META = [
+  { end: 15,   suffix: "+", icon: Star,          color: "#facc15" },
+  { end: 1200, suffix: "+", icon: Users,         color: "#4ade80" },
+  { end: 80,   suffix: "+", icon: BookOpen,      color: "#60a5fa" },
+  { end: 100,  suffix: "%", icon: GraduationCap, color: "#f472b6" },
 ];
 
-function Counter({ end, suffix, label, icon: Icon, color }: typeof stats[0]) {
+function Counter({ end, suffix, label, icon: Icon, color }: typeof STAT_META[0] & { label: string }) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
@@ -38,12 +40,26 @@ function Counter({ end, suffix, label, icon: Icon, color }: typeof stats[0]) {
       <div className="text-4xl md:text-5xl font-serif font-extrabold text-white mb-1 tabular-nums">
         {count}{suffix}
       </div>
-      <div className="text-white/70 font-medium text-sm uppercase tracking-widest">{label}</div>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={label}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          className="text-white/70 font-medium text-sm uppercase tracking-widest"
+        >
+          {label}
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 }
 
 export default function Stats() {
+  const { lang } = useLanguage();
+  const t = SITE[lang].stats;
+
   return (
     <section className="py-20 relative overflow-hidden">
       <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, #0f2618 0%, #1a4030 50%, #0d1f28 100%)" }} />
@@ -57,19 +73,23 @@ export default function Stats() {
           transition={{ duration: 0.5 }}
           className="text-center mb-14"
         >
-          <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest mb-3"
-            style={{ background: "rgba(74,222,128,0.15)", color: "#4ade80", border: "1px solid rgba(74,222,128,0.3)" }}>
-            Our Numbers
-          </span>
-          <h2 className="text-3xl md:text-4xl font-serif font-extrabold text-white">
-            Trusted by families across Kaithal
-          </h2>
+          <AnimatePresence mode="wait">
+            <motion.div key={lang} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
+              <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest mb-3"
+                style={{ background: "rgba(74,222,128,0.15)", color: "#4ade80", border: "1px solid rgba(74,222,128,0.3)" }}>
+                {t.label}
+              </span>
+              <h2 className="text-3xl md:text-4xl font-serif font-extrabold text-white">
+                {t.heading}
+              </h2>
+            </motion.div>
+          </AnimatePresence>
         </motion.div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-6">
-          {stats.map((s, i) => (
+          {STAT_META.map((s, i) => (
             <motion.div
-              key={s.label}
+              key={s.color}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -77,7 +97,7 @@ export default function Stats() {
               className="rounded-2xl p-6"
               style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)", backdropFilter: "blur(8px)" }}
             >
-              <Counter {...s} />
+              <Counter {...s} label={t.items[i]} />
             </motion.div>
           ))}
         </div>
