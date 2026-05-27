@@ -19,6 +19,7 @@ import PageLoader from "@/components/ui/PageLoader";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import PhoneButton from "@/components/ui/PhoneButton";
 import AIGuide from "@/components/ui/AIGuide";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 const queryClient = new QueryClient();
 
@@ -26,14 +27,11 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
-      {/* About Us sub-pages */}
       <Route path="/about/story" component={OurStoryPage} />
       <Route path="/about/directors" component={OurDirectorsPage} />
       <Route path="/about/divisions" component={DivisionsPage} />
       <Route path="/about/tieups" component={TieupsPage} />
-      {/* Legacy /about → redirect to Our Story */}
       <Route path="/about" component={OurStoryPage} />
-      {/* Other pages */}
       <Route path="/academics" component={AcademicsPage} />
       <Route path="/facilities" component={FacilitiesPage} />
       <Route path="/faculty" component={FacultyPage} />
@@ -48,16 +46,18 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <PageLoader />
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <Router />
-          <AIGuide />
-        </WouterRouter>
-        <WhatsAppButton />
-        <PhoneButton />
-        <Toaster />
-      </TooltipProvider>
+      <LanguageProvider>
+        <TooltipProvider>
+          <PageLoader />
+          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+            <Router />
+            <AIGuide />
+          </WouterRouter>
+          <WhatsAppButton />
+          <PhoneButton />
+          <Toaster />
+        </TooltipProvider>
+      </LanguageProvider>
     </QueryClientProvider>
   );
 }
