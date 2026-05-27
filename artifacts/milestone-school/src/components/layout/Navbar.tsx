@@ -109,26 +109,30 @@ export default function Navbar() {
 
           {/* ── Language Toggle ── */}
           <span className="w-px h-3.5 bg-white/20 mx-1" />
-          <div className="flex items-center rounded-full overflow-hidden border border-white/20"
-               style={{ background: "rgba(255,255,255,0.08)" }}>
+          <div className="relative flex rounded-full"
+               style={{ background:"rgba(255,255,255,0.10)", border:"1px solid rgba(255,255,255,0.18)",
+                        backdropFilter:"blur(12px)", padding:2 }}>
+            <motion.div
+              className="absolute top-[2px] bottom-[2px] rounded-full pointer-events-none"
+              animate={{ x: lang === "en" ? 0 : "100%" }}
+              transition={{ type:"spring", stiffness:500, damping:38 }}
+              style={{ width:"calc(50% - 2px)", left:2,
+                       background:"linear-gradient(135deg,#3b82f6,#0ea5e9)",
+                       boxShadow:"0 0 8px rgba(14,165,233,0.60)" }}/>
             <button
               onClick={() => setLang("en")}
-              className={`px-2.5 py-0.5 text-[11px] font-bold tracking-wide transition-all duration-200 ${
-                lang === "en"
-                  ? "bg-white text-[#1e3a5f]"
-                  : "text-white/60 hover:text-white"
-              }`}
-            >
+              className="relative z-10 font-bold tracking-wide transition-colors duration-200"
+              style={{ fontSize:10, padding:"1px 10px",
+                       color: lang === "en" ? "white" : "rgba(255,255,255,0.45)",
+                       minWidth:34, textAlign:"center" }}>
               EN
             </button>
             <button
               onClick={() => setLang("hi")}
-              className={`px-2.5 py-0.5 text-[11px] font-bold tracking-wide transition-all duration-200 ${
-                lang === "hi"
-                  ? "bg-white text-[#1e3a5f]"
-                  : "text-white/60 hover:text-white"
-              }`}
-            >
+              className="relative z-10 font-bold tracking-wide transition-colors duration-200"
+              style={{ fontSize:10, padding:"1px 10px",
+                       color: lang === "hi" ? "white" : "rgba(255,255,255,0.45)",
+                       minWidth:34, textAlign:"center" }}>
               हिं
             </button>
           </div>
