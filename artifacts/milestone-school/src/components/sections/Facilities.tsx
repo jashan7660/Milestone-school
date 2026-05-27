@@ -44,18 +44,13 @@ export default function Facilities() {
   return (
     <section id="facilities" className="py-24 bg-background">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-          <div className="max-w-2xl">
-            <div className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-6 uppercase tracking-wider">
-              Infrastructure
-            </div>
-            <h2 className="text-3xl md:text-5xl font-serif font-bold text-foreground leading-tight">
-              World-class facilities for <br/>holistic development
-            </h2>
+        <div className="flex flex-col items-center text-center mb-16 gap-4">
+          <div className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-semibold text-sm uppercase tracking-wider">
+            Infrastructure
           </div>
-          <p className="text-muted-foreground text-lg max-w-md">
-            Our campus is thoughtfully designed to provide a safe, stimulating environment that supports every aspect of a student's growth.
-          </p>
+          <h2 className="text-3xl md:text-5xl font-serif font-bold text-foreground leading-tight">
+            World-class facilities for holistic development
+          </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
