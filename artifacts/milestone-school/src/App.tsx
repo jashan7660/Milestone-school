@@ -15,7 +15,6 @@ import OurDirectorsPage from "@/pages/OurDirectorsPage";
 import DivisionsPage from "@/pages/DivisionsPage";
 import TieupsPage from "@/pages/TieupsPage";
 import AdmissionsPage from "@/pages/AdmissionsPage";
-import BackToTop from "@/components/ui/BackToTop";
 import PageLoader from "@/components/ui/PageLoader";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import PhoneButton from "@/components/ui/PhoneButton";
@@ -55,7 +54,6 @@ function App() {
           <Router />
           <AIGuide />
         </WouterRouter>
-        <BackToTop />
         <WhatsAppButton />
         <PhoneButton />
         <Toaster />

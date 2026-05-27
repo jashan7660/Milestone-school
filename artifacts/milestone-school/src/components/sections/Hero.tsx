@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowRight, ChevronDown, MapPin, Award } from "lucide-react";
+import { ArrowRight, MapPin, Award } from "lucide-react";
 
 export default function Hero() {
   const scrollTo = (id: string) =>
@@ -162,18 +162,6 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* ── Scroll indicator ── */}
-      <motion.button
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, y: [0, 8, 0] }}
-        transition={{ delay: 1.6, duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-        onClick={() => scrollTo("#about")}
-        aria-label="Scroll down"
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 transition-colors"
-        style={{ zIndex: 2, color: "rgba(255,255,255,0.45)" }}
-      >
-        <ChevronDown size={30} />
-      </motion.button>
     </section>
   );
 }
