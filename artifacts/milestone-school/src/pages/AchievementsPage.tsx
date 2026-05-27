@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Trophy, Medal, Star, Award, GraduationCap, Users } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { useLanguage } from "@/context/LanguageContext";
 import goldGloryImg from "@assets/SaveClip.App_616509678_18086449688035990_8536646500599410673_n_1777616289311.jpg";
 import silverGloryImg from "@assets/SaveClip.App_614878340_18086449655035990_3947843287675199799_n_1777616304025.jpg";
 import parvImg from "@assets/top_result_1777616348864.jpg";
@@ -15,25 +16,35 @@ const fadeUp = (delay = 0) => ({
 });
 
 export default function AchievementsPage() {
+  const { lang } = useLanguage();
+  const isHindi = lang === "hi";
+
   const toppers = [
-    { name: "Parv Mittal", score: "97%", class: "CBSE Class X — 2025-26", image: parvImg, badge: "School Topper" },
+    { name: "Parv Mittal", score: "97%", class: isHindi ? "CBSE कक्षा X — 2025-26" : "CBSE Class X — 2025-26", image: parvImg, badge: isHindi ? "स्कूल टॉपर" : "School Topper" },
   ];
 
   const gallery = [
-    { src: boardResultImg, title: "CBSE Class X — 100% Outstanding Result 2025-26", span: "md:col-span-2" },
-    { src: parvImg, title: "Parv Mittal — 97% CBSE Class X", span: "" },
-    { src: goldGloryImg, title: "Rahul — Gold, 6th Chandigarh Open Skating Championship", span: "" },
-    { src: silverGloryImg, title: "Yash — Silver, 6th Chandigarh Open Skating Championship", span: "" },
+    { src: boardResultImg, title: isHindi ? "CBSE कक्षा X — 100% उत्कृष्ट परिणाम 2025-26" : "CBSE Class X — 100% Outstanding Result 2025-26", span: "md:col-span-2" },
+    { src: parvImg, title: isHindi ? "परव मित्तल — 97% CBSE कक्षा X" : "Parv Mittal — 97% CBSE Class X", span: "" },
+    { src: goldGloryImg, title: isHindi ? "राहुल — गोल्ड, 6वीं चंडीगढ़ ओपन स्केटिंग चैम्पियनशिप" : "Rahul — Gold, 6th Chandigarh Open Skating Championship", span: "" },
+    { src: silverGloryImg, title: isHindi ? "यश — सिल्वर, 6वीं चंडीगढ़ ओपन स्केटिंग चैम्पियनशिप" : "Yash — Silver, 6th Chandigarh Open Skating Championship", span: "" },
   ];
 
   const highlights = [
-    { icon: GraduationCap, value: "100%", label: "CBSE Class X Result 2025-26", color: "bg-blue-600" },
-    { icon: Star, value: "97%", label: "School Topper — Parv Mittal", color: "bg-secondary" },
-    { icon: Trophy, value: "Gold", label: "Chandigarh Open Skating Championship", color: "bg-yellow-500" },
-    { icon: Medal, value: "Silver", label: "Chandigarh Open Skating Championship", color: "bg-gray-400" },
+    { icon: GraduationCap, value: "100%", label: isHindi ? "CBSE कक्षा X परिणाम 2025-26" : "CBSE Class X Result 2025-26", color: "bg-blue-600" },
+    { icon: Star, value: "97%", label: isHindi ? "स्कूल टॉपर — परव मित्तल" : "School Topper — Parv Mittal", color: "bg-secondary" },
+    { icon: Trophy, value: isHindi ? "स्वर्ण" : "Gold", label: isHindi ? "चंडीगढ़ ओपन स्केटिंग चैम्पियनशिप" : "Chandigarh Open Skating Championship", color: "bg-yellow-500" },
+    { icon: Medal, value: isHindi ? "रजत" : "Silver", label: isHindi ? "चंडीगढ़ ओपन स्केटिंग चैम्पियनशिप" : "Chandigarh Open Skating Championship", color: "bg-gray-400" },
   ];
 
-  const awards = [
+  const awards = isHindi ? [
+    { title: "100% बोर्ड परिणाम", year: "2025-26", desc: "CBSE कक्षा X बोर्ड में बैठे हर छात्र ने उत्तीर्ण किया — स्कूल की शैक्षणिक कठोरता और शिक्षक समर्पण का प्रमाण।", icon: Award },
+    { title: "CBSE कक्षा X टॉपर", year: "2025-26", desc: "परव मित्तल ने CBSE कक्षा X में 97% का उत्कृष्ट प्रदर्शन किया और स्कूल के उच्चतम स्कोरर रहे।", icon: Star },
+    { title: "स्वर्ण — स्केटिंग चैम्पियनशिप", year: "2024", desc: "राहुल ने 6वीं चंडीगढ़ ओपन स्केटिंग चैम्पियनशिप में स्वर्ण पदक जीता।", icon: Trophy },
+    { title: "रजत — स्केटिंग चैम्पियनशिप", year: "2024", desc: "यश ने 6वीं चंडीगढ़ ओपन स्केटिंग चैम्पियनशिप में रजत पदक हासिल किया।", icon: Medal },
+    { title: "अंतर-विद्यालय प्रतियोगिताएं", year: "चालू", desc: "छात्र जिला और राज्य स्तरीय प्रश्नोत्तरी, वाद-विवाद, विज्ञान मेले और सांस्कृतिक प्रतियोगिताओं में नियमित रूप से भाग लेते और जीतते हैं।", icon: Users },
+    { title: "लगातार तीन 100% परिणाम", year: "2022–25", desc: "माइलस्टोन ने लगातार तीन शैक्षणिक वर्षों तक CBSE बोर्ड में 100% पास रिकॉर्ड बनाए रखा है।", icon: GraduationCap },
+  ] : [
     { title: "100% Board Result", year: "2025-26", desc: "Every student who appeared for CBSE Class X boards passed — a testimony to the school's academic rigour and teacher dedication.", icon: Award },
     { title: "CBSE Class X Topper", year: "2025-26", desc: "Parv Mittal achieved an outstanding 97% in CBSE Class X, ranking as the school's highest scorer.", icon: Star },
     { title: "Gold — Skating Championship", year: "2024", desc: "Rahul brought home the Gold medal at the 6th Chandigarh Open Skating Championship, representing The Milestone on a state stage.", icon: Trophy },
@@ -55,9 +66,17 @@ export default function AchievementsPage() {
           </div>
           <div className="container relative z-10 mx-auto px-4 md:px-6 text-center">
             <motion.div {...fadeUp()}>
-              <div className="inline-block px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-sm text-white font-semibold text-sm mb-6 uppercase tracking-wider">Our Pride</div>
-              <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-5 leading-tight">Achievements</h1>
-              <p className="text-white/85 text-lg md:text-xl max-w-2xl mx-auto">From board exam glory to championship podiums — our students continue to make The Milestone family immensely proud.</p>
+              <div className="inline-block px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-sm text-white font-semibold text-sm mb-6 uppercase tracking-wider">
+                {isHindi ? "हमारा गौरव" : "Our Pride"}
+              </div>
+              <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-5 leading-tight">
+                {isHindi ? "उपलब्धियां" : "Achievements"}
+              </h1>
+              <p className="text-white/85 text-lg md:text-xl max-w-2xl mx-auto">
+                {isHindi
+                  ? "बोर्ड परीक्षा की शान से लेकर चैम्पियनशिप पोडियम तक — हमारे छात्र माइलस्टोन परिवार को बेहद गर्वित करते रहते हैं।"
+                  : "From board exam glory to championship podiums — our students continue to make The Milestone family immensely proud."}
+              </p>
             </motion.div>
           </div>
         </section>
@@ -81,9 +100,15 @@ export default function AchievementsPage() {
         <section className="py-20 bg-background">
           <div className="container mx-auto px-4 md:px-6">
             <motion.div {...fadeUp()} className="text-center max-w-2xl mx-auto mb-14">
-              <div className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-5 uppercase tracking-wider">Academic Results</div>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold">CBSE Board Results</h2>
-              <p className="text-muted-foreground mt-4 text-lg">Consistent excellence in board exams — a reflection of our teaching quality and student dedication.</p>
+              <div className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-5 uppercase tracking-wider">
+                {isHindi ? "शैक्षणिक परिणाम" : "Academic Results"}
+              </div>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold">{isHindi ? "CBSE बोर्ड परिणाम" : "CBSE Board Results"}</h2>
+              <p className="text-muted-foreground mt-4 text-lg">
+                {isHindi
+                  ? "बोर्ड परीक्षाओं में निरंतर उत्कृष्टता — हमारी शिक्षण गुणवत्ता और छात्र समर्पण का प्रतिबिंब।"
+                  : "Consistent excellence in board exams — a reflection of our teaching quality and student dedication."}
+              </p>
             </motion.div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
               {gallery.map((item, i) => (
@@ -102,8 +127,10 @@ export default function AchievementsPage() {
         <section className="py-20 bg-muted/30">
           <div className="container mx-auto px-4 md:px-6">
             <motion.div {...fadeUp()} className="text-center max-w-2xl mx-auto mb-14">
-              <div className="inline-block px-4 py-1.5 rounded-full bg-secondary/10 text-secondary font-semibold text-sm mb-5 uppercase tracking-wider">Star Performers</div>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold">School Toppers</h2>
+              <div className="inline-block px-4 py-1.5 rounded-full bg-secondary/10 text-secondary font-semibold text-sm mb-5 uppercase tracking-wider">
+                {isHindi ? "स्टार परफॉर्मर" : "Star Performers"}
+              </div>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold">{isHindi ? "स्कूल टॉपर" : "School Toppers"}</h2>
             </motion.div>
             <div className="flex justify-center">
               {toppers.map((t, i) => (
@@ -125,9 +152,15 @@ export default function AchievementsPage() {
         <section className="py-20 bg-background">
           <div className="container mx-auto px-4 md:px-6">
             <motion.div {...fadeUp()} className="text-center max-w-2xl mx-auto mb-14">
-              <div className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-5 uppercase tracking-wider">Awards & Recognitions</div>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold">A culture of winning</h2>
-              <p className="text-muted-foreground mt-4 text-lg">Academic excellence, sporting glory, and creative achievements — The Milestone celebrates every kind of success.</p>
+              <div className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-5 uppercase tracking-wider">
+                {isHindi ? "पुरस्कार और मान्यताएं" : "Awards & Recognitions"}
+              </div>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold">{isHindi ? "जीतने की संस्कृति" : "A culture of winning"}</h2>
+              <p className="text-muted-foreground mt-4 text-lg">
+                {isHindi
+                  ? "शैक्षणिक उत्कृष्टता, खेल की शान और रचनात्मक उपलब्धियां — माइलस्टोन हर तरह की सफलता का जश्न मनाता है।"
+                  : "Academic excellence, sporting glory, and creative achievements — The Milestone celebrates every kind of success."}
+              </p>
             </motion.div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {awards.map((a, i) => (
@@ -154,8 +187,12 @@ export default function AchievementsPage() {
         <section className="py-20 bg-muted/30">
           <div className="container mx-auto px-4 md:px-6">
             <motion.div {...fadeUp()} className="text-center max-w-2xl mx-auto mb-12">
-              <div className="inline-block px-4 py-1.5 rounded-full bg-secondary/10 text-secondary font-semibold text-sm mb-5 uppercase tracking-wider">In Action</div>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold">Watch our students shine</h2>
+              <div className="inline-block px-4 py-1.5 rounded-full bg-secondary/10 text-secondary font-semibold text-sm mb-5 uppercase tracking-wider">
+                {isHindi ? "एक्शन में" : "In Action"}
+              </div>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold">
+                {isHindi ? "हमारे छात्रों को चमकते देखें" : "Watch our students shine"}
+              </h2>
             </motion.div>
             <motion.div {...fadeUp(0.1)} className="max-w-3xl mx-auto rounded-3xl overflow-hidden shadow-2xl border-8 border-white bg-black">
               <video src="/video4.mp4" controls playsInline preload="metadata" className="w-full h-auto" />

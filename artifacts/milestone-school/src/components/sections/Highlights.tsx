@@ -1,4 +1,6 @@
 import { motion } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext";
+import { SITE } from "@/i18n/translations";
 import farewellImg from "@assets/SaveClip.App_614889198_18086113952035990_6052207292470122772_n_1777615680379.jpg";
 import goldSkatingImg from "@assets/SaveClip.App_616509678_18086449688035990_8536646500599410673_n_1777615684795.jpg";
 import dramaImg from "@assets/2_1777975525377.jpg";
@@ -6,22 +8,21 @@ import stepFutureImg from "@assets/3_1777975544009.jpg";
 import donationImg from "@assets/4_1777975552878.jpg";
 import nssImg from "@assets/9_1777975562152.jpg";
 
-const videos = [
-  { src: "/video1.mp4", label: "School Event" },
-  { src: "/video2.mp4", label: "Campus Moments" },
-  { src: "/video3.mp4", label: "Student Activities" },
-];
+const VIDEO_SRCS = ["/video1.mp4", "/video2.mp4", "/video3.mp4"];
 
-const highlights = [
-  { src: farewellImg,   alt: "Farewell Celebration — Turning Pages, Carrying Memories",          span: "" },
-  { src: goldSkatingImg,alt: "Gold Glory — 6th Chandigarh Open Skating Championship",            span: "" },
-  { src: dramaImg,      alt: "Drama Highlights — Play Enactment & Job Interview Activity",       span: "" },
-  { src: nssImg,        alt: "NSS — Together We Can Make a Difference",                          span: "" },
-  { src: donationImg,   alt: "Donation Drive — Spreading Joy & Kindness",                        span: "" },
-  { src: stepFutureImg, alt: "Not Just an Activity — A Step Towards the Future",                 span: "" },
+const highlightPhotos = [
+  { src: farewellImg,   alt: "Farewell Celebration — Turning Pages, Carrying Memories" },
+  { src: goldSkatingImg,alt: "Gold Glory — 6th Chandigarh Open Skating Championship" },
+  { src: dramaImg,      alt: "Drama Highlights — Play Enactment & Job Interview Activity" },
+  { src: nssImg,        alt: "NSS — Together We Can Make a Difference" },
+  { src: donationImg,   alt: "Donation Drive — Spreading Joy & Kindness" },
+  { src: stepFutureImg, alt: "Not Just an Activity — A Step Towards the Future" },
 ];
 
 export default function Highlights() {
+  const { lang } = useLanguage();
+  const t = SITE[lang].highlights;
+
   return (
     <section id="highlights" className="py-20 md:py-24 bg-muted/30">
       <div className="container mx-auto px-4 md:px-6">
@@ -32,26 +33,24 @@ export default function Highlights() {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-14"
         >
-          <div className="section-label-green">School Highlights</div>
+          <div className="section-label-green">{t.badge}</div>
           <h2 className="text-3xl md:text-5xl font-serif font-extrabold text-foreground mb-5 leading-[1.1] tracking-tight">
-            Celebrations, Achievements &{" "}
-            <span className="text-gradient">Campus Life</span>
+            {t.heading}{" "}
+            <span className="text-gradient">{t.accent}</span>
           </h2>
-          <p className="text-muted-foreground text-lg font-light leading-[1.8]">
-            From glittering farewell ceremonies to championship gold medals — life at The Milestone is full of memorable milestones.
-          </p>
+          <p className="text-muted-foreground text-lg font-light leading-[1.8]">{t.body}</p>
         </motion.div>
 
         {/* Photo highlights — 3-column grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-10">
-          {highlights.map((item, i) => (
+          {highlightPhotos.map((item, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: (i % 3) * 0.12 }}
-              className={`rounded-2xl overflow-hidden shadow-lg group relative ${item.span}`}
+              className="rounded-2xl overflow-hidden shadow-lg group relative"
             >
               <img
                 src={item.src}
@@ -67,7 +66,7 @@ export default function Highlights() {
 
         {/* Video highlights */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {videos.map((video, i) => (
+          {VIDEO_SRCS.map((src, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
@@ -76,16 +75,10 @@ export default function Highlights() {
               transition={{ duration: 0.5, delay: i * 0.12 }}
               className="rounded-2xl overflow-hidden shadow-lg bg-black"
             >
-              <video
-                src={video.src}
-                controls
-                playsInline
-                preload="metadata"
-                className="w-full h-56 object-cover"
-              />
+              <video src={src} controls playsInline preload="metadata" className="w-full h-56 object-cover" />
               <div className="bg-card px-4 py-3">
-                <p className="text-sm font-semibold text-foreground">{video.label}</p>
-                <p className="text-xs text-muted-foreground">The Milestone Sr. Sec. School</p>
+                <p className="text-sm font-semibold text-foreground">{t.videoLabels[i]}</p>
+                <p className="text-xs text-muted-foreground">{t.schoolLabel}</p>
               </div>
             </motion.div>
           ))}

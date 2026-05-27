@@ -1,25 +1,20 @@
 import { motion } from "framer-motion";
 import { CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/context/LanguageContext";
+import { SITE } from "@/i18n/translations";
 
 export default function WhyChooseUs() {
-  const reasons = [
-    "Experienced and caring faculty",
-    "State-of-the-art infrastructure",
-    "Focus on values and character building",
-    "Excellent academic track record",
-    "Safe, structured, student-first campus",
-    "Rich extracurricular programs"
-  ];
+  const { lang } = useLanguage();
+  const t = SITE[lang].whyUs;
 
   return (
     <section className="py-24 bg-primary text-primary-foreground relative overflow-hidden">
-      {/* Decorative background shapes */}
       <div className="absolute top-0 right-0 w-1/2 h-full bg-primary-foreground/5 skew-x-12 translate-x-32 -z-0"></div>
-      
+
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          
+
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -27,17 +22,17 @@ export default function WhyChooseUs() {
             transition={{ duration: 0.7 }}
           >
             <h2 className="text-3xl md:text-5xl font-serif font-extrabold mb-5 leading-[1.1] tracking-tight">
-              Why parents trust{" "}
+              {t.heading}{" "}
               <br className="hidden sm:block" />
-              <span className="text-gradient-hero">The Milestone</span>
+              <span className="text-gradient-hero">{t.accent}</span>
             </h2>
-            
+
             <p className="text-primary-foreground/78 text-lg mb-10 leading-[1.85] font-light">
-              Choosing the right school is one of the most important decisions for your child. We provide an environment where children feel secure, valued, and inspired to reach their full potential.
+              {t.body}
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-4 mb-10">
-              {reasons.map((reason, index) => (
+              {t.reasons.map((reason, index) => (
                 <div key={index} className="flex items-start gap-3">
                   <CheckCircle className="w-6 h-6 text-secondary flex-shrink-0" />
                   <span className="font-medium">{reason}</span>
@@ -45,12 +40,12 @@ export default function WhyChooseUs() {
               ))}
             </div>
 
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold rounded-full px-8 shadow-lg"
               onClick={() => document.querySelector("#admissions")?.scrollIntoView({ behavior: "smooth" })}
             >
-              Start Admission Process
+              {t.cta}
             </Button>
           </motion.div>
 
@@ -71,10 +66,9 @@ export default function WhyChooseUs() {
                 <img src="/library.png" alt="Library" className="rounded-2xl w-full h-48 object-cover shadow-lg border-4 border-primary-foreground/20" />
               </div>
             </div>
-            {/* Center badge */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white text-primary p-6 rounded-full w-32 h-32 flex flex-col items-center justify-center shadow-2xl border-4 border-secondary">
               <span className="font-bold text-2xl">100%</span>
-              <span className="text-xs text-center font-bold uppercase mt-1">Focus on Growth</span>
+              <span className="text-xs text-center font-bold uppercase mt-1">{t.badge2}</span>
             </div>
           </motion.div>
 

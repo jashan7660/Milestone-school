@@ -326,6 +326,38 @@ export const SITE: Record<Lang, SiteT> = {
         "Life Skills & Activity Programs",
       ],
     },
+    highlights: {
+      badge: "School Highlights",
+      heading: "Celebrations, Achievements &",
+      accent: "Campus Life",
+      body: "From glittering farewell ceremonies to championship gold medals — life at The Milestone is full of memorable milestones.",
+      videoLabels: ["School Event", "Campus Moments", "Student Activities"],
+      schoolLabel: "The Milestone Sr. Sec. School",
+    },
+    newsEvents: {
+      badge: "Happenings",
+      heading: "News & Announcements",
+      viewAll: "View All Updates",
+      events: [
+        { month: "Mar", day: "15", date: "Mar 15, 2024", title: "Admissions Open for 2026-2027", desc: "Registration for Nursery to Class 11 has begun. Visit the school office between 9 AM - 2 PM." },
+        { month: "Apr", day: "10", date: "Apr 10, 2024", title: "Annual Science & Tech Exhibition", desc: "Students from classes 6 to 12 will showcase their innovative working models in the main auditorium." },
+        { month: "Apr", day: "22", date: "Apr 22, 2024", title: "Parent-Teacher Meeting", desc: "First PTM of the academic session to discuss the curriculum roadmap and student goals." },
+        { month: "May", day: "05", date: "May 05, 2024", title: "Inter-School Sports Meet", desc: "The Milestone will be hosting the district level basketball and athletics tournament." },
+      ],
+    },
+    faq: {
+      badge: "Common Questions",
+      heading: "Frequently Asked Questions",
+      body: "Find answers to common queries about admissions, curriculum, and campus life.",
+      items: [
+        { q: "What is the admission process at The Milestone?", a: "The admission process begins with filling out the inquiry form online or at the school office. This is followed by a campus visit, a brief interaction with the Principal/Counselor, and submission of previous academic records. Admissions are granted based on seat availability." },
+        { q: "Which curriculum does the school follow?", a: "We are proudly affiliated with the Central Board of Secondary Education (CBSE), New Delhi. We strictly adhere to the CBSE curriculum from Nursery to Class 12, ensuring national-level standardized education." },
+        { q: "What are the school timings?", a: "The school operates from Monday to Saturday. Timings are 7:30 AM to 2:30 PM. Saturdays might have modified timings or specific extracurricular focus depending on the grade." },
+        { q: "Do you provide transport facilities?", a: "Yes, we have a fleet of safe, well-maintained yellow school buses covering Kaithal city and neighboring villages. All buses are equipped with safety features and are accompanied by an attendant." },
+        { q: "What subjects are offered in Classes 11 and 12?", a: "We offer four main streams for Senior Secondary students: Medical (PCB), Non-Medical (PCM), Commerce, and Humanities (Arts), along with various elective subjects like Physical Education, Computer Science, and Fine Arts." },
+        { q: "What extracurricular activities are available?", a: "We believe in holistic development. Students can participate in various indoor and outdoor sports, dance, music, art and craft, debating, and specialized club activities that run throughout the academic year." },
+      ],
+    },
   },
 
   /* ══════════════════════════════════════════════════════════ HINDI ══ */
@@ -511,6 +543,38 @@ export const SITE: Record<Lang, SiteT> = {
         "जीवन कौशल और गतिविधि कार्यक्रम",
       ],
     },
+    highlights: {
+      badge: "स्कूल हाइलाइट्स",
+      heading: "उत्सव, उपलब्धियां और",
+      accent: "कैंपस जीवन",
+      body: "चमकदार विदाई समारोहों से लेकर चैम्पियनशिप स्वर्ण पदकों तक — माइलस्टोन में जीवन यादगार पलों से भरा है।",
+      videoLabels: ["स्कूल कार्यक्रम", "कैंपस के पल", "छात्र गतिविधियां"],
+      schoolLabel: "द माइलस्टोन सी.सेक. स्कूल",
+    },
+    newsEvents: {
+      badge: "गतिविधियां",
+      heading: "समाचार और घोषणाएं",
+      viewAll: "सभी अपडेट देखें",
+      events: [
+        { month: "मार्च", day: "15", date: "15 मार्च 2024", title: "2026-2027 के लिए प्रवेश खुले", desc: "नर्सरी से कक्षा 11 तक पंजीकरण शुरू हो गया है। स्कूल कार्यालय में सुबह 9 बजे से दोपहर 2 बजे के बीच आएं।" },
+        { month: "अप्रैल", day: "10", date: "10 अप्रैल 2024", title: "वार्षिक विज्ञान और तकनीक प्रदर्शनी", desc: "कक्षा 6 से 12 के छात्र मुख्य सभागार में अपने नवाचारी कार्यशील मॉडल प्रस्तुत करेंगे।" },
+        { month: "अप्रैल", day: "22", date: "22 अप्रैल 2024", title: "अभिभावक-शिक्षक बैठक", desc: "शैक्षणिक सत्र की पहली PTM, जिसमें पाठ्यक्रम रोडमैप और छात्र लक्ष्यों पर चर्चा होगी।" },
+        { month: "मई", day: "05", date: "05 मई 2024", title: "अंतर-विद्यालय खेल प्रतियोगिता", desc: "द माइलस्टोन जिला स्तरीय बास्केटबॉल और एथलेटिक्स टूर्नामेंट की मेजबानी करेगा।" },
+      ],
+    },
+    faq: {
+      badge: "सामान्य प्रश्न",
+      heading: "अक्सर पूछे जाने वाले प्रश्न",
+      body: "प्रवेश, पाठ्यक्रम और कैंपस जीवन से संबंधित सामान्य प्रश्नों के उत्तर यहां पाएं।",
+      items: [
+        { q: "द माइलस्टोन में प्रवेश प्रक्रिया क्या है?", a: "प्रवेश प्रक्रिया ऑनलाइन या स्कूल कार्यालय में जांच फॉर्म भरने से शुरू होती है। इसके बाद कैंपस विजिट, प्रिंसिपल/काउंसलर के साथ संक्षिप्त बातचीत और पिछले शैक्षणिक रिकॉर्ड जमा करना होता है। प्रवेश सीट उपलब्धता के आधार पर दिया जाता है।" },
+        { q: "स्कूल कौन सा पाठ्यक्रम अपनाता है?", a: "हम केंद्रीय माध्यमिक शिक्षा बोर्ड (CBSE), नई दिल्ली से गर्व के साथ संबद्ध हैं। हम नर्सरी से कक्षा 12 तक CBSE पाठ्यक्रम का सख्ती से पालन करते हैं, जिससे राष्ट्रीय स्तर की मानकीकृत शिक्षा सुनिश्चित होती है।" },
+        { q: "स्कूल का समय क्या है?", a: "स्कूल सोमवार से शनिवार तक चलता है। समय सुबह 7:30 बजे से दोपहर 2:30 बजे तक है। शनिवार को ग्रेड के आधार पर संशोधित समय या विशेष पाठ्येतर गतिविधियां हो सकती हैं।" },
+        { q: "क्या आप परिवहन सुविधाएं प्रदान करते हैं?", a: "हां, हमारे पास कैथल शहर और आसपास के गांवों को कवर करने वाली सुरक्षित, अच्छी तरह से रखी गई पीली स्कूल बसों का एक बेड़ा है। सभी बसें सुरक्षा सुविधाओं से लैस हैं और उनके साथ एक परिचर होता है।" },
+        { q: "कक्षा 11 और 12 में कौन से विषय उपलब्ध हैं?", a: "हम वरिष्ठ माध्यमिक छात्रों के लिए चार मुख्य स्ट्रीम प्रदान करते हैं: मेडिकल (PCB), नॉन-मेडिकल (PCM), वाणिज्य और मानविकी (कला), साथ ही शारीरिक शिक्षा, कंप्यूटर विज्ञान और ललित कला जैसे वैकल्पिक विषय।" },
+        { q: "कौन सी पाठ्येतर गतिविधियां उपलब्ध हैं?", a: "हम समग्र विकास में विश्वास करते हैं। छात्र विभिन्न इनडोर और आउटडोर खेल, नृत्य, संगीत, कला और शिल्प, वाद-विवाद और पूरे शैक्षणिक वर्ष चलने वाली विशेष क्लब गतिविधियों में भाग ले सकते हैं।" },
+      ],
+    },
   },
 };
 
@@ -550,4 +614,7 @@ interface SiteT {
     quickLinks: { label: string; href: string }[];
     academics: string[];
   };
+  highlights: { badge: string; heading: string; accent: string; body: string; videoLabels: string[]; schoolLabel: string };
+  newsEvents: { badge: string; heading: string; viewAll: string; events: { month: string; day: string; date: string; title: string; desc: string }[] };
+  faq: { badge: string; heading: string; body: string; items: { q: string; a: string }[] };
 }

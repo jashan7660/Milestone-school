@@ -4,6 +4,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/context/LanguageContext";
 import goldGloryImg from "@assets/SaveClip.App_616509678_18086449688035990_8536646500599410673_n_1777616289311.jpg";
 import silverGloryImg from "@assets/SaveClip.App_614878340_18086449655035990_3947843287675199799_n_1777616304025.jpg";
 import parvImg from "@assets/top_result_1777616348864.jpg";
@@ -11,11 +12,11 @@ import boardResultImg from "@assets/image_1777616635036.png";
 import nandiniGoldImg from "@assets/0986_1777975694502.jpg";
 
 const achievements = [
-  { src: boardResultImg,  alt: "CBSE Class 10 — 100% Outstanding Result 2025-26",               span: "md:col-span-2" },
-  { src: parvImg,         alt: "Parv Mittal — 97% CBSE Class X Result",                         span: "" },
-  { src: nandiniGoldImg,  alt: "Nandini — Gold Glory, First Position in Declamation (District)", span: "" },
-  { src: goldGloryImg,    alt: "Rahul — Gold Glory, 6th Chandigarh Open Skating Championship",   span: "" },
-  { src: silverGloryImg,  alt: "Yash — Silver Glory, 6th Chandigarh Open Skating Championship",  span: "" },
+  { src: boardResultImg, alt: "CBSE Class 10 — 100% Outstanding Result 2025-26", span: "md:col-span-2" },
+  { src: parvImg, alt: "Parv Mittal — 97% CBSE Class X Result", span: "" },
+  { src: nandiniGoldImg, alt: "Nandini — Gold Glory, First Position in Declamation (District)", span: "" },
+  { src: goldGloryImg, alt: "Rahul — Gold Glory, 6th Chandigarh Open Skating Championship", span: "" },
+  { src: silverGloryImg, alt: "Yash — Silver Glory, 6th Chandigarh Open Skating Championship", span: "" },
 ];
 
 const fadeUp = (delay = 0) => ({
@@ -26,13 +27,27 @@ const fadeUp = (delay = 0) => ({
 });
 
 export default function AboutPage() {
-  const pillars = [
+  const { lang } = useLanguage();
+  const isHindi = lang === "hi";
+
+  const pillars = isHindi ? [
+    { icon: Eye, title: "हमारी दृष्टि", color: "bg-blue-50 text-primary border-blue-100", desc: "एक उत्कृष्टता केंद्र बनना जो जिज्ञासु, दयालु और सक्षम शिक्षार्थियों का पोषण करे, जो सार्थक जीवन जीएं और समाज में सकारात्मक योगदान दें।" },
+    { icon: Target, title: "हमारा मिशन", color: "bg-green-50 text-secondary border-green-100", desc: "एक समग्र, CBSE-संरेखित शिक्षा प्रदान करना जो शैक्षणिक कठोरता और चरित्र निर्माण को संतुलित करे — हर छात्र को उनकी अनूठी क्षमता खोजने के लिए सशक्त करे।" },
+    { icon: Heart, title: "हमारे मूल्य", color: "bg-indigo-50 text-indigo-600 border-indigo-100", desc: "ईमानदारी, करुणा, अनुशासन, जिज्ञासा और सम्मान — कक्षाओं में, खेल मैदान पर और दैनिक जीवन में हम जो कुछ भी करते हैं उसकी नींव।" },
+  ] : [
     { icon: Eye, title: "Our Vision", color: "bg-blue-50 text-primary border-blue-100", desc: "To be a centre of excellence that nurtures curious, compassionate, and capable learners who go on to lead meaningful lives and contribute positively to society." },
     { icon: Target, title: "Our Mission", color: "bg-green-50 text-secondary border-green-100", desc: "To provide a holistic, CBSE-aligned education that balances academic rigour with character building — empowering every student to discover their unique potential." },
     { icon: Heart, title: "Our Values", color: "bg-indigo-50 text-indigo-600 border-indigo-100", desc: "Integrity, compassion, discipline, curiosity, and respect form the foundation of everything we do — in classrooms, on the sports field, and in daily life." },
   ];
 
-  const milestones = [
+  const milestones = isHindi ? [
+    { year: "2008", event: "द माइलस्टोन सी.सेक. स्कूल की स्थापना 120 छात्रों और गुणवत्तापूर्ण शिक्षा के सपने के साथ कैथल में हुई।" },
+    { year: "2012", event: "CBSE मान्यता प्राप्त हुई और अत्याधुनिक बुनियादी ढांचे के साथ कक्षा I-X तक विस्तार किया गया।" },
+    { year: "2016", event: "कक्षा XI और XII के लिए वरिष्ठ माध्यमिक स्ट्रीम — विज्ञान, वाणिज्य और कला — शुरू किए गए।" },
+    { year: "2019", event: "स्मार्ट क्लासरूम विंग, डिजिटल पुस्तकालय और पूर्ण सुसज्जित विज्ञान प्रयोगशालाओं का उद्घाटन।" },
+    { year: "2022", event: "लगातार तीसरे वर्ष 100% बोर्ड परिणाम; स्कूल की शक्ति 1,000 छात्रों को पार कर गई।" },
+    { year: "2025", event: "CBSE कक्षा X — 100% उत्कृष्ट परिणाम जिसमें कई 90%+ स्कोरर; स्केटिंग चैम्पियनशिप में स्वर्ण और रजत।" },
+  ] : [
     { year: "2008", event: "The Milestone Sr. Sec. School founded in Kaithal with 120 students and a vision of quality education." },
     { year: "2012", event: "Received CBSE affiliation and expanded to Classes I–X with state-of-the-art infrastructure." },
     { year: "2016", event: "Launched Senior Secondary streams — Science, Commerce, and Arts — for Classes XI & XII." },
@@ -41,7 +56,14 @@ export default function AboutPage() {
     { year: "2025", event: "CBSE Class X — 100% outstanding result with multiple 90%+ scorers; skating championship gold and silver." },
   ];
 
-  const whyUs = [
+  const whyUs = isHindi ? [
+    { icon: BookOpen, text: "नर्सरी से कक्षा XII तक CBSE पाठ्यक्रम" },
+    { icon: Users, text: "80+ अनुभवी और समर्पित शिक्षक" },
+    { icon: Award, text: "100% बोर्ड परीक्षा पास रिकॉर्ड" },
+    { icon: Shield, text: "सुरक्षित, संरचित, CCTV-निगरानी कैंपस" },
+    { icon: Heart, text: "मूल्यों और चरित्र पर समग्र ध्यान" },
+    { icon: Target, text: "व्यापक पाठ्येतर कार्यक्रम" },
+  ] : [
     { icon: BookOpen, text: "CBSE curriculum from Nursery to Class XII" },
     { icon: Users, text: "80+ experienced and dedicated faculty" },
     { icon: Award, text: "100% board exam pass record" },
@@ -63,9 +85,17 @@ export default function AboutPage() {
           </div>
           <div className="container relative z-10 mx-auto px-4 md:px-6 text-center">
             <motion.div {...fadeUp()}>
-              <div className="inline-block px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-sm text-white font-semibold text-sm mb-6 uppercase tracking-wider">Who We Are</div>
-              <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-5 leading-tight">About The Milestone</h1>
-              <p className="text-white/85 text-lg md:text-xl max-w-2xl mx-auto">A trusted name in Kaithal for over 15 years — shaping bright futures through quality education, strong values, and a nurturing campus.</p>
+              <div className="inline-block px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-sm text-white font-semibold text-sm mb-6 uppercase tracking-wider">
+                {isHindi ? "हम कौन हैं" : "Who We Are"}
+              </div>
+              <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-5 leading-tight">
+                {isHindi ? "माइलस्टोन के बारे में" : "About The Milestone"}
+              </h1>
+              <p className="text-white/85 text-lg md:text-xl max-w-2xl mx-auto">
+                {isHindi
+                  ? "कैथल में 15 वर्षों से एक भरोसेमंद नाम — गुणवत्तापूर्ण शिक्षा, मजबूत मूल्यों और एक पोषण देने वाले कैंपस के माध्यम से उज्ज्वल भविष्य बना रहे हैं।"
+                  : "A trusted name in Kaithal for over 15 years — shaping bright futures through quality education, strong values, and a nurturing campus."}
+              </p>
             </motion.div>
           </div>
         </section>
@@ -75,20 +105,33 @@ export default function AboutPage() {
           <div className="container mx-auto px-4 md:px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <motion.div {...fadeUp()}>
-                <div className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-5 uppercase tracking-wider">Our Story</div>
-                <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6 leading-tight">A legacy of learning, <span className="text-secondary">built with purpose</span></h2>
-                <p className="text-muted-foreground text-lg mb-5 leading-relaxed">The Milestone Sr. Sec. School was founded with a singular vision — to create an institution where every child, regardless of background, receives a world-class education that prepares them not just for exams, but for life.</p>
-                <p className="text-muted-foreground text-lg leading-relaxed">Located near Khurana Bypass, Kaithal, our campus is home to over 1,200 students, 80+ qualified teachers, and a community that believes deeply in the power of education to transform lives.</p>
+                <div className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-5 uppercase tracking-wider">
+                  {isHindi ? "हमारी कहानी" : "Our Story"}
+                </div>
+                <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6 leading-tight">
+                  {isHindi ? "सीखने की एक विरासत, " : "A legacy of learning, "}
+                  <span className="text-secondary">{isHindi ? "उद्देश्य के साथ बनाई गई" : "built with purpose"}</span>
+                </h2>
+                <p className="text-muted-foreground text-lg mb-5 leading-relaxed">
+                  {isHindi
+                    ? "द माइलस्टोन सी.सेक. स्कूल की स्थापना एक अनूठे दृष्टिकोण के साथ हुई — एक ऐसी संस्था बनाना जहां हर बच्चे को, पृष्ठभूमि की परवाह किए बिना, एक विश्व स्तरीय शिक्षा मिले।"
+                    : "The Milestone Sr. Sec. School was founded with a singular vision — to create an institution where every child, regardless of background, receives a world-class education that prepares them not just for exams, but for life."}
+                </p>
+                <p className="text-muted-foreground text-lg leading-relaxed">
+                  {isHindi
+                    ? "खुराना बाईपास के पास, कैथल में स्थित हमारा कैंपस 1,200 से अधिक छात्रों, 80+ योग्य शिक्षकों का घर है।"
+                    : "Located near Khurana Bypass, Kaithal, our campus is home to over 1,200 students, 80+ qualified teachers, and a community that believes deeply in the power of education to transform lives."}
+                </p>
               </motion.div>
               <motion.div {...fadeUp(0.15)} className="relative">
                 <img src="/hero.png" alt="School campus" className="rounded-3xl w-full h-[420px] object-cover shadow-2xl border-8 border-white" />
                 <div className="absolute -bottom-6 -left-6 bg-primary text-white px-6 py-4 rounded-2xl shadow-xl">
                   <div className="text-3xl font-serif font-bold">15+</div>
-                  <div className="text-xs font-medium uppercase tracking-wider opacity-80">Years of Excellence</div>
+                  <div className="text-xs font-medium uppercase tracking-wider opacity-80">{isHindi ? "उत्कृष्टता के वर्ष" : "Years of Excellence"}</div>
                 </div>
                 <div className="absolute -top-6 -right-6 bg-secondary text-white px-6 py-4 rounded-2xl shadow-xl">
                   <div className="text-3xl font-serif font-bold">1200+</div>
-                  <div className="text-xs font-medium uppercase tracking-wider opacity-80">Students</div>
+                  <div className="text-xs font-medium uppercase tracking-wider opacity-80">{isHindi ? "छात्र" : "Students"}</div>
                 </div>
               </motion.div>
             </div>
@@ -99,8 +142,12 @@ export default function AboutPage() {
         <section className="py-20 bg-muted/30">
           <div className="container mx-auto px-4 md:px-6">
             <motion.div {...fadeUp()} className="text-center max-w-2xl mx-auto mb-14">
-              <div className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-5 uppercase tracking-wider">Our Guiding Principles</div>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold">Vision, Mission & Values</h2>
+              <div className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-5 uppercase tracking-wider">
+                {isHindi ? "हमारे मार्गदर्शक सिद्धांत" : "Our Guiding Principles"}
+              </div>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold">
+                {isHindi ? "दृष्टि, मिशन और मूल्य" : "Vision, Mission & Values"}
+              </h2>
             </motion.div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {pillars.map((p, i) => (
@@ -123,19 +170,34 @@ export default function AboutPage() {
               <motion.div {...fadeUp()} className="lg:col-span-2 text-center">
                 <div className="relative inline-block">
                   <img src="/principal.png" alt="Mr. Atul Sharma — Principal" className="w-64 h-64 rounded-full object-cover object-top shadow-2xl border-8 border-white mx-auto" />
-                  <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-primary text-white text-xs font-bold px-4 py-1.5 rounded-full whitespace-nowrap shadow-lg">Principal, The Milestone</div>
+                  <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-primary text-white text-xs font-bold px-4 py-1.5 rounded-full whitespace-nowrap shadow-lg">
+                    {isHindi ? "प्रिंसिपल, द माइलस्टोन" : "Principal, The Milestone"}
+                  </div>
                 </div>
                 <h3 className="text-2xl font-serif font-bold mt-8 mb-1">Mr. Atul Sharma</h3>
-                <p className="text-muted-foreground text-sm">M.A., B.Ed. | 20+ Years in Education</p>
+                <p className="text-muted-foreground text-sm">{isHindi ? "M.A., B.Ed. | 20+ वर्षों का अनुभव" : "M.A., B.Ed. | 20+ Years in Education"}</p>
               </motion.div>
               <motion.div {...fadeUp(0.15)} className="lg:col-span-3">
-                <div className="inline-block px-4 py-1.5 rounded-full bg-secondary/10 text-secondary font-semibold text-sm mb-5 uppercase tracking-wider">Principal's Message</div>
-                <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6 leading-tight">A message from our <span className="text-primary">Principal</span></h2>
+                <div className="inline-block px-4 py-1.5 rounded-full bg-secondary/10 text-secondary font-semibold text-sm mb-5 uppercase tracking-wider">
+                  {isHindi ? "प्रिंसिपल का संदेश" : "Principal's Message"}
+                </div>
+                <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6 leading-tight">
+                  {isHindi ? "हमारे " : "A message from our "}
+                  <span className="text-primary">{isHindi ? "प्रिंसिपल का संदेश" : "Principal"}</span>
+                </h2>
                 <blockquote className="border-l-4 border-secondary pl-6 mb-6">
-                  <p className="text-muted-foreground text-lg leading-relaxed italic">"At The Milestone, we do not just educate — we inspire. Every child who walks through our doors is a story waiting to unfold. Our role is to provide the environment, the guidance, and the encouragement to make that story extraordinary."</p>
+                  <p className="text-muted-foreground text-lg leading-relaxed italic">
+                    {isHindi
+                      ? '"माइलस्टोन में, हम केवल पढ़ाते नहीं — हम प्रेरित करते हैं। हमारे दरवाजे से गुजरने वाला हर बच्चा एक अनकही कहानी है। हमारी भूमिका वह वातावरण, मार्गदर्शन और प्रोत्साहन प्रदान करना है जो उस कहानी को असाधारण बनाए।"'
+                      : '"At The Milestone, we do not just educate — we inspire. Every child who walks through our doors is a story waiting to unfold. Our role is to provide the environment, the guidance, and the encouragement to make that story extraordinary."'}
+                  </p>
                 </blockquote>
-                <p className="text-muted-foreground text-lg leading-relaxed mb-6">"We believe education is not confined to textbooks. It is built in the laboratory, on the sports field, in the music room, and in every interaction between a teacher and a student. We are committed to delivering all of that — with excellence and with heart."</p>
-                <p className="text-foreground font-semibold">— Mr. Atul Sharma, Principal</p>
+                <p className="text-muted-foreground text-lg leading-relaxed mb-6">
+                  {isHindi
+                    ? '"हम मानते हैं कि शिक्षा पाठ्यपुस्तकों तक सीमित नहीं है। यह प्रयोगशाला में, खेल मैदान पर, संगीत कक्ष में और शिक्षक-छात्र की हर बातचीत में बनती है।"'
+                    : '"We believe education is not confined to textbooks. It is built in the laboratory, on the sports field, in the music room, and in every interaction between a teacher and a student. We are committed to delivering all of that — with excellence and with heart."'}
+                </p>
+                <p className="text-foreground font-semibold">— Mr. Atul Sharma, {isHindi ? "प्रिंसिपल" : "Principal"}</p>
               </motion.div>
             </div>
           </div>
@@ -145,8 +207,12 @@ export default function AboutPage() {
         <section className="py-20 bg-muted/30">
           <div className="container mx-auto px-4 md:px-6">
             <motion.div {...fadeUp()} className="text-center max-w-2xl mx-auto mb-14">
-              <div className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-5 uppercase tracking-wider">Our Journey</div>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold">Milestones through the years</h2>
+              <div className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-5 uppercase tracking-wider">
+                {isHindi ? "हमारी यात्रा" : "Our Journey"}
+              </div>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold">
+                {isHindi ? "वर्षों के दौरान माइलस्टोन" : "Milestones through the years"}
+              </h2>
             </motion.div>
             <div className="relative max-w-3xl mx-auto">
               <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-0.5 bg-border md:-translate-x-0.5" />
@@ -175,44 +241,29 @@ export default function AboutPage() {
             <motion.div {...fadeUp()} className="text-center max-w-3xl mx-auto mb-14">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-5 uppercase tracking-wider">
                 <Trophy size={14} />
-                Our Achievements
+                {isHindi ? "हमारी उपलब्धियां" : "Our Achievements"}
               </div>
               <h2 className="text-3xl md:text-5xl font-serif font-extrabold text-foreground mb-5 leading-[1.1] tracking-tight">
-                Pride of The Milestone
+                {isHindi ? "माइलस्टोन का गौरव" : "Pride of The Milestone"}
               </h2>
               <p className="text-muted-foreground text-lg font-light leading-[1.8]">
-                From championship medals to board exam glory — our students continue to make The Milestone family proud.
+                {isHindi
+                  ? "चैम्पियनशिप पदकों से लेकर बोर्ड परीक्षा की शान तक — हमारे छात्र माइलस्टोन परिवार को गर्वित करते रहते हैं।"
+                  : "From championship medals to board exam glory — our students continue to make The Milestone family proud."}
               </p>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {achievements.map((item, i) => (
-                <motion.div
-                  key={i}
-                  {...fadeUp(i * 0.1)}
-                  className={`relative rounded-2xl overflow-hidden shadow-lg group ${item.span}`}
-                >
-                  <img
-                    src={item.src}
-                    alt={item.alt}
-                    className="w-full h-80 object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                  />
+                <motion.div key={i} {...fadeUp(i * 0.1)} className={`relative rounded-2xl overflow-hidden shadow-lg group ${item.span}`}>
+                  <img src={item.src} alt={item.alt} className="w-full h-80 object-cover object-top transition-transform duration-700 group-hover:scale-105" />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/85 via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
                     <p className="text-white font-semibold text-sm leading-snug">{item.alt}</p>
                   </div>
                 </motion.div>
               ))}
-              <motion.div
-                {...fadeUp(0.4)}
-                className="rounded-2xl overflow-hidden shadow-lg bg-black"
-              >
-                <video
-                  src="/video4.mp4"
-                  controls
-                  playsInline
-                  preload="metadata"
-                  className="w-full h-80 object-cover"
-                />
+              <motion.div {...fadeUp(0.4)} className="rounded-2xl overflow-hidden shadow-lg bg-black">
+                <video src="/video4.mp4" controls playsInline preload="metadata" className="w-full h-80 object-cover" />
               </motion.div>
             </div>
           </div>
@@ -223,9 +274,17 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(34,197,94,0.2),transparent_60%)]" />
           <div className="container relative z-10 mx-auto px-4 md:px-6">
             <motion.div {...fadeUp()} className="text-center max-w-2xl mx-auto mb-14">
-              <div className="inline-block px-4 py-1.5 rounded-full bg-white/15 text-white font-semibold text-sm mb-5 uppercase tracking-wider">Why The Milestone</div>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold">Why parents choose us</h2>
-              <p className="text-white/75 mt-4 text-lg">Every feature of our school is designed with one goal — your child's success and happiness.</p>
+              <div className="inline-block px-4 py-1.5 rounded-full bg-white/15 text-white font-semibold text-sm mb-5 uppercase tracking-wider">
+                {isHindi ? "माइलस्टोन क्यों" : "Why The Milestone"}
+              </div>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold">
+                {isHindi ? "अभिभावक हमें क्यों चुनते हैं" : "Why parents choose us"}
+              </h2>
+              <p className="text-white/75 mt-4 text-lg">
+                {isHindi
+                  ? "हमारे स्कूल की हर विशेषता एक लक्ष्य को ध्यान में रखकर बनाई गई है — आपके बच्चे की सफलता और खुशी।"
+                  : "Every feature of our school is designed with one goal — your child's success and happiness."}
+              </p>
             </motion.div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
               {whyUs.map((item, i) => (
@@ -238,7 +297,7 @@ export default function AboutPage() {
             <div className="text-center">
               <Link href="/academics">
                 <Button size="lg" className="bg-secondary text-white hover:bg-secondary/90 rounded-full px-10 font-bold shadow-xl hover:-translate-y-1 transition-all">
-                  Explore Academics <ArrowRight className="ml-2 h-4 w-4" />
+                  {isHindi ? "शैक्षणिक देखें" : "Explore Academics"} <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
             </div>

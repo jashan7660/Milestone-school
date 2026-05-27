@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { GraduationCap, Star, Users, BookOpen, Heart } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { useLanguage } from "@/context/LanguageContext";
 import principalImg from "@assets/atul_sharama_1777615661839.jpg";
 
 const fadeUp = (delay = 0) => ({
@@ -12,33 +13,40 @@ const fadeUp = (delay = 0) => ({
 });
 
 export default function FacultyPage() {
+  const { lang } = useLanguage();
+  const isHindi = lang === "hi";
+
   const principal = {
     name: "Mr. Atul Sharma",
-    role: "Principal",
-    qual: "M.A., B.Ed. | 20+ Years in Education",
+    role: isHindi ? "प्रिंसिपल" : "Principal",
+    qual: isHindi ? "M.A., B.Ed. | 20+ वर्षों का अनुभव" : "M.A., B.Ed. | 20+ Years in Education",
     image: principalImg,
-    bio: "A visionary leader and passionate educator, Mr. Atul Sharma has dedicated over two decades to transforming young minds. Under his guidance, The Milestone has achieved consistent 100% board results and built a reputation as Kaithal's most trusted school. He believes every student has a unique gift waiting to be discovered.",
+    bio: isHindi
+      ? "एक दूरदर्शी नेता और भावुक शिक्षक, श्री अतुल शर्मा ने युवा मस्तिष्कों को आकार देने में दो दशकों से अधिक समय समर्पित किया है। उनके मार्गदर्शन में माइलस्टोन ने लगातार 100% बोर्ड परिणाम हासिल किए हैं और कैथल के सबसे भरोसेमंद स्कूल के रूप में ख्याति बनाई है।"
+      : "A visionary leader and passionate educator, Mr. Atul Sharma has dedicated over two decades to transforming young minds. Under his guidance, The Milestone has achieved consistent 100% board results and built a reputation as Kaithal's most trusted school. He believes every student has a unique gift waiting to be discovered.",
   };
 
   const teachers = [
-    { name: "Mrs. Sunita Sharma", subject: "Physics", qual: "M.Sc. Physics, B.Ed.", exp: "14 years", image: "/teacher-science.png", dept: "Science" },
-    { name: "Mr. Amit Verma", subject: "Mathematics", qual: "M.Sc. Maths, B.Ed.", exp: "12 years", image: "/teacher-math.png", dept: "Mathematics" },
-    { name: "Mrs. Rekha Gupta", subject: "Chemistry", qual: "M.Sc. Chemistry, B.Ed.", exp: "10 years", image: "/teacher-science.png", dept: "Science" },
-    { name: "Mr. Rajesh Kumar", subject: "English", qual: "M.A. English, B.Ed.", exp: "11 years", image: "/teacher-math.png", dept: "Languages" },
-    { name: "Mrs. Priya Yadav", subject: "Biology", qual: "M.Sc. Biology, B.Ed.", exp: "8 years", image: "/teacher-science.png", dept: "Science" },
-    { name: "Mr. Sanjay Rana", subject: "Social Studies", qual: "M.A. History, B.Ed.", exp: "9 years", image: "/teacher-math.png", dept: "Humanities" },
-    { name: "Mrs. Kavita Arora", subject: "Hindi", qual: "M.A. Hindi, B.Ed.", exp: "13 years", image: "/teacher-science.png", dept: "Languages" },
-    { name: "Mr. Deepak Nain", subject: "Computer Science", qual: "M.C.A., B.Ed.", exp: "7 years", image: "/teacher-math.png", dept: "Technology" },
+    { name: "Mrs. Sunita Sharma", subject: isHindi ? "भौतिकी" : "Physics", qual: "M.Sc. Physics, B.Ed.", exp: isHindi ? "14 वर्ष" : "14 years", image: "/teacher-science.png", dept: isHindi ? "विज्ञान" : "Science" },
+    { name: "Mr. Amit Verma", subject: isHindi ? "गणित" : "Mathematics", qual: "M.Sc. Maths, B.Ed.", exp: isHindi ? "12 वर्ष" : "12 years", image: "/teacher-math.png", dept: isHindi ? "गणित" : "Mathematics" },
+    { name: "Mrs. Rekha Gupta", subject: isHindi ? "रसायन विज्ञान" : "Chemistry", qual: "M.Sc. Chemistry, B.Ed.", exp: isHindi ? "10 वर्ष" : "10 years", image: "/teacher-science.png", dept: isHindi ? "विज्ञान" : "Science" },
+    { name: "Mr. Rajesh Kumar", subject: isHindi ? "अंग्रेजी" : "English", qual: "M.A. English, B.Ed.", exp: isHindi ? "11 वर्ष" : "11 years", image: "/teacher-math.png", dept: isHindi ? "भाषाएं" : "Languages" },
+    { name: "Mrs. Priya Yadav", subject: isHindi ? "जीव विज्ञान" : "Biology", qual: "M.Sc. Biology, B.Ed.", exp: isHindi ? "8 वर्ष" : "8 years", image: "/teacher-science.png", dept: isHindi ? "विज्ञान" : "Science" },
+    { name: "Mr. Sanjay Rana", subject: isHindi ? "सामाजिक अध्ययन" : "Social Studies", qual: "M.A. History, B.Ed.", exp: isHindi ? "9 वर्ष" : "9 years", image: "/teacher-math.png", dept: isHindi ? "मानविकी" : "Humanities" },
+    { name: "Mrs. Kavita Arora", subject: isHindi ? "हिंदी" : "Hindi", qual: "M.A. Hindi, B.Ed.", exp: isHindi ? "13 वर्ष" : "13 years", image: "/teacher-science.png", dept: isHindi ? "भाषाएं" : "Languages" },
+    { name: "Mr. Deepak Nain", subject: isHindi ? "कंप्यूटर विज्ञान" : "Computer Science", qual: "M.C.A., B.Ed.", exp: isHindi ? "7 वर्ष" : "7 years", image: "/teacher-math.png", dept: isHindi ? "तकनीक" : "Technology" },
   ];
 
   const stats = [
-    { icon: Users, value: "80+", label: "Qualified Faculty" },
-    { icon: GraduationCap, value: "10+", label: "Avg. Years Experience" },
-    { icon: Star, value: "100%", label: "CBSE Trained Teachers" },
-    { icon: Heart, value: "1200+", label: "Students Mentored" },
+    { icon: Users, value: "80+", label: isHindi ? "योग्य शिक्षक" : "Qualified Faculty" },
+    { icon: GraduationCap, value: "10+", label: isHindi ? "औसत वर्षों का अनुभव" : "Avg. Years Experience" },
+    { icon: Star, value: "100%", label: isHindi ? "CBSE प्रशिक्षित शिक्षक" : "CBSE Trained Teachers" },
+    { icon: Heart, value: "1200+", label: isHindi ? "छात्रों को मार्गदर्शन" : "Students Mentored" },
   ];
 
-  const departments = ["Science", "Mathematics", "Languages", "Humanities", "Technology", "Arts & Sports"];
+  const departments = isHindi
+    ? ["विज्ञान", "गणित", "भाषाएं", "मानविकी", "तकनीक", "कला और खेल"]
+    : ["Science", "Mathematics", "Languages", "Humanities", "Technology", "Arts & Sports"];
 
   return (
     <div className="min-h-screen bg-background font-sans text-foreground overflow-x-hidden">
@@ -53,9 +61,17 @@ export default function FacultyPage() {
           </div>
           <div className="container relative z-10 mx-auto px-4 md:px-6 text-center">
             <motion.div {...fadeUp()}>
-              <div className="inline-block px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-sm text-white font-semibold text-sm mb-6 uppercase tracking-wider">Our Mentors</div>
-              <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-5 leading-tight">Faculty & Staff</h1>
-              <p className="text-white/85 text-lg md:text-xl max-w-2xl mx-auto">Meet the dedicated educators who inspire every student at The Milestone to go beyond the ordinary.</p>
+              <div className="inline-block px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-sm text-white font-semibold text-sm mb-6 uppercase tracking-wider">
+                {isHindi ? "हमारे मेंटर" : "Our Mentors"}
+              </div>
+              <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-5 leading-tight">
+                {isHindi ? "शिक्षक और कर्मचारी" : "Faculty & Staff"}
+              </h1>
+              <p className="text-white/85 text-lg md:text-xl max-w-2xl mx-auto">
+                {isHindi
+                  ? "उन समर्पित शिक्षकों से मिलिए जो माइलस्टोन के हर छात्र को असाधारण बनने के लिए प्रेरित करते हैं।"
+                  : "Meet the dedicated educators who inspire every student at The Milestone to go beyond the ordinary."}
+              </p>
             </motion.div>
           </div>
         </section>
@@ -79,15 +95,19 @@ export default function FacultyPage() {
         <section className="py-20 bg-background">
           <div className="container mx-auto px-4 md:px-6">
             <motion.div {...fadeUp()} className="text-center max-w-2xl mx-auto mb-14">
-              <div className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-5 uppercase tracking-wider">School Leadership</div>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold">Meet our Principal</h2>
+              <div className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-5 uppercase tracking-wider">
+                {isHindi ? "स्कूल नेतृत्व" : "School Leadership"}
+              </div>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold">
+                {isHindi ? "हमारे प्रिंसिपल से मिलिए" : "Meet our Principal"}
+              </h2>
             </motion.div>
             <motion.div {...fadeUp(0.1)} className="max-w-4xl mx-auto bg-gradient-to-br from-primary/5 to-secondary/5 border-2 border-primary/15 rounded-3xl p-8 md:p-12">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
                 <div className="text-center">
                   <img src={principal.image} alt={principal.name} className="w-48 h-48 rounded-full object-cover object-top shadow-2xl border-6 border-white mx-auto" />
                   <div className="mt-4">
-                    <div className="bg-primary text-white text-xs font-bold px-4 py-1.5 rounded-full inline-block">Principal</div>
+                    <div className="bg-primary text-white text-xs font-bold px-4 py-1.5 rounded-full inline-block">{principal.role}</div>
                   </div>
                 </div>
                 <div className="md:col-span-2">
@@ -104,7 +124,9 @@ export default function FacultyPage() {
         <section className="py-10 bg-muted/30">
           <div className="container mx-auto px-4 md:px-6">
             <motion.div {...fadeUp()} className="text-center mb-10">
-              <h3 className="text-xl font-serif font-bold text-foreground">Academic Departments</h3>
+              <h3 className="text-xl font-serif font-bold text-foreground">
+                {isHindi ? "शैक्षणिक विभाग" : "Academic Departments"}
+              </h3>
             </motion.div>
             <motion.div {...fadeUp(0.1)} className="flex flex-wrap justify-center gap-3">
               {departments.map((d, i) => (
@@ -121,8 +143,12 @@ export default function FacultyPage() {
         <section className="py-20 bg-background">
           <div className="container mx-auto px-4 md:px-6">
             <motion.div {...fadeUp()} className="text-center max-w-2xl mx-auto mb-14">
-              <div className="inline-block px-4 py-1.5 rounded-full bg-secondary/10 text-secondary font-semibold text-sm mb-5 uppercase tracking-wider">Our Teachers</div>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold">Experienced educators, passionate mentors</h2>
+              <div className="inline-block px-4 py-1.5 rounded-full bg-secondary/10 text-secondary font-semibold text-sm mb-5 uppercase tracking-wider">
+                {isHindi ? "हमारे शिक्षक" : "Our Teachers"}
+              </div>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold">
+                {isHindi ? "अनुभवी शिक्षक, भावुक मेंटर" : "Experienced educators, passionate mentors"}
+              </h2>
             </motion.div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {teachers.map((t, i) => (
@@ -137,7 +163,7 @@ export default function FacultyPage() {
                     <p className="text-secondary font-semibold text-sm mb-1">{t.subject}</p>
                     <p className="text-muted-foreground text-xs mb-2">{t.qual}</p>
                     <div className="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full">
-                      <Star size={11} className="fill-primary" /> {t.exp} experience
+                      <Star size={11} className="fill-primary" /> {t.exp} {isHindi ? "अनुभव" : "experience"}
                     </div>
                   </div>
                 </motion.div>
@@ -150,10 +176,16 @@ export default function FacultyPage() {
         <section className="py-16 bg-muted/30">
           <div className="container mx-auto px-4 md:px-6 text-center">
             <motion.div {...fadeUp()}>
-              <h2 className="text-2xl md:text-3xl font-serif font-bold mb-4">Want to join our faculty?</h2>
-              <p className="text-muted-foreground text-lg mb-6 max-w-xl mx-auto">We are always looking for passionate, qualified educators who share our commitment to student excellence.</p>
+              <h2 className="text-2xl md:text-3xl font-serif font-bold mb-4">
+                {isHindi ? "हमारे शिक्षक दल में शामिल होना चाहते हैं?" : "Want to join our faculty?"}
+              </h2>
+              <p className="text-muted-foreground text-lg mb-6 max-w-xl mx-auto">
+                {isHindi
+                  ? "हम हमेशा ऐसे भावुक, योग्य शिक्षकों की तलाश में रहते हैं जो छात्र उत्कृष्टता के प्रति हमारी प्रतिबद्धता साझा करते हैं।"
+                  : "We are always looking for passionate, qualified educators who share our commitment to student excellence."}
+              </p>
               <a href="mailto:themilestoneKtl@gmail.com" className="inline-flex items-center gap-2 bg-primary text-white font-bold px-8 py-3 rounded-full hover:bg-primary/90 hover:-translate-y-1 transition-all shadow-lg">
-                Send Your CV <GraduationCap size={18} />
+                {isHindi ? "अपना CV भेजें" : "Send Your CV"} <GraduationCap size={18} />
               </a>
             </motion.div>
           </div>

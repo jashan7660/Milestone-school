@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Microscope, Monitor, BookOpen, Dumbbell, Palette, Bus, Shield, Wifi, Camera, Coffee } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { useLanguage } from "@/context/LanguageContext";
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -11,7 +12,53 @@ const fadeUp = (delay = 0) => ({
 });
 
 export default function FacilitiesPage() {
-  const mainFacilities = [
+  const { lang } = useLanguage();
+  const isHindi = lang === "hi";
+
+  const mainFacilities = isHindi ? [
+    {
+      icon: Microscope,
+      title: "विज्ञान प्रयोगशालाएं",
+      image: "/science-lab.png",
+      desc: "हमारी पूर्ण रूप से सुसज्जित भौतिकी, रसायन और जीव विज्ञान लैब छात्रों को प्रयोगों और व्यावहारिक कार्य का हाथों-पर अनुभव देती हैं।",
+      highlights: ["3 अलग लैब — भौतिकी, रसायन, जीव विज्ञान", "आधुनिक उपकरण और सुरक्षा उपकरण", "कक्षा VI-XII के लिए नियमित व्यावहारिक सत्र", "प्रशिक्षित लैब सहायक उपलब्ध"],
+    },
+    {
+      icon: BookOpen,
+      title: "डिजिटल पुस्तकालय",
+      image: "/library.png",
+      desc: "4,000 से अधिक पुस्तकों वाला एक शांत, अच्छी तरह से भरा पुस्तकालय जो पढ़ने के प्रति प्रेम और स्वतंत्र शोध को प्रोत्साहित करता है।",
+      highlights: ["4,000+ पुस्तकें और पत्रिकाएं", "समर्पित पठन क्षेत्र", "डिजिटल कैटलॉग प्रणाली", "एकाग्र शिक्षा के लिए अध्ययन केबिन"],
+    },
+    {
+      icon: Dumbbell,
+      title: "खेल परिसर",
+      image: "/sports.png",
+      desc: "शारीरिक विकास हमारी शिक्षा का एक स्तंभ है। हमारी विशाल खेल सुविधाएं विभिन्न बाहरी और इनडोर खेलों को समायोजित करती हैं।",
+      highlights: ["क्रिकेट, फुटबॉल और बैडमिंटन मैदान", "बास्केटबॉल और वॉलीबॉल कोर्ट", "स्केटिंग क्लब के लिए स्केटिंग रिंक", "वार्षिक खेल दिवस उत्सव"],
+    },
+    {
+      icon: Monitor,
+      title: "कंप्यूटर प्रयोगशाला",
+      image: "/smart-classroom.png",
+      desc: "हाई-स्पीड इंटरनेट कनेक्टिविटी के साथ एक आधुनिक कंप्यूटर लैब छात्रों को आज की तकनीक-केंद्रित दुनिया के अनुरूप डिजिटल साक्षरता और प्रोग्रामिंग कौशल विकसित करने में सहायता करती है।",
+      highlights: ["50+ नवीनतम हार्डवेयर वर्कस्टेशन", "हाई-स्पीड ब्रॉडबैंड इंटरनेट", "प्रोग्रामिंग और कोडिंग कक्षाएं", "MS Office, Python और वेब बेसिक्स"],
+    },
+    {
+      icon: Palette,
+      title: "रचनात्मक कला और गतिविधि कक्ष",
+      image: "/art-room.png",
+      desc: "संगीत, नृत्य, कला और नाटक को हमारे परिसर में एक समर्पित स्थान मिलता है। हमारे गतिविधि कक्षों में छात्र अपनी रचनात्मक आवाज खोजते हैं।",
+      highlights: ["वाद्ययंत्रों के साथ समर्पित संगीत कक्ष", "स्प्रंग फ्लोरिंग के साथ नृत्य स्टूडियो", "कला और शिल्प कक्ष", "वार्षिक सांस्कृतिक कार्यक्रम और प्रतियोगिताएं"],
+    },
+    {
+      icon: Bus,
+      title: "सुरक्षित परिवहन नेटवर्क",
+      image: "/school-bus.png",
+      desc: "हमारे GPS-ट्रैक स्कूल बस बेड़े में कैथल शहर और आसपास के क्षेत्र शामिल हैं, जो छात्रों के लिए हर दिन सुरक्षित और समयबद्ध यात्रा सुनिश्चित करते हैं।",
+      highlights: ["GPS-ट्रैक बसें", "कैथल और आसपास के क्षेत्र कवर", "प्रशिक्षित चालक और परिचर", "नियमित वाहन रखरखाव"],
+    },
+  ] : [
     {
       icon: Microscope,
       title: "Science Laboratories",
@@ -56,7 +103,12 @@ export default function FacilitiesPage() {
     },
   ];
 
-  const extras = [
+  const extras = isHindi ? [
+    { icon: Shield, title: "24/7 CCTV निगरानी", desc: "प्रत्येक छात्र और स्टाफ सदस्य की सुरक्षा के लिए पूरा परिसर हाई-डेफिनिशन CCTV कैमरों से कवर है।" },
+    { icon: Wifi, title: "परिसर-व्यापी Wi-Fi", desc: "निर्बाध डिजिटल शिक्षण और शोध के लिए पूरे परिसर में हाई-स्पीड इंटरनेट एक्सेस।" },
+    { icon: Camera, title: "स्मार्ट क्लासरूम", desc: "प्रत्येक कक्षा में आकर्षक, आधुनिक पाठों के लिए इंटरैक्टिव डिजिटल बोर्ड और ऑडियो-विज़ुअल टूल हैं।" },
+    { icon: Coffee, title: "स्वास्थ्यकर कैफेटेरिया", desc: "सख्त स्वच्छता मानकों के तहत तैयार पौष्टिक स्नैक्स और भोजन परोसने वाला साफ, पर्यवेक्षित कैंटीन।" },
+  ] : [
     { icon: Shield, title: "24/7 CCTV Surveillance", desc: "Entire campus covered with high-definition CCTV cameras for the safety of every student and staff member." },
     { icon: Wifi, title: "Campus-Wide Wi-Fi", desc: "High-speed internet access across the campus for seamless digital learning and research." },
     { icon: Camera, title: "Smart Classrooms", desc: "Every classroom features an interactive digital board and audio-visual tools for engaging, modern lessons." },
@@ -76,9 +128,17 @@ export default function FacilitiesPage() {
           </div>
           <div className="container relative z-10 mx-auto px-4 md:px-6 text-center">
             <motion.div {...fadeUp()}>
-              <div className="inline-block px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-sm text-white font-semibold text-sm mb-6 uppercase tracking-wider">Infrastructure</div>
-              <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-5 leading-tight">Facilities & Campus</h1>
-              <p className="text-white/85 text-lg md:text-xl max-w-2xl mx-auto">World-class infrastructure thoughtfully designed to support every aspect of academic, physical, and creative development.</p>
+              <div className="inline-block px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-sm text-white font-semibold text-sm mb-6 uppercase tracking-wider">
+                {isHindi ? "बुनियादी ढांचा" : "Infrastructure"}
+              </div>
+              <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-5 leading-tight">
+                {isHindi ? "सुविधाएं और कैंपस" : "Facilities & Campus"}
+              </h1>
+              <p className="text-white/85 text-lg md:text-xl max-w-2xl mx-auto">
+                {isHindi
+                  ? "विश्व स्तरीय बुनियादी ढांचा जो शैक्षणिक, शारीरिक और रचनात्मक विकास के हर पहलू को समर्थन देने के लिए सोच-समझकर डिज़ाइन किया गया है।"
+                  : "World-class infrastructure thoughtfully designed to support every aspect of academic, physical, and creative development."}
+              </p>
             </motion.div>
           </div>
         </section>
@@ -87,8 +147,12 @@ export default function FacilitiesPage() {
         <section className="py-20 bg-background">
           <div className="container mx-auto px-4 md:px-6">
             <motion.div {...fadeUp()} className="text-center max-w-2xl mx-auto mb-16">
-              <div className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-5 uppercase tracking-wider">Our Campus</div>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold">Everything your child needs — in one campus</h2>
+              <div className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-5 uppercase tracking-wider">
+                {isHindi ? "हमारा कैंपस" : "Our Campus"}
+              </div>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold">
+                {isHindi ? "आपके बच्चे को जो चाहिए — सब एक कैंपस में" : "Everything your child needs — in one campus"}
+              </h2>
             </motion.div>
             <div className="space-y-20">
               {mainFacilities.map((f, i) => (
@@ -100,7 +164,9 @@ export default function FacilitiesPage() {
                     </div>
                   </div>
                   <div className={i % 2 !== 0 ? "lg:order-1" : ""}>
-                    <div className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-4 uppercase tracking-wider">Facility 0{i + 1}</div>
+                    <div className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-4 uppercase tracking-wider">
+                      {isHindi ? `सुविधा 0${i + 1}` : `Facility 0${i + 1}`}
+                    </div>
                     <h3 className="text-2xl md:text-3xl font-serif font-bold mb-4">{f.title}</h3>
                     <p className="text-muted-foreground text-lg leading-relaxed mb-6">{f.desc}</p>
                     <ul className="space-y-3">
@@ -122,8 +188,12 @@ export default function FacilitiesPage() {
         <section className="py-20 bg-muted/30">
           <div className="container mx-auto px-4 md:px-6">
             <motion.div {...fadeUp()} className="text-center max-w-2xl mx-auto mb-14">
-              <div className="inline-block px-4 py-1.5 rounded-full bg-secondary/10 text-secondary font-semibold text-sm mb-5 uppercase tracking-wider">And More</div>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold">Safety, connectivity & comfort</h2>
+              <div className="inline-block px-4 py-1.5 rounded-full bg-secondary/10 text-secondary font-semibold text-sm mb-5 uppercase tracking-wider">
+                {isHindi ? "और भी" : "And More"}
+              </div>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold">
+                {isHindi ? "सुरक्षा, कनेक्टिविटी और आराम" : "Safety, connectivity & comfort"}
+              </h2>
             </motion.div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {extras.map((e, i) => (
