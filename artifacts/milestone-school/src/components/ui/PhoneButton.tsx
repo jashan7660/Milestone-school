@@ -13,7 +13,7 @@ export default function PhoneButton() {
       transition={{ delay: 1.2, type: "spring", stiffness: 260, damping: 20 }}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
-      className="fixed bottom-28 left-5 z-50 flex items-center justify-center w-14 h-14 rounded-full shadow-xl"
+      className="hidden sm:flex fixed bottom-28 left-5 z-50 items-center justify-center w-14 h-14 rounded-full shadow-xl"
       style={{ background: "#1a3a6b" }}
     >
       <Phone className="w-6 h-6 text-white" />
