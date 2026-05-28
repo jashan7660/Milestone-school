@@ -46,15 +46,17 @@ export default function OurDirectorsPage() {
   ];
 
   const boardMembers = isHindi ? [
-    { name: "Mrs. Sunita Devi", role: "अध्यक्ष", note: "माइलस्टोन परिवार की संस्थापक और मार्गदर्शक शक्ति" },
-    { name: "Mr. Rajiv Sharma", role: "प्रबंध निदेशक", note: "रणनीतिक विकास और बुनियादी ढांचे की देखरेख" },
-    { name: "Mrs. Anita Khurana", role: "शैक्षणिक सलाहकार", note: "पाठ्यक्रम और शैक्षणिक नीति को आकार देते हैं" },
-    { name: "Mr. Sandeep Goyal", role: "वित्त निदेशक", note: "टिकाऊ विकास और संसाधन प्रबंधन सुनिश्चित करते हैं" },
+    { name: "Mrs. Sulochana Sharma", role: "अध्यक्ष", note: "माइलस्टोन परिवार की संस्थापक और मार्गदर्शक शक्ति" },
+    { name: "Ms. Yogita Sharma", role: "प्रबंध निदेशक", note: "रणनीतिक विकास और बुनियादी ढांचे की देखरेख" },
+    { name: "Ms. Shalu Grover", role: "इवेंट हेड", note: "सभी स्कूल कार्यक्रमों और गतिविधियों की योजना और संचालन" },
+    { name: "Mr. Sarthak Sharma", role: "प्रबंधन", note: "दैनिक संचालन और प्रशासनिक कार्यों का समन्वय" },
+    { name: "Ms. Ashima Sindhwani", role: "शैक्षणिक सलाहकार", note: "पाठ्यक्रम और शैक्षणिक नीति को आकार देते हैं" },
   ] : [
-    { name: "Mrs. Sunita Devi", role: "Chairperson", note: "Founder & guiding force of The Milestone family" },
-    { name: "Mr. Rajiv Sharma", role: "Managing Director", note: "Oversees strategic development and infrastructure" },
-    { name: "Mrs. Anita Khurana", role: "Academic Advisor", note: "Shapes curriculum and academic policy" },
-    { name: "Mr. Sandeep Goyal", role: "Finance Director", note: "Ensures sustainable growth and resource management" },
+    { name: "Mrs. Sulochana Sharma", role: "Chairperson", note: "Founder & guiding force of The Milestone family" },
+    { name: "Ms. Yogita Sharma", role: "Managing Director", note: "Oversees strategic development and infrastructure" },
+    { name: "Ms. Shalu Grover", role: "Event Head", note: "Plans and coordinates all school events and activities" },
+    { name: "Mr. Sarthak Sharma", role: "Management", note: "Coordinates day-to-day operations and administration" },
+    { name: "Ms. Ashima Sindhwani", role: "Academic Advisor", note: "Shapes curriculum and academic policy" },
   ];
 
   return (
