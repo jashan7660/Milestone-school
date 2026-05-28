@@ -245,7 +245,7 @@ export const SITE: Record<Lang, SiteT> = {
       body:    "Our experienced educators are more than just teachers — they are mentors, facilitators, and role models deeply committed to every student's success.",
       team: [
         { name: "Mr. Atul Sharma",     role: "Principal",          bio: "A dedicated leader with years of experience in shaping young minds. Committed to nurturing a culture of academic excellence, values, and holistic development at The Milestone." },
-        { name: "Ms. Poonam Vashith",  role: "Academic Head",      bio: "A passionate educator and academic leader who drives curriculum excellence and inspires students to express, perform, and lead with confidence." },
+        { name: "Mrs. Sulochana Sharma", role: "Chairperson",        bio: "The visionary founder and guiding force of The Milestone family, whose dedication to quality education has shaped the school's culture of excellence for over 15 years." },
         { name: "Ms. Hina Pahwa",      role: "English Facilitator", bio: "A dedicated English facilitator committed to building strong communication, vocabulary, and literary skills in every student through interactive and engaging methods." },
       ],
     },
@@ -463,7 +463,7 @@ export const SITE: Record<Lang, SiteT> = {
       body:    "हमारे अनुभवी शिक्षक केवल अध्यापक नहीं हैं — वे मेंटर, सूत्रधार और आदर्श हैं जो हर छात्र की सफलता के लिए गहराई से प्रतिबद्ध हैं।",
       team: [
         { name: "श्री अतुल शर्मा",   role: "प्राचार्य",               bio: "युवा मन को आकार देने के वर्षों के अनुभव के साथ एक समर्पित नेता। माइलस्टोन में शैक्षणिक उत्कृष्टता, मूल्यों और समग्र विकास की संस्कृति को बढ़ावा देने के लिए प्रतिबद्ध।" },
-        { name: "सुश्री पूनम वशिष्ठ", role: "शैक्षणिक प्रमुख",          bio: "एक उत्साही शिक्षिका और शैक्षणिक नेता जो पाठ्यक्रम उत्कृष्टता को आगे बढ़ाती हैं और छात्रों को आत्मविश्वास के साथ अभिव्यक्त करने, प्रदर्शन करने और नेतृत्व करने के लिए प्रेरित करती हैं।" },
+        { name: "श्रीमती सुलोचना शर्मा", role: "अध्यक्ष",              bio: "माइलस्टोन परिवार की दूरदर्शी संस्थापक और मार्गदर्शक शक्ति, जिनकी गुणवत्तापूर्ण शिक्षा के प्रति समर्पण ने 15 वर्षों से अधिक समय से स्कूल की उत्कृष्टता की संस्कृति को आकार दिया है।" },
         { name: "सुश्री हिना पाहवा",  role: "अंग्रेजी सूत्रधार",        bio: "एक समर्पित अंग्रेजी सूत्रधार जो इंटरैक्टिव और आकर्षक तरीकों से हर छात्र में मजबूत संचार, शब्दावली और साहित्यिक कौशल विकसित करने के लिए प्रतिबद्ध हैं।" },
       ],
     },

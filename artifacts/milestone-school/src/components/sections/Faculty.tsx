@@ -3,12 +3,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useLanguage } from "@/context/LanguageContext";
 import { SITE } from "@/i18n/translations";
 import principalImg from "@assets/atul_sharama_1777615661839.jpg";
+import sulochanaSharmaImg from "@assets/ChatGPT_Image_May_28,_2026,_10_44_20_AM_1779951430750.png";
 import facultyPosterImg from "@assets/1_1777975535490.jpg";
 
 const localImages = [
-  { image: principalImg,     pos: "object-top" },
-  { image: facultyPosterImg, pos: "object-[20%_10%]" },
-  { image: facultyPosterImg, pos: "object-[50%_10%]" },
+  { image: principalImg,        pos: "object-top" },
+  { image: sulochanaSharmaImg,  pos: "object-top" },
+  { image: facultyPosterImg,    pos: "object-[50%_10%]" },
 ];
 
 export default function Faculty() {
