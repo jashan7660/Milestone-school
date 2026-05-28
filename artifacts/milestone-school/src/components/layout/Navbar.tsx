@@ -11,28 +11,22 @@ import logoUrl from "@assets/image_1777543805589.png";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "@/hooks/useTheme";
 import { useLanguage } from "@/context/LanguageContext";
+import { SITE } from "@/i18n/translations";
 
-const TICKER_ITEMS = [
-  "🎉 Admissions Open for Session 2026–27 — Limited Seats",
-  "🏆 Our students won Gold at Chandigarh Open Skating Championship",
-  "📢 CBSE Affiliated School · Nursery to Class XII · Kaithal, Haryana",
-  "✨ 100% Pass Percentage · 15+ Years of Excellence",
+const ABOUT_HREFS = [
+  { href: "/about/story",    icon: BookText   },
+  { href: "/about/directors", icon: User2     },
+  { href: "/faculty",         icon: Users     },
+  { href: "/about/divisions", icon: LayoutGrid },
+  { href: "/about/tieups",    icon: Handshake  },
 ];
 
-const ABOUT_ITEMS = [
-  { name: "Our Story",     href: "/about/story",    icon: BookText,   desc: "History, vision & values" },
-  { name: "Our Directors", href: "/about/directors", icon: User2,      desc: "Leadership & management" },
-  { name: "Our Faculty",   href: "/faculty",         icon: Users,      desc: "Meet our dedicated teachers" },
-  { name: "Divisions",     href: "/about/divisions", icon: LayoutGrid, desc: "Academic sections & wings" },
-  { name: "Tie-ups",       href: "/about/tieups",    icon: Handshake,  desc: "Partnerships & collaborations" },
-];
-
-const NAV_LINKS = [
-  { name: "Home",         href: "/",             icon: Home },
-  { name: "Academics",    href: "/academics",    icon: BookOpen },
-  { name: "Facilities",   href: "/facilities",   icon: Building2 },
-  { name: "Achievements", href: "/achievements", icon: Trophy },
-  { name: "Gallery",      href: "/gallery",      icon: Image },
+const NAV_HREFS = [
+  { href: "/",             icon: Home     },
+  { href: "/academics",    icon: BookOpen },
+  { href: "/facilities",   icon: Building2 },
+  { href: "/achievements", icon: Trophy   },
+  { href: "/gallery",      icon: Image    },
 ];
 
 export default function Navbar() {
@@ -44,6 +38,9 @@ export default function Navbar() {
   const [location, setLocation]         = useLocation();
   const { theme, toggle: toggleTheme }  = useTheme();
   const { lang, setLang }               = useLanguage();
+  const t                               = SITE[lang].navbar;
+  const ABOUT_ITEMS = ABOUT_HREFS.map((h, i) => ({ ...h, name: t.aboutItems[i].name, desc: t.aboutItems[i].desc }));
+  const NAV_LINKS   = NAV_HREFS.map((h, i) => ({ ...h, name: i === 0 ? t.home : t.navLinks[i - 1] }));
   const aboutRef                        = useRef<HTMLDivElement>(null);
   const hoverTimeout                    = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastScrollY                     = useRef(0);
@@ -79,8 +76,8 @@ export default function Navbar() {
       {/* ── Announcement Ticker ── */}
       <div className="hidden md:block overflow-hidden bg-[#0F172A] text-white text-[11px] py-1.5">
         <div ref={tickerRef} className="flex whitespace-nowrap animate-[ticker_28s_linear_infinite]">
-          {[...TICKER_ITEMS, ...TICKER_ITEMS].map((t, i) => (
-            <span key={i} className="inline-flex items-center gap-6 mx-8">{t}<span className="text-white/30">|</span></span>
+          {[...t.ticker, ...t.ticker].map((item, i) => (
+            <span key={i} className="inline-flex items-center gap-6 mx-8">{item}<span className="text-white/30">|</span></span>
           ))}
         </div>
       </div>
