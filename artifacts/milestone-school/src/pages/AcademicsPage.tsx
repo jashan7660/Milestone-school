@@ -201,24 +201,81 @@ export default function AcademicsPage() {
         </section>
 
         {/* Results CTA */}
-        <section className="py-20 bg-primary text-white relative overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.07),transparent_60%)]" />
-          <div className="container relative z-10 mx-auto px-4 md:px-6 text-center">
-            <motion.div {...fadeUp()}>
-              <div className="text-5xl md:text-7xl font-serif font-bold text-secondary mb-4">100%</div>
-              <h2 className="text-2xl md:text-4xl font-serif font-bold mb-4">
-                {isHindi ? "CBSE कक्षा X परिणाम — 2025-26" : "CBSE Class X Result — 2025-26"}
-              </h2>
-              <p className="text-white/80 text-lg max-w-xl mx-auto mb-8">
-                {isHindi
-                  ? "कक्षा X CBSE बोर्ड परीक्षा में बैठने वाले हर एक छात्र ने उत्कृष्टता के साथ उत्तीर्ण किया। परव मित्तल ने 97% के साथ शीर्ष स्थान प्राप्त किया।"
-                  : "Every single student who appeared for the Class X CBSE board exam passed with distinction. Parv Mittal topped with 97%."}
-              </p>
-              <Link href="/achievements">
-                <Button size="lg" className="bg-secondary text-white hover:bg-secondary/90 rounded-full px-10 font-bold shadow-xl hover:-translate-y-1 transition-all">
-                  {isHindi ? "सभी उपलब्धियां देखें" : "See All Achievements"} <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
+        <section className="py-24 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #fefce8 0%, #ecfdf5 40%, #eff6ff 100%)" }}>
+          {/* Decorative blobs */}
+          <div className="absolute top-[-60px] left-[-60px] w-72 h-72 rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(250,204,21,0.25), transparent 70%)" }} />
+          <div className="absolute bottom-[-40px] right-[-40px] w-64 h-64 rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(16,185,129,0.20), transparent 70%)" }} />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(37,99,235,0.06), transparent 70%)" }} />
+
+          <div className="container relative z-10 mx-auto px-4 md:px-6">
+            <motion.div {...fadeUp()} className="max-w-4xl mx-auto">
+              {/* Top label */}
+              <div className="text-center mb-10">
+                <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest"
+                  style={{ background: "rgba(16,185,129,0.12)", color: "#059669", border: "1.5px solid rgba(16,185,129,0.3)" }}>
+                  🏆 {isHindi ? "हमारी उपलब्धि" : "Our Achievement"}
+                </span>
+              </div>
+
+              {/* Main card */}
+              <div className="bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden">
+                {/* Rainbow top bar */}
+                <div className="h-1.5" style={{ background: "linear-gradient(90deg, #2563EB, #10B981, #F59E0B, #EF4444, #8B5CF6)" }} />
+
+                <div className="p-10 md:p-14 text-center">
+                  {/* Big number */}
+                  <motion.div
+                    initial={{ scale: 0.5, opacity: 0 }}
+                    whileInView={{ scale: 1, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ type: "spring", stiffness: 160, damping: 18, delay: 0.1 }}
+                    className="inline-block mb-4">
+                    <span className="font-serif font-extrabold leading-none"
+                      style={{ fontSize: "clamp(4rem, 12vw, 8rem)", background: "linear-gradient(135deg, #16a34a, #2563EB)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                      100%
+                    </span>
+                  </motion.div>
+
+                  <h2 className="text-2xl md:text-4xl font-serif font-extrabold text-slate-800 mb-3 leading-tight">
+                    {isHindi ? "CBSE कक्षा X परिणाम — 2025-26" : "CBSE Class X Result — 2025-26"}
+                  </h2>
+                  <p className="text-slate-500 text-base md:text-lg max-w-xl mx-auto mb-10 leading-relaxed">
+                    {isHindi
+                      ? "कक्षा X CBSE बोर्ड परीक्षा में बैठने वाले हर एक छात्र ने उत्कृष्टता के साथ उत्तीर्ण किया। परव मित्तल ने 97% के साथ शीर्ष स्थान प्राप्त किया।"
+                      : "Every single student who appeared for the Class X CBSE board exam passed with distinction. Parv Mittal topped with 97%."}
+                  </p>
+
+                  {/* Stat pills */}
+                  <div className="flex flex-wrap justify-center gap-3 mb-10">
+                    {(isHindi ? [
+                      { emoji: "🥇", label: "टॉपर: परव मित्तल", val: "97%" },
+                      { emoji: "📈", label: "पास प्रतिशत", val: "100%" },
+                      { emoji: "🎓", label: "CBSE बोर्ड", val: "2025–26" },
+                    ] : [
+                      { emoji: "🥇", label: "Topper: Parv Mittal", val: "97%" },
+                      { emoji: "📈", label: "Pass Percentage", val: "100%" },
+                      { emoji: "🎓", label: "CBSE Board", val: "2025–26" },
+                    ]).map(({ emoji, label, val }, i) => (
+                      <div key={i} className="flex items-center gap-3 px-5 py-3 rounded-2xl border"
+                        style={{ background: "linear-gradient(135deg, #f8fafc, #f1f5f9)", borderColor: "#e2e8f0" }}>
+                        <span className="text-xl">{emoji}</span>
+                        <div className="text-left">
+                          <p className="text-xs text-slate-400 font-medium">{label}</p>
+                          <p className="text-base font-extrabold text-slate-800">{val}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <Link href="/achievements">
+                    <Button size="lg"
+                      className="rounded-full px-10 font-bold shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all border-0 text-white"
+                      style={{ background: "linear-gradient(135deg, #16a34a, #2563EB)" }}>
+                      {isHindi ? "सभी उपलब्धियां देखें" : "See All Achievements"} <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </Link>
+                </div>
+              </div>
             </motion.div>
           </div>
         </section>
