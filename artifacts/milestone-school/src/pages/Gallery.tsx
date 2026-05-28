@@ -16,6 +16,25 @@ import img8 from "@assets/image_1777545703703.png";
 import img9 from "@assets/image_1777545767228.png";
 import farewellImg from "@assets/SaveClip.App_614889198_18086113952035990_6052207292470122772_n_1777615680379.jpg";
 import goldGloryImg from "@assets/SaveClip.App_616509678_18086449688035990_8536646500599410673_n_1777615684795.jpg";
+import cbse12ResultImg from "@assets/image_1779951744816.png";
+import digitalAwarenessImg from "@assets/image_1779951768177.png";
+import karateChampImg from "@assets/image_1779951783244.png";
+import techDayImg from "@assets/image_1779951809693.png";
+import chessGoldImg from "@assets/image_1779951837517.png";
+import interClanImg from "@assets/image_1779951863398.png";
+import mobileAwarenessImg from "@assets/image_1779951886679.png";
+import donationDriveImg from "@assets/image_1779951906514.png";
+import littleHandsImg from "@assets/image_1779951931402.png";
+import healthDayImg from "@assets/image_1779951947476.png";
+import congratsMilestonersImg from "@assets/image_1779951978961.png";
+import loveNatureImg from "@assets/image_1779951994342.png";
+import englishOlympiadImg from "@assets/image_1779952017127.png";
+import childrensInterviewImg from "@assets/image_1779952039519.png";
+import notebookCoverImg from "@assets/image_1779952102017.png";
+import cylinderRegImg from "@assets/image_1779952115047.png";
+import declamationImg from "@assets/image_1779952134161.png";
+import debateImg from "@assets/image_1779952144193.png";
+import prayerImg from "@assets/image_1779952189203.png";
 
 const VIDEO_SRCS = ["/video1.mp4", "/video2.mp4", "/video3.mp4"];
 
@@ -30,30 +49,49 @@ interface GalleryItem {
 }
 
 const GALLERY_ITEMS: GalleryItem[] = [
-  { src: farewellImg,  altEN: "Farewell Celebration — Turning Pages, Carrying Memories",       altHI: "विदाई समारोह — पन्ने पलटते हुए, यादें संजोते हुए",          category: "highlights", featured: true },
-  { src: goldGloryImg, altEN: "Gold Glory — 6th Chandigarh Open Skating Championship",          altHI: "गोल्ड ग्लोरी — 6वीं चंडीगढ़ ओपन स्केटिंग चैंपियनशिप",      category: "achievements", featured: true },
-  { src: img6,         altEN: "Annual Day Stage Performance",                                    altHI: "वार्षिक दिवस मंच प्रदर्शन",                               category: "events", featured: true },
-  { src: img3,         altEN: "Cultural Celebration at The Milestone",                           altHI: "माइलस्टोन में सांस्कृतिक उत्सव",                          category: "events" },
-  { src: img4,         altEN: "Student Music Performance on Stage",                              altHI: "मंच पर छात्र संगीत प्रदर्शन",                             category: "events" },
-  { src: img8,         altEN: "Award Winners with Certificates",                                 altHI: "प्रमाण पत्र के साथ पुरस्कार विजेता",                      category: "achievements" },
-  { src: img1,         altEN: "Students with School Principal in Office",                        altHI: "स्कूल प्रिंसिपल के साथ छात्र कार्यालय में",              category: "campus" },
-  { src: img2,         altEN: "Group Photo at The Tribune Visit",                                altHI: "द ट्रिब्यून विजिट पर ग्रुप फोटो",                        category: "campus" },
-  { src: img5,         altEN: "Class Group Photograph in Auditorium",                            altHI: "सभागार में कक्षा समूह फोटो",                             category: "campus" },
-  { src: img7,         altEN: "School Assembly with Students and Staff",                         altHI: "छात्रों और कर्मचारियों के साथ स्कूल सभा",               category: "campus" },
-  { src: img9,         altEN: "Investiture Ceremony at School Entrance",                         altHI: "स्कूल प्रवेश पर निवेश समारोह",                           category: "events" },
+  { src: farewellImg,           altEN: "Farewell Celebration — Turning Pages, Carrying Memories",              altHI: "विदाई समारोह — पन्ने पलटते हुए, यादें संजोते हुए",                     category: "highlights",   featured: true },
+  { src: goldGloryImg,          altEN: "Gold Glory — 6th Chandigarh Open Skating Championship",               altHI: "गोल्ड ग्लोरी — 6वीं चंडीगढ़ ओपन स्केटिंग चैंपियनशिप",             category: "achievements", featured: true },
+  { src: karateChampImg,        altEN: "Karate Champions — Chandigarh State Championship 2026",               altHI: "कराटे चैंपियंस — चंडीगढ़ राज्य चैंपियनशिप 2026",                   category: "achievements", featured: true },
+  { src: chessGoldImg,          altEN: "Reyansh Sharma — Gold Medal, Chess Championship",                     altHI: "रेयांश शर्मा — गोल्ड मेडल, शतरंज चैंपियनशिप",                      category: "achievements", featured: true },
+  { src: cbse12ResultImg,       altEN: "CBSE Grade XII Science Result 2025-26 — Drishti 92%",                 altHI: "CBSE कक्षा XII विज्ञान परिणाम 2025-26 — दृष्टि 92%",                 category: "achievements", featured: true },
+  { src: declamationImg,        altEN: "Gold Glory — Nandini, Declamation Competition",                       altHI: "गोल्ड ग्लोरी — नंदिनी, वक्तृत्व प्रतियोगिता",                      category: "achievements" },
+  { src: debateImg,             altEN: "Gold Glory — Reshika & Yashika, Debate Competition",                  altHI: "गोल्ड ग्लोरी — रेशिका और यशिका, वाद-विवाद प्रतियोगिता",            category: "achievements" },
+  { src: englishOlympiadImg,    altEN: "Young Achievers — English Olympiad Winners",                          altHI: "युवा उपलब्धिकर्ता — इंग्लिश ओलंपियाड विजेता",                      category: "achievements" },
+  { src: img6,                  altEN: "Annual Day Stage Performance",                                        altHI: "वार्षिक दिवस मंच प्रदर्शन",                                         category: "events",       featured: true },
+  { src: img3,                  altEN: "Cultural Celebration at The Milestone",                               altHI: "माइलस्टोन में सांस्कृतिक उत्सव",                                    category: "events" },
+  { src: img4,                  altEN: "Student Music Performance on Stage",                                  altHI: "मंच पर छात्र संगीत प्रदर्शन",                                       category: "events" },
+  { src: img9,                  altEN: "Investiture Ceremony at School Entrance",                             altHI: "स्कूल प्रवेश पर निवेश समारोह",                                      category: "events" },
+  { src: digitalAwarenessImg,   altEN: "Empowering Young Minds — Digital Awareness with Haryana Police",      altHI: "युवा मन सशक्तिकरण — हरियाणा पुलिस के साथ डिजिटल जागरूकता",        category: "events" },
+  { src: techDayImg,            altEN: "National Technology Day — Poster-Making, Deewal 2nd Position",        altHI: "राष्ट्रीय प्रौद्योगिकी दिवस — पोस्टर बनाना, दीवाल द्वितीय स्थान", category: "events" },
+  { src: interClanImg,          altEN: "Inter Clan Awareness Drive 2026",                                     altHI: "इंटर क्लान जागरूकता अभियान 2026",                                   category: "events" },
+  { src: mobileAwarenessImg,    altEN: "Mobile Addiction Awareness Programme",                                altHI: "मोबाइल नशा जागरूकता कार्यक्रम",                                    category: "events" },
+  { src: donationDriveImg,      altEN: "Donation Drive — Giving Back to the Community",                      altHI: "डोनेशन ड्राइव — समुदाय को वापस देना",                              category: "events" },
+  { src: healthDayImg,          altEN: "Encouraging a Healthy Lifestyle — World Health Day",                  altHI: "स्वस्थ जीवनशैली को प्रोत्साहन — विश्व स्वास्थ्य दिवस",             category: "events" },
+  { src: congratsMilestonersImg,altEN: "Congratulations Milestoners — Welcome Song & Solo Dance",             altHI: "बधाई माइलस्टोनर्स — स्वागत गीत और एकल नृत्य",                      category: "events" },
+  { src: childrensInterviewImg, altEN: "Children's Interview — Budding Communicators",                        altHI: "बच्चों का साक्षात्कार — उभरते संचारक",                              category: "events" },
+  { src: cylinderRegImg,        altEN: "Cylinder Regulator Change — Hands-on Science Learning",              altHI: "सिलेंडर रेगुलेटर बदलाव — प्रयोगात्मक विज्ञान सीखना",               category: "events" },
+  { src: img8,                  altEN: "Award Winners with Certificates",                                     altHI: "प्रमाण पत्र के साथ पुरस्कार विजेता",                                category: "achievements" },
+  { src: img1,                  altEN: "Students with School Principal in Office",                            altHI: "स्कूल प्रिंसिपल के साथ छात्र कार्यालय में",                        category: "campus" },
+  { src: img2,                  altEN: "Group Photo at The Tribune Visit",                                    altHI: "द ट्रिब्यून विजिट पर ग्रुप फोटो",                                  category: "campus" },
+  { src: img5,                  altEN: "Class Group Photograph in Auditorium",                                altHI: "सभागार में कक्षा समूह फोटो",                                        category: "campus" },
+  { src: img7,                  altEN: "School Assembly with Students and Staff",                             altHI: "छात्रों और कर्मचारियों के साथ स्कूल सभा",                          category: "campus" },
+  { src: littleHandsImg,        altEN: "Little Hands, Big Learning — Early Childhood Activities",             altHI: "छोटे हाथ, बड़ी सीख — प्रारंभिक बाल्यावस्था गतिविधियां",            category: "campus" },
+  { src: loveNatureImg,         altEN: "Learning to Love Nature — Environmental Education",                   altHI: "प्रकृति से प्यार करना सीखना — पर्यावरण शिक्षा",                    category: "campus" },
+  { src: notebookCoverImg,      altEN: "Notebook Cover Designing — Creative Arts Activity",                   altHI: "नोटबुक कवर डिज़ाइनिंग — रचनात्मक कला गतिविधि",                    category: "campus" },
+  { src: prayerImg,             altEN: "Prayer & Magic Words — Morning Assembly",                             altHI: "प्रार्थना और जादुई शब्द — सुबह की सभा",                             category: "campus" },
 ];
 
 const STAT_ITEMS_EN = [
-  { icon: Camera, val: "500+", label: "Memories Captured" },
-  { icon: Trophy, val: "50+",  label: "Events Celebrated" },
-  { icon: Users,  val: "15+",  label: "Years of Campus Life" },
-  { icon: Sparkles, val: "100%", label: "Pure Joy" },
+  { icon: Camera,   val: "600+",  label: "Memories Captured" },
+  { icon: Trophy,   val: "50+",   label: "Events Celebrated" },
+  { icon: Users,    val: "15+",   label: "Years of Campus Life" },
+  { icon: Sparkles, val: "100%",  label: "Pure Joy" },
 ];
 const STAT_ITEMS_HI = [
-  { icon: Camera, val: "500+", label: "यादें कैद" },
-  { icon: Trophy, val: "50+",  label: "उत्सव मनाए" },
-  { icon: Users,  val: "15+",  label: "कैंपस जीवन के वर्ष" },
-  { icon: Sparkles, val: "100%", label: "शुद्ध आनंद" },
+  { icon: Camera,   val: "600+",  label: "यादें कैद" },
+  { icon: Trophy,   val: "50+",   label: "उत्सव मनाए" },
+  { icon: Users,    val: "15+",   label: "कैंपस जीवन के वर्ष" },
+  { icon: Sparkles, val: "100%",  label: "शुद्ध आनंद" },
 ];
 
 export default function GalleryPage() {

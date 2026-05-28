@@ -11,6 +11,12 @@ import goldGloryImg   from "@assets/SaveClip.App_616509678_18086449688035990_853
 import silverGloryImg from "@assets/SaveClip.App_614878340_18086449655035990_3947843287675199799_n_1777616304025.jpg";
 import parvImg        from "@assets/top_result_1777616348864.jpg";
 import boardResultImg from "@assets/image_1777616635036.png";
+import cbse12ResultImg  from "@assets/image_1779951744816.png";
+import karateChampImg   from "@assets/image_1779951783244.png";
+import chessGoldImg     from "@assets/image_1779951837517.png";
+import englishOlympiadImg from "@assets/image_1779952017127.png";
+import declamationImg   from "@assets/image_1779952134161.png";
+import debateImg        from "@assets/image_1779952144193.png";
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 28 },
@@ -44,26 +50,44 @@ export default function AchievementsPage() {
   ];
 
   const galleryItems = [
-    { src: boardResultImg, titleEN: "CBSE Class X — 100% Outstanding Result 2025-26",               titleHI: "CBSE कक्षा X — 100% उत्कृष्ट परिणाम 2025-26",                    wide: true  },
-    { src: parvImg,        titleEN: "Parv Mittal — School Topper, 97% CBSE Class X",                titleHI: "परव मित्तल — स्कूल टॉपर, 97% CBSE कक्षा X",                    wide: false },
-    { src: goldGloryImg,   titleEN: "Rahul — Gold, 6th Chandigarh Open Skating Championship",       titleHI: "राहुल — गोल्ड, 6वीं चंडीगढ़ ओपन स्केटिंग चैम्पियनशिप",       wide: false },
-    { src: silverGloryImg, titleEN: "Yash — Silver, 6th Chandigarh Open Skating Championship",      titleHI: "यश — सिल्वर, 6वीं चंडीगढ़ ओपन स्केटिंग चैम्पियनशिप",        wide: false },
+    { src: boardResultImg,    titleEN: "CBSE Class X — 100% Outstanding Result 2025-26",               titleHI: "CBSE कक्षा X — 100% उत्कृष्ट परिणाम 2025-26",                      wide: true  },
+    { src: parvImg,           titleEN: "Parv Mittal — School Topper, 97% CBSE Class X",               titleHI: "परव मित्तल — स्कूल टॉपर, 97% CBSE कक्षा X",                      wide: false },
+    { src: goldGloryImg,      titleEN: "Rahul — Gold, 6th Chandigarh Open Skating Championship",      titleHI: "राहुल — गोल्ड, 6वीं चंडीगढ़ ओपन स्केटिंग चैम्पियनशिप",         wide: false },
+    { src: silverGloryImg,    titleEN: "Yash — Silver, 6th Chandigarh Open Skating Championship",     titleHI: "यश — सिल्वर, 6वीं चंडीगढ़ ओपन स्केटिंग चैम्पियनशिप",          wide: false },
+    { src: cbse12ResultImg,   titleEN: "CBSE Class XII Science Result 2025-26 — Drishti 92%",         titleHI: "CBSE कक्षा XII विज्ञान परिणाम 2025-26 — दृष्टि 92%",              wide: true  },
+    { src: karateChampImg,    titleEN: "Karate Champions — Chandigarh State Championship 2026",       titleHI: "कराटे चैंपियंस — चंडीगढ़ राज्य चैंपियनशिप 2026",                 wide: false },
+    { src: chessGoldImg,      titleEN: "Reyansh Sharma — Gold Medal, Chess Championship",             titleHI: "रेयांश शर्मा — गोल्ड मेडल, शतरंज चैंपियनशिप",                  wide: false },
+    { src: englishOlympiadImg,titleEN: "Young Achievers — English Olympiad Winners",                  titleHI: "युवा उपलब्धिकर्ता — इंग्लिश ओलंपियाड विजेता",                  wide: false },
+    { src: declamationImg,    titleEN: "Gold Glory — Nandini, Declamation Competition",               titleHI: "गोल्ड ग्लोरी — नंदिनी, वक्तृत्व प्रतियोगिता",                  wide: false },
+    { src: debateImg,         titleEN: "Gold Glory — Reshika & Yashika, Debate Competition",          titleHI: "गोल्ड ग्लोरी — रेशिका और यशिका, वाद-विवाद प्रतियोगिता",        wide: false },
   ];
 
   const awards = isHindi ? [
-    { title: "100% बोर्ड परिणाम",              year: "2025-26", desc: "CBSE कक्षा X बोर्ड में बैठे हर छात्र ने उत्तीर्ण किया — स्कूल की शैक्षणिक कठोरता का प्रमाण।",          icon: Award,       color: "#2563EB" },
-    { title: "CBSE कक्षा X टॉपर",             year: "2025-26", desc: "परव मित्तल ने 97% के उत्कृष्ट अंक प्राप्त किए — स्कूल के सर्वोच्च स्कोरर।",                           icon: Star,        color: "#F59E0B" },
-    { title: "स्वर्ण — स्केटिंग चैम्पियनशिप",year: "2024",    desc: "राहुल ने 6वीं चंडीगढ़ ओपन स्केटिंग चैम्पियनशिप में स्वर्ण पदक जीता।",                                  icon: Trophy,      color: "#EAB308" },
-    { title: "रजत — स्केटिंग चैम्पियनशिप",   year: "2024",    desc: "यश ने 6वीं चंडीगढ़ ओपन स्केटिंग चैम्पियनशिप में रजत पदक हासिल किया।",                                  icon: Medal,       color: "#94A3B8" },
-    { title: "अंतर-विद्यालय प्रतियोगिताएं",  year: "जारी",   desc: "छात्र जिला और राज्य स्तरीय प्रश्नोत्तरी, वाद-विवाद, विज्ञान मेले और सांस्कृतिक प्रतियोगिताओं में जीतते हैं।", icon: Users,  color: "#8B5CF6" },
-    { title: "लगातार तीन 100% परिणाम",        year: "2022–25", desc: "माइलस्टोन ने लगातार तीन शैक्षणिक वर्षों तक CBSE बोर्ड में 100% पास रिकॉर्ड बनाए रखा है।",             icon: GraduationCap, color: "#10B981" },
+    { title: "100% बोर्ड परिणाम",                year: "2025-26", desc: "CBSE कक्षा X बोर्ड में बैठे हर छात्र ने उत्तीर्ण किया — स्कूल की शैक्षणिक कठोरता का प्रमाण।",                                  icon: Award,         color: "#2563EB" },
+    { title: "CBSE कक्षा X टॉपर",               year: "2025-26", desc: "परव मित्तल ने 97% के उत्कृष्ट अंक प्राप्त किए — स्कूल के सर्वोच्च स्कोरर।",                                                     icon: Star,          color: "#F59E0B" },
+    { title: "CBSE कक्षा XII — दृष्टि 92%",     year: "2025-26", desc: "CBSE कक्षा XII विज्ञान में दृष्टि ने 92% अंक प्राप्त कर स्कूल का नाम रोशन किया।",                                              icon: GraduationCap, color: "#2563EB" },
+    { title: "स्वर्ण — स्केटिंग चैम्पियनशिप",  year: "2024",    desc: "राहुल ने 6वीं चंडीगढ़ ओपन स्केटिंग चैम्पियनशिप में स्वर्ण पदक जीता।",                                                           icon: Trophy,        color: "#EAB308" },
+    { title: "रजत — स्केटिंग चैम्पियनशिप",     year: "2024",    desc: "यश ने 6वीं चंडीगढ़ ओपन स्केटिंग चैम्पियनशिप में रजत पदक हासिल किया।",                                                           icon: Medal,         color: "#94A3B8" },
+    { title: "कराटे चैंपियंस",                  year: "2026",    desc: "माइलस्टोन के छात्रों ने चंडीगढ़ राज्य कराटे चैंपियनशिप 2026 में शानदार प्रदर्शन करते हुए पदक जीते।",                             icon: Trophy,        color: "#EF4444" },
+    { title: "स्वर्ण — शतरंज चैंपियनशिप",      year: "2026",    desc: "रेयांश शर्मा ने शतरंज चैंपियनशिप में स्वर्ण पदक जीतकर स्कूल का गौरव बढ़ाया।",                                                   icon: Medal,         color: "#EAB308" },
+    { title: "गोल्ड ग्लोरी — वक्तृत्व",        year: "2025-26", desc: "नंदिनी ने वक्तृत्व प्रतियोगिता में स्वर्ण पदक प्राप्त कर उत्कृष्ट संचार कौशल का प्रदर्शन किया।",                                 icon: Star,          color: "#8B5CF6" },
+    { title: "गोल्ड ग्लोरी — वाद-विवाद",       year: "2025-26", desc: "रेशिका और यशिका ने वाद-विवाद प्रतियोगिता में स्वर्ण जीतकर स्कूल का झंडा ऊंचा किया।",                                            icon: Star,          color: "#EC4899" },
+    { title: "इंग्लिश ओलंपियाड विजेता",        year: "2025-26", desc: "माइलस्टोन के युवा प्रतिभाशाली छात्रों ने English Olympiad में शीर्ष स्थान प्राप्त किया।",                                          icon: Award,         color: "#10B981" },
+    { title: "अंतर-विद्यालय प्रतियोगिताएं",    year: "जारी",   desc: "छात्र जिला और राज्य स्तरीय प्रश्नोत्तरी, वाद-विवाद, विज्ञान मेले और सांस्कृतिक प्रतियोगिताओं में जीतते हैं।",                       icon: Users,         color: "#8B5CF6" },
+    { title: "लगातार तीन 100% परिणाम",          year: "2022–25", desc: "माइलस्टोन ने लगातार तीन शैक्षणिक वर्षों तक CBSE बोर्ड में 100% पास रिकॉर्ड बनाए रखा है।",                                        icon: GraduationCap, color: "#10B981" },
   ] : [
-    { title: "100% Board Result",              year: "2025-26", desc: "Every student who appeared for CBSE Class X boards passed — a testimony to the school's academic rigour.",  icon: Award,       color: "#2563EB" },
-    { title: "CBSE Class X Topper",            year: "2025-26", desc: "Parv Mittal achieved an outstanding 97% in CBSE Class X, ranking as the school's highest scorer.",          icon: Star,        color: "#F59E0B" },
-    { title: "Gold — Skating Championship",    year: "2024",    desc: "Rahul brought home the Gold medal at the 6th Chandigarh Open Skating Championship.",                        icon: Trophy,      color: "#EAB308" },
-    { title: "Silver — Skating Championship",  year: "2024",    desc: "Yash secured Silver at the 6th Chandigarh Open Skating Championship — a proud moment for our sports team.", icon: Medal,       color: "#94A3B8" },
-    { title: "Inter-School Competitions",      year: "Ongoing", desc: "Students regularly participate and win at district & state-level quiz, debate, science fair competitions.",    icon: Users,       color: "#8B5CF6" },
-    { title: "Three Consecutive 100% Results", year: "2022–25", desc: "The Milestone has maintained a 100% CBSE board pass record for three consecutive academic years.",          icon: GraduationCap, color: "#10B981" },
+    { title: "100% Board Result",                year: "2025-26", desc: "Every student who appeared for CBSE Class X boards passed — a testimony to the school's academic rigour.",                           icon: Award,         color: "#2563EB" },
+    { title: "CBSE Class X Topper",              year: "2025-26", desc: "Parv Mittal achieved an outstanding 97% in CBSE Class X, ranking as the school's highest scorer.",                                   icon: Star,          color: "#F59E0B" },
+    { title: "CBSE Class XII — Drishti 92%",     year: "2025-26", desc: "Drishti scored 92% in CBSE Class XII Science, bringing immense pride to The Milestone family.",                                      icon: GraduationCap, color: "#2563EB" },
+    { title: "Gold — Skating Championship",      year: "2024",    desc: "Rahul brought home the Gold medal at the 6th Chandigarh Open Skating Championship.",                                                  icon: Trophy,        color: "#EAB308" },
+    { title: "Silver — Skating Championship",    year: "2024",    desc: "Yash secured Silver at the 6th Chandigarh Open Skating Championship — a proud moment for our sports team.",                          icon: Medal,         color: "#94A3B8" },
+    { title: "Karate Champions",                 year: "2026",    desc: "Milestone students won medals at the Chandigarh State Karate Championship 2026, showcasing strength and discipline.",                  icon: Trophy,        color: "#EF4444" },
+    { title: "Gold — Chess Championship",        year: "2026",    desc: "Reyansh Sharma won the Gold medal at the Chess Championship, demonstrating exceptional strategic skill.",                             icon: Medal,         color: "#EAB308" },
+    { title: "Gold Glory — Declamation",         year: "2025-26", desc: "Nandini won Gold in the Declamation Competition, displaying outstanding oratory and communication skills.",                           icon: Star,          color: "#8B5CF6" },
+    { title: "Gold Glory — Debate",              year: "2025-26", desc: "Reshika & Yashika won Gold in the Debate Competition — an inspiring display of critical thinking and teamwork.",                      icon: Star,          color: "#EC4899" },
+    { title: "English Olympiad Winners",         year: "2025-26", desc: "Young Milestone achievers topped the English Olympiad, showcasing their language excellence on a competitive platform.",               icon: Award,         color: "#10B981" },
+    { title: "Inter-School Competitions",        year: "Ongoing", desc: "Students regularly participate and win at district & state-level quiz, debate, science fair and cultural competitions.",               icon: Users,         color: "#8B5CF6" },
+    { title: "Three Consecutive 100% Results",   year: "2022–25", desc: "The Milestone has maintained a 100% CBSE board pass record for three consecutive academic years.",                                    icon: GraduationCap, color: "#10B981" },
   ];
 
   return (
@@ -271,69 +295,36 @@ export default function AchievementsPage() {
             <p className="text-muted-foreground mt-3 text-sm">{isHindi ? "क्लिक करके बड़ा देखें" : "Click any photo to view full size"}</p>
           </motion.div>
 
-          {/* Gallery — 2×2 grid with correct image display */}
-          <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {/* Gallery — responsive masonry grid */}
+          <div className="max-w-5xl mx-auto columns-1 sm:columns-2 lg:columns-3 gap-5 space-y-5">
 
-            {/* Card 0 & 1: Board result + Topper (both are small portrait images) */}
-            {[galleryItems[0], galleryItems[1]].map((item, i) => (
+            {galleryItems.map((item, i) => (
               <motion.div key={i}
-                {...fadeUp(i * 0.1)}
-                whileHover={{ y: -5, boxShadow: "0 24px 60px rgba(0,0,0,0.14)" }}
+                {...fadeUp((i % 3) * 0.08)}
+                whileHover={{ y: -5, boxShadow: "0 24px 60px rgba(0,0,0,0.18)" }}
                 onClick={() => setLightbox({ src: item.src, title: isHindi ? item.titleHI : item.titleEN })}
-                className="relative rounded-2xl overflow-hidden shadow-lg cursor-pointer group transition-all duration-300 bg-white border border-slate-100 flex flex-col">
-                {/* Badge */}
-                <div className="absolute top-3 left-3 z-10 flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold text-white"
-                  style={{ background: i === 0 ? "linear-gradient(135deg,#2563EB,#10B981)" : "linear-gradient(135deg,#F59E0B,#EF4444)" }}>
-                  {i === 0 ? <><Star size={9} className="fill-white"/> {isHindi ? "100% परिणाम" : "100% Result"}</> : <>👑 {isHindi ? "स्कूल टॉपर" : "School Topper"}</>}
-                </div>
-                {/* Zoom icon on hover */}
-                <div className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-md">
-                  <ZoomIn size={14} className="text-slate-600"/>
-                </div>
-                {/* Image — object-contain so full image is visible */}
-                <div className="flex-1 flex items-center justify-center p-4 min-h-[280px] bg-gradient-to-br from-slate-50 to-white">
-                  <img src={item.src} alt={isHindi ? item.titleHI : item.titleEN}
-                    className="max-w-full max-h-[300px] object-contain transition-transform duration-500 group-hover:scale-[1.04]"
-                    style={{ filter: "drop-shadow(0 4px 16px rgba(0,0,0,0.12))" }}/>
-                </div>
-                {/* Caption */}
-                <div className="px-4 py-3 border-t border-slate-100">
-                  <p className="text-slate-700 font-semibold text-xs leading-snug text-center">
+                className="relative rounded-2xl overflow-hidden shadow-lg cursor-pointer group transition-all duration-300 break-inside-avoid mb-5">
+                {/* Image */}
+                <img src={item.src} alt={isHindi ? item.titleHI : item.titleEN}
+                  className="w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  style={{ display: "block" }}/>
+                {/* Dark gradient overlay on hover */}
+                <div className="absolute inset-0 flex flex-col justify-between p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{ background: "linear-gradient(to top, rgba(10,22,40,0.9) 0%, rgba(10,22,40,0.2) 60%, transparent 100%)" }}>
+                  <div className="self-end">
+                    <div className="w-9 h-9 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/30">
+                      <ZoomIn size={16} className="text-white"/>
+                    </div>
+                  </div>
+                  <p className="text-white text-[12px] font-semibold leading-snug">
                     {isHindi ? item.titleHI : item.titleEN}
                   </p>
                 </div>
-              </motion.div>
-            ))}
-
-            {/* Card 2 & 3: Skating gold + silver (large 1080×1350 portraits — object-cover works perfectly) */}
-            {[galleryItems[2], galleryItems[3]].map((item, i) => (
-              <motion.div key={i + 2}
-                {...fadeUp((i + 2) * 0.1)}
-                whileHover={{ y: -5, boxShadow: "0 24px 60px rgba(0,0,0,0.18)" }}
-                onClick={() => setLightbox({ src: item.src, title: isHindi ? item.titleHI : item.titleEN })}
-                className="relative rounded-2xl overflow-hidden shadow-lg cursor-pointer group transition-all duration-300">
-                {/* 4:5 aspect ratio perfectly matches 1080×1350 */}
-                <div className="relative w-full overflow-hidden" style={{ paddingBottom: "125%" }}>
-                  <img src={item.src} alt={isHindi ? item.titleHI : item.titleEN}
-                    className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"/>
-                  {/* Dark overlay on hover */}
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300"/>
-                  {/* Zoom icon */}
-                  <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                    <ZoomIn size={14} className="text-white"/>
-                  </div>
-                  {/* Caption on hover */}
-                  <div className="absolute bottom-0 left-0 right-0 px-4 py-4 translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300"
-                    style={{ background: "linear-gradient(to top, rgba(10,22,40,0.92) 0%, transparent 100%)" }}>
-                    <p className="text-white text-[12px] font-semibold leading-snug">
-                      {isHindi ? item.titleHI : item.titleEN}
-                    </p>
-                  </div>
-                </div>
-                {/* Medal badge */}
-                <div className="absolute top-3 left-3 z-10 flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold text-white shadow-lg"
-                  style={{ background: i === 0 ? "linear-gradient(135deg,#F59E0B,#D97706)" : "linear-gradient(135deg,#94A3B8,#64748B)" }}>
-                  {i === 0 ? "🥇" : "🥈"} {i === 0 ? (isHindi ? "गोल्ड" : "Gold") : (isHindi ? "सिल्वर" : "Silver")}
+                {/* Always-visible caption strip */}
+                <div className="px-3 py-2.5 bg-white/95 border-t border-slate-100">
+                  <p className="text-slate-700 font-semibold text-[11px] leading-snug text-center line-clamp-2">
+                    {isHindi ? item.titleHI : item.titleEN}
+                  </p>
                 </div>
               </motion.div>
             ))}
