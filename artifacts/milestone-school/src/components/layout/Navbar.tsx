@@ -87,7 +87,7 @@ export default function Navbar() {
         <div className="flex items-center gap-5">
           <a href="https://maps.google.com/?q=Khurana+Rd+Chiranjeev+Colony+Kaithal+Haryana+136027" target="_blank" rel="noopener noreferrer"
             className="flex items-center gap-1.5 hover:text-white transition-colors">
-            <MapPin size={12} /> Khurana Rd, Chiranjeev Colony, Kaithal
+            <MapPin size={12} /> {t.address}
           </a>
           <a href="tel:+919812574766" className="flex items-center gap-1.5 hover:text-white transition-colors">
             <Phone size={12} /> +91 98125-74766
@@ -172,13 +172,13 @@ export default function Navbar() {
 
             {/* Home */}
             <NavBtn active={isActive("/")} onClick={() => navigate("/")}>
-              <Home size={12} /> Home
+              <Home size={12} /> {t.home}
             </NavBtn>
 
             {/* About Us — dropdown */}
             <div ref={aboutRef} className="relative" onMouseEnter={handleAboutEnter} onMouseLeave={handleAboutLeave}>
               <NavBtn active={isAboutActive} onClick={() => navigate("/about/story")}>
-                About Us
+                {t.aboutUs}
                 <motion.span animate={{ rotate: desktopAbout ? 180 : 0 }} transition={{ duration: 0.2 }}>
                   <ChevronDown size={12} />
                 </motion.span>
@@ -199,7 +199,7 @@ export default function Navbar() {
                     {/* Gradient header */}
                     <div className="px-4 py-3 text-xs font-bold uppercase tracking-widest text-white"
                       style={{ background: "linear-gradient(135deg, #2563EB, #1D4ED8)" }}>
-                      About The Milestone
+                      {t.aboutHeader}
                     </div>
                     <div className="p-2">
                       {ABOUT_ITEMS.map(({ name, href, icon: Icon, desc }, i) => (
@@ -226,7 +226,7 @@ export default function Navbar() {
                     </div>
                     <div className="mx-3 mb-3 rounded-xl px-3 py-2 text-[11px] font-semibold flex items-center gap-1.5"
                       style={{ background: "linear-gradient(135deg, #eff6ff, #dbeafe)", color: "#2563EB" }}>
-                      <Trophy size={11} /> Kaithal's most trusted CBSE school since 2008
+                      <Trophy size={11} /> {t.trusted}
                     </div>
                   </motion.div>
                 )}
@@ -253,7 +253,7 @@ export default function Navbar() {
               {/* Shine sweep */}
               <span className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-white/25 to-transparent" />
               <GraduationCap size={14} />
-              Admissions Open
+              {t.admissionsOpen}
               {/* Pulse dot */}
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
@@ -303,7 +303,7 @@ export default function Navbar() {
           >
             <nav className="container mx-auto px-4 py-4 flex flex-col gap-1">
 
-              <MobileNavBtn active={isActive("/")} onClick={() => navigate("/")} icon={<Home size={16}/>}>Home</MobileNavBtn>
+              <MobileNavBtn active={isActive("/")} onClick={() => navigate("/")} icon={<Home size={16}/>}>{t.home}</MobileNavBtn>
 
               {/* About accordion */}
               <div>
@@ -312,7 +312,7 @@ export default function Navbar() {
                   className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200
                     ${isAboutActive ? "bg-blue-600 text-white" : "text-foreground hover:bg-slate-100 dark:hover:bg-white/5"}`}
                 >
-                  <span className="flex items-center gap-2.5"><User2 size={16} /> About Us</span>
+                  <span className="flex items-center gap-2.5"><User2 size={16} /> {t.aboutUs}</span>
                   <motion.span animate={{ rotate: mobileAbout ? 180 : 0 }} transition={{ duration: 0.2 }}>
                     <ChevronDown size={15} className="opacity-60" />
                   </motion.span>
@@ -348,7 +348,7 @@ export default function Navbar() {
                 className="mt-3 w-full flex items-center justify-center gap-2 h-11 rounded-xl text-sm font-bold text-white relative overflow-hidden"
                 style={{ background: "linear-gradient(135deg, #2563EB, #10B981)", boxShadow: "0 4px 16px rgba(37,99,235,0.35)" }}
               >
-                <GraduationCap size={16} /> Admissions Open 2026–27
+                <GraduationCap size={16} /> {t.mobileAdmissions}
               </button>
 
               <div className="mt-4 pt-4 border-t border-border/50 flex flex-col gap-2 text-xs text-muted-foreground px-1">

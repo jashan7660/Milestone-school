@@ -158,6 +158,7 @@ export const SITE: Record<Lang, SiteT> = {
       admissionsOpen: "Admissions Open",
       mobileAdmissions: "Admissions Open 2026–27",
       trusted: "Kaithal's most trusted CBSE school since 2008",
+      address: "Khurana Rd, Chiranjeev Colony, Kaithal",
       navLinks: ["Academics", "Facilities", "Achievements", "Gallery"],
       aboutItems: [
         { name: "Our Story",     desc: "History, vision & values" },
@@ -375,6 +376,7 @@ export const SITE: Record<Lang, SiteT> = {
       admissionsOpen: "प्रवेश खुले हैं",
       mobileAdmissions: "प्रवेश खुले हैं 2026–27",
       trusted: "2008 से कैथल का सबसे भरोसेमंद CBSE स्कूल",
+      address: "खुराना रोड, चिरंजीव कॉलोनी, कैथल",
       navLinks: ["शैक्षणिक", "सुविधाएं", "उपलब्धियां", "गैलरी"],
       aboutItems: [
         { name: "हमारी कहानी",  desc: "इतिहास, दृष्टि और मूल्य" },
@@ -588,6 +590,7 @@ interface SiteT {
     admissionsOpen: string;
     mobileAdmissions: string;
     trusted: string;
+    address: string;
     navLinks: string[];
     aboutItems: { name: string; desc: string }[];
   };
