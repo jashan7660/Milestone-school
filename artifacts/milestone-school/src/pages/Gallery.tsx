@@ -430,20 +430,21 @@ export default function GalleryPage() {
               <div className="h-px flex-1 opacity-20" style={{ background: "rgba(255,255,255,0.4)" }}/>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {[
-                { src: "/activity-video1.mp4", labelEN: "School Activities — Campus Highlights",     labelHI: "स्कूल गतिविधियां — कैंपस हाइलाइट्स" },
-                { src: "/activity-video2.mp4", labelEN: "Student Life — Moments at The Milestone",   labelHI: "छात्र जीवन — माइलस्टोन के पल"       },
+                { src: "/activity-video1.mp4", labelEN: "School Activities — Campus Highlights",    labelHI: "स्कूल गतिविधियां — कैंपस हाइलाइट्स", accent: "#8B5CF6", dot: "#a78bfa" },
+                { src: "/activity-video2.mp4", labelEN: "Student Life — Moments at The Milestone", labelHI: "छात्र जीवन — माइलस्टोन के पल",        accent: "#2563EB", dot: "#60a5fa" },
+                { src: "/activity-video3.mp4", labelEN: "Campus Events — School Life",             labelHI: "कैंपस इवेंट्स — स्कूल जीवन",           accent: "#EC4899", dot: "#f9a8d4" },
               ].map((v, i) => (
                 <div key={i}
                   className="rounded-2xl overflow-hidden"
                   style={{
                     background: "rgba(255,255,255,0.05)",
-                    border: "1px solid rgba(139,92,246,0.3)",
+                    border: `1px solid ${v.accent}55`,
                     pointerEvents: "none",
                     userSelect: "none",
                   }}>
-                  <div className="h-1" style={{ background: ["linear-gradient(90deg,#8B5CF6,#a78bfa)", "linear-gradient(90deg,#2563EB,#60a5fa)"][i] }}/>
+                  <div className="h-1" style={{ background: `linear-gradient(90deg,${v.accent},${v.dot})` }}/>
                   <div className="relative bg-black">
                     <video
                       src={v.src}
@@ -456,13 +457,13 @@ export default function GalleryPage() {
                       style={{ height: "240px", pointerEvents: "none" }}
                     />
                     <div className="absolute top-3 left-3 w-8 h-8 rounded-full flex items-center justify-center"
-                      style={{ background: ["#8B5CF6cc","#2563EBcc"][i], pointerEvents: "none" }}>
+                      style={{ background: v.accent + "cc", pointerEvents: "none" }}>
                       <Sparkles size={13} className="text-white"/>
                     </div>
                   </div>
                   <div className="p-4">
                     <div className="flex items-center gap-2 mb-1">
-                      <div className="w-1.5 h-1.5 rounded-full" style={{ background: ["#a78bfa","#60a5fa"][i] }}/>
+                      <div className="w-1.5 h-1.5 rounded-full" style={{ background: v.dot }}/>
                       <p className="font-bold text-white text-sm">{isHindi ? v.labelHI : v.labelEN}</p>
                     </div>
                     <p className="text-white/40 text-xs">{isHindi ? "द माइलस्टोन सी.सेक. स्कूल" : "The Milestone Sr. Sec. School"}</p>
