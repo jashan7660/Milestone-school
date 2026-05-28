@@ -7,9 +7,9 @@ import sulochanaSharmaImg from "@assets/ChatGPT_Image_May_28,_2026,_10_44_20_AM_
 import facultyPosterImg from "@assets/1_1777975535490.jpg";
 
 const localImages = [
-  { image: principalImg,        pos: "object-top" },
-  { image: sulochanaSharmaImg,  pos: "object-top" },
-  { image: facultyPosterImg,    pos: "object-[50%_10%]" },
+  { image: principalImg,        pos: "object-top",          style: {} },
+  { image: sulochanaSharmaImg,  pos: "object-[center_0%]",  style: { transform: "scale(2.2)", transformOrigin: "50% 12%" } },
+  { image: facultyPosterImg,    pos: "object-[50%_10%]",    style: {} },
 ];
 
 export default function Faculty() {
@@ -47,6 +47,7 @@ export default function Faculty() {
                     src={localImages[index].image}
                     alt={member.name}
                     className={`w-full h-full object-cover ${localImages[index].pos} transition-transform duration-500 group-hover:scale-105`}
+                    style={localImages[index].style}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
