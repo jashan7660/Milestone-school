@@ -99,19 +99,26 @@ export default function AIGuide() {
 
   const startPageScroll = useCallback((durationSec: number) => {
     cancelPageScroll();
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
-      const totalMs = Math.max(durationSec * 1000, 1000);
-      const t0 = performance.now();
-      const tick = (now: number) => {
-        const p = Math.min((now - t0) / totalMs, 1);
-        const e = p < 0.5 ? 2*p*p : 1 - Math.pow(-2*p+2, 2)/2;
-        const max = document.documentElement.scrollHeight - window.innerHeight;
-        if (max > 0) window.scrollTo(0, max * e);
-        if (p < 1) scrollRafRef.current = requestAnimationFrame(tick);
-      };
-      scrollRafRef.current = requestAnimationFrame(tick);
-    }, 600);
+    /* Scroll to top instantly, then animate to the absolute bottom over durationSec.
+       We use 90% of the duration so the footer is visible before audio ends. */
+    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+    const totalMs = Math.max(durationSec * 900, 4000); // 90% of duration, min 4s
+    const t0 = performance.now();
+    const tick = (now: number) => {
+      const p = Math.min((now - t0) / totalMs, 1);
+      /* ease-in-out cubic */
+      const e = p < 0.5 ? 4*p*p*p : 1 - Math.pow(-2*p+2, 3)/2;
+      /* Re-measure every tick so late-loading content is included */
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      if (max > 0) window.scrollTo(0, max * e);
+      if (p < 1) {
+        scrollRafRef.current = requestAnimationFrame(tick);
+      } else {
+        /* Final hard-snap to the very bottom (footer) */
+        window.scrollTo({ top: document.documentElement.scrollHeight });
+      }
+    };
+    scrollRafRef.current = requestAnimationFrame(tick);
   }, [cancelPageScroll]);
 
   const stopAudio = useCallback(() => {
@@ -129,12 +136,21 @@ export default function AIGuide() {
     if (msgBoxRef.current) msgBoxRef.current.scrollTop = msgBoxRef.current.scrollHeight;
   }, []);
 
+  /* Default scroll duration per step (seconds) — used immediately before
+     audio metadata arrives so the page always starts scrolling right away. */
+  const DEFAULT_SCROLL_SEC = 15;
+
   const playTourAudio = useCallback((step: number) => {
     stopAudio();
     const audio = new Audio(`/audio/tour-${step}.mp3`);
     audioRef.current = audio;
     audio.onended = () => { audioRef.current = null; nextStepRef.current(); };
-    audio.addEventListener("loadedmetadata", () => { startPageScroll(audio.duration); });
+    /* Once we know the real duration, restart scroll timed to the audio */
+    audio.addEventListener("loadedmetadata", () => {
+      if (audio.duration && isFinite(audio.duration)) {
+        startPageScroll(audio.duration);
+      }
+    });
     audio.play().catch(() => {});
   }, [stopAudio, startPageScroll]);
 
@@ -147,8 +163,11 @@ export default function AIGuide() {
     stopAudio(); setTourStep(step);
     navigate(tourSteps[step].path);
     nextStepRef.current = () => startStep(step + 1);
+    /* Start scrolling immediately with a default duration so the page
+       begins moving top→footer right away, even before audio metadata loads. */
+    startPageScroll(DEFAULT_SCROLL_SEC);
     playTourAudio(step);
-  }, [navigate, playTourAudio, stopAudio, tourSteps]);
+  }, [navigate, playTourAudio, stopAudio, tourSteps, startPageScroll]);
 
   const startTour = useCallback(() => { setMode("tour"); startStep(0); }, [startStep]);
   const stopTour  = useCallback(() => {
