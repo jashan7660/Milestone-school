@@ -1,9 +1,8 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { Link } from "wouter";
-import { ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { X, ZoomIn, Play, Camera, Trophy, Users, Sparkles, Grid3X3, Video } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
 import img1 from "@assets/image_1777545590594.png";
@@ -20,140 +19,365 @@ import goldGloryImg from "@assets/SaveClip.App_616509678_18086449688035990_85366
 
 const VIDEO_SRCS = ["/video1.mp4", "/video2.mp4", "/video3.mp4"];
 
-const highlightPhotos = [
-  { src: farewellImg, alt: "Farewell Celebration — Turning Pages, Carrying Memories" },
-  { src: goldGloryImg, alt: "Gold Glory — 6th Chandigarh Open Skating Championship" },
+type Category = "all" | "events" | "campus" | "achievements" | "highlights";
+
+interface GalleryItem {
+  src: string;
+  altEN: string;
+  altHI: string;
+  category: Category;
+  featured?: boolean;
+}
+
+const GALLERY_ITEMS: GalleryItem[] = [
+  { src: farewellImg,  altEN: "Farewell Celebration — Turning Pages, Carrying Memories",       altHI: "विदाई समारोह — पन्ने पलटते हुए, यादें संजोते हुए",          category: "highlights", featured: true },
+  { src: goldGloryImg, altEN: "Gold Glory — 6th Chandigarh Open Skating Championship",          altHI: "गोल्ड ग्लोरी — 6वीं चंडीगढ़ ओपन स्केटिंग चैंपियनशिप",      category: "achievements", featured: true },
+  { src: img6,         altEN: "Annual Day Stage Performance",                                    altHI: "वार्षिक दिवस मंच प्रदर्शन",                               category: "events", featured: true },
+  { src: img3,         altEN: "Cultural Celebration at The Milestone",                           altHI: "माइलस्टोन में सांस्कृतिक उत्सव",                          category: "events" },
+  { src: img4,         altEN: "Student Music Performance on Stage",                              altHI: "मंच पर छात्र संगीत प्रदर्शन",                             category: "events" },
+  { src: img8,         altEN: "Award Winners with Certificates",                                 altHI: "प्रमाण पत्र के साथ पुरस्कार विजेता",                      category: "achievements" },
+  { src: img1,         altEN: "Students with School Principal in Office",                        altHI: "स्कूल प्रिंसिपल के साथ छात्र कार्यालय में",              category: "campus" },
+  { src: img2,         altEN: "Group Photo at The Tribune Visit",                                altHI: "द ट्रिब्यून विजिट पर ग्रुप फोटो",                        category: "campus" },
+  { src: img5,         altEN: "Class Group Photograph in Auditorium",                            altHI: "सभागार में कक्षा समूह फोटो",                             category: "campus" },
+  { src: img7,         altEN: "School Assembly with Students and Staff",                         altHI: "छात्रों और कर्मचारियों के साथ स्कूल सभा",               category: "campus" },
+  { src: img9,         altEN: "Investiture Ceremony at School Entrance",                         altHI: "स्कूल प्रवेश पर निवेश समारोह",                           category: "events" },
+];
+
+const STAT_ITEMS_EN = [
+  { icon: Camera, val: "500+", label: "Memories Captured" },
+  { icon: Trophy, val: "50+",  label: "Events Celebrated" },
+  { icon: Users,  val: "15+",  label: "Years of Campus Life" },
+  { icon: Sparkles, val: "100%", label: "Pure Joy" },
+];
+const STAT_ITEMS_HI = [
+  { icon: Camera, val: "500+", label: "यादें कैद" },
+  { icon: Trophy, val: "50+",  label: "उत्सव मनाए" },
+  { icon: Users,  val: "15+",  label: "कैंपस जीवन के वर्ष" },
+  { icon: Sparkles, val: "100%", label: "शुद्ध आनंद" },
 ];
 
 export default function GalleryPage() {
   const { lang } = useLanguage();
   const isHindi = lang === "hi";
 
-  const images = [
-    { src: img1, alt: isHindi ? "स्कूल प्रिंसिपल के साथ छात्र कार्यालय में" : "Students with school principal in office" },
-    { src: img2, alt: isHindi ? "द ट्रिब्यून विजिट पर ग्रुप फोटो" : "Group photo at The Tribune visit" },
-    { src: img3, alt: isHindi ? "माइलस्टोन में सांस्कृतिक उत्सव" : "Cultural celebration at The Milestone" },
-    { src: img4, alt: isHindi ? "मंच पर छात्र संगीत प्रदर्शन" : "Student music performance on stage" },
-    { src: img5, alt: isHindi ? "सभागार में कक्षा समूह फोटो" : "Class group photograph in auditorium" },
-    { src: img6, alt: isHindi ? "वार्षिक दिवस मंच प्रदर्शन" : "Annual day stage performance" },
-    { src: img7, alt: isHindi ? "छात्रों और कर्मचारियों के साथ स्कूल सभा" : "School assembly with students and staff" },
-    { src: img8, alt: isHindi ? "प्रमाण पत्र के साथ पुरस्कार विजेता" : "Award winners with certificates" },
-    { src: img9, alt: isHindi ? "स्कूल प्रवेश पर निवेश समारोह" : "Investiture ceremony at school entrance" },
+  const [activeFilter, setActiveFilter] = useState<Category>("all");
+  const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
+
+  const FILTERS: { key: Category; labelEN: string; labelHI: string; icon: React.ReactNode }[] = [
+    { key: "all",          labelEN: "All",          labelHI: "सभी",        icon: <Grid3X3 size={13}/> },
+    { key: "highlights",   labelEN: "Highlights",   labelHI: "हाइलाइट्स", icon: <Sparkles size={13}/> },
+    { key: "events",       labelEN: "Events",       labelHI: "कार्यक्रम", icon: <Camera size={13}/> },
+    { key: "achievements", labelEN: "Achievements", labelHI: "उपलब्धियां",icon: <Trophy size={13}/> },
+    { key: "campus",       labelEN: "Campus Life",  labelHI: "कैंपस जीवन",icon: <Users size={13}/> },
   ];
+
+  const filtered = activeFilter === "all"
+    ? GALLERY_ITEMS
+    : GALLERY_ITEMS.filter(i => i.category === activeFilter);
 
   const videoLabels = isHindi
     ? ["स्कूल कार्यक्रम", "कैंपस के पल", "छात्र गतिविधियां"]
     : ["School Event", "Campus Moments", "Student Activities"];
 
+  const statsItems = isHindi ? STAT_ITEMS_HI : STAT_ITEMS_EN;
+
   return (
-    <div className="min-h-screen bg-background font-sans text-foreground overflow-x-hidden selection:bg-secondary selection:text-secondary-foreground">
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Navbar />
 
-      <main>
-        {/* Hero Banner */}
-        <section className="relative bg-gradient-to-br from-primary via-primary to-secondary py-20 md:py-28 overflow-hidden">
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute top-10 left-10 w-72 h-72 rounded-full bg-white/30 blur-3xl"></div>
-            <div className="absolute bottom-10 right-10 w-96 h-96 rounded-full bg-secondary/40 blur-3xl"></div>
+      {/* ── HERO ──────────────────────────────────────────────────── */}
+      <section className="relative overflow-hidden min-h-[70vh] flex items-center"
+        style={{ background: "linear-gradient(145deg, #0a1628 0%, #0f2d50 40%, #0a2a1a 75%, #12103a 100%)" }}>
+
+        {/* Animated orbs */}
+        {[
+          { w: 500, h: 500, x: "-8%",  y: "-20%", c: "#2563EB", dur: 9 },
+          { w: 380, h: 380, x: "70%",  y: "40%",  c: "#10B981", dur: 12 },
+          { w: 260, h: 260, x: "30%",  y: "60%",  c: "#8B5CF6", dur: 7 },
+        ].map((o, i) => (
+          <motion.div key={i} className="absolute rounded-full pointer-events-none"
+            style={{ width: o.w, height: o.h, left: o.x, top: o.y, background: `radial-gradient(circle, ${o.c}28, transparent 70%)` }}
+            animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.9, 0.5] }}
+            transition={{ repeat: Infinity, duration: o.dur, ease: "easeInOut" }}/>
+        ))}
+
+        {/* Floating camera icons */}
+        {["📸", "🎭", "🏆", "🎬", "✨", "🎓"].map((emoji, i) => (
+          <motion.div key={i} className="absolute text-2xl select-none pointer-events-none hidden md:block"
+            style={{ left: `${[8,85,15,78,45,62][i]}%`, top: `${[20,15,72,68,12,78][i]}%` }}
+            animate={{ y: [0, -14, 0], opacity: [0.4, 0.8, 0.4] }}
+            transition={{ repeat: Infinity, duration: 4 + i * 0.7, delay: i * 0.5, ease: "easeInOut" }}>
+            {emoji}
+          </motion.div>
+        ))}
+
+        {/* Grid overlay */}
+        <div className="absolute inset-0 pointer-events-none opacity-[0.035]"
+          style={{ backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px)", backgroundSize: "48px 48px" }}/>
+
+        <div className="container relative z-10 mx-auto px-4 md:px-6 py-28 md:py-36 text-center">
+          <motion.div initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest mb-7"
+            style={{ background: "rgba(255,255,255,0.10)", border: "1.5px solid rgba(255,255,255,0.22)", color: "rgba(255,255,255,0.85)", backdropFilter: "blur(12px)" }}>
+            <motion.span animate={{ scale: [1, 1.3, 1] }} transition={{ repeat: Infinity, duration: 2 }}>📸</motion.span>
+            {isHindi ? "कैंपस जीवन" : "Campus Life"}
+            <motion.span className="w-2 h-2 rounded-full bg-green-400" animate={{ opacity: [1, 0.3, 1] }} transition={{ repeat: Infinity, duration: 0.9 }}/>
+          </motion.div>
+
+          <motion.h1 className="font-serif font-extrabold text-white leading-tight tracking-tight mb-5"
+            style={{ fontSize: "clamp(2.4rem, 7vw, 5.5rem)", textShadow: "0 4px 40px rgba(0,0,0,0.5)" }}
+            initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}>
+            {isHindi ? "माइलस्टोन के" : "Moments at"}
+            <br/>
+            <span style={{ background: "linear-gradient(90deg, #60a5fa, #34d399, #a78bfa)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+              {isHindi ? "यादगार पल" : "The Milestone"}
+            </span>
+          </motion.h1>
+
+          <motion.p className="text-white/65 text-base md:text-xl max-w-2xl mx-auto leading-relaxed"
+            initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.3 }}>
+            {isHindi
+              ? "हमारे छात्रों, उत्सवों, उपलब्धियों और कैंपस की खुशियों की झलकियां — हर पल अनमोल है।"
+              : "Glimpses of our students, celebrations, achievements, and everyday joys — every moment here is a milestone."}
+          </motion.p>
+        </div>
+
+        {/* Wave bottom */}
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg viewBox="0 0 1440 70" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
+            <path d="M0 70L1440 70L1440 25C1200 70 960 5 720 25C480 45 240 5 0 25Z" fill="hsl(var(--background))"/>
+          </svg>
+        </div>
+      </section>
+
+      {/* ── STATS STRIP ────────────────────────────────────────────── */}
+      <section className="py-12 bg-background">
+        <div className="container mx-auto px-4 md:px-6">
+          <motion.div className="grid grid-cols-2 md:grid-cols-4 gap-4"
+            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
+            {statsItems.map(({ icon: Icon, val, label }, i) => (
+              <motion.div key={i}
+                whileHover={{ y: -4, boxShadow: "0 12px 40px rgba(0,0,0,0.09)" }}
+                className="flex items-center gap-4 p-5 rounded-2xl border border-border bg-card transition-all duration-300">
+                <div className="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center"
+                  style={{ background: `${["#2563EB","#10B981","#8B5CF6","#F59E0B"][i]}15`, border: `1.5px solid ${["#2563EB","#10B981","#8B5CF6","#F59E0B"][i]}30` }}>
+                  <Icon size={20} style={{ color: ["#2563EB","#10B981","#8B5CF6","#F59E0B"][i] }}/>
+                </div>
+                <div>
+                  <p className="text-2xl font-serif font-extrabold text-foreground leading-none">{val}</p>
+                  <p className="text-muted-foreground text-xs mt-0.5 font-medium">{label}</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── FILTER TABS ────────────────────────────────────────────── */}
+      <section className="pb-4 bg-background sticky top-[64px] z-30 border-b border-border/60">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="flex gap-2 overflow-x-auto pb-3 scrollbar-hide">
+            {FILTERS.map(({ key, labelEN, labelHI, icon }) => (
+              <motion.button key={key}
+                onClick={() => setActiveFilter(key)}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all duration-250 flex-shrink-0"
+                style={activeFilter === key ? {
+                  background: "linear-gradient(135deg, #2563EB, #10B981)",
+                  color: "white",
+                  boxShadow: "0 4px 18px rgba(37,99,235,0.35)",
+                } : {
+                  background: "rgba(0,0,0,0.04)",
+                  color: "var(--muted-foreground)",
+                  border: "1.5px solid var(--border)",
+                }}>
+                {icon}
+                {isHindi ? labelHI : labelEN}
+                {activeFilter === key && (
+                  <motion.span layoutId="tab-active-dot" className="w-1.5 h-1.5 rounded-full bg-white/80"/>
+                )}
+              </motion.button>
+            ))}
           </div>
-          <div className="container relative z-10 mx-auto px-4 md:px-6 text-center">
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-              <div className="inline-block px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-sm text-white font-semibold text-sm mb-6 uppercase tracking-wider">
-                {isHindi ? "कैंपस जीवन" : "Campus Life"}
-              </div>
-              <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-6 leading-tight">
-                {isHindi ? "माइलस्टोन के पल" : "Moments at The Milestone"}
-              </h1>
-              <p className="text-white/90 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-                {isHindi
-                  ? "द माइलस्टोन सी.सेक. स्कूल में हमारे छात्रों, उत्सवों, उपलब्धियों और रोजमर्रा की खुशियों की झलकियां।"
-                  : "Glimpses of our students, celebrations, achievements, and everyday joys at The Milestone Sr. Sec. School."}
-              </p>
+        </div>
+      </section>
+
+      {/* ── MASONRY PHOTO GRID ─────────────────────────────────────── */}
+      <section className="py-14 bg-background">
+        <div className="container mx-auto px-4 md:px-6">
+          <AnimatePresence mode="wait">
+            <motion.div key={activeFilter}
+              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.4 }}
+              className="columns-1 sm:columns-2 lg:columns-3 gap-5 space-y-5">
+              {filtered.map((item, i) => (
+                <motion.div key={item.src}
+                  initial={{ opacity: 0, scale: 0.92 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.5, delay: (i % 3) * 0.07 }}
+                  whileHover={{ y: -4 }}
+                  className="relative group overflow-hidden rounded-2xl shadow-md hover:shadow-2xl transition-all duration-400 cursor-pointer break-inside-avoid mb-5"
+                  style={item.featured ? { border: "2.5px solid transparent", backgroundImage: "linear-gradient(white,white), linear-gradient(135deg,#2563EB,#10B981)", backgroundOrigin: "border-box", backgroundClip: "padding-box, border-box" } : {}}
+                  onClick={() => setLightbox({ src: item.src, alt: isHindi ? item.altHI : item.altEN })}>
+
+                  {item.featured && (
+                    <div className="absolute top-3 left-3 z-10 flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold text-white"
+                      style={{ background: "linear-gradient(135deg,#2563EB,#10B981)", boxShadow: "0 2px 12px rgba(37,99,235,0.45)" }}>
+                      <Sparkles size={9}/> {isHindi ? "फीचर्ड" : "Featured"}
+                    </div>
+                  )}
+
+                  <img src={item.src} alt={isHindi ? item.altHI : item.altEN}
+                    className="w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    style={{ display: "block" }}/>
+
+                  {/* Hover overlay */}
+                  <div className="absolute inset-0 flex flex-col justify-between p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    style={{ background: "linear-gradient(to top, rgba(10,22,40,0.88) 0%, rgba(10,22,40,0.3) 60%, transparent 100%)" }}>
+                    <div className="self-end">
+                      <div className="w-9 h-9 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/30">
+                        <ZoomIn size={16} className="text-white"/>
+                      </div>
+                    </div>
+                    <div>
+                      <span className="inline-block px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider mb-2 text-white"
+                        style={{ background: "rgba(255,255,255,0.18)" }}>
+                        {isHindi
+                          ? { events:"कार्यक्रम", campus:"कैंपस", achievements:"उपलब्धि", highlights:"हाइलाइट" }[item.category]
+                          : item.category.charAt(0).toUpperCase() + item.category.slice(1)}
+                      </span>
+                      <p className="text-white text-sm font-semibold leading-snug line-clamp-2">
+                        {isHindi ? item.altHI : item.altEN}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
             </motion.div>
-          </div>
-        </section>
+          </AnimatePresence>
 
-        {/* Gallery Grid */}
-        <section className="py-20 md:py-24 bg-background">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {images.map((image, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                  whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.5, delay: (index % 3) * 0.1 }}
-                  className="relative rounded-2xl overflow-hidden group bg-muted aspect-[4/3] shadow-md hover:shadow-2xl transition-shadow duration-500"
-                >
-                  <img src={image.src} alt={image.alt} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                    <p className="text-white font-medium text-base leading-snug">{image.alt}</p>
-                  </div>
-                </motion.div>
-              ))}
+          {filtered.length === 0 && (
+            <div className="text-center py-20 text-muted-foreground">
+              <Camera size={48} className="mx-auto mb-3 opacity-30"/>
+              <p>{isHindi ? "इस श्रेणी में कोई चित्र नहीं है।" : "No photos in this category yet."}</p>
             </div>
-          </div>
-        </section>
+          )}
+        </div>
+      </section>
 
-        {/* School Highlights */}
-        <section className="py-20 md:py-24 bg-muted/30">
-          <div className="container mx-auto px-4 md:px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-center max-w-3xl mx-auto mb-14"
-            >
-              <div className="inline-block px-4 py-1.5 rounded-full bg-secondary/10 text-secondary font-semibold text-sm mb-5 uppercase tracking-wider">
-                {isHindi ? "स्कूल हाइलाइट्स" : "School Highlights"}
+      {/* ── VIDEO SECTION ──────────────────────────────────────────── */}
+      <section className="py-20 relative overflow-hidden"
+        style={{ background: "linear-gradient(160deg, #0f172a 0%, #0f2d1a 50%, #1e1b4b 100%)" }}>
+
+        <div className="absolute inset-0 pointer-events-none opacity-[0.04]"
+          style={{ backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px)", backgroundSize: "44px 44px" }}/>
+
+        <div className="container relative z-10 mx-auto px-4 md:px-6">
+          <motion.div className="text-center mb-14"
+            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest mb-5"
+              style={{ background: "rgba(139,92,246,0.18)", color: "#c4b5fd", border: "1.5px solid rgba(139,92,246,0.4)" }}>
+              <Video size={12}/> {isHindi ? "हाइलाइट वीडियो" : "Highlight Videos"}
+            </div>
+            <h2 className="text-3xl md:text-4xl font-serif font-extrabold text-white mb-3">
+              {isHindi ? "जिएं " : "Relive the "}
+              <span style={{ background: "linear-gradient(90deg,#a78bfa,#34d399)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                {isHindi ? "जादुई पलों को" : "Magic Moments"}
+              </span>
+            </h2>
+            <p className="text-white/55 max-w-xl mx-auto">
+              {isHindi ? "हमारे स्कूल कार्यक्रमों, उत्सवों और छात्र गतिविधियों के वीडियो देखें।" : "Watch our school events, celebrations, and student activities come to life."}
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {VIDEO_SRCS.map((src, i) => (
+              <motion.div key={i}
+                initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }} transition={{ delay: i * 0.12, duration: 0.6 }}
+                whileHover={{ y: -6, boxShadow: "0 24px 60px rgba(0,0,0,0.5)" }}
+                className="rounded-2xl overflow-hidden transition-all duration-300"
+                style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)" }}>
+
+                {/* Colored accent bar */}
+                <div className="h-1" style={{ background: ["linear-gradient(90deg,#2563EB,#60a5fa)", "linear-gradient(90deg,#10B981,#34d399)", "linear-gradient(90deg,#8B5CF6,#a78bfa)"][i] }}/>
+
+                <div className="relative bg-black">
+                  <video src={src} controls playsInline preload="metadata"
+                    className="w-full object-cover"
+                    style={{ height: "200px" }}/>
+                  <div className="absolute top-3 left-3 w-8 h-8 rounded-full flex items-center justify-center pointer-events-none"
+                    style={{ background: ["#2563EB","#10B981","#8B5CF6"][i] + "cc" }}>
+                    <Play size={12} className="text-white fill-white ml-0.5"/>
+                  </div>
+                </div>
+
+                <div className="p-5">
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className="w-1.5 h-1.5 rounded-full" style={{ background: ["#60a5fa","#34d399","#a78bfa"][i] }}/>
+                    <p className="font-bold text-white text-sm">{videoLabels[i]}</p>
+                  </div>
+                  <p className="text-white/40 text-xs">{isHindi ? "द माइलस्टोन सी.सेक. स्कूल" : "The Milestone Sr. Sec. School"}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA STRIP ──────────────────────────────────────────────── */}
+      <section className="py-16"
+        style={{ background: "linear-gradient(135deg, #fefce8 0%, #ecfdf5 50%, #eff6ff 100%)" }}>
+        <div className="container mx-auto px-4 md:px-6 text-center">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <p className="text-slate-500 text-sm uppercase tracking-widest font-semibold mb-3">
+              {isHindi ? "हमारी कहानी का हिस्सा बनें" : "Be Part of Our Story"}
+            </p>
+            <h2 className="text-2xl md:text-3xl font-serif font-extrabold text-slate-800 mb-6">
+              {isHindi ? "आपके बच्चे की यादें यहाँ बनेंगी 🌟" : "Your child's best memories start here 🌟"}
+            </h2>
+            <a href="/admissions"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-white text-sm shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+              style={{ background: "linear-gradient(135deg, #2563EB, #10B981)" }}>
+              {isHindi ? "प्रवेश के लिए आवेदन करें" : "Apply for Admissions"} →
+            </a>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── LIGHTBOX ───────────────────────────────────────────────── */}
+      <AnimatePresence>
+        {lightbox && (
+          <motion.div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 md:p-10"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            style={{ background: "rgba(5,10,20,0.92)", backdropFilter: "blur(16px)" }}
+            onClick={() => setLightbox(null)}>
+
+            <motion.div className="relative max-w-5xl w-full"
+              initial={{ scale: 0.85, opacity: 0, y: 30 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.88, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 220, damping: 25 }}
+              onClick={e => e.stopPropagation()}>
+
+              <img src={lightbox.src} alt={lightbox.alt}
+                className="w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl"/>
+
+              <div className="mt-4 px-2 flex items-start justify-between gap-4">
+                <p className="text-white/80 text-sm md:text-base leading-snug">{lightbox.alt}</p>
+                <button onClick={() => setLightbox(null)}
+                  className="flex-shrink-0 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center border border-white/20 transition-colors">
+                  <X size={16} className="text-white"/>
+                </button>
               </div>
-              <h2 className="text-3xl md:text-5xl font-serif font-bold text-foreground mb-5 leading-tight">
-                {isHindi ? "उत्सव, उपलब्धियां और कैंपस जीवन" : "Celebrations, Achievements & Campus Life"}
-              </h2>
-              <p className="text-muted-foreground text-lg">
-                {isHindi
-                  ? "चमकदार विदाई समारोहों से लेकर चैम्पियनशिप स्वर्ण पदकों तक — माइलस्टोन में जीवन यादगार पलों से भरा है।"
-                  : "From glittering farewell ceremonies to championship gold medals — life at The Milestone is full of memorable milestones."}
-              </p>
             </motion.div>
 
-            {/* Highlight photos */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-              {highlightPhotos.map((item, i) => (
-                <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.15 }} className="rounded-2xl overflow-hidden shadow-lg group relative">
-                  <img src={item.src} alt={item.alt} className="w-full h-72 md:h-96 object-cover transition-transform duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                    <p className="text-white font-semibold text-base leading-snug">{item.alt}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Highlight videos */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {VIDEO_SRCS.map((src, i) => (
-                <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.12 }} className="rounded-2xl overflow-hidden shadow-lg bg-black">
-                  <video src={src} controls playsInline preload="metadata" className="w-full h-56 object-cover" />
-                  <div className="bg-card px-4 py-3">
-                    <p className="text-sm font-semibold text-foreground">{videoLabels[i]}</p>
-                    <p className="text-xs text-muted-foreground">{isHindi ? "द माइलस्टोन सी.सेक. स्कूल" : "The Milestone Sr. Sec. School"}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            <div className="mt-16 text-center">
-              <Link href="/">
-                <Button size="lg" variant="outline" className="rounded-full px-8 h-12 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all">
-                  <ArrowLeft className="mr-2 h-4 w-4" /> {isHindi ? "होम पर वापस जाएं" : "Back to Home"}
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </section>
-      </main>
+            {/* Close hint */}
+            <p className="absolute bottom-5 text-white/30 text-xs">{isHindi ? "बंद करने के लिए क्लिक करें" : "Click anywhere to close"}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <Footer />
     </div>
