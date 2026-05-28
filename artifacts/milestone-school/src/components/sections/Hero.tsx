@@ -2,10 +2,12 @@ import { motion } from "framer-motion";
 import { ArrowRight, MapPin, Award } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { SITE } from "@/i18n/translations";
+import { useLocation } from "wouter";
 
 export default function Hero() {
   const { lang } = useLanguage();
   const t = SITE[lang].hero;
+  const [, setLocation] = useLocation();
 
   const scrollTo = (id: string) =>
     document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
@@ -141,7 +143,7 @@ export default function Hero() {
           className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto"
         >
           <button
-            onClick={() => scrollTo("#admissions")}
+            onClick={() => { setLocation("/admissions"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
             className="group inline-flex items-center justify-center gap-2 px-7 py-3.5 sm:px-9 sm:py-4 rounded-full font-semibold text-white text-sm sm:text-base transition-all duration-300 hover:-translate-y-1 hover:scale-[1.03] w-full sm:w-auto"
             style={{
               background: "linear-gradient(135deg, #16a34a 0%, #22c55e 100%)",
