@@ -492,6 +492,101 @@
   }
 }
 
+/* ═══════════════════════════════════════════════════════════
+   PALETTE THEMES  (data-palette="<id>" on <html>)
+   Each theme overrides --primary and --secondary (light + dark)
+═══════════════════════════════════════════════════════════ */
+
+/* ── Royal Purple ────────────────────────────────────────── */
+html[data-palette="purple"] {
+  --primary:   262 83% 58%;
+  --secondary:  38 92% 50%;
+  --ring:       262 83% 58%;
+  --accent:      38 92% 50%;
+  --sidebar-primary: 262 83% 58%;
+  --sidebar-ring:    262 83% 58%;
+  --chart-1:    262 83% 58%;
+  --chart-2:     38 92% 50%;
+}
+html[data-palette="purple"].dark {
+  --primary:   262 80% 65%;
+  --secondary:  38 90% 55%;
+  --ring:       262 80% 65%;
+  --accent:      38 90% 55%;
+}
+
+/* ── Crimson & Gold ──────────────────────────────────────── */
+html[data-palette="crimson"] {
+  --primary:    0 72% 51%;
+  --secondary: 25 95% 53%;
+  --ring:       0 72% 51%;
+  --accent:    25 95% 53%;
+  --sidebar-primary:  0 72% 51%;
+  --sidebar-ring:     0 72% 51%;
+  --chart-1:    0 72% 51%;
+  --chart-2:   25 95% 53%;
+}
+html[data-palette="crimson"].dark {
+  --primary:    0 70% 60%;
+  --secondary: 25 92% 60%;
+  --ring:       0 70% 60%;
+  --accent:    25 92% 60%;
+}
+
+/* ── Forest Green ────────────────────────────────────────── */
+html[data-palette="forest"] {
+  --primary:  142 71% 30%;
+  --secondary: 38 90% 45%;
+  --ring:     142 71% 30%;
+  --accent:    38 90% 45%;
+  --sidebar-primary: 142 71% 30%;
+  --sidebar-ring:    142 71% 30%;
+  --chart-1:  142 71% 30%;
+  --chart-2:   38 90% 45%;
+}
+html[data-palette="forest"].dark {
+  --primary:  142 68% 42%;
+  --secondary: 38 88% 52%;
+  --ring:     142 68% 42%;
+  --accent:    38 88% 52%;
+}
+
+/* ── Ocean Teal ──────────────────────────────────────────── */
+html[data-palette="ocean"] {
+  --primary:  174 62% 36%;
+  --secondary: 199 89% 48%;
+  --ring:     174 62% 36%;
+  --accent:   199 89% 48%;
+  --sidebar-primary: 174 62% 36%;
+  --sidebar-ring:    174 62% 36%;
+  --chart-1:  174 62% 36%;
+  --chart-2:  199 89% 48%;
+}
+html[data-palette="ocean"].dark {
+  --primary:  174 60% 46%;
+  --secondary: 199 86% 56%;
+  --ring:     174 60% 46%;
+  --accent:   199 86% 56%;
+}
+
+/* ── Midnight Rose ───────────────────────────────────────── */
+html[data-palette="midnight"] {
+  --primary:   245 75% 52%;
+  --secondary: 340 82% 52%;
+  --ring:      245 75% 52%;
+  --accent:    340 82% 52%;
+  --sidebar-primary: 245 75% 52%;
+  --sidebar-ring:    245 75% 52%;
+  --chart-1:   245 75% 52%;
+  --chart-2:   340 82% 52%;
+}
+html[data-palette="midnight"].dark {
+  --primary:   245 72% 63%;
+  --secondary: 340 79% 62%;
+  --ring:      245 72% 63%;
+  --accent:    340 79% 62%;
+}
+
 /**
  * Using the elevate system.
  * Automatic contrast adjustment.

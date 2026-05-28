@@ -20,6 +20,7 @@ import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import PhoneButton from "@/components/ui/PhoneButton";
 import AIGuide from "@/components/ui/AIGuide";
 import { LanguageProvider } from "@/context/LanguageContext";
+import { PaletteProvider } from "@/context/PaletteContext";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +47,7 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <PaletteProvider>
       <LanguageProvider>
         <TooltipProvider>
           <PageLoader />
@@ -58,6 +60,7 @@ function App() {
           <Toaster />
         </TooltipProvider>
       </LanguageProvider>
+      </PaletteProvider>
     </QueryClientProvider>
   );
 }
