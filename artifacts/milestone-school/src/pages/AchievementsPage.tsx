@@ -271,37 +271,70 @@ export default function AchievementsPage() {
             <p className="text-muted-foreground mt-3 text-sm">{isHindi ? "क्लिक करके बड़ा देखें" : "Click any photo to view full size"}</p>
           </motion.div>
 
-          {/* Masonry-style grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto">
-            {galleryItems.map((item, i) => (
+          {/* Gallery — 2×2 grid with correct image display */}
+          <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+            {/* Card 0 & 1: Board result + Topper (both are small portrait images) */}
+            {[galleryItems[0], galleryItems[1]].map((item, i) => (
               <motion.div key={i}
                 {...fadeUp(i * 0.1)}
-                whileHover={{ y: -6, boxShadow: "0 20px 60px rgba(0,0,0,0.18)" }}
+                whileHover={{ y: -5, boxShadow: "0 24px 60px rgba(0,0,0,0.14)" }}
                 onClick={() => setLightbox({ src: item.src, title: isHindi ? item.titleHI : item.titleEN })}
-                className={`relative rounded-2xl overflow-hidden shadow-md cursor-pointer group transition-all duration-400
-                  ${item.wide ? "md:col-span-2" : ""}`}>
-                <img src={item.src} alt={isHindi ? item.titleHI : item.titleEN}
-                  className="w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                  style={{ height: item.wide ? "280px" : "260px" }}/>
-                {/* Gradient overlay */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-5"
-                  style={{ background: "linear-gradient(to top, rgba(10,22,40,0.9) 0%, rgba(10,22,40,0.2) 60%, transparent 100%)" }}>
-                  <div className="self-end">
-                    <div className="w-9 h-9 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/30">
-                      <ZoomIn size={16} className="text-white"/>
-                    </div>
-                  </div>
-                  <p className="text-white font-semibold text-sm leading-snug line-clamp-2">
+                className="relative rounded-2xl overflow-hidden shadow-lg cursor-pointer group transition-all duration-300 bg-white border border-slate-100 flex flex-col">
+                {/* Badge */}
+                <div className="absolute top-3 left-3 z-10 flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold text-white"
+                  style={{ background: i === 0 ? "linear-gradient(135deg,#2563EB,#10B981)" : "linear-gradient(135deg,#F59E0B,#EF4444)" }}>
+                  {i === 0 ? <><Star size={9} className="fill-white"/> {isHindi ? "100% परिणाम" : "100% Result"}</> : <>👑 {isHindi ? "स्कूल टॉपर" : "School Topper"}</>}
+                </div>
+                {/* Zoom icon on hover */}
+                <div className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-md">
+                  <ZoomIn size={14} className="text-slate-600"/>
+                </div>
+                {/* Image — object-contain so full image is visible */}
+                <div className="flex-1 flex items-center justify-center p-4 min-h-[280px] bg-gradient-to-br from-slate-50 to-white">
+                  <img src={item.src} alt={isHindi ? item.titleHI : item.titleEN}
+                    className="max-w-full max-h-[300px] object-contain transition-transform duration-500 group-hover:scale-[1.04]"
+                    style={{ filter: "drop-shadow(0 4px 16px rgba(0,0,0,0.12))" }}/>
+                </div>
+                {/* Caption */}
+                <div className="px-4 py-3 border-t border-slate-100">
+                  <p className="text-slate-700 font-semibold text-xs leading-snug text-center">
                     {isHindi ? item.titleHI : item.titleEN}
                   </p>
                 </div>
-                {/* Always-visible subtle badge for featured */}
-                {i === 0 && (
-                  <div className="absolute top-3 left-3 flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold text-white"
-                    style={{ background: "linear-gradient(135deg,#2563EB,#10B981)" }}>
-                    <Star size={9} className="fill-white"/> {isHindi ? "फीचर्ड" : "Featured"}
+              </motion.div>
+            ))}
+
+            {/* Card 2 & 3: Skating gold + silver (large 1080×1350 portraits — object-cover works perfectly) */}
+            {[galleryItems[2], galleryItems[3]].map((item, i) => (
+              <motion.div key={i + 2}
+                {...fadeUp((i + 2) * 0.1)}
+                whileHover={{ y: -5, boxShadow: "0 24px 60px rgba(0,0,0,0.18)" }}
+                onClick={() => setLightbox({ src: item.src, title: isHindi ? item.titleHI : item.titleEN })}
+                className="relative rounded-2xl overflow-hidden shadow-lg cursor-pointer group transition-all duration-300">
+                {/* 4:5 aspect ratio perfectly matches 1080×1350 */}
+                <div className="relative w-full overflow-hidden" style={{ paddingBottom: "125%" }}>
+                  <img src={item.src} alt={isHindi ? item.titleHI : item.titleEN}
+                    className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"/>
+                  {/* Dark overlay on hover */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300"/>
+                  {/* Zoom icon */}
+                  <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    <ZoomIn size={14} className="text-white"/>
                   </div>
-                )}
+                  {/* Caption on hover */}
+                  <div className="absolute bottom-0 left-0 right-0 px-4 py-4 translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300"
+                    style={{ background: "linear-gradient(to top, rgba(10,22,40,0.92) 0%, transparent 100%)" }}>
+                    <p className="text-white text-[12px] font-semibold leading-snug">
+                      {isHindi ? item.titleHI : item.titleEN}
+                    </p>
+                  </div>
+                </div>
+                {/* Medal badge */}
+                <div className="absolute top-3 left-3 z-10 flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold text-white shadow-lg"
+                  style={{ background: i === 0 ? "linear-gradient(135deg,#F59E0B,#D97706)" : "linear-gradient(135deg,#94A3B8,#64748B)" }}>
+                  {i === 0 ? "🥇" : "🥈"} {i === 0 ? (isHindi ? "गोल्ड" : "Gold") : (isHindi ? "सिल्वर" : "Silver")}
+                </div>
               </motion.div>
             ))}
           </div>
