@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { X, ZoomIn, Play, Camera, Trophy, Users, Sparkles, Grid3X3, Video } from "lucide-react";
+import { X, ZoomIn, Play, Camera, Trophy, Users, Sparkles, Grid3X3, Video, Microscope } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
 import img1 from "@assets/image_1777545590594.png";
@@ -361,6 +361,62 @@ export default function GalleryPage() {
               </motion.div>
             ))}
           </div>
+
+          {/* ── SCIENCE LAB VIDEOS (autoplay · loop · muted · no controls) ── */}
+          <motion.div className="mt-14"
+            initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }}>
+
+            <div className="flex items-center gap-3 mb-6">
+              <div className="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest"
+                style={{ background: "rgba(16,185,129,0.18)", color: "#34d399", border: "1.5px solid rgba(16,185,129,0.4)" }}>
+                <Microscope size={12}/> {isHindi ? "विज्ञान प्रयोगशाला" : "Science Lab in Action"}
+              </div>
+              <div className="h-px flex-1 opacity-20" style={{ background: "rgba(255,255,255,0.4)" }}/>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {[
+                { src: "/science-lab-video.mp4",  labelEN: "Science Lab — Practical Session",   labelHI: "विज्ञान लैब — प्रयोगात्मक सत्र" },
+                { src: "/science-lab-video2.mp4", labelEN: "Science Lab — Hands-on Experiment", labelHI: "विज्ञान लैब — प्रायोगिक प्रयोग"  },
+              ].map((v, i) => (
+                <div key={i}
+                  className="rounded-2xl overflow-hidden"
+                  style={{
+                    background: "rgba(255,255,255,0.05)",
+                    border: "1px solid rgba(16,185,129,0.3)",
+                    pointerEvents: "none",
+                    userSelect: "none",
+                  }}>
+                  <div className="h-1" style={{ background: "linear-gradient(90deg,#10B981,#34d399)" }}/>
+                  <div className="relative bg-black">
+                    <video
+                      src={v.src}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      disablePictureInPicture
+                      className="w-full object-cover"
+                      style={{ height: "240px", pointerEvents: "none" }}
+                    />
+                    <div className="absolute top-3 left-3 w-8 h-8 rounded-full flex items-center justify-center"
+                      style={{ background: "#10B981cc", pointerEvents: "none" }}>
+                      <Microscope size={13} className="text-white"/>
+                    </div>
+                  </div>
+                  <div className="p-4">
+                    <div className="flex items-center gap-2 mb-1">
+                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-400"/>
+                      <p className="font-bold text-white text-sm">{isHindi ? v.labelHI : v.labelEN}</p>
+                    </div>
+                    <p className="text-white/40 text-xs">{isHindi ? "द माइलस्टोन सी.सेक. स्कूल" : "The Milestone Sr. Sec. School"}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
         </div>
       </section>
 
