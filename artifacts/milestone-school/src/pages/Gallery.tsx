@@ -417,6 +417,61 @@ export default function GalleryPage() {
             </div>
           </motion.div>
 
+          {/* ── CAMPUS ACTIVITY VIDEOS (autoplay · loop · muted · no controls) ── */}
+          <motion.div className="mt-10"
+            initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }}>
+
+            <div className="flex items-center gap-3 mb-6">
+              <div className="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest"
+                style={{ background: "rgba(139,92,246,0.18)", color: "#c4b5fd", border: "1.5px solid rgba(139,92,246,0.4)" }}>
+                <Sparkles size={12}/> {isHindi ? "कैंपस गतिविधियां" : "Campus Activities"}
+              </div>
+              <div className="h-px flex-1 opacity-20" style={{ background: "rgba(255,255,255,0.4)" }}/>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {[
+                { src: "/activity-video1.mp4", labelEN: "School Activities — Campus Highlights",     labelHI: "स्कूल गतिविधियां — कैंपस हाइलाइट्स" },
+                { src: "/activity-video2.mp4", labelEN: "Student Life — Moments at The Milestone",   labelHI: "छात्र जीवन — माइलस्टोन के पल"       },
+              ].map((v, i) => (
+                <div key={i}
+                  className="rounded-2xl overflow-hidden"
+                  style={{
+                    background: "rgba(255,255,255,0.05)",
+                    border: "1px solid rgba(139,92,246,0.3)",
+                    pointerEvents: "none",
+                    userSelect: "none",
+                  }}>
+                  <div className="h-1" style={{ background: ["linear-gradient(90deg,#8B5CF6,#a78bfa)", "linear-gradient(90deg,#2563EB,#60a5fa)"][i] }}/>
+                  <div className="relative bg-black">
+                    <video
+                      src={v.src}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      disablePictureInPicture
+                      className="w-full object-cover"
+                      style={{ height: "240px", pointerEvents: "none" }}
+                    />
+                    <div className="absolute top-3 left-3 w-8 h-8 rounded-full flex items-center justify-center"
+                      style={{ background: ["#8B5CF6cc","#2563EBcc"][i], pointerEvents: "none" }}>
+                      <Sparkles size={13} className="text-white"/>
+                    </div>
+                  </div>
+                  <div className="p-4">
+                    <div className="flex items-center gap-2 mb-1">
+                      <div className="w-1.5 h-1.5 rounded-full" style={{ background: ["#a78bfa","#60a5fa"][i] }}/>
+                      <p className="font-bold text-white text-sm">{isHindi ? v.labelHI : v.labelEN}</p>
+                    </div>
+                    <p className="text-white/40 text-xs">{isHindi ? "द माइलस्टोन सी.सेक. स्कूल" : "The Milestone Sr. Sec. School"}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
         </div>
       </section>
 
