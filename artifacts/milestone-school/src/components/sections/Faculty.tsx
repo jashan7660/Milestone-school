@@ -5,11 +5,15 @@ import { SITE } from "@/i18n/translations";
 import principalImg from "@assets/pricipal_sir_1780036894116.png";
 import sulochanaSharmaImg from "@assets/managing_director_1780037204818.jpeg";
 import vicePrincipalImg from "@assets/viceprincipal_1780037357684.png";
+import sarthakImg from "@assets/sarthak_1780039328255.png";
+import secretaryImg from "@assets/secretary_1780039339840.png";
 
 const localImages = [
   { image: principalImg,       position: "center top",    fit: "cover" as const, bg: "transparent" },
   { image: sulochanaSharmaImg, position: "center 6%",     fit: "cover" as const, bg: "transparent" },
   { image: vicePrincipalImg,   position: "center 5%",     fit: "cover" as const, bg: "transparent" },
+  { image: sarthakImg,         position: "center top",    fit: "cover" as const, bg: "transparent" },
+  { image: secretaryImg,       position: "center top",    fit: "cover" as const, bg: "transparent" },
 ];
 
 export default function Faculty() {
@@ -32,7 +36,7 @@ export default function Faculty() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-14">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 mb-14">
           {t.team.map((member, index) => (
             <motion.div
               key={index}

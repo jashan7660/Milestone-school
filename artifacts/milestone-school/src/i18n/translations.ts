@@ -247,6 +247,8 @@ export const SITE: Record<Lang, SiteT> = {
         { name: "Mr. Atul Sharma",     role: "Principal",          bio: "A dedicated leader with years of experience in shaping young minds. Committed to nurturing a culture of academic excellence, values, and holistic development at The Milestone." },
         { name: "Mrs. Sulochana Sharma", role: "Managing Director",   bio: "The visionary founder and guiding force of The Milestone family, whose dedication to quality education has shaped the school's culture of excellence for over 15 years." },
         { name: "Ms. Yogita Sharma",   role: "Vice Principal",      bio: "A passionate educator and leader committed to fostering academic excellence, discipline, and a nurturing environment where every student grows with confidence." },
+        { name: "Mr. Sarthak Sharma",  role: "Dean of Admin",       bio: "Overseeing the administrative operations of The Milestone with efficiency and dedication, ensuring a smooth and supportive environment for students, staff, and parents alike." },
+        { name: "Mr. Rudransh Sharma", role: "Secretary",           bio: "Managing school communications, coordination, and institutional affairs with professionalism and a student-first approach that keeps The Milestone running seamlessly." },
       ],
     },
     testimonials: {
@@ -465,6 +467,8 @@ export const SITE: Record<Lang, SiteT> = {
         { name: "श्री अतुल शर्मा",   role: "प्राचार्य",               bio: "युवा मन को आकार देने के वर्षों के अनुभव के साथ एक समर्पित नेता। माइलस्टोन में शैक्षणिक उत्कृष्टता, मूल्यों और समग्र विकास की संस्कृति को बढ़ावा देने के लिए प्रतिबद्ध।" },
         { name: "श्रीमती सुलोचना शर्मा", role: "मैनेजिंग डायरेक्टर",   bio: "माइलस्टोन परिवार की दूरदर्शी संस्थापक और मार्गदर्शक शक्ति, जिनकी गुणवत्तापूर्ण शिक्षा के प्रति समर्पण ने 15 वर्षों से अधिक समय से स्कूल की उत्कृष्टता की संस्कृति को आकार दिया है।" },
         { name: "सुश्री योगिता शर्मा", role: "उप-प्राचार्य",              bio: "एक उत्साही शिक्षक और नेता जो अकादमिक उत्कृष्टता, अनुशासन और एक पोषणकारी वातावरण को बढ़ावा देने के लिए प्रतिबद्ध हैं जहाँ हर छात्र आत्मविश्वास के साथ आगे बढ़े।" },
+        { name: "श्री सार्थक शर्मा",  role: "डीन ऑफ एडमिन",          bio: "माइलस्टोन के प्रशासनिक कार्यों की कुशलता और समर्पण के साथ देखरेख करते हुए छात्रों, स्टाफ और अभिभावकों के लिए एक सुचारू और सहायक वातावरण सुनिश्चित करते हैं।" },
+        { name: "श्री रुद्रांश शर्मा", role: "सचिव",                    bio: "स्कूल के संचार, समन्वय और संस्थागत कार्यों का व्यावसायिकता और छात्र-प्रथम दृष्टिकोण के साथ प्रबंधन करते हैं जो माइलस्टोन को सुचारू रूप से चलाता है।" },
       ],
     },
     testimonials: {
