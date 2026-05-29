@@ -7,9 +7,9 @@ import sulochanaSharmaImg from "@assets/managing_director_1780037204818.jpeg";
 import vicePrincipalImg from "@assets/viceprincipal_1780037357684.png";
 
 const localImages = [
-  { image: principalImg,       position: "center 48%" },
-  { image: sulochanaSharmaImg, position: "center 6%"  },
-  { image: vicePrincipalImg,   position: "center 5%"  },
+  { image: principalImg,       position: "center center", fit: "contain" as const, bg: "#f0f4f8" },
+  { image: sulochanaSharmaImg, position: "center 6%",     fit: "cover"   as const, bg: "transparent" },
+  { image: vicePrincipalImg,   position: "center 5%",     fit: "cover"   as const, bg: "transparent" },
 ];
 
 export default function Faculty() {
@@ -45,7 +45,7 @@ export default function Faculty() {
               <Card className="overflow-hidden border-none shadow-md hover:shadow-xl transition-shadow bg-card h-full flex flex-col">
                 <div
                   className="overflow-hidden rounded-t-xl flex-shrink-0"
-                  style={{ height: "400px" }}
+                  style={{ height: "400px", background: localImages[index].bg }}
                 >
                   <img
                     src={localImages[index].image}
@@ -53,7 +53,7 @@ export default function Faculty() {
                     style={{
                       width: "100%",
                       height: "100%",
-                      objectFit: "cover",
+                      objectFit: localImages[index].fit,
                       objectPosition: localImages[index].position,
                       display: "block",
                       borderRadius: "12px 12px 0 0",
