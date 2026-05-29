@@ -3,7 +3,7 @@ import { Microscope, Monitor, BookOpen, Dumbbell, Palette, Bus } from "lucide-re
 import { useLanguage } from "@/context/LanguageContext";
 import { SITE } from "@/i18n/translations";
 
-const IMAGES = [null, "/library.png", "/sports.png", "/art-room.png", "/smart-classroom.png", "/school-bus.png"];
+const IMAGES = [null, "/library.png", null, "/art-room.png", "/smart-classroom.png", "/school-bus.png"];
 const ICONS  = [Microscope, BookOpen, Dumbbell, Palette, Monitor, Bus];
 
 export default function Facilities() {
@@ -49,11 +49,14 @@ export default function Facilities() {
                   {index === 0 ? (
                     <video
                       src="/science-lab-video3.mp4"
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      disablePictureInPicture
+                      autoPlay loop muted playsInline disablePictureInPicture
+                      className="w-full h-full object-cover"
+                      style={{ pointerEvents: "none" }}
+                    />
+                  ) : index === 2 ? (
+                    <video
+                      src="/sports-video.mp4"
+                      autoPlay loop muted playsInline disablePictureInPicture
                       className="w-full h-full object-cover"
                       style={{ pointerEvents: "none" }}
                     />
