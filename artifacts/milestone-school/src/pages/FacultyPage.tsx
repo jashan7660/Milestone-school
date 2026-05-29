@@ -3,7 +3,7 @@ import { GraduationCap, Star, Users, BookOpen, Heart } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { useLanguage } from "@/context/LanguageContext";
-import principalImg from "@assets/atul_sharama_1777615661839.jpg";
+import principalImg from "@assets/pricipal_sir_1780036894116.png";
 import amazingEducatorsImg from "@assets/image_1780027878905.png";
 import activeParticipImg   from "@assets/image_1780027932559.png";
 import commitGrowthImg     from "@assets/image_1780028126827.png";

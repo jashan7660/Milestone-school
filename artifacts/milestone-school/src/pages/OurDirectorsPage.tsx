@@ -3,7 +3,7 @@ import { Quote, GraduationCap, Award, Star, Users } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { useLanguage } from "@/context/LanguageContext";
-import principalImg from "@assets/atul_sharama_1777615661839.jpg";
+import principalImg from "@assets/pricipal_sir_1780036894116.png";
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 28 },

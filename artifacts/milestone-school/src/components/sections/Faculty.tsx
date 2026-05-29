@@ -2,12 +2,12 @@ import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLanguage } from "@/context/LanguageContext";
 import { SITE } from "@/i18n/translations";
-import principalImg from "@assets/atul_sharama_1777615661839.jpg";
+import principalImg from "@assets/pricipal_sir_1780036894116.png";
 import sulochanaSharmaImg from "@assets/ChatGPT_Image_May_28,_2026,_10_44_20_AM_1779951430750.png";
 import facultyPosterImg from "@assets/1_1777975535490.jpg";
 
 const localImages = [
-  { image: principalImg,        pos: "object-top",          style: {} },
+  { image: principalImg,        pos: "object-center",       style: { transform: "scale(1.35)", transformOrigin: "50% 38%" } },
   { image: sulochanaSharmaImg,  pos: "object-[center_0%]",  style: { transform: "scale(2.2)", transformOrigin: "50% 12%" } },
   { image: facultyPosterImg,    pos: "object-[50%_10%]",    style: {} },
 ];
