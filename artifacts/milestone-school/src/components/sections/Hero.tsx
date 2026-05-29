@@ -5,7 +5,7 @@ import { SITE } from "@/i18n/translations";
 import { useLocation } from "wouter";
 import { useState, useEffect, useRef } from "react";
 
-type Slide = "video" | "photo";
+type Slide = "video1" | "video2" | "photo";
 
 const PHOTO_DURATION = 6000;
 
@@ -13,8 +13,9 @@ export default function Hero() {
   const { lang } = useLanguage();
   const t = SITE[lang].hero;
   const [, setLocation] = useLocation();
-  const [slide, setSlide] = useState<Slide>("video");
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const [slide, setSlide] = useState<Slide>("video1");
+  const video1Ref = useRef<HTMLVideoElement>(null);
+  const video2Ref = useRef<HTMLVideoElement>(null);
   const photoTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const scrollTo = (id: string) =>
@@ -26,34 +27,42 @@ export default function Hero() {
     };
   }, []);
 
-  const handleVideoEnded = () => {
+  const handleVideo1Ended = () => {
+    setSlide("video2");
+  };
+
+  const handleVideo2Ended = () => {
     setSlide("photo");
     photoTimerRef.current = setTimeout(() => {
-      setSlide("video");
+      setSlide("video1");
     }, PHOTO_DURATION);
   };
 
   useEffect(() => {
-    if (slide === "video" && videoRef.current) {
-      videoRef.current.currentTime = 0;
-      videoRef.current.play().catch(() => {});
+    if (slide === "video1" && video1Ref.current) {
+      video1Ref.current.currentTime = 0;
+      video1Ref.current.play().catch(() => {});
+    }
+    if (slide === "video2" && video2Ref.current) {
+      video2Ref.current.currentTime = 0;
+      video2Ref.current.play().catch(() => {});
     }
   }, [slide]);
 
   return (
     <section className="relative w-full min-h-screen overflow-hidden flex items-center justify-center">
 
-      {/* Video slide */}
+      {/* Video 1 — 1st slide */}
       <AnimatePresence>
-        {slide === "video" && (
+        {slide === "video1" && (
           <motion.video
-            key="hero-video"
-            ref={videoRef}
+            key="hero-video1"
+            ref={video1Ref}
             src="/hero-video2.mp4"
             autoPlay
             muted
             playsInline
-            onEnded={handleVideoEnded}
+            onEnded={handleVideo1Ended}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -64,13 +73,17 @@ export default function Hero() {
         )}
       </AnimatePresence>
 
-      {/* Photo slide */}
+      {/* Video 2 — 2nd slide */}
       <AnimatePresence>
-        {slide === "photo" && (
-          <motion.img
-            key="hero-photo"
-            src="/slide1.png"
-            alt="The Milestone School Campus"
+        {slide === "video2" && (
+          <motion.video
+            key="hero-video2"
+            ref={video2Ref}
+            src="/hero-video2-new.mp4"
+            autoPlay
+            muted
+            playsInline
+            onEnded={handleVideo2Ended}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -81,7 +94,7 @@ export default function Hero() {
         )}
       </AnimatePresence>
 
-      {/* Dark overlays + text — only visible when photo is showing */}
+      {/* Photo — 3rd slide, with overlays and text */}
       <AnimatePresence>
         {slide === "photo" && (
           <motion.div
@@ -89,10 +102,17 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 1 }}
             className="absolute inset-0"
             style={{ zIndex: 1 }}
           >
+            {/* Photo background */}
+            <img
+              src="/slide1.png"
+              alt="The Milestone School Campus"
+              className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+            />
+
             {/* Gradient overlays */}
             <div
               className="absolute inset-0"
