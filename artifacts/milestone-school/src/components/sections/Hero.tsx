@@ -15,10 +15,14 @@ export default function Hero() {
   return (
     <section className="relative w-full min-h-screen overflow-hidden flex items-center justify-center">
 
-      {/* Photo background */}
-      <img
-        src="/slide1.png"
-        alt="The Milestone School Campus"
+      {/* Video background (photo shows as poster while video loads) */}
+      <video
+        src="/hero-video-main.mp4"
+        poster="/slide1.png"
+        autoPlay
+        loop
+        muted
+        playsInline
         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
         style={{ zIndex: 0 }}
       />
