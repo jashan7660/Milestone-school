@@ -1,114 +1,121 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView, useAnimation } from "framer-motion";
-import { Shield, Star, Trophy, Zap, Flame, Droplets, Leaf, Crown } from "lucide-react";
+import { Shield, Star, Trophy, Crown } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+
+const LOGO_SRC = "/clan-logos.png";
 
 const clans = [
   {
     rank: 1,
-    name: "Phoenix",
-    nameHi: "फीनिक्स",
-    color: "#ef4444",
-    colorLight: "#fef2f2",
-    colorMid: "#fca5a5",
-    gradient: "from-red-500 to-orange-500",
-    gradientBg: "from-red-50 to-orange-50",
-    border: "border-red-400",
-    glow: "shadow-red-400/40",
-    motto: "Rise from the ashes, conquer the sky",
-    mottoHi: "राख से उठो, आकाश को जीतो",
-    points: 4820,
-    icon: Flame,
+    name: "The Leaders",
+    nameHi: "द लीडर्स",
+    fullName: "The Leaders Clan",
+    fullNameHi: "द लीडर्स क्लान",
+    color: "#e53e3e",
+    colorDark: "#c53030",
+    colorGlow: "rgba(229,62,62,0.4)",
+    colorBg: "rgba(229,62,62,0.08)",
+    colorBorder: "rgba(229,62,62,0.35)",
+    colorBar: "from-red-500 to-red-400",
+    logoPos: "0% 22%",
+    motto: "Lead with Courage",
+    mottoHi: "साहस से नेतृत्व करो",
     captain: "Arjun Sharma",
     captainHi: "अर्जुन शर्मा",
-    badges: ["🏆 Champions", "⚡ Top Scorer", "🎯 Perfect Aim"],
+    points: 4820,
     progress: 96,
+    badges: ["🏆 Champions", "⚡ Top Scorer"],
   },
   {
     rank: 2,
-    name: "Neptune",
-    nameHi: "नेपच्यून",
-    color: "#3b82f6",
-    colorLight: "#eff6ff",
-    colorMid: "#93c5fd",
-    gradient: "from-blue-500 to-cyan-500",
-    gradientBg: "from-blue-50 to-cyan-50",
-    border: "border-blue-400",
-    glow: "shadow-blue-400/40",
-    motto: "Deep as the ocean, strong as the tide",
-    mottoHi: "समुद्र जितना गहरा, लहर जितना ताकतवर",
-    points: 4560,
-    icon: Droplets,
+    name: "The Legends",
+    nameHi: "द लेजेंड्स",
+    fullName: "The Legends Clan",
+    fullNameHi: "द लेजेंड्स क्लान",
+    color: "#3182ce",
+    colorDark: "#2b6cb0",
+    colorGlow: "rgba(49,130,206,0.4)",
+    colorBg: "rgba(49,130,206,0.08)",
+    colorBorder: "rgba(49,130,206,0.35)",
+    colorBar: "from-blue-500 to-blue-400",
+    logoPos: "33.33% 22%",
+    motto: "Set Benchmarks with Hardwork",
+    mottoHi: "मेहनत से मानदंड स्थापित करो",
     captain: "Priya Verma",
     captainHi: "प्रिया वर्मा",
-    badges: ["🌊 Wave Rider", "📚 Academic Star", "🤝 Team Spirit"],
+    points: 4560,
     progress: 91,
+    badges: ["📚 Academic Star", "🤝 Team Spirit"],
   },
   {
     rank: 3,
-    name: "Falcon",
-    nameHi: "फाल्कन",
-    color: "#22c55e",
-    colorLight: "#f0fdf4",
-    colorMid: "#86efac",
-    gradient: "from-green-500 to-emerald-500",
-    gradientBg: "from-green-50 to-emerald-50",
-    border: "border-green-400",
-    glow: "shadow-green-400/40",
-    motto: "Soar high, strike fast, never look back",
-    mottoHi: "ऊँचे उड़ो, तेज़ मारो, पीछे मत देखो",
-    points: 4290,
-    icon: Leaf,
+    name: "The Victors",
+    nameHi: "द विक्टर्स",
+    fullName: "The Victors Clan",
+    fullNameHi: "द विक्टर्स क्लान",
+    color: "#38a169",
+    colorDark: "#2f855a",
+    colorGlow: "rgba(56,161,105,0.4)",
+    colorBg: "rgba(56,161,105,0.08)",
+    colorBorder: "rgba(56,161,105,0.35)",
+    colorBar: "from-green-500 to-green-400",
+    logoPos: "66.66% 22%",
+    motto: "Win with Pride",
+    mottoHi: "गर्व के साथ जीतो",
     captain: "Rohit Malik",
     captainHi: "रोहित मलिक",
-    badges: ["🦅 Swift Strike", "🌿 Green Shield", "⚽ Sports Star"],
+    points: 4290,
     progress: 85,
+    badges: ["⚽ Sports Star", "🌿 Green Shield"],
   },
   {
     rank: 4,
-    name: "Thunder",
-    nameHi: "थंडर",
-    color: "#eab308",
-    colorLight: "#fefce8",
-    colorMid: "#fde047",
-    gradient: "from-yellow-500 to-amber-500",
-    gradientBg: "from-yellow-50 to-amber-50",
-    border: "border-yellow-400",
-    glow: "shadow-yellow-400/40",
-    motto: "Strike with power, shine with glory",
-    mottoHi: "शक्ति से प्रहार करो, गौरव से चमको",
-    points: 3980,
-    icon: Zap,
+    name: "The Elites",
+    nameHi: "द एलीट्स",
+    fullName: "The Elites Clan",
+    fullNameHi: "द एलीट्स क्लान",
+    color: "#805ad5",
+    colorDark: "#6b46c1",
+    colorGlow: "rgba(128,90,213,0.4)",
+    colorBg: "rgba(128,90,213,0.08)",
+    colorBorder: "rgba(128,90,213,0.35)",
+    colorBar: "from-purple-500 to-purple-400",
+    logoPos: "100% 22%",
+    motto: "Be Extraordinary Consistently",
+    mottoHi: "हर बार असाधारण बनो",
     captain: "Sneha Yadav",
     captainHi: "स्नेहा यादव",
-    badges: ["⚡ Lightning Fast", "🌟 Rising Star", "🎨 Creative Mind"],
+    points: 3980,
     progress: 79,
+    badges: ["🌟 Rising Star", "🎨 Creative Mind"],
   },
 ];
+
+const rankMedal = ["🥇", "🥈", "🥉", "🎖️"];
 
 function CountUp({ target, inView }: { target: number; inView: boolean }) {
   const [count, setCount] = useState(0);
   useEffect(() => {
     if (!inView) return;
-    let start = 0;
+    let current = 0;
     const duration = 1800;
-    const step = 16;
-    const increment = target / (duration / step);
+    const steps = 60;
+    const increment = target / steps;
+    const interval = duration / steps;
     const timer = setInterval(() => {
-      start += increment;
-      if (start >= target) {
+      current += increment;
+      if (current >= target) {
         setCount(target);
         clearInterval(timer);
       } else {
-        setCount(Math.floor(start));
+        setCount(Math.floor(current));
       }
-    }, step);
+    }, interval);
     return () => clearInterval(timer);
   }, [inView, target]);
   return <span>{count.toLocaleString()}</span>;
 }
-
-const rankMedal = ["🥇", "🥈", "🥉", "🎖️"];
 
 export default function ClanSystem() {
   const { lang } = useLanguage();
@@ -123,260 +130,326 @@ export default function ClanSystem() {
 
   const containerVariants = {
     hidden: {},
-    visible: { transition: { staggerChildren: 0.15 } },
+    visible: { transition: { staggerChildren: 0.12 } },
   };
 
   const cardVariants = {
-    hidden: { opacity: 0, y: 50, scale: 0.95 },
-    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+    hidden: { opacity: 0, y: 48, scale: 0.96 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+    },
   };
 
   return (
-    <section id="clan-system" className="py-24 relative overflow-hidden bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
-
-      {/* Animated background blobs */}
+    <section
+      id="clan-system"
+      className="py-24 relative overflow-hidden"
+      style={{
+        background: "linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)",
+      }}
+    >
+      {/* Background glow blobs */}
       {[
-        { color: "bg-red-500/10",    size: "w-96 h-96",   pos: "top-10 left-10",    delay: 0 },
-        { color: "bg-blue-500/10",   size: "w-80 h-80",   pos: "top-20 right-20",   delay: 1.5 },
-        { color: "bg-green-500/10",  size: "w-72 h-72",   pos: "bottom-20 left-1/3",delay: 0.8 },
-        { color: "bg-yellow-500/10", size: "w-64 h-64",   pos: "bottom-10 right-10",delay: 2 },
-      ].map((blob, i) => (
+        { color: "rgba(229,62,62,0.12)",   top: "5%",  left: "5%",  size: 380 },
+        { color: "rgba(49,130,206,0.12)",  top: "8%",  right: "5%", size: 340 },
+        { color: "rgba(56,161,105,0.10)",  bottom:"10%", left: "20%",size: 300 },
+        { color: "rgba(128,90,213,0.12)", bottom:"8%", right:"8%",  size: 360 },
+      ].map((b, i) => (
         <motion.div
           key={i}
-          className={`absolute ${blob.size} ${blob.color} ${blob.pos} rounded-full blur-3xl`}
-          animate={{ scale: [1, 1.15, 1], opacity: [0.6, 1, 0.6] }}
-          transition={{ duration: 5 + i, repeat: Infinity, delay: blob.delay, ease: "easeInOut" }}
+          className="absolute rounded-full pointer-events-none"
+          style={{
+            width: b.size, height: b.size,
+            background: b.color,
+            top: b.top, left: (b as any).left, right: (b as any).right, bottom: (b as any).bottom,
+            filter: "blur(60px)",
+          }}
+          animate={{ scale: [1, 1.12, 1], opacity: [0.7, 1, 0.7] }}
+          transition={{ duration: 5 + i, repeat: Infinity, delay: i * 1.2, ease: "easeInOut" }}
         />
       ))}
 
       {/* Floating particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {Array.from({ length: 20 }).map((_, i) => (
+        {Array.from({ length: 18 }).map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-white/20 rounded-full"
-            style={{ left: `${5 + i * 5}%`, top: `${10 + (i % 5) * 20}%` }}
-            animate={{ y: [-10, 10, -10], opacity: [0.2, 0.6, 0.2] }}
-            transition={{ duration: 3 + (i % 4), repeat: Infinity, delay: i * 0.2, ease: "easeInOut" }}
+            className="absolute rounded-full"
+            style={{
+              width: i % 3 === 0 ? 3 : 2,
+              height: i % 3 === 0 ? 3 : 2,
+              background: "rgba(255,255,255,0.25)",
+              left: `${4 + i * 5.2}%`,
+              top: `${8 + (i % 6) * 16}%`,
+            }}
+            animate={{ y: [-12, 12, -12], opacity: [0.2, 0.7, 0.2] }}
+            transition={{ duration: 3 + (i % 4), repeat: Infinity, delay: i * 0.18, ease: "easeInOut" }}
           />
         ))}
       </div>
 
       <div className="container mx-auto px-4 md:px-6 relative z-10" ref={ref}>
 
-        {/* Section Header */}
+        {/* ── Section Header ── */}
         <motion.div
-          className="text-center max-w-3xl mx-auto mb-6"
-          initial={{ opacity: 0, y: 30 }}
+          className="text-center max-w-2xl mx-auto mb-4"
+          initial={{ opacity: 0, y: 28 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
         >
           <motion.div
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 text-white/80 font-semibold text-sm mb-6 uppercase tracking-wider border border-white/20 backdrop-blur-sm"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-white/70 font-semibold text-xs mb-5 uppercase tracking-widest border border-white/15"
+            style={{ background: "rgba(255,255,255,0.06)" }}
             animate={{ scale: [1, 1.02, 1] }}
-            transition={{ duration: 3, repeat: Infinity }}
+            transition={{ duration: 3.5, repeat: Infinity }}
           >
-            <Shield size={14} />
+            <Shield size={13} />
             {isHindi ? "प्रतिस्पर्धा और गौरव" : "Competition & Glory"}
           </motion.div>
 
-          <h2 className="text-4xl md:text-6xl font-serif font-extrabold text-white mb-5 leading-tight tracking-tight">
-            {isHindi ? "हमारा " : "Our "}
-            <span className="bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 bg-clip-text text-transparent">
-              {isHindi ? "क्लान सिस्टम" : "Clan System"}
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-black text-white mb-4 leading-tight tracking-tight">
+            {isHindi ? "द " : "THE "}
+            <span
+              style={{
+                background: "linear-gradient(135deg, #f59e0b, #ef4444)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              {isHindi ? "क्लान" : "CLAN"}
             </span>
+            {isHindi ? " सिस्टम" : " SYSTEM"}
           </h2>
-          <p className="text-white/60 text-lg font-light leading-relaxed">
+
+          <p className="text-white/55 text-base md:text-lg leading-relaxed font-light">
             {isHindi
-              ? "चार क्लान, एक लक्ष्य — माइलस्टोन में उत्कृष्टता का मुकुट जीतना।"
-              : "Four clans, one goal — to claim the crown of excellence at The Milestone."}
+              ? "माइलस्टोन में नेतृत्व, आत्मविश्वास, टीमवर्क और स्वस्थ प्रतिस्पर्धा का निर्माण।"
+              : "Building leadership, confidence, teamwork, and healthy competition at The Milestone Sr. Sec. School."}
           </p>
         </motion.div>
 
-        {/* Live leaderboard banner */}
+        {/* Live leaderboard badge */}
         <motion.div
-          className="flex items-center justify-center gap-3 mb-12"
-          initial={{ opacity: 0, y: 20 }}
+          className="flex justify-center mb-12"
+          initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.25 }}
         >
-          <div className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-yellow-500/20 to-orange-500/20 border border-yellow-500/30 backdrop-blur-sm">
+          <div
+            className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border"
+            style={{ background: "rgba(245,158,11,0.12)", borderColor: "rgba(245,158,11,0.3)" }}
+          >
             <motion.div
-              className="w-2 h-2 bg-green-400 rounded-full"
+              className="w-2 h-2 rounded-full bg-green-400"
               animate={{ opacity: [1, 0.3, 1] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
+              transition={{ duration: 1.4, repeat: Infinity }}
             />
-            <Trophy size={16} className="text-yellow-400" />
-            <span className="text-white/80 text-sm font-semibold">
+            <Trophy size={15} className="text-yellow-400" />
+            <span className="text-white/75 text-sm font-semibold">
               {isHindi ? "लाइव लीडरबोर्ड" : "Live Leaderboard"}
             </span>
-            <span className="text-yellow-400 font-bold text-sm">
-              {isHindi ? "• फीनिक्स आगे है!" : "• Phoenix leads!"}
+            <span className="font-bold text-sm" style={{ color: "#f59e0b" }}>
+              {isHindi ? "• द लीडर्स आगे हैं!" : "• The Leaders lead!"}
             </span>
           </div>
         </motion.div>
 
-        {/* Clan Cards Grid */}
+        {/* ── Clan Cards Grid ── */}
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-12"
           variants={containerVariants}
           initial="hidden"
           animate={controls}
         >
-          {clans.map((clan) => {
-            const Icon = clan.icon;
-            return (
+          {clans.map((clan) => (
+            <motion.div
+              key={clan.name}
+              variants={cardVariants}
+              whileHover={{ y: -12, scale: 1.03 }}
+              transition={{ type: "spring", stiffness: 300, damping: 22 }}
+              className="relative group cursor-pointer"
+            >
+              {/* Hover glow ring */}
               <motion.div
-                key={clan.name}
-                variants={cardVariants}
-                whileHover={{ y: -10, scale: 1.03 }}
-                className="relative group cursor-pointer"
+                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                style={{ boxShadow: `0 0 40px 8px ${clan.colorGlow}`, borderRadius: 16 }}
+              />
+
+              {/* Card */}
+              <div
+                className="relative rounded-2xl overflow-hidden h-full flex flex-col border transition-all duration-500 group-hover:border-opacity-60"
+                style={{
+                  background: "linear-gradient(160deg, rgba(30,41,59,0.95) 0%, rgba(15,23,42,0.98) 100%)",
+                  borderColor: clan.colorBorder,
+                  borderWidth: 1,
+                  backdropFilter: "blur(12px)",
+                }}
               >
-                {/* Glow on hover */}
+                {/* Top accent bar */}
                 <div
-                  className={`absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl`}
-                  style={{ background: clan.color, opacity: 0, filter: "blur(20px)" }}
-                />
-                <motion.div
-                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-30 transition-opacity duration-500"
-                  style={{ boxShadow: `0 0 40px 10px ${clan.color}` }}
+                  className="h-1 w-full flex-shrink-0"
+                  style={{ background: `linear-gradient(90deg, ${clan.color}, transparent)` }}
                 />
 
-                <div
-                  className="relative rounded-2xl overflow-hidden border border-white/10 backdrop-blur-sm h-full flex flex-col"
-                  style={{ background: "rgba(255,255,255,0.05)" }}
-                >
-                  {/* Clan color top bar */}
+                {/* Rank badge */}
+                <div className="absolute top-3.5 right-3.5 text-xl leading-none">
+                  {rankMedal[clan.rank - 1]}
+                </div>
+
+                <div className="p-6 flex flex-col flex-1 items-center">
+
+                  {/* Logo from sprite image */}
+                  <motion.div
+                    className="w-24 h-24 rounded-full overflow-hidden mb-5 flex-shrink-0 border-2"
+                    style={{
+                      borderColor: clan.colorBorder,
+                      boxShadow: `0 0 0 4px ${clan.colorBg}, 0 4px 20px ${clan.colorGlow}`,
+                    }}
+                    animate={{ rotate: [0, 3, -3, 0] }}
+                    transition={{ duration: 5 + clan.rank, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <div
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        backgroundImage: `url(${LOGO_SRC})`,
+                        backgroundSize: "400% auto",
+                        backgroundPosition: clan.logoPos,
+                        backgroundRepeat: "no-repeat",
+                      }}
+                    />
+                  </motion.div>
+
+                  {/* Clan name */}
+                  <h3
+                    className="text-xl font-serif font-extrabold text-center mb-0.5 uppercase tracking-wide group-hover:scale-105 transition-transform duration-300"
+                    style={{ color: clan.color }}
+                  >
+                    {isHindi ? clan.fullNameHi : clan.fullName}
+                  </h3>
+
+                  {/* Motto pill */}
                   <div
-                    className="h-1.5 w-full"
-                    style={{ background: `linear-gradient(90deg, ${clan.color}, transparent)` }}
-                  />
-
-                  {/* Rank badge */}
-                  <div className="absolute top-4 right-4 text-2xl">
-                    {rankMedal[clan.rank - 1]}
+                    className="w-full rounded-xl px-3 py-2.5 text-center mb-5 mt-3"
+                    style={{ background: clan.color }}
+                  >
+                    <div className="text-white/70 text-[9px] font-bold uppercase tracking-widest mb-0.5">
+                      {isHindi ? "आदर्श वाक्य" : "Motto"}
+                    </div>
+                    <div className="text-white font-bold text-sm leading-snug">
+                      {isHindi ? clan.mottoHi : clan.motto}
+                    </div>
                   </div>
 
-                  <div className="p-6 flex flex-col flex-1">
-                    {/* Icon */}
-                    <motion.div
-                      className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5 mx-auto"
-                      style={{ background: `${clan.color}22`, border: `2px solid ${clan.color}44` }}
-                      animate={{ rotate: [0, 5, -5, 0] }}
-                      transition={{ duration: 4 + clan.rank, repeat: Infinity, ease: "easeInOut" }}
+                  {/* Captain */}
+                  <div className="flex items-center gap-1.5 mb-5 justify-center">
+                    <Crown size={12} style={{ color: clan.color }} />
+                    <span className="text-white/50 text-xs">
+                      {isHindi ? "कप्तान:" : "Captain:"}{" "}
+                      <span className="text-white/85 font-semibold">
+                        {isHindi ? clan.captainHi : clan.captain}
+                      </span>
+                    </span>
+                  </div>
+
+                  {/* Points counter */}
+                  <div className="text-center mb-4">
+                    <div
+                      className="text-4xl font-black tabular-nums leading-none"
+                      style={{ color: clan.color }}
                     >
-                      <Icon size={32} style={{ color: clan.color }} />
-                    </motion.div>
-
-                    {/* Name + Motto */}
-                    <div className="text-center mb-5">
-                      <h3
-                        className="text-2xl font-serif font-extrabold mb-1 group-hover:scale-105 transition-transform"
-                        style={{ color: clan.color }}
-                      >
-                        {isHindi ? clan.nameHi : clan.name}
-                      </h3>
-                      <p className="text-white/50 text-xs leading-relaxed italic">
-                        "{isHindi ? clan.mottoHi : clan.motto}"
-                      </p>
+                      <CountUp target={clan.points} inView={inView} />
                     </div>
+                    <div className="text-white/35 text-[10px] font-semibold uppercase tracking-widest mt-1">
+                      {isHindi ? "अंक" : "Points"}
+                    </div>
+                  </div>
 
-                    {/* Captain */}
-                    <div className="flex items-center gap-2 mb-5 justify-center">
-                      <Crown size={13} style={{ color: clan.color }} />
-                      <span className="text-white/60 text-xs">
-                        {isHindi ? "कप्तान:" : "Captain:"}{" "}
-                        <span className="text-white/90 font-semibold">
-                          {isHindi ? clan.captainHi : clan.captain}
-                        </span>
+                  {/* Progress bar */}
+                  <div className="w-full mb-4">
+                    <div className="flex justify-between text-[10px] text-white/35 mb-1.5">
+                      <span>{isHindi ? "प्रगति" : "Progress"}</span>
+                      <span className="font-semibold" style={{ color: clan.color }}>
+                        {clan.progress}%
                       </span>
                     </div>
-
-                    {/* Points */}
-                    <div className="text-center mb-4">
-                      <div
-                        className="text-4xl font-black tabular-nums"
-                        style={{ color: clan.color }}
-                      >
-                        <CountUp target={clan.points} inView={inView} />
-                      </div>
-                      <div className="text-white/40 text-xs font-medium uppercase tracking-widest mt-0.5">
-                        {isHindi ? "अंक" : "Points"}
-                      </div>
+                    <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.08)" }}>
+                      <motion.div
+                        className="h-full rounded-full"
+                        style={{ background: clan.color }}
+                        initial={{ width: 0 }}
+                        animate={inView ? { width: `${clan.progress}%` } : { width: 0 }}
+                        transition={{ duration: 1.6, delay: 0.3 + clan.rank * 0.1, ease: "easeOut" }}
+                      />
                     </div>
-
-                    {/* Progress bar */}
-                    <div className="mb-5">
-                      <div className="flex justify-between text-xs text-white/40 mb-1.5">
-                        <span>{isHindi ? "प्रगति" : "Progress"}</span>
-                        <span>{clan.progress}%</span>
-                      </div>
-                      <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                        <motion.div
-                          className="h-full rounded-full"
-                          style={{ background: `linear-gradient(90deg, ${clan.color}, ${clan.colorMid})` }}
-                          initial={{ width: 0 }}
-                          animate={inView ? { width: `${clan.progress}%` } : { width: 0 }}
-                          transition={{ duration: 1.5, delay: 0.4 + clan.rank * 0.1, ease: "easeOut" }}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Badges */}
-                    <div className="flex flex-wrap gap-1.5 mb-5 justify-center">
-                      {clan.badges.map((badge, bi) => (
-                        <span
-                          key={bi}
-                          className="text-xs px-2 py-0.5 rounded-full font-medium"
-                          style={{ background: `${clan.color}20`, color: clan.colorMid, border: `1px solid ${clan.color}30` }}
-                        >
-                          {badge}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* CTA */}
-                    <motion.button
-                      className="w-full py-2.5 rounded-xl text-sm font-bold transition-all duration-300 mt-auto"
-                      style={{
-                        background: `linear-gradient(135deg, ${clan.color}33, ${clan.color}11)`,
-                        border: `1px solid ${clan.color}50`,
-                        color: clan.color,
-                      }}
-                      whileHover={{ background: clan.color, color: "#fff" }}
-                      whileTap={{ scale: 0.97 }}
-                    >
-                      {isHindi ? "विवरण देखें →" : "View Details →"}
-                    </motion.button>
                   </div>
+
+                  {/* Badges */}
+                  <div className="flex flex-wrap gap-1.5 mb-5 justify-center">
+                    {clan.badges.map((badge, bi) => (
+                      <span
+                        key={bi}
+                        className="text-[10px] px-2.5 py-0.5 rounded-full font-semibold"
+                        style={{
+                          background: clan.colorBg,
+                          color: clan.color,
+                          border: `1px solid ${clan.colorBorder}`,
+                        }}
+                      >
+                        {badge}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* CTA button */}
+                  <motion.button
+                    className="w-full py-2.5 rounded-xl text-sm font-bold mt-auto transition-colors duration-300"
+                    style={{
+                      background: clan.colorBg,
+                      border: `1px solid ${clan.colorBorder}`,
+                      color: clan.color,
+                    }}
+                    whileHover={{ background: clan.color, color: "#fff" }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    {isHindi ? "विवरण देखें →" : "View Details →"}
+                  </motion.button>
                 </div>
-              </motion.div>
-            );
-          })}
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
 
-        {/* Bottom stats row */}
+        {/* ── Bottom stats ── */}
         <motion.div
           className="grid grid-cols-2 md:grid-cols-4 gap-4"
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 28 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.7 }}
+          transition={{ duration: 0.7, delay: 0.65 }}
         >
           {[
-            { icon: "⚔️", label: isHindi ? "कुल मैच" : "Total Matches",   value: "148" },
-            { icon: "🎯", label: isHindi ? "इस सीजन" : "This Season",     value: "2024–25" },
+            { icon: "⚔️", label: isHindi ? "कुल मैच" : "Total Matches",    value: "148" },
+            { icon: "📅", label: isHindi ? "सत्र" : "Season",              value: "2024–25" },
             { icon: "👥", label: isHindi ? "कुल सदस्य" : "Total Members",  value: "480+" },
-            { icon: "🏆", label: isHindi ? "पिछला विजेता" : "Last Champion", value: isHindi ? "नेपच्यून" : "Neptune" },
+            { icon: "🏆", label: isHindi ? "पिछला विजेता" : "Last Champions", value: isHindi ? "द लेजेंड्स" : "The Legends" },
           ].map((stat, i) => (
-            <div
+            <motion.div
               key={i}
-              className="text-center p-4 rounded-xl border border-white/10 backdrop-blur-sm"
-              style={{ background: "rgba(255,255,255,0.04)" }}
+              className="text-center p-4 rounded-xl border"
+              style={{
+                background: "rgba(255,255,255,0.04)",
+                borderColor: "rgba(255,255,255,0.08)",
+              }}
+              whileHover={{ background: "rgba(255,255,255,0.07)" }}
             >
               <div className="text-2xl mb-1">{stat.icon}</div>
-              <div className="text-white font-bold text-lg">{stat.value}</div>
-              <div className="text-white/40 text-xs">{stat.label}</div>
-            </div>
+              <div className="text-white font-bold text-base">{stat.value}</div>
+              <div className="text-white/35 text-xs mt-0.5">{stat.label}</div>
+            </motion.div>
           ))}
         </motion.div>
       </div>
