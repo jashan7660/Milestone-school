@@ -3,7 +3,6 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
 // Lazy load sections for better performance
-const VideoHero = lazy(() => import("@/components/sections/VideoHero"));
 const Hero = lazy(() => import("@/components/sections/Hero"));
 const About = lazy(() => import("@/components/sections/About"));
 const Stats = lazy(() => import("@/components/sections/Stats"));
@@ -29,7 +28,6 @@ export default function Home() {
       
       <main>
         <Suspense fallback={<SectionSkeleton />}>
-          <VideoHero />
           <Hero />
           <About />
           <Stats />
