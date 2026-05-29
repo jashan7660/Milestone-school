@@ -98,9 +98,24 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-primary-foreground/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-primary-foreground/60">
-          <p>© {new Date().getFullYear()} {t.copyright}</p>
-          <p className="text-xs">{t.designedWith}</p>
+        <div className="border-t border-primary-foreground/20 pt-8 flex flex-col items-center gap-4 text-sm text-primary-foreground/60">
+          <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-2 text-xs">
+            <button onClick={() => navigate("/terms")} className="hover:text-secondary transition-colors">
+              Terms &amp; Conditions
+            </button>
+            <span className="opacity-30">|</span>
+            <button onClick={() => navigate("/privacy")} className="hover:text-secondary transition-colors">
+              Privacy Policy
+            </button>
+            <span className="opacity-30">|</span>
+            <button onClick={() => navigate("/disclaimer")} className="hover:text-secondary transition-colors">
+              Disclaimer
+            </button>
+          </div>
+          <div className="flex flex-col md:flex-row justify-between items-center gap-3 w-full">
+            <p>© {new Date().getFullYear()} {t.copyright}</p>
+            <p className="text-xs">{t.designedWith}</p>
+          </div>
         </div>
       </div>
     </footer>

@@ -15,6 +15,9 @@ import OurDirectorsPage from "@/pages/OurDirectorsPage";
 import DivisionsPage from "@/pages/DivisionsPage";
 import TieupsPage from "@/pages/TieupsPage";
 import AdmissionsPage from "@/pages/AdmissionsPage";
+import TermsPage from "@/pages/TermsPage";
+import PrivacyPage from "@/pages/PrivacyPage";
+import DisclaimerPage from "@/pages/DisclaimerPage";
 import PageLoader from "@/components/ui/PageLoader";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import PhoneButton from "@/components/ui/PhoneButton";
@@ -39,6 +42,9 @@ function Router() {
       <Route path="/achievements" component={AchievementsPage} />
       <Route path="/gallery" component={GalleryPage} />
       <Route path="/admissions" component={AdmissionsPage} />
+      <Route path="/terms" component={TermsPage} />
+      <Route path="/privacy" component={PrivacyPage} />
+      <Route path="/disclaimer" component={DisclaimerPage} />
       <Route component={NotFound} />
     </Switch>
   );
