@@ -17,6 +17,8 @@ import chessGoldImg     from "@assets/image_1779951837517.png";
 import englishOlympiadImg from "@assets/image_1779952017127.png";
 import declamationImg   from "@assets/image_1779952134161.png";
 import debateImg        from "@assets/image_1779952144193.png";
+import natTechDayAwardImg from "@assets/image_1780027856130.png";
+import interviewActivityImg from "@assets/image_1780027948437.png";
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 28 },
@@ -58,8 +60,10 @@ export default function AchievementsPage() {
     { src: karateChampImg,    titleEN: "Karate Champions — Chandigarh State Championship 2026",       titleHI: "कराटे चैंपियंस — चंडीगढ़ राज्य चैंपियनशिप 2026",                 wide: false },
     { src: chessGoldImg,      titleEN: "Reyansh Sharma — Gold Medal, Chess Championship",             titleHI: "रेयांश शर्मा — गोल्ड मेडल, शतरंज चैंपियनशिप",                  wide: false },
     { src: englishOlympiadImg,titleEN: "Young Achievers — English Olympiad Winners",                  titleHI: "युवा उपलब्धिकर्ता — इंग्लिश ओलंपियाड विजेता",                  wide: false },
-    { src: declamationImg,    titleEN: "Gold Glory — Nandini, Declamation Competition",               titleHI: "गोल्ड ग्लोरी — नंदिनी, वक्तृत्व प्रतियोगिता",                  wide: false },
-    { src: debateImg,         titleEN: "Gold Glory — Reshika & Yashika, Debate Competition",          titleHI: "गोल्ड ग्लोरी — रेशिका और यशिका, वाद-विवाद प्रतियोगिता",        wide: false },
+    { src: declamationImg,      titleEN: "Gold Glory — Nandini, Declamation Competition",               titleHI: "गोल्ड ग्लोरी — नंदिनी, वक्तृत्व प्रतियोगिता",                  wide: false },
+    { src: debateImg,           titleEN: "Gold Glory — Reshika & Yashika, Debate Competition",          titleHI: "गोल्ड ग्लोरी — रेशिका और यशिका, वाद-विवाद प्रतियोगिता",        wide: false },
+    { src: natTechDayAwardImg,  titleEN: "National Technology Day — Deewal Wins 2nd Position, Poster Making at ITI Kaithal", titleHI: "राष्ट्रीय प्रौद्योगिकी दिवस — ITI कैथल में दीवाल को पोस्टर-मेकिंग में द्वितीय स्थान", wide: true },
+    { src: interviewActivityImg, titleEN: "Interview Activity — From Learning to Leading, Mock Interviews", titleHI: "इंटरव्यू एक्टिविटी — लर्निंग से लीडिंग तक, मॉक इंटरव्यू",       wide: false },
   ];
 
   const awards = isHindi ? [

@@ -36,6 +36,21 @@ import declamationImg from "@assets/image_1779952134161.png";
 import debateImg from "@assets/image_1779952144193.png";
 import prayerImg from "@assets/image_1779952189203.png";
 
+import natTechDayAwardImg   from "@assets/image_1780027856130.png";
+import amazingEducatorsImg  from "@assets/image_1780027878905.png";
+import screenToSceneImg     from "@assets/image_1780027894386.png";
+import cbpWorkshopImg       from "@assets/image_1780027914989.png";
+import activeParticipImg    from "@assets/image_1780027932559.png";
+import interviewActivityImg from "@assets/image_1780027948437.png";
+import stepFutureImg        from "@assets/image_1780027970016.png";
+import togetherDiffImg      from "@assets/image_1780027992471.png";
+import grade9NSSImg         from "@assets/image_1780028003851.png";
+import buddhaPurnimaImg     from "@assets/image_1780028022711.png";
+import mixingStirringImg    from "@assets/image_1780028042335.png";
+import mangoShakeImg        from "@assets/image_1780028053955.png";
+import commitGrowthImg      from "@assets/image_1780028126827.png";
+import healthyLifestyleImg  from "@assets/image_1780028142790.png";
+
 const VIDEO_SRCS = ["/video1.mp4", "/video2.mp4", "/video3.mp4"];
 
 type Category = "all" | "events" | "campus" | "achievements" | "highlights";
@@ -79,6 +94,20 @@ const GALLERY_ITEMS: GalleryItem[] = [
   { src: loveNatureImg,         altEN: "Learning to Love Nature — Environmental Education",                   altHI: "प्रकृति से प्यार करना सीखना — पर्यावरण शिक्षा",                    category: "campus" },
   { src: notebookCoverImg,      altEN: "Notebook Cover Designing — Creative Arts Activity",                   altHI: "नोटबुक कवर डिज़ाइनिंग — रचनात्मक कला गतिविधि",                    category: "campus" },
   { src: prayerImg,             altEN: "Prayer & Magic Words — Morning Assembly",                             altHI: "प्रार्थना और जादुई शब्द — सुबह की सभा",                             category: "campus" },
+  { src: natTechDayAwardImg,   altEN: "National Technology Day — Deewal Wins 2nd Position, Poster Making at ITI Kaithal", altHI: "राष्ट्रीय प्रौद्योगिकी दिवस — दीवाल को ITI कैथल में पोस्टर-मेकिंग में द्वितीय स्थान", category: "achievements", featured: true },
+  { src: amazingEducatorsImg,  altEN: "Our Amazing Educators — Ms. Renu, Ms. Neelam, Ms. Preeti, Ms. Deepika", altHI: "हमारे अद्भुत शिक्षक — सुश्री रेणु, सुश्री नीलम, सुश्री प्रीति, सुश्री दीपिका", category: "campus" },
+  { src: screenToSceneImg,     altEN: "From Screen to Scene — Kids Learn Healthy Daily Habits vs Screen Time",   altHI: "स्क्रीन से दृश्य तक — बच्चों ने स्वस्थ दिनचर्या और स्क्रीन टाइम का अंतर सीखा",      category: "events" },
+  { src: cbpWorkshopImg,       altEN: "CBP Workshop 2026 — Promoting Mental Health & Wellness at The Milestone",  altHI: "CBP वर्कशॉप 2026 — माइलस्टोन में मानसिक स्वास्थ्य और कल्याण को बढ़ावा",             category: "events" },
+  { src: activeParticipImg,    altEN: "Active Participation — 60 Teachers in CBP Workshop, Interactive & Engaging", altHI: "सक्रिय भागीदारी — CBP वर्कशॉप में 60 शिक्षकों की उत्साही सहभागिता",                category: "events" },
+  { src: interviewActivityImg, altEN: "Interview Activity — From Learning to Leading, Mock Interviews at The Milestone", altHI: "इंटरव्यू एक्टिविटी — लर्निंग से लीडिंग तक, माइलस्टोन में मॉक इंटरव्यू",            category: "events" },
+  { src: stepFutureImg,        altEN: "A Step Towards the Future — Confidence, Communication & Life Skills",       altHI: "भविष्य की ओर एक कदम — आत्मविश्वास, संचार और जीवन कौशल",                          category: "events" },
+  { src: togetherDiffImg,      altEN: "Together We Can Make a Difference — NSS Community Service Drive",           altHI: "मिलकर हम बदलाव ला सकते हैं — NSS सामुदायिक सेवा अभियान",                         category: "events" },
+  { src: grade9NSSImg,         altEN: "Grade 9 Students in Noble Cause — National Service Scheme Initiative",      altHI: "कक्षा 9 के छात्र एक नेक काम में — राष्ट्रीय सेवा योजना पहल",                    category: "events" },
+  { src: buddhaPurnimaImg,     altEN: "Happy Buddha Purnima — Cultural Stage Performance, 12 May 2025",            altHI: "हैप्पी बुद्ध पूर्णिमा — सांस्कृतिक मंच प्रदर्शन, 12 मई 2025",                   category: "events" },
+  { src: mixingStirringImg,    altEN: "Mixing, Stirring & Smiling — Summer Mango Activity with Students",          altHI: "मिक्सिंग, स्टिरिंग और मुस्कुराहट — छात्रों के साथ ग्रीष्मकालीन आम गतिविधि",      category: "campus" },
+  { src: mangoShakeImg,        altEN: "Summer Special Mango Shake — Students Present Healthy Drink to School Head", altHI: "समर स्पेशल मैंगो शेक — छात्रों ने स्कूल प्रमुख को स्वस्थ पेय भेंट किया",          category: "campus" },
+  { src: commitGrowthImg,      altEN: "Commitment to Growth — Empowering Teachers, Strengthening Education",       altHI: "विकास के प्रति प्रतिबद्धता — शिक्षकों को सशक्त बनाना, शिक्षा को मजबूत करना",    category: "campus" },
+  { src: healthyLifestyleImg,  altEN: "Encouraging a Healthy Lifestyle — World Health Day Activities at The Milestone", altHI: "स्वस्थ जीवनशैली को प्रोत्साहन — माइलस्टोन में विश्व स्वास्थ्य दिवस गतिविधियां", category: "events" },
 ];
 
 const STAT_ITEMS_EN = [

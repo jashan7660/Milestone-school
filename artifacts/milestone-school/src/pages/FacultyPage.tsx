@@ -4,6 +4,9 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { useLanguage } from "@/context/LanguageContext";
 import principalImg from "@assets/atul_sharama_1777615661839.jpg";
+import amazingEducatorsImg from "@assets/image_1780027878905.png";
+import activeParticipImg   from "@assets/image_1780027932559.png";
+import commitGrowthImg     from "@assets/image_1780028126827.png";
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -165,6 +168,59 @@ export default function FacultyPage() {
                     <div className="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full">
                       <Star size={11} className="fill-primary" /> {t.exp} {isHindi ? "अनुभव" : "experience"}
                     </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Faculty Moments */}
+        <section className="py-20 relative overflow-hidden"
+          style={{ background: "linear-gradient(160deg, #0f172a 0%, #0a2240 50%, #12103a 100%)" }}>
+          <div className="absolute inset-0 pointer-events-none opacity-[0.04]"
+            style={{ backgroundImage:"linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px)", backgroundSize:"44px 44px" }}/>
+          <div className="relative z-10 container mx-auto px-4 md:px-6">
+            <motion.div {...fadeUp()} className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-4"
+                style={{ background:"rgba(245,158,11,0.12)", color:"#fbbf24", border:"1px solid rgba(245,158,11,0.3)" }}>
+                {isHindi ? "हमारे शिक्षक" : "Faculty Highlights"}
+              </div>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-white">
+                {isHindi ? "शिक्षक जो " : "Teachers Who "}
+                <span style={{ background:"linear-gradient(90deg,#f59e0b,#f472b6)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>
+                  {isHindi ? "प्रेरित करते हैं" : "Inspire"}
+                </span>
+              </h2>
+            </motion.div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                { img: amazingEducatorsImg,
+                  capEN: "Our Amazing Educators — Ms. Renu, Ms. Neelam, Ms. Preeti & Ms. Deepika",
+                  capHI: "हमारे अद्भुत शिक्षक — सुश्री रेणु, सुश्री नीलम, सुश्री प्रीति और सुश्री दीपिका",
+                  accent: "#f59e0b" },
+                { img: activeParticipImg,
+                  capEN: "60 Teachers Actively Participated in the CBP Workshop — Interactive & Engaging",
+                  capHI: "60 शिक्षकों ने CBP वर्कशॉप में उत्साहपूर्वक भाग लिया — संवादात्मक और आकर्षक",
+                  accent: "#60a5fa" },
+                { img: commitGrowthImg,
+                  capEN: "Commitment to Growth — Empowering Teachers, Strengthening Education",
+                  capHI: "विकास के प्रति प्रतिबद्धता — शिक्षकों को सशक्त बनाना, शिक्षा को मजबूत करना",
+                  accent: "#34d399" },
+              ].map(({ img, capEN, capHI, accent }, i) => (
+                <motion.div key={i} {...fadeUp(i * 0.12)}
+                  whileHover={{ y: -6, boxShadow: `0 20px 48px ${accent}22` }}
+                  className="rounded-2xl overflow-hidden transition-all duration-300 group"
+                  style={{ border:`1px solid ${accent}30` }}>
+                  <div className="relative overflow-hidden" style={{ aspectRatio:"4/3" }}>
+                    <img src={img} alt={isHindi ? capHI : capEN}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"/>
+                    <div className="absolute inset-0"
+                      style={{ background:"linear-gradient(to top, rgba(10,22,40,0.85) 0%, transparent 55%)" }}/>
+                    <div className="h-1 absolute top-0 left-0 right-0" style={{ background:`linear-gradient(90deg,${accent},${accent}66)` }}/>
+                  </div>
+                  <div className="p-4" style={{ background:"rgba(255,255,255,0.04)" }}>
+                    <p className="text-white/70 text-sm leading-relaxed">{isHindi ? capHI : capEN}</p>
                   </div>
                 </motion.div>
               ))}
