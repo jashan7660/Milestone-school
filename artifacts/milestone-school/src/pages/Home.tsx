@@ -10,6 +10,7 @@ const Academics = lazy(() => import("@/components/sections/Academics"));
 const Facilities = lazy(() => import("@/components/sections/Facilities"));
 const WhyChooseUs = lazy(() => import("@/components/sections/WhyChooseUs"));
 const Faculty = lazy(() => import("@/components/sections/Faculty"));
+const ClanSystem = lazy(() => import("@/components/sections/ClanSystem"));
 const Testimonials = lazy(() => import("@/components/sections/Testimonials"));
 const AdmissionsForm = lazy(() => import("@/components/sections/AdmissionsForm"));
 const Contact = lazy(() => import("@/components/sections/Contact"));
@@ -34,6 +35,7 @@ export default function Home() {
           <Facilities />
           <WhyChooseUs />
           <Faculty />
+          <ClanSystem />
           <Testimonials />
           <AdmissionsForm />
           <Contact />
