@@ -3,7 +3,7 @@ import { Microscope, Monitor, BookOpen, Dumbbell, Palette, Bus } from "lucide-re
 import { useLanguage } from "@/context/LanguageContext";
 import { SITE } from "@/i18n/translations";
 
-const IMAGES = ["/science-lab.png", "/library.png", "/sports.png", "/art-room.png", "/smart-classroom.png", "/school-bus.png"];
+const IMAGES = [null, "/library.png", "/sports.png", "/art-room.png", "/smart-classroom.png", "/school-bus.png"];
 const ICONS  = [Microscope, BookOpen, Dumbbell, Palette, Monitor, Bus];
 
 export default function Facilities() {
@@ -46,11 +46,24 @@ export default function Facilities() {
                 className="group rounded-3xl overflow-hidden bg-card border border-border shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full"
               >
                 <div className="relative h-60 overflow-hidden">
-                  <img
-                    src={IMAGES[index]}
-                    alt={facility.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
+                  {index === 0 ? (
+                    <video
+                      src="/science-lab-video3.mp4"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      disablePictureInPicture
+                      className="w-full h-full object-cover"
+                      style={{ pointerEvents: "none" }}
+                    />
+                  ) : (
+                    <img
+                      src={IMAGES[index]!}
+                      alt={facility.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60" />
                   <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-full text-primary shadow-sm">
                     <Icon className="w-6 h-6" />
