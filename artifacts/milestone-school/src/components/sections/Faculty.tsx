@@ -7,9 +7,9 @@ import sulochanaSharmaImg from "@assets/managing_director_1780037204818.jpeg";
 import vicePrincipalImg from "@assets/viceprincipal_1780037357684.png";
 
 const localImages = [
-  { image: principalImg,       position: "center 30%" },
-  { image: sulochanaSharmaImg, position: "center top"  },
-  { image: vicePrincipalImg,   position: "center top"  },
+  { image: principalImg,       position: "center 48%" },
+  { image: sulochanaSharmaImg, position: "center 6%"  },
+  { image: vicePrincipalImg,   position: "center 5%"  },
 ];
 
 export default function Faculty() {
@@ -45,7 +45,7 @@ export default function Faculty() {
               <Card className="overflow-hidden border-none shadow-md hover:shadow-xl transition-shadow bg-card h-full flex flex-col">
                 <div
                   className="overflow-hidden rounded-t-xl flex-shrink-0"
-                  style={{ height: "340px" }}
+                  style={{ height: "400px" }}
                 >
                   <img
                     src={localImages[index].image}
