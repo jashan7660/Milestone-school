@@ -55,7 +55,7 @@ export default function Facilities() {
                     />
                   ) : index === 2 ? (
                     <video
-                      src="/sports-video.mp4"
+                      src="/sports-complex-video.mp4"
                       autoPlay loop muted playsInline disablePictureInPicture
                       className="w-full h-full object-cover"
                       style={{ pointerEvents: "none" }}
