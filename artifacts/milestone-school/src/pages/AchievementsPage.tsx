@@ -96,7 +96,7 @@ export default function AchievementsPage() {
 
       {/* ── HERO ──────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden min-h-[82vh] flex items-center"
-        style={{ background: "linear-gradient(145deg, #0a1628 0%, #1a1200 30%, #0a2a1a 60%, #12103a 100%)" }}>
+        style={{ background: "linear-gradient(145deg, #0a1628 0%, #0f2d50 40%, #0a2a1a 75%, #12103a 100%)" }}>
 
         {/* Animated orbs */}
         {[
