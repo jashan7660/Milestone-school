@@ -7,9 +7,9 @@ import sulochanaSharmaImg from "@assets/managing_director_1780037204818.jpeg";
 import vicePrincipalImg from "@assets/viceprincipal_1780037357684.png";
 
 const localImages = [
-  { image: principalImg,        pos: "object-center",       style: { transform: "scale(1.35)", transformOrigin: "50% 38%" } },
-  { image: sulochanaSharmaImg,  pos: "object-top",          style: { transform: "scale(1.05)", transformOrigin: "50% 0%" } },
-  { image: vicePrincipalImg,    pos: "object-top",          style: { transform: "scale(1.3)",  transformOrigin: "50% 12%" } },
+  { image: principalImg,       position: "center 30%" },
+  { image: sulochanaSharmaImg, position: "center top"  },
+  { image: vicePrincipalImg,   position: "center top"  },
 ];
 
 export default function Faculty() {
@@ -40,18 +40,27 @@ export default function Faculty() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="h-full"
             >
-              <Card className="overflow-hidden border-none shadow-md hover:shadow-xl transition-shadow bg-card group h-full">
-                <div className="aspect-square overflow-hidden relative">
+              <Card className="overflow-hidden border-none shadow-md hover:shadow-xl transition-shadow bg-card h-full flex flex-col">
+                <div
+                  className="overflow-hidden rounded-t-xl flex-shrink-0"
+                  style={{ height: "340px" }}
+                >
                   <img
                     src={localImages[index].image}
                     alt={member.name}
-                    className={`w-full h-full object-cover ${localImages[index].pos} transition-transform duration-500 group-hover:scale-105`}
-                    style={localImages[index].style}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      objectPosition: localImages[index].position,
+                      display: "block",
+                      borderRadius: "12px 12px 0 0",
+                    }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
-                <CardContent className="p-6 text-center relative z-10 bg-card">
+                <CardContent className="p-6 text-center bg-card flex-1 flex flex-col justify-start">
                   <h3 className="text-xl font-bold font-serif text-foreground mb-1">{member.name}</h3>
                   <p className="text-secondary font-semibold text-sm mb-4">{member.role}</p>
                   <p className="text-muted-foreground text-sm leading-relaxed">{member.bio}</p>
