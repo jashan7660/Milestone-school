@@ -159,26 +159,15 @@ export default function FacilitiesPage() {
                 <motion.div key={i} {...fadeUp(0.1)} className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${i % 2 !== 0 ? "lg:flex-row-reverse" : ""}`}>
                   <div className={i % 2 !== 0 ? "lg:order-2" : ""}>
                     {i === 0 ? (
-                      /* Science Labs — show looping silent videos instead of static image */
-                      <div className="grid grid-cols-2 gap-3">
-                        {["/science-lab-video.mp4", "/science-lab-video2.mp4"].map((src, vi) => (
-                          <div key={vi} className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white bg-black"
-                            style={{ pointerEvents: "none" }}>
-                            <video
-                              src={src}
-                              autoPlay
-                              loop
-                              muted
-                              playsInline
-                              disablePictureInPicture
-                              className="w-full h-[260px] object-cover"
-                              style={{ pointerEvents: "none" }}
-                            />
-                            <div className="absolute top-3 left-3 bg-primary text-white p-2 rounded-lg shadow-lg">
-                              <f.icon size={16} />
-                            </div>
-                          </div>
-                        ))}
+                      /* Science Labs — single looping video */
+                      <div className="relative rounded-3xl overflow-hidden shadow-2xl border-8 border-white group" style={{ pointerEvents: "none" }}>
+                        <video
+                          src="/science-lab-video2.mp4"
+                          autoPlay loop muted playsInline disablePictureInPicture
+                          className="w-full h-[340px] object-cover"
+                          style={{ pointerEvents: "none" }}
+                        />
+                        <div className="absolute top-4 left-4 bg-primary text-white p-2.5 rounded-xl shadow-lg"><f.icon size={20} /></div>
                       </div>
                     ) : i === 5 ? (
                       <div className="relative rounded-3xl overflow-hidden shadow-2xl border-8 border-white group" style={{ pointerEvents: "none" }}>
