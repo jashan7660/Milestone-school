@@ -8,8 +8,8 @@ import vicePrincipalImg from "@assets/viceprincipal_1780037357684.png";
 
 const localImages = [
   { image: principalImg,        pos: "object-center",       style: { transform: "scale(1.35)", transformOrigin: "50% 38%" } },
-  { image: sulochanaSharmaImg,  pos: "object-top",          style: { transform: "scale(1.25)", transformOrigin: "50% 15%" } },
-  { image: vicePrincipalImg,    pos: "object-center",       style: { transform: "scale(1.1)",  transformOrigin: "50% 22%" } },
+  { image: sulochanaSharmaImg,  pos: "object-top",          style: { transform: "scale(1.05)", transformOrigin: "50% 0%" } },
+  { image: vicePrincipalImg,    pos: "object-top",          style: { transform: "scale(1.3)",  transformOrigin: "50% 12%" } },
 ];
 
 export default function Faculty() {
