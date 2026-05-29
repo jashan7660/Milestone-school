@@ -1,27 +1,87 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, MapPin, Award } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { SITE } from "@/i18n/translations";
 import { useLocation } from "wouter";
+import { useState, useEffect, useRef } from "react";
+
+type Slide = "video" | "photo";
+
+const PHOTO_DURATION = 6000;
 
 export default function Hero() {
   const { lang } = useLanguage();
   const t = SITE[lang].hero;
   const [, setLocation] = useLocation();
+  const [slide, setSlide] = useState<Slide>("video");
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const photoTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const scrollTo = (id: string) =>
     document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
 
+  useEffect(() => {
+    return () => {
+      if (photoTimerRef.current) clearTimeout(photoTimerRef.current);
+    };
+  }, []);
+
+  const handleVideoEnded = () => {
+    setSlide("photo");
+    photoTimerRef.current = setTimeout(() => {
+      setSlide("video");
+    }, PHOTO_DURATION);
+  };
+
+  useEffect(() => {
+    if (slide === "video" && videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().catch(() => {});
+    }
+  }, [slide]);
+
   return (
     <section className="relative w-full min-h-screen overflow-hidden flex items-center justify-center">
 
-      <img
-        src="/slide1.png"
-        alt="The Milestone School Campus"
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-        style={{ zIndex: 0 }}
-      />
+      {/* Video slide */}
+      <AnimatePresence>
+        {slide === "video" && (
+          <motion.video
+            key="hero-video"
+            ref={videoRef}
+            src="/hero-video2.mp4"
+            autoPlay
+            muted
+            playsInline
+            onEnded={handleVideoEnded}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+            style={{ zIndex: 0 }}
+          />
+        )}
+      </AnimatePresence>
 
+      {/* Photo slide */}
+      <AnimatePresence>
+        {slide === "photo" && (
+          <motion.img
+            key="hero-photo"
+            src="/slide1.png"
+            alt="The Milestone School Campus"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+            style={{ zIndex: 0 }}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Overlays */}
       <div
         className="absolute inset-0"
         style={{
