@@ -6,3 +6,5 @@ artifacts/milestone-school/public/science-lab-video.mp4 filter=lfs diff=lfs merg
 attached_assets/FDownloader.Net_AQPW_SKlKcJSbyZuW-az49DeUCbemRW_zPbx2XjgY9BsMW_1779953338552.mp4 filter=lfs diff=lfs merge=lfs -text
 artifacts/milestone-school/public/activity-video1.mp4 filter=lfs diff=lfs merge=lfs -text
 attached_assets/FDownloader.Net_AQPW_SKlKcJSbyZuW-az49DeUCbemRW_zPbx2XjgY9BsMW_1780044039467.mp4 filter=lfs diff=lfs merge=lfs -text
+artifacts/milestone-school/public/creative-arts-video.mp4 filter=lfs diff=lfs merge=lfs -text
+attached_assets/0529_(1)(2)_1780051386655.mp4 filter=lfs diff=lfs merge=lfs -text
