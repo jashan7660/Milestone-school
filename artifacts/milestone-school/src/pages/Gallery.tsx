@@ -108,6 +108,10 @@ const GALLERY_ITEMS: GalleryItem[] = [
   { src: mangoShakeImg,        altEN: "Summer Special Mango Shake — Students Present Healthy Drink to School Head", altHI: "समर स्पेशल मैंगो शेक — छात्रों ने स्कूल प्रमुख को स्वस्थ पेय भेंट किया",          category: "campus" },
   { src: commitGrowthImg,      altEN: "Commitment to Growth — Empowering Teachers, Strengthening Education",       altHI: "विकास के प्रति प्रतिबद्धता — शिक्षकों को सशक्त बनाना, शिक्षा को मजबूत करना",    category: "campus" },
   { src: healthyLifestyleImg,  altEN: "Encouraging a Healthy Lifestyle — World Health Day Activities at The Milestone", altHI: "स्वस्थ जीवनशैली को प्रोत्साहन — माइलस्टोन में विश्व स्वास्थ्य दिवस गतिविधियां", category: "events" },
+  { src: "/sports-competition.png",        altEN: "Interschool Sports Competition — Milestone Students in Action",              altHI: "इंटरस्कूल खेल प्रतियोगिता — माइलस्टोन छात्र मैदान में",                         category: "events",       featured: true },
+  { src: "/digital-footprints-seminar.png",altEN: "Digital Footprints Seminar — Cyber Awareness Session at The Milestone",     altHI: "डिजिटल फुटप्रिंट्स सेमिनार — माइलस्टोन में साइबर जागरूकता सत्र",               category: "events" },
+  { src: "/stage-event.png",               altEN: "Stage Event — Students with Guest Speaker, School Seminar",                 altHI: "मंच कार्यक्रम — अतिथि वक्ता के साथ छात्र, स्कूल सेमिनार",                      category: "events" },
+  { src: "/students-assembly.png",         altEN: "Students in Assembly Hall — Learning Together at The Milestone",            altHI: "सभागार में छात्र — माइलस्टोन में मिलकर सीखना",                                  category: "campus" },
 ];
 
 const STAT_ITEMS_EN = [

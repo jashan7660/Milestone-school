@@ -64,6 +64,7 @@ export default function AchievementsPage() {
     { src: debateImg,           titleEN: "Gold Glory — Reshika & Yashika, Debate Competition",          titleHI: "गोल्ड ग्लोरी — रेशिका और यशिका, वाद-विवाद प्रतियोगिता",        wide: false },
     { src: natTechDayAwardImg,  titleEN: "National Technology Day — Deewal Wins 2nd Position, Poster Making at ITI Kaithal", titleHI: "राष्ट्रीय प्रौद्योगिकी दिवस — ITI कैथल में दीवाल को पोस्टर-मेकिंग में द्वितीय स्थान", wide: true },
     { src: interviewActivityImg, titleEN: "Interview Activity — From Learning to Leading, Mock Interviews", titleHI: "इंटरव्यू एक्टिविटी — लर्निंग से लीडिंग तक, मॉक इंटरव्यू",       wide: false },
+    { src: "/milestone-times-newsletter.png", titleEN: "The Milestone Times — Spring Chronicles 2025, April & May Edition", titleHI: "द माइलस्टोन टाइम्स — स्प्रिंग क्रॉनिकल्स 2025, अप्रैल और मई संस्करण", wide: true },
   ];
 
   const awards = isHindi ? [
