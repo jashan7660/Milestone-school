@@ -7,9 +7,9 @@ import sulochanaSharmaImg from "@assets/managing_director_1780037204818.jpeg";
 import vicePrincipalImg from "@assets/viceprincipal_1780037357684.png";
 
 const localImages = [
-  { image: principalImg,       position: "center center", fit: "contain" as const, bg: "#f0f4f8" },
-  { image: sulochanaSharmaImg, position: "center 6%",     fit: "cover"   as const, bg: "transparent" },
-  { image: vicePrincipalImg,   position: "center 5%",     fit: "cover"   as const, bg: "transparent" },
+  { image: principalImg,       position: "center top",    fit: "cover" as const, bg: "transparent" },
+  { image: sulochanaSharmaImg, position: "center 6%",     fit: "cover" as const, bg: "transparent" },
+  { image: vicePrincipalImg,   position: "center 5%",     fit: "cover" as const, bg: "transparent" },
 ];
 
 export default function Faculty() {

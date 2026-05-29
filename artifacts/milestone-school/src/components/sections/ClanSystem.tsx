@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { motion, useInView, useAnimation } from "framer-motion";
-import { Shield, Star, Trophy, Crown } from "lucide-react";
+import { Shield, Trophy } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
 const LOGO_SRC = "/clan-logos.png";
@@ -93,29 +93,6 @@ const clans = [
 ];
 
 const rankMedal = ["🥇", "🥈", "🥉", "🎖️"];
-
-function CountUp({ target, inView }: { target: number; inView: boolean }) {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    if (!inView) return;
-    let current = 0;
-    const duration = 1800;
-    const steps = 60;
-    const increment = target / steps;
-    const interval = duration / steps;
-    const timer = setInterval(() => {
-      current += increment;
-      if (current >= target) {
-        setCount(target);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(current));
-      }
-    }, interval);
-    return () => clearInterval(timer);
-  }, [inView, target]);
-  return <span>{count.toLocaleString()}</span>;
-}
 
 export default function ClanSystem() {
   const { lang } = useLanguage();
@@ -345,51 +322,8 @@ export default function ClanSystem() {
                     </div>
                   </div>
 
-                  {/* Captain */}
-                  <div className="flex items-center gap-1.5 mb-5 justify-center">
-                    <Crown size={12} style={{ color: clan.color }} />
-                    <span className="text-white/50 text-xs">
-                      {isHindi ? "कप्तान:" : "Captain:"}{" "}
-                      <span className="text-white/85 font-semibold">
-                        {isHindi ? clan.captainHi : clan.captain}
-                      </span>
-                    </span>
-                  </div>
-
-                  {/* Points counter */}
-                  <div className="text-center mb-4">
-                    <div
-                      className="text-4xl font-black tabular-nums leading-none"
-                      style={{ color: clan.color }}
-                    >
-                      <CountUp target={clan.points} inView={inView} />
-                    </div>
-                    <div className="text-white/35 text-[10px] font-semibold uppercase tracking-widest mt-1">
-                      {isHindi ? "अंक" : "Points"}
-                    </div>
-                  </div>
-
-                  {/* Progress bar */}
-                  <div className="w-full mb-4">
-                    <div className="flex justify-between text-[10px] text-white/35 mb-1.5">
-                      <span>{isHindi ? "प्रगति" : "Progress"}</span>
-                      <span className="font-semibold" style={{ color: clan.color }}>
-                        {clan.progress}%
-                      </span>
-                    </div>
-                    <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.08)" }}>
-                      <motion.div
-                        className="h-full rounded-full"
-                        style={{ background: clan.color }}
-                        initial={{ width: 0 }}
-                        animate={inView ? { width: `${clan.progress}%` } : { width: 0 }}
-                        transition={{ duration: 1.6, delay: 0.3 + clan.rank * 0.1, ease: "easeOut" }}
-                      />
-                    </div>
-                  </div>
-
                   {/* Badges */}
-                  <div className="flex flex-wrap gap-1.5 mb-5 justify-center">
+                  <div className="flex flex-wrap gap-1.5 mt-2 justify-center">
                     {clan.badges.map((badge, bi) => (
                       <span
                         key={bi}
@@ -404,20 +338,6 @@ export default function ClanSystem() {
                       </span>
                     ))}
                   </div>
-
-                  {/* CTA button */}
-                  <motion.button
-                    className="w-full py-2.5 rounded-xl text-sm font-bold mt-auto transition-colors duration-300"
-                    style={{
-                      background: clan.colorBg,
-                      border: `1px solid ${clan.colorBorder}`,
-                      color: clan.color,
-                    }}
-                    whileHover={{ background: clan.color, color: "#fff" }}
-                    whileTap={{ scale: 0.97 }}
-                  >
-                    {isHindi ? "विवरण देखें →" : "View Details →"}
-                  </motion.button>
                 </div>
               </div>
             </motion.div>
