@@ -132,7 +132,7 @@ export default function OurDirectorsPage() {
               {/* Photo + meta */}
               <div className="lg:col-span-2 flex flex-col items-center lg:items-start gap-6">
                 <div className="relative">
-                  <div className="w-52 h-52 rounded-3xl overflow-hidden shadow-2xl"
+                  <div className="w-52 h-72 rounded-3xl overflow-hidden shadow-2xl"
                     style={{ border:"3px solid rgba(37,99,235,0.3)", boxShadow:"0 0 40px rgba(37,99,235,0.2)" }}>
                     <img src={principal.image} alt={principal.name} className="w-full h-full object-cover object-top" />
                   </div>
