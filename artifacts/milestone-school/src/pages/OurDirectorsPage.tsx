@@ -50,7 +50,7 @@ export default function OurDirectorsPage() {
     { name: "Mr. Sarthak Sharma",    role: "प्रबंधन",             note: "दैनिक संचालन और प्रशासनिक कार्यों का समन्वय",            accent: "#60a5fa" },
     { name: "Ms. Ashima Sindhwani",  role: "शैक्षणिक सलाहकार",   note: "पाठ्यक्रम और शैक्षणिक नीति को आकार देते हैं",            accent: "#f472b6" },
   ] : [
-    { name: "Mrs. Sulochana Sharma", role: "Chairperson",         note: "Founder & guiding force of The Milestone family",                    accent: "#f59e0b" },
+    { name: "Mrs. Sulochana Sharma", role: "Managing Director",         note: "Founder & guiding force of The Milestone family",                    accent: "#f59e0b" },
     { name: "Ms. Yogita Sharma",     role: "Managing Director",   note: "Oversees strategic development and infrastructure",                   accent: "#10B981" },
     { name: "Ms. Shalu Grover",      role: "Event Head",          note: "Plans and coordinates all school events and activities",              accent: "#a78bfa" },
     { name: "Mr. Sarthak Sharma",    role: "Management",          note: "Coordinates day-to-day operations and administration",                accent: "#60a5fa" },
