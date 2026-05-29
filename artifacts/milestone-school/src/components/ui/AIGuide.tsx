@@ -564,54 +564,63 @@ export default function AIGuide() {
               {/* Start Tour button */}
               <motion.button onClick={startTour}
                 initial={{ opacity:0, x:14 }} animate={{ opacity:1, x:0 }} transition={{ delay:0.06 }}
-                whileHover={{ scale:1.06, x:-2 }} whileTap={{ scale:0.94 }}
-                className={`flex items-center gap-2 rounded-full font-bold relative overflow-hidden ${isMobile ? "px-4 py-2 text-[11px]" : "px-5 py-2.5 text-[12px]"}`}
-                style={{ background:GLASS_LIGHT, backdropFilter:"blur(16px)",
-                         border:`1px solid ${NEON}40`,
-                         boxShadow:`0 0 18px ${NEON}25, 0 8px 32px rgba(0,0,0,0.45)`,
-                         color:"white" }}>
-                <motion.div className="absolute inset-0 rounded-full"
-                  style={{ background:`linear-gradient(90deg,transparent,${NEON}18,transparent)` }}
-                  animate={{ x:["-100%","100%"] }} transition={{ repeat:Infinity, duration:2.4, ease:"linear" }}/>
-                <motion.span animate={{ rotate:[0,360] }}
-                  transition={{ repeat:Infinity, duration:4, ease:"linear" }}
-                  style={{ display:"inline-block" }}>🚀</motion.span>
-                <AnimatePresence mode="wait">
-                  <motion.span key={"st-"+lang} className="relative"
-                    initial={{ opacity:0, y:4 }} animate={{ opacity:1, y:0 }}
-                    exit={{ opacity:0, y:-4 }} transition={{ duration:0.18 }}>
-                    {t.startTour}
-                  </motion.span>
-                </AnimatePresence>
-                <motion.div className="w-1.5 h-1.5 rounded-full"
-                  style={{ background:NEON, boxShadow:`0 0 6px ${NEON}` }}
-                  animate={{ opacity:[1,0.2,1] }} transition={{ repeat:Infinity, duration:1.2 }}/>
+                whileHover={{ scale:1.04, y:-2 }} whileTap={{ scale:0.96 }}
+                className={`flex items-center gap-2.5 rounded-2xl font-bold relative overflow-hidden ${isMobile ? "px-4 py-2.5 text-[11px]" : "px-5 py-3 text-[12px]"}`}
+                style={{
+                  background:`linear-gradient(135deg,#0d3d20,#0a2d42)`,
+                  backdropFilter:"blur(20px)",
+                  border:`1px solid ${NEON}50`,
+                  boxShadow:`0 0 0 1px ${NEON}15, 0 8px 28px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08)`,
+                  color:"white",
+                }}>
+                <div className="w-7 h-7 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{ background:`linear-gradient(135deg,${NEON}30,${CYAN}20)`, border:`1px solid ${NEON}40` }}>
+                  <span style={{ fontSize:14 }}>🗺️</span>
+                </div>
+                <div className="text-left">
+                  <AnimatePresence mode="wait">
+                    <motion.div key={"st-"+lang}
+                      initial={{ opacity:0, y:4 }} animate={{ opacity:1, y:0 }}
+                      exit={{ opacity:0, y:-4 }} transition={{ duration:0.18 }}>
+                      <div style={{ fontWeight:800, fontSize: isMobile ? 11 : 12, color:"white", lineHeight:1.2 }}>{t.startTour}</div>
+                      <div style={{ fontSize:9, color:`${NEON}cc`, fontWeight:600, letterSpacing:"0.04em", marginTop:1 }}>
+                        {lang === "hi" ? "स्कूल को एक्सप्लोर करें" : "Explore the school"}
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+                <ChevronRight size={14} style={{ color:`${NEON}99`, marginLeft:"auto" }}/>
               </motion.button>
 
               {/* Chat with AI button */}
               <motion.button onClick={()=>setMode("chat")}
                 initial={{ opacity:0, x:14 }} animate={{ opacity:1, x:0 }} transition={{ delay:0.12 }}
-                whileHover={{ scale:1.06, x:-2 }} whileTap={{ scale:0.94 }}
-                className={`flex items-center gap-2 rounded-full font-bold relative overflow-hidden ${isMobile ? "px-4 py-2 text-[11px]" : "px-5 py-2.5 text-[12px]"}`}
-                style={{ background:`linear-gradient(135deg,${BLUE}dd,#091d6bdd)`,
-                         backdropFilter:"blur(16px)",
-                         border:`1px solid ${CYAN}40`,
-                         boxShadow:`0 0 18px ${CYAN}25, 0 8px 32px rgba(17,69,181,0.45)`,
-                         color:"white" }}>
-                <motion.div className="absolute inset-0 rounded-full"
-                  style={{ background:`linear-gradient(90deg,transparent,${CYAN}18,transparent)` }}
-                  animate={{ x:["-100%","100%"] }} transition={{ repeat:Infinity, duration:2.8, ease:"linear" }}/>
-                <motion.span animate={{ scale:[1,1.2,1] }} transition={{ repeat:Infinity, duration:1.8 }}
-                  style={{ display:"inline-block" }}>
+                whileHover={{ scale:1.04, y:-2 }} whileTap={{ scale:0.96 }}
+                className={`flex items-center gap-2.5 rounded-2xl font-bold relative overflow-hidden ${isMobile ? "px-4 py-2.5 text-[11px]" : "px-5 py-3 text-[12px]"}`}
+                style={{
+                  background:`linear-gradient(135deg,#0d1e4a,#091538)`,
+                  backdropFilter:"blur(20px)",
+                  border:`1px solid ${CYAN}50`,
+                  boxShadow:`0 0 0 1px ${CYAN}15, 0 8px 28px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08)`,
+                  color:"white",
+                }}>
+                <div className="w-7 h-7 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{ background:`linear-gradient(135deg,${CYAN}30,${BLUE}40)`, border:`1px solid ${CYAN}40` }}>
                   <Sparkles size={13} color={CYAN}/>
-                </motion.span>
-                <AnimatePresence mode="wait">
-                  <motion.span key={"ca-"+lang} className="relative"
-                    initial={{ opacity:0, y:4 }} animate={{ opacity:1, y:0 }}
-                    exit={{ opacity:0, y:-4 }} transition={{ duration:0.18 }}>
-                    {t.chatWithAI}
-                  </motion.span>
-                </AnimatePresence>
+                </div>
+                <div className="text-left">
+                  <AnimatePresence mode="wait">
+                    <motion.div key={"ca-"+lang}
+                      initial={{ opacity:0, y:4 }} animate={{ opacity:1, y:0 }}
+                      exit={{ opacity:0, y:-4 }} transition={{ duration:0.18 }}>
+                      <div style={{ fontWeight:800, fontSize: isMobile ? 11 : 12, color:"white", lineHeight:1.2 }}>{t.chatWithAI}</div>
+                      <div style={{ fontSize:9, color:`${CYAN}cc`, fontWeight:600, letterSpacing:"0.04em", marginTop:1 }}>
+                        {lang === "hi" ? "कोई भी सवाल पूछें" : "Ask anything, anytime"}
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+                <ChevronRight size={14} style={{ color:`${CYAN}99`, marginLeft:"auto" }}/>
               </motion.button>
             </motion.div>
           )}
@@ -620,48 +629,18 @@ export default function AIGuide() {
         {/* Floating Robot Orb */}
         <motion.button
           onClick={()=>{ if(mode==="tour") stopTour(); else if(mode==="chat") setMode("idle"); }}
-          animate={{ y:[0,-8,0] }} transition={{ repeat:Infinity, duration:2.8, ease:"easeInOut" }}
-          whileHover={{ scale:1.1 }} whileTap={{ scale:0.93 }}
+          animate={{ y:[0,-6,0] }} transition={{ repeat:Infinity, duration:3.2, ease:"easeInOut" }}
+          whileHover={{ scale:1.08 }} whileTap={{ scale:0.93 }}
           className="relative cursor-pointer" title="Millie — AI Guide">
 
-          {/* Outer ambient glow */}
-          <motion.div className="absolute -inset-5 rounded-full pointer-events-none"
-            animate={{ opacity:[0.25,0.08,0.25], scale:[1,1.08,1] }}
-            transition={{ repeat:Infinity, duration:3 }}
-            style={{ background:`radial-gradient(circle,${NEON}50 0%,${CYAN}20 40%,transparent 70%)` }}/>
-
-          {/* Spinning neon ring */}
-          <motion.div className="absolute -inset-2 rounded-full pointer-events-none"
-            animate={{ rotate:360 }} transition={{ repeat:Infinity, duration:6, ease:"linear" }}
-            style={{ border:`1.5px solid transparent`,
-                     borderTop:`1.5px solid ${NEON}90`, borderRight:`1.5px solid ${CYAN}60`,
-                     borderRadius:"50%",
-                     boxShadow:`0 0 8px ${NEON}40` }}/>
-
-          {/* Counter-spin ring */}
-          <motion.div className="absolute -inset-3.5 rounded-full pointer-events-none"
-            animate={{ rotate:-360 }} transition={{ repeat:Infinity, duration:10, ease:"linear" }}
-            style={{ border:`1px dashed rgba(0,217,255,0.30)`, borderRadius:"50%" }}/>
+          {/* Soft static glow */}
+          <div className="absolute -inset-3 rounded-full pointer-events-none"
+            style={{ background:`radial-gradient(circle,${NEON}22 0%,transparent 70%)` }}/>
 
           <img src="/ai-robot.png" alt="Millie AI Guide"
                className="relative z-10"
                style={{ width: isMobile ? 66 : 86, height: isMobile ? 66 : 86, objectFit:"contain",
-                        filter:`drop-shadow(0 0 12px ${NEON}80) drop-shadow(0 0 24px ${CYAN}50) drop-shadow(0 4px 16px rgba(0,0,0,0.60))` }}/>
-
-          {/* Particle sparks */}
-          {[0,1,2].map(i => (
-            <motion.div key={i}
-              className="absolute w-1 h-1 rounded-full pointer-events-none"
-              style={{ background: i%2===0 ? NEON : CYAN,
-                       top:"50%", left:"50%",
-                       boxShadow:`0 0 4px ${i%2===0?NEON:CYAN}` }}
-              animate={{
-                x:[0, (i===0?-28:i===1?20:8)],
-                y:[0, (i===0?-20:i===1?-28:22)],
-                opacity:[0,1,0], scale:[0,1.2,0],
-              }}
-              transition={{ repeat:Infinity, duration:2.2, delay:i*0.7, ease:"easeOut" }}/>
-          ))}
+                        filter:`drop-shadow(0 0 10px ${NEON}60) drop-shadow(0 4px 16px rgba(0,0,0,0.55))` }}/>
         </motion.button>
       </div>
     </div>
