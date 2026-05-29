@@ -417,16 +417,33 @@ export default function AchievementsPage() {
             </p>
           </motion.div>
 
-          <motion.div {...fadeUp(0.1)} className="max-w-3xl mx-auto rounded-3xl overflow-hidden shadow-2xl"
-            style={{ border: "2px solid rgba(245,158,11,0.3)" }}>
-            <div className="h-1.5" style={{ background: "linear-gradient(90deg,#F59E0B,#EF4444,#8B5CF6,#10B981)" }}/>
-            <div className="bg-black">
-              <video src="/video4.mp4" controls playsInline preload="metadata" className="w-full h-auto"/>
-            </div>
-            <div className="px-6 py-4" style={{ background: "rgba(255,255,255,0.06)" }}>
-              <p className="text-white/70 text-sm font-semibold">{isHindi ? "द माइलस्टोन सी.सेक. स्कूल — उपलब्धि क्षण" : "The Milestone Sr. Sec. School — Achievement Moments"}</p>
-            </div>
-          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {[
+              { src: "/section-video1.mp4", labelEN: "Achievement Moments — The Milestone", labelHI: "उपलब्धि क्षण — माइलस्टोन", accent: "#F59E0B", dot: "#fcd34d" },
+              { src: "/section-video2.mp4", labelEN: "Student Excellence — Campus Highlights", labelHI: "छात्र उत्कृष्टता — कैंपस हाइलाइट्स", accent: "#10B981", dot: "#34d399" },
+            ].map((v, i) => (
+              <motion.div key={i} {...fadeUp(i * 0.1)}
+                className="rounded-3xl overflow-hidden shadow-2xl"
+                style={{ border: `2px solid ${v.accent}55` }}>
+                <div className="h-1.5" style={{ background: `linear-gradient(90deg,${v.accent},${v.dot})` }}/>
+                <div className="bg-black">
+                  <video
+                    src={v.src}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    disablePictureInPicture
+                    className="w-full object-cover"
+                    style={{ height: "260px" }}
+                  />
+                </div>
+                <div className="px-6 py-4" style={{ background: "rgba(255,255,255,0.06)" }}>
+                  <p className="text-white/70 text-sm font-semibold">{isHindi ? v.labelHI : v.labelEN}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 

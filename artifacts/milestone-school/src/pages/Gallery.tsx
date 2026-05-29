@@ -51,7 +51,7 @@ import mangoShakeImg        from "@assets/image_1780028053955.png";
 import commitGrowthImg      from "@assets/image_1780028126827.png";
 import healthyLifestyleImg  from "@assets/image_1780028142790.png";
 
-const VIDEO_SRCS = ["/video1.mp4", "/video2.mp4", "/video3.mp4"];
+const VIDEO_SRCS = ["/section-video1.mp4", "/section-video2.mp4", "/video3.mp4"];
 
 type Category = "all" | "events" | "campus" | "achievements" | "highlights";
 
@@ -371,13 +371,9 @@ export default function GalleryPage() {
                 <div className="h-1" style={{ background: ["linear-gradient(90deg,#2563EB,#60a5fa)", "linear-gradient(90deg,#10B981,#34d399)", "linear-gradient(90deg,#8B5CF6,#a78bfa)"][i] }}/>
 
                 <div className="relative bg-black">
-                  <video src={src} controls playsInline preload="metadata"
+                  <video src={src} autoPlay loop muted playsInline disablePictureInPicture
                     className="w-full object-cover"
-                    style={{ height: "200px" }}/>
-                  <div className="absolute top-3 left-3 w-8 h-8 rounded-full flex items-center justify-center pointer-events-none"
-                    style={{ background: ["#2563EB","#10B981","#8B5CF6"][i] + "cc" }}>
-                    <Play size={12} className="text-white fill-white ml-0.5"/>
-                  </div>
+                    style={{ height: "200px", pointerEvents: "none" }}/>
                 </div>
 
                 <div className="p-5">
