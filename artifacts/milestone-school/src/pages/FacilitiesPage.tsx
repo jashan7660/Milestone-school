@@ -180,6 +180,16 @@ export default function FacilitiesPage() {
                           </div>
                         ))}
                       </div>
+                    ) : i === 5 ? (
+                      <div className="relative rounded-3xl overflow-hidden shadow-2xl border-8 border-white group" style={{ pointerEvents: "none" }}>
+                        <video
+                          src="/transport-video.mp4"
+                          autoPlay loop muted playsInline disablePictureInPicture
+                          className="w-full h-[340px] object-cover"
+                          style={{ pointerEvents: "none" }}
+                        />
+                        <div className="absolute top-4 left-4 bg-primary text-white p-2.5 rounded-xl shadow-lg"><f.icon size={20} /></div>
+                      </div>
                     ) : (
                       <div className="relative rounded-3xl overflow-hidden shadow-2xl border-8 border-white group">
                         <img src={f.image} alt={f.title} className="w-full h-[340px] object-cover transition-transform duration-700 group-hover:scale-105" />

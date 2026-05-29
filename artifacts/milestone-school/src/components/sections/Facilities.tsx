@@ -60,6 +60,13 @@ export default function Facilities() {
                       className="w-full h-full object-cover"
                       style={{ pointerEvents: "none" }}
                     />
+                  ) : index === 5 ? (
+                    <video
+                      src="/transport-video.mp4"
+                      autoPlay loop muted playsInline disablePictureInPicture
+                      className="w-full h-full object-cover"
+                      style={{ pointerEvents: "none" }}
+                    />
                   ) : (
                     <img
                       src={IMAGES[index]!}
