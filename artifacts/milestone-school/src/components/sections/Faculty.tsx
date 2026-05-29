@@ -4,12 +4,12 @@ import { useLanguage } from "@/context/LanguageContext";
 import { SITE } from "@/i18n/translations";
 import principalImg from "@assets/pricipal_sir_1780036894116.png";
 import sulochanaSharmaImg from "@assets/managing_director_1780037204818.jpeg";
-import facultyPosterImg from "@assets/1_1777975535490.jpg";
+import vicePrincipalImg from "@assets/viceprincipal_1780037357684.png";
 
 const localImages = [
   { image: principalImg,        pos: "object-center",       style: { transform: "scale(1.35)", transformOrigin: "50% 38%" } },
   { image: sulochanaSharmaImg,  pos: "object-center",       style: { transform: "scale(1.15)", transformOrigin: "50% 20%" } },
-  { image: facultyPosterImg,    pos: "object-[50%_10%]",    style: {} },
+  { image: vicePrincipalImg,    pos: "object-center",       style: { transform: "scale(1.1)",  transformOrigin: "50% 22%" } },
 ];
 
 export default function Faculty() {
