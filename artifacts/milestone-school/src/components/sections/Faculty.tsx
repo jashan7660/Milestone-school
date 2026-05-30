@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
 import { SITE } from "@/i18n/translations";
-import { Crown, Sparkles, ArrowRight } from "lucide-react";
+import { Crown, Star, ArrowRight, Quote } from "lucide-react";
 import { Link } from "wouter";
 import principalImg from "@assets/pricipal_sir_1780036894116.png";
 import sulochanaSharmaImg from "@assets/managing_director_1780037204818.jpeg";
@@ -11,21 +11,20 @@ import secretaryImg from "@assets/secretary_1780039339840.png";
 
 const CONFETTI = ["#F59E0B","#EF4444","#10B981","#2563EB","#8B5CF6","#EC4899"];
 
-const CARD_ACCENTS = [
-  { color: "#F59E0B", bg: "#78350f" },
-  { color: "#10B981", bg: "#064e3b" },
-  { color: "#60a5fa", bg: "#1e3a8a" },
-  { color: "#a78bfa", bg: "#4c1d95" },
-  { color: "#f472b6", bg: "#831843" },
+const MEMBERS = [
+  { image: principalImg,       pos: "center top",  accent: "#F59E0B", glow: "rgba(245,158,11,0.35)",  featured: true  },
+  { image: sulochanaSharmaImg, pos: "center 6%",   accent: "#10B981", glow: "rgba(16,185,129,0.30)",  featured: false },
+  { image: vicePrincipalImg,   pos: "center 5%",   accent: "#60a5fa", glow: "rgba(96,165,250,0.30)",  featured: false },
+  { image: sarthakImg,         pos: "center top",  accent: "#a78bfa", glow: "rgba(167,139,250,0.30)", featured: false },
+  { image: secretaryImg,       pos: "center top",  accent: "#f472b6", glow: "rgba(244,114,182,0.30)", featured: false },
 ];
 
-const localImages = [
-  { image: principalImg,       position: "center top",    fit: "cover" as const },
-  { image: sulochanaSharmaImg, position: "center 6%",     fit: "cover" as const },
-  { image: vicePrincipalImg,   position: "center 5%",     fit: "cover" as const },
-  { image: sarthakImg,         position: "center top",    fit: "cover" as const },
-  { image: secretaryImg,       position: "center top",    fit: "cover" as const },
-];
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 28 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-40px" },
+  transition: { duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] },
+});
 
 export default function Faculty() {
   const { lang } = useLanguage();
@@ -34,107 +33,162 @@ export default function Faculty() {
 
   return (
     <section id="faculty" className="py-28 relative overflow-hidden"
-      style={{ background: "linear-gradient(160deg, #0f172a 0%, #0a2240 50%, #0a1e0f 100%)" }}>
+      style={{ background: "linear-gradient(160deg, #0f0c1a 0%, #0a1628 40%, #0a200f 75%, #0f0c1a 100%)" }}>
 
       {/* Animated orbs */}
       {[
-        { w: 500, h: 500, x: "-7%",  y: "-22%", c: "#F59E0B", dur: 12 },
-        { w: 380, h: 380, x: "74%",  y: "48%",  c: "#10B981", dur: 15 },
-        { w: 260, h: 260, x: "38%",  y: "62%",  c: "#8B5CF6", dur: 9  },
-        { w: 200, h: 200, x: "64%",  y: "-12%", c: "#EC4899", dur: 11 },
+        { w: 600, h: 600, x: "-8%",  y: "-25%", c: "#F59E0B", dur: 14 },
+        { w: 450, h: 450, x: "75%",  y: "45%",  c: "#8B5CF6", dur: 16 },
+        { w: 300, h: 300, x: "40%",  y: "68%",  c: "#EC4899", dur: 10 },
+        { w: 220, h: 220, x: "65%",  y: "-10%", c: "#10B981", dur: 12 },
       ].map((o, i) => (
         <motion.div key={i} className="absolute rounded-full pointer-events-none"
-          style={{ width: o.w, height: o.h, left: o.x, top: o.y, background: `radial-gradient(circle,${o.c}18,transparent 70%)` }}
-          animate={{ scale: [1, 1.22, 1], opacity: [0.3, 0.65, 0.3] }}
+          style={{ width: o.w, height: o.h, left: o.x, top: o.y,
+            background: `radial-gradient(circle,${o.c}1a,transparent 70%)` }}
+          animate={{ scale: [1, 1.28, 1], opacity: [0.28, 0.65, 0.28] }}
           transition={{ repeat: Infinity, duration: o.dur, ease: "easeInOut" }}/>
       ))}
 
       {/* Confetti dots */}
-      {Array.from({ length: 14 }).map((_, i) => (
-        <motion.div key={i} className="absolute w-1.5 h-1.5 rounded-full pointer-events-none hidden md:block"
-          style={{ left: `${(i * 47 + 9) % 94}%`, top: `${(i * 59 + 7) % 88}%`,
-            backgroundColor: CONFETTI[i % CONFETTI.length], opacity: 0.3 }}
-          animate={{ y: [0, -14, 0], opacity: [0.3, 0.6, 0.3], scale: [1, 1.4, 1] }}
-          transition={{ repeat: Infinity, duration: 3.2 + (i % 5) * 0.5, delay: (i * 0.20) % 3, ease: "easeInOut" }}/>
+      {Array.from({ length: 16 }).map((_, i) => (
+        <motion.div key={i} className="absolute rounded-full pointer-events-none hidden md:block"
+          style={{ width: i % 3 === 0 ? 8 : 5, height: i % 3 === 0 ? 8 : 5,
+            left: `${(i * 43 + 9) % 94}%`, top: `${(i * 61 + 7) % 89}%`,
+            backgroundColor: CONFETTI[i % CONFETTI.length], opacity: 0.28 }}
+          animate={{ y: [0, -18, 0], opacity: [0.28, 0.6, 0.28], scale: [1, 1.5, 1] }}
+          transition={{ repeat: Infinity, duration: 3.5 + (i % 5) * 0.55, delay: (i * 0.22) % 3, ease: "easeInOut" }}/>
       ))}
 
       {/* Grid overlay */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.035]"
+      <div className="absolute inset-0 pointer-events-none opacity-[0.03]"
         style={{ backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px)", backgroundSize: "48px 48px" }}/>
 
       <div className="relative z-10 container mx-auto px-4 md:px-6">
 
-        {/* Header */}
-        <motion.div className="text-center max-w-3xl mx-auto mb-16"
-          initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.65 }}>
+        {/* ── Header ── */}
+        <motion.div {...fadeUp(0)} className="text-center max-w-2xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-5"
-            style={{ background: "rgba(245,158,11,0.12)", color: "#fbbf24", border: "1px solid rgba(245,158,11,0.3)" }}>
+            style={{ background: "rgba(245,158,11,0.12)", color: "#fbbf24", border: "1px solid rgba(245,158,11,0.30)" }}>
             <Crown size={12}/> {t.label}
           </div>
-          <h2 className="text-4xl md:text-5xl font-serif font-extrabold text-white mb-5 leading-tight tracking-tight">
+          <h2 className="text-4xl md:text-5xl font-serif font-extrabold text-white mb-5 leading-tight">
             {t.heading}{" "}
-            <span style={{ background: "linear-gradient(90deg,#fbbf24,#f472b6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+            <span style={{ background: "linear-gradient(90deg,#fbbf24,#f472b6,#a78bfa)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
               {t.accent}
             </span>
           </h2>
-          <p className="text-white/55 text-lg font-light leading-relaxed">{t.body}</p>
+          <p className="text-white/50 text-lg font-light leading-relaxed">{t.body}</p>
         </motion.div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-12">
-          {t.team.map((member, i) => {
-            const acc = CARD_ACCENTS[i % CARD_ACCENTS.length];
-            return (
-              <motion.div key={i}
-                initial={{ opacity: 0, y: 36, scale: 0.96 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.55, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                whileHover={{ y: -8, boxShadow: `0 20px 48px ${acc.color}28` }}
-                className="group rounded-3xl overflow-hidden transition-all duration-350 flex flex-col"
-                style={{ background: "rgba(255,255,255,0.04)", border: `1.5px solid ${acc.color}30` }}>
+        {/* ── Featured Principal card ── */}
+        <motion.div {...fadeUp(0.1)} className="mb-8">
+          <div className="group relative rounded-3xl overflow-hidden"
+            style={{ background: "rgba(255,255,255,0.04)", border: `2px solid ${MEMBERS[0].accent}35`,
+              boxShadow: `0 8px 48px ${MEMBERS[0].glow}` }}>
+            <div className="h-1.5" style={{ background: `linear-gradient(90deg,${MEMBERS[0].accent},#EC4899,#8B5CF6)` }}/>
 
-                {/* Colored top bar */}
-                <div className="h-1" style={{ background: `linear-gradient(90deg,${acc.color},${acc.color}44)` }}/>
+            <div className="grid grid-cols-1 md:grid-cols-5 min-h-[380px]">
+              {/* Photo side */}
+              <div className="md:col-span-2 relative overflow-hidden" style={{ minHeight: 340 }}>
+                <img src={MEMBERS[0].image} alt={t.team[0].name}
+                  className="w-full h-full object-cover object-top absolute inset-0 transition-transform duration-700 group-hover:scale-105"
+                  style={{ objectPosition: MEMBERS[0].pos }}/>
+                <div className="absolute inset-0" style={{ background: "linear-gradient(to right, transparent 40%, rgba(10,16,32,0.95) 100%)" }}/>
+                <div className="absolute inset-0 md:hidden" style={{ background: "linear-gradient(to top, rgba(10,16,32,0.98) 0%, transparent 50%)" }}/>
+                {/* Gold star badge */}
+                <div className="absolute top-5 left-5 flex items-center gap-2 px-4 py-2 rounded-full"
+                  style={{ background: "linear-gradient(135deg,#F59E0B,#d97706)", boxShadow: "0 4px 20px rgba(245,158,11,0.50)" }}>
+                  <Star size={13} className="text-white fill-white"/>
+                  <span className="text-white text-[11px] font-bold uppercase tracking-widest">{isHindi ? "प्रधानाचार्य" : "Principal"}</span>
+                </div>
+              </div>
+
+              {/* Bio side */}
+              <div className="md:col-span-3 p-8 md:p-12 flex flex-col justify-center">
+                <div className="text-white/20 mb-4"><Quote size={40}/></div>
+                <h3 className="text-3xl md:text-4xl font-serif font-extrabold text-white mb-2 leading-tight">{t.team[0].name}</h3>
+                <p className="text-sm font-bold uppercase tracking-widest mb-6" style={{ color: MEMBERS[0].accent }}>
+                  {t.team[0].role}
+                </p>
+                <p className="text-white/60 text-lg leading-relaxed mb-8 font-light italic border-l-4 pl-5"
+                  style={{ borderColor: `${MEMBERS[0].accent}55` }}>
+                  "{t.team[0].bio}"
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  {(isHindi
+                    ? ["M.A., B.Ed.", "20+ वर्षों का अनुभव", "CBSE विशेषज्ञ"]
+                    : ["M.A., B.Ed.", "20+ Years in Education", "CBSE Expert"]
+                  ).map((tag, ti) => (
+                    <span key={ti} className="text-[11px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full"
+                      style={{ background: `${MEMBERS[0].accent}15`, color: MEMBERS[0].accent, border: `1px solid ${MEMBERS[0].accent}35` }}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* ── Portrait cards row ── */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
+          {t.team.slice(1).map((member, i) => {
+            const meta = MEMBERS[i + 1];
+            return (
+              <motion.div key={i} {...fadeUp(i * 0.1 + 0.2)}
+                className="group relative rounded-3xl overflow-hidden cursor-pointer"
+                style={{ background: "rgba(255,255,255,0.03)", border: `1.5px solid ${meta.accent}28` }}
+                whileHover={{ y: -8, boxShadow: `0 28px 60px ${meta.glow}` }}>
+
+                {/* Top accent bar */}
+                <div className="h-1" style={{ background: `linear-gradient(90deg,${meta.accent},${meta.accent}44)` }}/>
 
                 {/* Photo */}
-                <div className="relative overflow-hidden flex-shrink-0" style={{ height: 300 }}>
-                  <img src={localImages[i].image} alt={member.name}
-                    className="w-full h-full transition-transform duration-700 group-hover:scale-105"
-                    style={{ objectFit: localImages[i].fit, objectPosition: localImages[i].position, display: "block" }}/>
-                  {/* Gradient overlay */}
-                  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(10,22,40,0.92) 0%, rgba(10,22,40,0.35) 55%, transparent 100%)" }}/>
-                  {/* Role badge on photo */}
-                  <div className="absolute bottom-4 left-0 right-0 px-4">
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-widest"
-                      style={{ background: `linear-gradient(135deg,${acc.color},${acc.color}bb)`, color: "white", boxShadow: `0 4px 16px ${acc.color}40` }}>
-                      <Sparkles size={9}/>
+                <div className="relative overflow-hidden" style={{ height: 320 }}>
+                  <img src={meta.image} alt={member.name}
+                    className="w-full h-full transition-transform duration-700 group-hover:scale-110"
+                    style={{ objectFit: "cover", objectPosition: meta.pos }}/>
+
+                  {/* Gradient overlay — always */}
+                  <div className="absolute inset-0"
+                    style={{ background: "linear-gradient(to top, rgba(10,12,26,1) 0%, rgba(10,12,26,0.55) 45%, rgba(10,12,26,0.05) 100%)" }}/>
+
+                  {/* Hover: shimmer glow */}
+                  <motion.div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    style={{ background: `radial-gradient(ellipse at bottom,${meta.accent}18,transparent 70%)` }}/>
+
+                  {/* Name + role overlay at bottom */}
+                  <div className="absolute bottom-0 left-0 right-0 p-5">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-2"
+                      style={{ background: `${meta.accent}20`, color: meta.accent, border: `1px solid ${meta.accent}45`, backdropFilter: "blur(8px)" }}>
+                      <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: meta.accent }}/>
                       {member.role}
                     </div>
+                    <h3 className="text-xl font-serif font-extrabold text-white leading-tight">{member.name}</h3>
                   </div>
                 </div>
 
-                {/* Info */}
-                <div className="p-5 flex flex-col flex-1">
-                  <h3 className="text-lg font-bold font-serif text-white mb-2 group-hover:scale-[1.02] transition-transform duration-300" style={{ color: "white" }}>
-                    {member.name}
-                  </h3>
-                  <p className="text-white/50 text-xs leading-relaxed font-light flex-1">{member.bio}</p>
-                  <div className="mt-4 h-0.5 rounded-full w-8" style={{ backgroundColor: acc.color }}/>
+                {/* Bio — revealed area below photo */}
+                <div className="px-5 py-4">
+                  <p className="text-white/45 text-xs leading-relaxed font-light line-clamp-3">{member.bio}</p>
+                  <div className="mt-4 flex items-center gap-2">
+                    <div className="h-px flex-1 rounded-full" style={{ background: `linear-gradient(90deg,${meta.accent}55,transparent)` }}/>
+                    <Star size={11} style={{ color: meta.accent }}/>
+                  </div>
                 </div>
               </motion.div>
             );
           })}
         </div>
 
-        {/* CTA */}
-        <motion.div className="text-center"
-          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.4 }}>
+        {/* ── CTA ── */}
+        <motion.div {...fadeUp(0.55)} className="text-center">
           <Link href="/faculty">
-            <button className="inline-flex items-center gap-2 px-10 py-4 rounded-full font-bold text-sm transition-all duration-300 hover:-translate-y-1"
-              style={{ background: "linear-gradient(135deg,#F59E0B,#d97706)", color: "white", boxShadow: "0 8px 32px rgba(245,158,11,0.30)" }}>
-              {isHindi ? "पूरी टीम देखें" : "Meet The Full Team"}
-              <ArrowRight size={16}/>
+            <button className="inline-flex items-center gap-3 px-12 py-5 rounded-full font-bold text-base transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
+              style={{ background: "linear-gradient(135deg,#F59E0B,#d97706)", color: "white",
+                boxShadow: "0 8px 32px rgba(245,158,11,0.35)", border: "1px solid rgba(255,255,255,0.15)" }}>
+              {isHindi ? "पूरी टीम से मिलें" : "Meet The Full Team"}
+              <ArrowRight size={18}/>
             </button>
           </Link>
         </motion.div>
