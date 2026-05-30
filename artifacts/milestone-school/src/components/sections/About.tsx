@@ -24,10 +24,15 @@ export default function About() {
               <div className="absolute -bottom-6 -left-6 w-48 h-48 bg-secondary/10 rounded-full blur-3xl -z-10" />
               <div className="absolute -top-6 -right-6 w-48 h-48 bg-primary/10 rounded-full blur-3xl -z-10" />
               <div className="rounded-2xl overflow-hidden shadow-xl border-4 border-white">
-                <img
-                  src="/library.png"
-                  alt="Students at The Milestone School"
-                  className="w-full h-auto object-contain"
+                <video
+                  src="/about-video.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  disablePictureInPicture
+                  className="w-full h-auto object-cover"
+                  style={{ pointerEvents: "none" }}
                 />
               </div>
               <div className="absolute -top-4 -right-4 bg-white px-4 py-3 rounded-xl shadow-lg border border-border hidden md:flex flex-col items-center">
