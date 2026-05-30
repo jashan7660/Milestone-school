@@ -8,8 +8,20 @@ export default function About() {
   const t = SITE[lang].about;
 
   return (
-    <section id="about" className="py-16 bg-background">
-      <div className="container mx-auto px-4 md:px-6">
+    <section id="about" className="py-24 relative" style={{ background: "linear-gradient(135deg, #f0f7ff 0%, #f8fffe 50%, #f0fff6 100%)" }}>
+      {/* Top wave divider */}
+      <div className="absolute top-0 left-0 w-full overflow-hidden leading-none" style={{ height: 60 }}>
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,0 C360,60 1080,0 1440,40 L1440,0 Z" fill="#0f172a" />
+        </svg>
+      </div>
+
+      <div className="container mx-auto px-4 md:px-6 pt-6">
+        {/* Section heading */}
+        <div className="text-center mb-12">
+          <div className="inline-block w-12 h-1 rounded-full mb-4" style={{ background: "linear-gradient(90deg, #16a34a, #1d4ed8)" }} />
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
           {/* Image column */}
