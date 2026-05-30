@@ -58,12 +58,12 @@ export default function WhyChooseUs() {
           >
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-4 pt-12">
-                <img src="/hero.png" alt="Happy students" className="rounded-2xl w-full h-48 object-cover shadow-lg border-4 border-primary-foreground/20" />
-                <img src="/art-room.png" alt="Art room" className="rounded-2xl w-full h-64 object-cover shadow-lg border-4 border-primary-foreground/20" />
+                <img src="/trust1.png" alt="Investiture Ceremony" className="rounded-2xl w-full h-48 object-cover shadow-lg border-4 border-primary-foreground/20" />
+                <img src="/trust2.png" alt="Yoga session" className="rounded-2xl w-full h-64 object-cover shadow-lg border-4 border-primary-foreground/20" />
               </div>
               <div className="space-y-4">
-                <img src="/sports.png" alt="Sports" className="rounded-2xl w-full h-64 object-cover shadow-lg border-4 border-primary-foreground/20" />
-                <img src="/library.png" alt="Library" className="rounded-2xl w-full h-48 object-cover shadow-lg border-4 border-primary-foreground/20" />
+                <img src="/trust3.png" alt="Sports activity" className="rounded-2xl w-full h-64 object-cover shadow-lg border-4 border-primary-foreground/20" />
+                <img src="/trust4.png" alt="Cultural performance" className="rounded-2xl w-full h-48 object-cover shadow-lg border-4 border-primary-foreground/20" />
               </div>
             </div>
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white text-primary p-6 rounded-full w-32 h-32 flex flex-col items-center justify-center shadow-2xl border-4 border-secondary">
