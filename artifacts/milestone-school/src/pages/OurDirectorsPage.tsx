@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Quote, GraduationCap, Award, Star, Users } from "lucide-react";
+import { Quote, GraduationCap, Award, Star, Users, Play } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { useLanguage } from "@/context/LanguageContext";
@@ -179,6 +179,103 @@ export default function OurDirectorsPage() {
                 <div className="rounded-2xl p-6"
                   style={{ background:"rgba(16,185,129,0.04)", border:"1px solid rgba(16,185,129,0.15)" }}>
                   <p className="text-foreground/75 text-base leading-relaxed">{principal.leadershipP}</p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── PRINCIPAL VIDEO MESSAGE ──────────────────────────────── */}
+      <section className="py-20 relative overflow-hidden"
+        style={{ background: "linear-gradient(160deg, #0a1628 0%, #0f2240 50%, #0a1e0f 100%)" }}>
+
+        {/* Ambient orbs */}
+        {[
+          { w:420, h:420, x:"-5%",  y:"-20%", c:"#2563EB", dur:10 },
+          { w:320, h:320, x:"72%",  y:"45%",  c:"#10B981", dur:13 },
+        ].map((o,i) => (
+          <motion.div key={i} className="absolute rounded-full pointer-events-none"
+            style={{ width:o.w, height:o.h, left:o.x, top:o.y, background:`radial-gradient(circle,${o.c}22,transparent 70%)` }}
+            animate={{ scale:[1,1.2,1], opacity:[0.4,0.75,0.4] }}
+            transition={{ repeat:Infinity, duration:o.dur, ease:"easeInOut" }}/>
+        ))}
+
+        <div className="absolute inset-0 pointer-events-none opacity-[0.035]"
+          style={{ backgroundImage:"linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px)", backgroundSize:"48px 48px" }}/>
+
+        <div className="relative z-10 container mx-auto px-4 md:px-6 max-w-4xl">
+
+          {/* Heading */}
+          <motion.div {...fadeUp(0)} className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-4"
+              style={{ background:"rgba(16,185,129,0.12)", color:"#34d399", border:"1px solid rgba(16,185,129,0.3)" }}>
+              <Play size={11} className="fill-[#34d399]" />
+              {isHindi ? "वीडियो संदेश" : "Video Message"}
+            </div>
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-white">
+              {isHindi ? "प्रिंसिपल का " : "Principal's "}
+              <span style={{ background:"linear-gradient(90deg,#34d399,#60a5fa)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>
+                {isHindi ? "वीडियो संदेश" : "Video Address"}
+              </span>
+            </h2>
+            <p className="text-white/50 text-sm mt-3 font-light max-w-xl mx-auto">
+              {isHindi
+                ? "श्री अतुल शर्मा का माइलस्टोन परिवार के लिए हृदय से संदेश"
+                : "A heartfelt address from Mr. Atul Sharma to the entire Milestone family"}
+            </p>
+          </motion.div>
+
+          {/* Video player card */}
+          <motion.div {...fadeUp(0.15)}
+            className="relative rounded-3xl overflow-hidden"
+            style={{
+              background: "rgba(255,255,255,0.03)",
+              border: "1.5px solid rgba(16,185,129,0.25)",
+              boxShadow: "0 0 60px rgba(16,185,129,0.12), 0 24px 60px rgba(0,0,0,0.4)"
+            }}>
+            {/* Top gradient bar */}
+            <div className="h-1" style={{ background:"linear-gradient(90deg,#2563EB,#10B981,#8B5CF6)" }}/>
+
+            <div className="p-4 md:p-6">
+              {/* Name tag above video */}
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center text-white font-bold text-sm shrink-0"
+                  style={{ background:"linear-gradient(135deg,#2563EB,#10B981)" }}>
+                  AS
+                </div>
+                <div>
+                  <p className="text-white font-semibold text-sm leading-none">Mr. Atul Sharma</p>
+                  <p className="text-white/45 text-xs mt-0.5">{isHindi ? "प्रिंसिपल, द माइलस्टोन Sr. Sec. School" : "Principal, The Milestone Sr. Sec. School"}</p>
+                </div>
+                <div className="ml-auto flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold"
+                  style={{ background:"rgba(239,68,68,0.15)", color:"#f87171", border:"1px solid rgba(239,68,68,0.25)" }}>
+                  <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse inline-block"/>
+                  {isHindi ? "लाइव संदेश" : "Message"}
+                </div>
+              </div>
+
+              {/* Video element */}
+              <div className="relative w-full rounded-2xl overflow-hidden"
+                style={{ background:"#000", aspectRatio:"16/9", boxShadow:"0 8px 32px rgba(0,0,0,0.5)" }}>
+                <video
+                  src="/principal-message.mp4"
+                  controls
+                  playsInline
+                  className="w-full h-full object-contain"
+                  poster=""
+                  preload="metadata"
+                />
+              </div>
+
+              {/* Footer */}
+              <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+                <p className="text-white/35 text-xs">
+                  {isHindi ? "The Milestone Sr. Sec. School, कैथल" : "The Milestone Sr. Sec. School, Kaithal"}
+                </p>
+                <div className="flex items-center gap-2">
+                  <GraduationCap size={13} className="text-green-400"/>
+                  <span className="text-white/40 text-xs">{isHindi ? "M.A., B.Ed. | 20+ वर्ष" : "M.A., B.Ed. | 20+ Years"}</span>
                 </div>
               </div>
             </div>
