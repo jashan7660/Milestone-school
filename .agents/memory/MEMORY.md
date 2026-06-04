@@ -1,0 +1,1 @@
+- [Multilingual wiring pattern](multilingual-pattern.md) — sections use SITE[lang].key; pages use inline isHindi ternary; lang persists via localStorage in LanguageContext.

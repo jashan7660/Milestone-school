@@ -1,0 +1,60 @@
+Fix the multilingual translation system so the selected language applies to the ENTIRE website, not only the AI Guide section.
+
+1. Currently the language switch only changes text inside the AI Guide/tool section.  
+2. Fix it so the selected language updates ALL website pages and components globally.
+
+The language system must work for:
+- Home page
+- About page
+- Infrastructure section
+- Admissions page
+- Contact page
+- Navigation bar
+- Footer
+- Buttons
+- Cards
+- Headings
+- Paragraphs
+- Forms
+- Notifications
+- AI chatbot
+- AI Guide/Tour
+- All dynamic content
+
+3. When Hindi is selected:
+   - Entire website content should instantly switch to Hindi.
+   - All page headings, buttons, labels, menus, and descriptions must translate properly.
+   - AI chatbot and AI Guide must also respond in Hindi.
+
+4. When English is selected:
+   - Entire website should switch back to English.
+   - AI chatbot and AI Guide should also use English.
+
+5. Implement a proper global translation system using:
+   - Context API / Global State
+   - i18n architecture
+   - Shared translation provider
+   - Dynamic language synchronization across all pages
+
+6. Ensure language changes happen instantly without page refresh.  
+7. Save selected language globally using localStorage/session storage so all pages remember the selected language after refresh.  
+8. Fix routing/state issues where page content stays in English after switching languages.  
+9. Ensure newly loaded pages automatically use the currently selected language.  
+10. Make all components connected to the same global translation state instead of only the AI Guide.
+
+11. Add proper translation JSON structure like:
+- en/home.json
+- hi/home.json
+- en/about.json
+- hi/about.json
+etc.
+
+12. Ensure:
+- Navbar language updates instantly
+- Hero section updates instantly
+- Footer updates instantly
+- AI components stay synchronized with selected language
+
+13. Keep the UI modern, responsive, smooth, and premium during language transitions.  
+14. Add smooth fade animation during text switching for better user experience.  
+15. Final result should feel like a professional fully multilingual AI-powered website where the entire site changes language together seamlessly.

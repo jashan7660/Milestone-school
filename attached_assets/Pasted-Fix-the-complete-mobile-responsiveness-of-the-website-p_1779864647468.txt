@@ -1,0 +1,60 @@
+Fix the complete mobile responsiveness of the website professionally.  
+
+IMPORTANT:
+These changes should ONLY apply on mobile devices and small screens.  
+Desktop and tablet layouts should remain unchanged.
+
+1. Completely optimize the hero section for mobile view.  
+2. Fix spacing, alignment, and overlapping issues so everything looks clean and understandable on phones.  
+3. Reduce the size of:
+   - AI Guide buttons
+   - “Start Tour” button
+   - “AI से बात करें” button
+   - Language switcher
+   - Floating labels/text
+   so the UI feels balanced and responsive on mobile.
+
+4. Remove ONLY on mobile:
+   - Floating phone icon
+   - Floating WhatsApp icon
+
+5. Keep AI Guide functionality working, but make its container smaller and more compact on mobile.  
+6. Reduce font sizes slightly for mobile while maintaining readability and premium appearance.  
+7. Add proper spacing between:
+   - Heading
+   - Subheading
+   - Buttons
+   - Affiliation text
+   - Location text
+
+8. Prevent UI elements from touching screen edges.  
+9. Make the hero content vertically balanced and centered properly on mobile devices.  
+10. Ensure no text gets cropped, overlapped, or pushed outside the screen.  
+11. Improve responsive scaling for:
+   - Buttons
+   - Icons
+   - AI assistant card
+   - Robot image
+   - Language toggle
+
+12. Add responsive breakpoints for:
+   - 320px
+   - 375px
+   - 425px
+   - 768px
+
+13. Use smooth responsive animations and maintain premium modern design.  
+14. Ensure all mobile elements remain touch-friendly and accessible.  
+15. Optimize padding, margins, flex layouts, and widths specifically for mobile screens.  
+16. The final mobile layout should look clean, premium, modern, and perfectly arranged like a professional high-end school website.
+
+Suggested implementation:
+- Use media queries for mobile responsiveness
+- Use flex-wrap where needed
+- Adjust z-index and positioning properly
+- Use relative units (%, rem, vw, vh) instead of fixed pixels
+- Prevent overflow-x on mobile
+- Use responsive typography scaling
+
+Goal:
+The mobile version should feel clean, attractive, fully responsive, and easy to understand without any clutter or overlapping.

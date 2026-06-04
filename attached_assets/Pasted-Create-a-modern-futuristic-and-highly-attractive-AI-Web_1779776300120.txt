@@ -1,0 +1,85 @@
+Create a modern, futuristic and highly attractive AI Website Tour UI for a school website. The current design looks boring and does not match the website theme. Redesign the entire AI guide experience with a premium glassmorphism + neon gradient style that perfectly blends with a green, blue and dark tropical website background.
+
+🎨 COLOR THEME:
+Use a beautiful combination of:
+- Deep Blue (#1145b5)
+- Neon Green (#00ff88)
+- Cyan Glow (#00d9ff)
+- Soft White
+- Dark transparent glass backgrounds
+
+✨ DESIGN STYLE:
+- Modern AI futuristic look
+- Smooth gradients
+- Glassmorphism cards
+- Soft neon glow
+- Rounded corners (20px+)
+- Floating animations
+- Premium shadows
+- Animated border glow
+- Smooth hover effects
+- Mobile responsive
+- High-end UI like ChatGPT + gaming dashboard
+
+🤖 AI GUIDE BUTTON:
+Redesign the “Start Tour” and “Chat with AI” buttons:
+- Add animated glowing border
+- Floating pulse effect
+- AI icon animation
+- Gradient background
+- Smooth hover scaling
+- Add moving particles or spark effects
+- Buttons should look premium and interactive
+
+🪄 TOUR POPUP REDESIGN:
+The tour popup should:
+- Open with smooth animation
+- Have transparent glass effect
+- Use animated progress bar
+- Add floating AI mascot animation
+- Show current page title beautifully
+- Add page icon beside title
+- Add typing animation for text
+- Use clean modern typography
+- Add smooth page transition animations
+- Add gradient highlights and glow
+
+⚡ IMPORTANT FIXES:
+1. The tour currently only highlights the top section of the page.
+   FIX THIS:
+   - Automatically scroll to the exact section being explained
+   - Highlight the full section properly
+   - Use spotlight effect around the active area
+   - Blur the background slightly for focus
+
+2. The tour takes 10 seconds per page and feels slow.
+   FIX THIS:
+   - Reduce delay to 3–4 seconds
+   - Add smooth fast transitions
+   - Add “Skip”, “Next”, “Previous” and “Auto Play” controls
+   - Add animated loading indicators
+
+3. Make the guide feel alive and smart:
+   - AI assistant should move slightly
+   - Add blinking eyes animation
+   - Add floating effect
+   - Add subtle sound effect support
+   - Add smooth micro-interactions everywhere
+
+📱 MOBILE EXPERIENCE:
+- Fully responsive
+- Bottom-sheet style popup on mobile
+- Easy tap controls
+- Smooth swipe transitions
+- Optimized spacing
+
+🌟 EXTRA PREMIUM FEATURES:
+- Dynamic glowing cursor effect
+- Animated gradient progress line
+- Interactive spotlight walkthrough
+- AI speech bubble animation
+- Smooth fade + slide transitions
+- Premium onboarding experience like modern SaaS websites
+
+🎯 FINAL GOAL:
+The AI Guide should look extremely modern, beautiful, interactive and premium — like a professional AI assistant built for a futuristic website. It should perfectly match the website theme and make users excited to explore the website.

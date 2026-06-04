@@ -1,0 +1,841 @@
+import { useState, useEffect, useRef, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useLocation } from "wouter";
+import { X, Send, ChevronRight, ChevronLeft, RotateCcw, Sparkles, BookOpen, Clock, Phone, MapPin, Bus, Trophy, Image } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
+import { TOUR_STEPS, CHAT_RESPONSES, SUGGESTIONS_TEXT, UI } from "@/i18n/translations";
+import type { Lang } from "@/i18n/translations";
+
+/* ─── Palette ──────────────────────────────────────────────── */
+const NEON       = "#00ff88";
+const CYAN       = "#00d9ff";
+const BLUE       = "#1145b5";
+const GLASS      = "rgba(8,12,28,0.88)";
+const GLASS_LIGHT = "rgba(8,12,28,0.72)";
+
+/* ─── Premium Language Toggle ──────────────────────────────── */
+function LangToggle({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => void }) {
+  return (
+    <div className="relative flex rounded-full"
+         style={{ background:"rgba(255,255,255,0.07)", border:"1px solid rgba(255,255,255,0.15)",
+                  backdropFilter:"blur(12px)", padding:2,
+                  boxShadow:`0 2px 12px rgba(0,0,0,0.35)` }}>
+      <motion.div
+        className="absolute top-[2px] bottom-[2px] rounded-full pointer-events-none"
+        animate={{ x: lang === "en" ? 0 : "100%" }}
+        transition={{ type:"spring", stiffness:500, damping:38 }}
+        style={{ width:"calc(50% - 2px)", left:2,
+                 background:`linear-gradient(135deg,${BLUE},${CYAN})`,
+                 boxShadow:`0 0 10px ${CYAN}70, 0 0 20px ${BLUE}50` }}/>
+      <button
+        onClick={() => setLang("en")}
+        className="relative z-10 px-3 py-0.5 text-[10px] font-bold rounded-full transition-colors duration-200"
+        style={{ color: lang === "en" ? "white" : "rgba(255,255,255,0.35)",
+                 minWidth:36, textAlign:"center" }}>
+        EN
+      </button>
+      <button
+        onClick={() => setLang("hi")}
+        className="relative z-10 px-3 py-0.5 text-[10px] font-bold rounded-full transition-colors duration-200"
+        style={{ color: lang === "hi" ? "white" : "rgba(255,255,255,0.35)",
+                 minWidth:36, textAlign:"center" }}>
+        हिं
+      </button>
+    </div>
+  );
+}
+
+/* ─── Bot response logic (AI via Groq) ─────────────────────── */
+async function getBotResponse(
+  input: string,
+  lang: Lang,
+  history: { role: "user" | "assistant"; content: string }[]
+): Promise<string> {
+  try {
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: input, history, lang }),
+    });
+    if (!res.ok) throw new Error("API error");
+    const data = await res.json() as { reply?: string; error?: string };
+    if (data.reply) return data.reply;
+    throw new Error(data.error ?? "No reply");
+  } catch {
+    // Fallback to keyword matching
+    const lower = input.toLowerCase();
+    for (const item of CHAT_RESPONSES[lang]) {
+      if (item.keywords.some(k => lower.includes(k))) return item.response;
+    }
+    return UI[lang].defaultReply;
+  }
+}
+
+type Mode = "idle" | "tour" | "chat";
+interface ChatMsg { from: "user" | "bot"; text: string; }
+
+/* ════════════════════════════════════════════════════════════════
+   MAIN COMPONENT
+════════════════════════════════════════════════════════════════ */
+export default function AIGuide() {
+  const { lang, setLang }       = useLanguage();
+  const t                       = UI[lang];
+  const tourSteps               = TOUR_STEPS[lang];
+  const suggestions             = SUGGESTIONS_TEXT[lang];
+
+  const [mode, setMode]         = useState<Mode>("idle");
+  const [tourStep, setTourStep] = useState(0);
+  const [messages, setMessages] = useState<ChatMsg[]>([
+    { from:"bot", text: UI[lang].welcomeMsg },
+  ]);
+  const [input, setInput]       = useState("");
+  const [thinking, setThinking] = useState(false);
+  const [, navigate]            = useLocation();
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 640);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 640);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  /* Reset welcome message when language changes */
+  useEffect(() => {
+    setMessages([{ from:"bot", text: UI[lang].welcomeMsg }]);
+  }, [lang]);
+
+  const audioRef           = useRef<HTMLAudioElement | null>(null);
+  const nextStepRef        = useRef<() => void>(() => {});
+  const chatEndRef         = useRef<HTMLDivElement>(null);
+  const msgBoxRef          = useRef<HTMLDivElement>(null);
+  const scrollRafRef       = useRef<number | null>(null);
+  const sectionTimerRef    = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const initTimerRef       = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const sectionScrollActive = useRef(false);
+  const userScrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const resumeSectionRef   = useRef<(() => void) | null>(null);
+  const cancelPageScroll = useCallback(() => {
+    if (scrollRafRef.current)       { cancelAnimationFrame(scrollRafRef.current); scrollRafRef.current = null; }
+    if (sectionTimerRef.current)    { clearTimeout(sectionTimerRef.current); sectionTimerRef.current = null; }
+    if (initTimerRef.current)       { clearTimeout(initTimerRef.current); initTimerRef.current = null; }
+    if (userScrollTimerRef.current) { clearTimeout(userScrollTimerRef.current); userScrollTimerRef.current = null; }
+    sectionScrollActive.current = false;
+  }, []);
+
+  /* ── Detect semantic page sections ─────────────────────────── */
+  const detectSections = useCallback((): Element[] => {
+    const all = Array.from(document.querySelectorAll("section, footer"));
+    const visible = all.filter(el => {
+      const h = el.scrollHeight || el.getBoundingClientRect().height;
+      const s = getComputedStyle(el);
+      return h > 80 && s.display !== "none" && s.visibility !== "hidden" && s.opacity !== "0";
+    });
+    /* Remove descendants — keep outermost matching elements */
+    return visible.filter(el => !visible.some(o => o !== el && o.contains(el)));
+  }, []);
+
+  /* ── Smooth scroll helper ───────────────────────────────────── */
+  const smoothScrollTo = useCallback((targetY: number, dur: number, onDone?: () => void) => {
+    if (scrollRafRef.current) cancelAnimationFrame(scrollRafRef.current);
+    const from = window.scrollY;
+    const maxY = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+    const to   = Math.max(0, Math.min(targetY, maxY));
+    const t0   = performance.now();
+    const tick = (now: number) => {
+      const p = Math.min((now - t0) / Math.max(dur, 1), 1);
+      const e = p < 0.5 ? 4*p*p*p : 1 - Math.pow(-2*p + 2, 3) / 2;
+      window.scrollTo(0, from + (to - from) * e);
+      if (p < 1) {
+        scrollRafRef.current = requestAnimationFrame(tick);
+      } else {
+        scrollRafRef.current = null;
+        onDone?.();
+      }
+    };
+    scrollRafRef.current = requestAnimationFrame(tick);
+  }, []);
+
+  /* ── Section-by-section guided scroll (primary) ─────────────── */
+  const startSectionedScroll = useCallback((durationSec: number) => {
+    cancelPageScroll();
+    sectionScrollActive.current = true;
+    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+
+    const totalMs = Math.max(durationSec * 1000, 5000);
+
+    initTimerRef.current = window.setTimeout(() => {
+      initTimerRef.current = null;
+      if (!sectionScrollActive.current) return;
+
+      const sections = detectSections();
+
+      if (sections.length === 0) {
+        /* Fallback: single smooth full-page scroll */
+        const t0 = performance.now();
+        const fallback = (now: number) => {
+          if (!sectionScrollActive.current) return;
+          const p = Math.min((now - t0) / totalMs, 1);
+          const e = p < 0.5 ? 4*p*p*p : 1 - Math.pow(-2*p + 2, 3) / 2;
+          const max = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+          if (max > 0) window.scrollTo(0, max * e);
+          if (p < 1) scrollRafRef.current = requestAnimationFrame(fallback);
+          else { window.scrollTo({ top: document.documentElement.scrollHeight }); sectionScrollActive.current = false; }
+        };
+        scrollRafRef.current = requestAnimationFrame(fallback);
+        return;
+      }
+
+      /* Time budget per section */
+      const scrollToMs   = Math.min(2000, (totalMs / sections.length) * 0.55);
+      const timePerSec   = totalMs / sections.length;
+      const pauseMs      = Math.max(timePerSec - scrollToMs, 500);
+      let currentIdx     = 0;
+
+      const visitSection = (idx: number) => {
+        if (!sectionScrollActive.current) return;
+        currentIdx = idx;
+
+        if (idx >= sections.length) {
+          /* Scroll all the way to the footer/bottom */
+          const maxY = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+          smoothScrollTo(maxY, 1800, () => { sectionScrollActive.current = false; });
+          return;
+        }
+
+        const el = sections[idx];
+        /* Update resume callback (used after manual-scroll pause) */
+        resumeSectionRef.current = () => { visitSection(currentIdx + 1); };
+
+        /* Center the section in the viewport */
+        const rect   = el.getBoundingClientRect();
+        const elMid  = window.scrollY + rect.top + rect.height / 2;
+        const targetY = elMid - window.innerHeight / 2;
+
+        smoothScrollTo(targetY, scrollToMs, () => {
+          if (!sectionScrollActive.current) return;
+          sectionTimerRef.current = window.setTimeout(() => {
+            sectionTimerRef.current = null;
+            visitSection(idx + 1);
+          }, pauseMs);
+        });
+      };
+
+      visitSection(0);
+    }, 450); /* wait for React to finish rendering the new page */
+  }, [cancelPageScroll, detectSections, smoothScrollTo]);
+
+  /* ── Manual scroll detection — pause & resume ───────────────── */
+  useEffect(() => {
+    const onManualScroll = () => {
+      if (!sectionScrollActive.current) return;
+      /* Cancel in-flight scroll animation and section timer */
+      if (scrollRafRef.current)    { cancelAnimationFrame(scrollRafRef.current); scrollRafRef.current = null; }
+      if (sectionTimerRef.current) { clearTimeout(sectionTimerRef.current); sectionTimerRef.current = null; }
+      if (initTimerRef.current)    { clearTimeout(initTimerRef.current); initTimerRef.current = null; }
+      /* Resume after 3 s of no user scrolling */
+      if (userScrollTimerRef.current) clearTimeout(userScrollTimerRef.current);
+      userScrollTimerRef.current = window.setTimeout(() => {
+        userScrollTimerRef.current = null;
+        if (sectionScrollActive.current) resumeSectionRef.current?.();
+      }, 3000);
+    };
+    window.addEventListener("wheel",     onManualScroll, { passive: true });
+    window.addEventListener("touchmove", onManualScroll, { passive: true });
+    return () => {
+      window.removeEventListener("wheel",     onManualScroll);
+      window.removeEventListener("touchmove", onManualScroll);
+    };
+  }, []);
+
+  const stopAudio = useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.onended = null;
+      audioRef.current = null;
+    }
+    cancelPageScroll();
+  }, [cancelPageScroll]);
+
+  useEffect(() => () => { stopAudio(); }, [stopAudio]);
+
+  const scrollMsgBox = useCallback(() => {
+    if (msgBoxRef.current) msgBoxRef.current.scrollTop = msgBoxRef.current.scrollHeight;
+  }, []);
+
+  /* Default scroll duration per step (seconds) — used immediately before
+     audio metadata arrives so the page always starts scrolling right away. */
+  const DEFAULT_SCROLL_SEC = 15;
+
+  const playTourAudio = useCallback((step: number) => {
+    stopAudio();
+    const audio = new Audio(`/audio/tour-${step}.mp3`);
+    audioRef.current = audio;
+    audio.onended = () => { audioRef.current = null; nextStepRef.current(); };
+    /* Once we know the real duration, restart the sectioned scroll timed to the audio */
+    audio.addEventListener("loadedmetadata", () => {
+      if (audio.duration && isFinite(audio.duration)) {
+        startSectionedScroll(audio.duration);
+      }
+    });
+    audio.play().catch(() => {});
+  }, [stopAudio, startSectionedScroll]);
+
+  const startStep = useCallback((step: number) => {
+    if (step >= tourSteps.length) {
+      stopAudio();
+      setMode("idle"); setTourStep(0); navigate("/");
+      window.scrollTo({ top:0, behavior:"smooth" }); return;
+    }
+    stopAudio(); setTourStep(step);
+    navigate(tourSteps[step].path);
+    nextStepRef.current = () => startStep(step + 1);
+    /* Begin sectioned scroll immediately; it will re-sync once audio metadata loads */
+    startSectionedScroll(DEFAULT_SCROLL_SEC);
+    playTourAudio(step);
+  }, [navigate, playTourAudio, stopAudio, tourSteps, startSectionedScroll]);
+
+  const startTour = useCallback(() => { setMode("tour"); startStep(0); }, [startStep]);
+  const stopTour  = useCallback(() => {
+    stopAudio(); setMode("idle"); setTourStep(0);
+    window.scrollTo({ top:0, behavior:"smooth" });
+  }, [stopAudio]);
+  const nextStep = useCallback(() => { startStep(tourStep + 1); }, [startStep, tourStep]);
+  const prevStep = useCallback(() => { startStep(Math.max(0, tourStep - 1)); }, [startStep, tourStep]);
+
+  useEffect(() => { chatEndRef.current?.scrollIntoView({ behavior:"smooth" }); }, [messages]);
+
+  const sendMessage = async (text?: string) => {
+    const msg = (text ?? input).trim();
+    if (!msg || thinking) return;
+    const updatedMessages = [...messages, { from:"user" as const, text:msg }];
+    setMessages(updatedMessages);
+    setInput(""); setThinking(true);
+    const history = updatedMessages
+      .map(m => ({ role: m.from === "user" ? "user" as const : "assistant" as const, content: m.text }));
+    const reply = await getBotResponse(msg, lang, history);
+    setThinking(false);
+    setMessages(m => [...m, { from:"bot", text: reply }]);
+  };
+
+  const step        = tourSteps[tourStep];
+  const panelWidth  = isMobile ? Math.min(window.innerWidth - 24, 320) : 340;
+
+  return (
+    <>
+    <div className="fixed bottom-4 right-3 sm:bottom-5 sm:right-4 z-[9998] flex flex-col items-end gap-2 sm:gap-3 select-none"
+         style={{ fontFamily:"'Poppins',sans-serif" }}>
+
+      {/* ══ TOUR PANEL ═══════════════════════════════════════════ */}
+      <AnimatePresence>
+        {mode === "tour" && (
+          <motion.div key="tour"
+            initial={{ opacity:0, y:28, scale:0.88 }}
+            animate={{ opacity:1, y:0, scale:1 }}
+            exit={{ opacity:0, y:20, scale:0.90 }}
+            transition={{ type:"spring", stiffness:340, damping:28 }}
+            className="overflow-hidden relative"
+            style={{
+              width: panelWidth,
+              background: GLASS,
+              backdropFilter:"blur(28px)",
+              WebkitBackdropFilter:"blur(28px)",
+              borderRadius:22,
+              border:`1px solid rgba(0,255,136,0.25)`,
+              boxShadow:`0 0 0 1px rgba(0,217,255,0.08), 0 20px 60px rgba(0,0,0,0.60), 0 0 40px rgba(0,255,136,0.08)`,
+            }}>
+
+            {/* Animated neon border top */}
+            <motion.div className="absolute top-0 left-0 right-0 h-[2px] rounded-t-[22px]"
+              style={{ background:`linear-gradient(90deg,transparent,${NEON},${CYAN},${NEON},transparent)` }}
+              animate={{ opacity:[0.6,1,0.6] }} transition={{ repeat:Infinity, duration:2.5 }}/>
+
+            {/* Header */}
+            <div className="flex items-center justify-between px-3 py-2.5"
+                 style={{ borderBottom:`1px solid rgba(255,255,255,0.06)` }}>
+              <div className="flex items-center gap-2">
+                <motion.div className="relative w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
+                  style={{ background:`linear-gradient(135deg,${BLUE},#0a2a7a)`,
+                           boxShadow:`0 0 12px ${NEON}60, 0 0 24px ${CYAN}30` }}
+                  animate={{ boxShadow:[`0 0 10px ${NEON}50,0 0 20px ${CYAN}20`,`0 0 18px ${NEON}80,0 0 36px ${CYAN}40`,`0 0 10px ${NEON}50,0 0 20px ${CYAN}20`] }}
+                  transition={{ repeat:Infinity, duration:2 }}>
+                  <span style={{ fontSize:13 }}>🤖</span>
+                  <motion.div className="absolute bottom-0.5 left-1 w-1 h-1 rounded-full"
+                    style={{ background:NEON }}
+                    animate={{ scaleY:[1,0.1,1] }} transition={{ repeat:Infinity, duration:3.5, delay:0.3 }}/>
+                  <motion.div className="absolute bottom-0.5 right-1 w-1 h-1 rounded-full"
+                    style={{ background:NEON }}
+                    animate={{ scaleY:[1,0.1,1] }} transition={{ repeat:Infinity, duration:3.5, delay:0.5 }}/>
+                </motion.div>
+                <div>
+                  <div style={{ fontWeight:800, fontSize:11, color:"white", letterSpacing:"0.01em", lineHeight:1.2 }}>
+                    <AnimatePresence mode="wait">
+                      <motion.span key={t.millieTour}
+                        initial={{ opacity:0, y:4 }} animate={{ opacity:1, y:0 }}
+                        exit={{ opacity:0, y:-4 }} transition={{ duration:0.2 }}>
+                        {t.millieTour}
+                      </motion.span>
+                    </AnimatePresence>
+                  </div>
+                  <div style={{ fontSize:8, color:NEON, fontWeight:700, letterSpacing:"0.08em", marginTop:1 }}>
+                    {t.aiSubtitleTour}
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center gap-1.5">
+                {/* Language Toggle — premium, inside panel */}
+                <LangToggle lang={lang} setLang={setLang}/>
+                {/* Step counter pill */}
+                <div className="px-1.5 py-0.5 rounded-full text-[9px] font-bold"
+                     style={{ background:`rgba(0,255,136,0.12)`, color:NEON, border:`1px solid ${NEON}40` }}>
+                  {tourStep+1}/{tourSteps.length}
+                </div>
+                <motion.button onClick={stopTour} whileHover={{ scale:1.15 }} whileTap={{ scale:0.9 }}
+                  className="w-6 h-6 rounded-full flex items-center justify-center"
+                  style={{ background:"rgba(255,255,255,0.07)", color:"rgba(255,255,255,0.55)" }}>
+                  <X size={11}/>
+                </motion.button>
+              </div>
+            </div>
+
+            <div className="px-4 pt-3 pb-4">
+              {/* Step icon + title */}
+              <AnimatePresence mode="wait">
+                <motion.div key={tourStep+"-title-"+lang}
+                  initial={{ opacity:0, x:-12 }} animate={{ opacity:1, x:0 }}
+                  exit={{ opacity:0, x:12 }}
+                  transition={{ duration:0.3 }}
+                  className="flex items-center gap-2 mb-3">
+                  <motion.div className="w-9 h-9 rounded-xl flex items-center justify-center text-[18px] flex-shrink-0"
+                    style={{ background:`linear-gradient(135deg,rgba(0,255,136,0.15),rgba(0,217,255,0.10))`,
+                             border:`1px solid rgba(0,255,136,0.25)`,
+                             boxShadow:`0 0 14px rgba(0,255,136,0.15)` }}
+                    animate={{ boxShadow:[`0 0 10px rgba(0,255,136,0.10)`,`0 0 22px rgba(0,255,136,0.25)`,`0 0 10px rgba(0,255,136,0.10)`] }}
+                    transition={{ repeat:Infinity, duration:2.2 }}>
+                    {step.icon}
+                  </motion.div>
+                  <div>
+                    <div style={{ fontSize:14, fontWeight:800, color:"white", lineHeight:1.2 }}>{step.title}</div>
+                    <div style={{ fontSize:9.5, color:"rgba(255,255,255,0.35)", fontWeight:500 }}>
+                      {t.pageOf} {tourStep+1} {t.of} {tourSteps.length}
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Message box */}
+              <AnimatePresence mode="wait">
+                <motion.div key={tourStep+"-msg-"+lang}
+                  initial={{ opacity:0 }} animate={{ opacity:1 }}
+                  exit={{ opacity:0 }}
+                  transition={{ duration:0.25 }}
+                  ref={msgBoxRef}
+                  className="rounded-[14px] p-3 mb-3"
+                  style={{
+                    background:"rgba(255,255,255,0.04)",
+                    border:`1px solid rgba(255,255,255,0.08)`,
+                    minHeight:90, maxHeight:150, overflowY:"auto",
+                    scrollbarWidth:"thin",
+                    scrollbarColor:`${NEON}30 transparent`,
+                  }}>
+                  <TypewriterText key={tourStep+"-"+lang} text={step.message} onScroll={scrollMsgBox}/>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Step dots */}
+              <div className="flex justify-center gap-1.5 mb-3">
+                {tourSteps.map((_, i) => (
+                  <motion.div key={i}
+                    onClick={() => startStep(i)}
+                    className="cursor-pointer rounded-full"
+                    style={{
+                      width: i === tourStep ? 18 : 6,
+                      height: 6,
+                      background: i === tourStep
+                        ? `linear-gradient(90deg,${NEON},${CYAN})`
+                        : i < tourStep ? `${NEON}60` : "rgba(255,255,255,0.15)",
+                      boxShadow: i === tourStep ? `0 0 8px ${NEON}80` : "none",
+                      transition: "all 0.3s ease",
+                    }}/>
+                ))}
+              </div>
+
+              {/* Prev / Next buttons */}
+              <div className="flex gap-2">
+                <motion.button onClick={prevStep} disabled={tourStep===0}
+                  whileHover={{ scale:1.04 }} whileTap={{ scale:0.95 }}
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-[12px] text-[12px] font-semibold disabled:opacity-25 transition-all"
+                  style={{ background:"rgba(255,255,255,0.06)", color:"rgba(255,255,255,0.65)",
+                           border:"1px solid rgba(255,255,255,0.10)" }}>
+                  <ChevronLeft size={13}/> {t.prev}
+                </motion.button>
+                <motion.button onClick={nextStep}
+                  whileHover={{ scale:1.04 }} whileTap={{ scale:0.95 }}
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-[12px] text-[12px] font-bold relative overflow-hidden"
+                  style={{ background:`linear-gradient(135deg,${BLUE},#0d2d9c)`,
+                           color:"white",
+                           boxShadow:`0 4px 18px rgba(17,69,181,0.55), 0 0 0 1px ${NEON}30`,
+                           border:`1px solid ${NEON}40` }}>
+                  <motion.div className="absolute inset-0"
+                    style={{ background:`linear-gradient(135deg,transparent,${NEON}15,transparent)` }}
+                    animate={{ x:["-100%","100%"] }} transition={{ repeat:Infinity, duration:2.5, ease:"linear" }}/>
+                  {tourStep===tourSteps.length-1
+                    ? <><RotateCcw size={12}/> {t.finish}</>
+                    : <>{t.next} <ChevronRight size={12}/></>}
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ══ CHAT PANEL ═══════════════════════════════════════════ */}
+      <AnimatePresence>
+        {mode === "chat" && (
+          <motion.div key="chat"
+            initial={{ opacity:0, y:28, scale:0.88 }}
+            animate={{ opacity:1, y:0, scale:1 }}
+            exit={{ opacity:0, y:20, scale:0.90 }}
+            transition={{ type:"spring", stiffness:340, damping:28 }}
+            className="flex flex-col overflow-hidden relative"
+            style={{ width: panelWidth,
+                     height: isMobile ? 420 : 500,
+                     background:GLASS,
+                     backdropFilter:"blur(28px)", WebkitBackdropFilter:"blur(28px)",
+                     borderRadius:22,
+                     border:`1px solid rgba(0,255,136,0.22)`,
+                     boxShadow:`0 0 0 1px rgba(0,217,255,0.06), 0 20px 60px rgba(0,0,0,0.60), 0 0 40px rgba(0,255,136,0.06)` }}>
+
+            {/* neon top edge */}
+            <motion.div className="absolute top-0 left-0 right-0 h-[2px] rounded-t-[22px] z-10"
+              style={{ background:`linear-gradient(90deg,transparent,${CYAN},${NEON},${CYAN},transparent)` }}
+              animate={{ opacity:[0.5,1,0.5] }} transition={{ repeat:Infinity, duration:2.8 }}/>
+
+            {/* Chat header */}
+            <div className="flex items-center justify-between px-3 py-2.5 flex-shrink-0"
+                 style={{ borderBottom:`1px solid rgba(255,255,255,0.06)` }}>
+              <div className="flex items-center gap-2">
+                <motion.div className="relative w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0"
+                  style={{ background:`linear-gradient(135deg,${BLUE},#0a1e6e)`,
+                           boxShadow:`0 0 14px ${NEON}50, 0 0 28px ${CYAN}25` }}
+                  animate={{ boxShadow:[`0 0 12px ${NEON}40,0 0 24px ${CYAN}20`,`0 0 22px ${NEON}70,0 0 44px ${CYAN}35`,`0 0 12px ${NEON}40,0 0 24px ${CYAN}20`] }}
+                  transition={{ repeat:Infinity, duration:2.2 }}>
+                  <img src="/ai-robot.png" alt="Millie" className="w-8 h-8 object-contain rounded-full"/>
+                  <motion.div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2"
+                    style={{ background:NEON, borderColor:GLASS }}
+                    animate={{ scale:[1,1.35,1], boxShadow:[`0 0 4px ${NEON}`,`0 0 10px ${NEON}`,`0 0 4px ${NEON}`] }}
+                    transition={{ repeat:Infinity, duration:1.4 }}/>
+                </motion.div>
+                <div>
+                  <p style={{ fontWeight:800, fontSize:12, color:"white", lineHeight:1.1 }}>
+                    <AnimatePresence mode="wait">
+                      <motion.span key={t.millieChat}
+                        initial={{ opacity:0, y:3 }} animate={{ opacity:1, y:0 }}
+                        exit={{ opacity:0, y:-3 }} transition={{ duration:0.18 }}>
+                        {t.millieChat}
+                      </motion.span>
+                    </AnimatePresence>
+                  </p>
+                  <p style={{ fontSize:8, color:NEON, fontWeight:700, letterSpacing:"0.07em", marginTop:1 }}>
+                    {t.aiSubtitle}
+                  </p>
+                  <div className="flex items-center gap-1 mt-0.5">
+                    <motion.div className="w-1.5 h-1.5 rounded-full" style={{ background:NEON }}
+                      animate={{ opacity:[1,0.3,1] }} transition={{ repeat:Infinity, duration:1.2 }}/>
+                    <p style={{ fontSize:8.5, color:"rgba(255,255,255,0.40)", fontWeight:500 }}>
+                      <AnimatePresence mode="wait">
+                        <motion.span key={t.online}
+                          initial={{ opacity:0 }} animate={{ opacity:1 }}
+                          exit={{ opacity:0 }} transition={{ duration:0.2 }}>
+                          {t.online}
+                        </motion.span>
+                      </AnimatePresence>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center gap-1.5">
+                {/* Language Toggle — premium, inside panel */}
+                <LangToggle lang={lang} setLang={setLang}/>
+                <motion.button onClick={()=>setMode("idle")} whileHover={{ scale:1.15 }} whileTap={{ scale:0.9 }}
+                  className="w-7 h-7 rounded-full flex items-center justify-center"
+                  style={{ background:"rgba(255,255,255,0.07)", color:"rgba(255,255,255,0.50)" }}>
+                  <X size={13}/>
+                </motion.button>
+              </div>
+            </div>
+
+            {/* Messages */}
+            <div className="flex-1 overflow-y-auto px-3 py-3 space-y-2.5"
+                 style={{ scrollbarWidth:"thin", scrollbarColor:`${NEON}25 transparent` }}>
+              <AnimatePresence initial={false}>
+                {messages.map((msg, i) => (
+                  <motion.div key={i} initial={{ opacity:0, y:6 }} animate={{ opacity:1, y:0 }}
+                    transition={{ duration:0.22 }}
+                    className={`flex ${msg.from==="user"?"justify-end":"justify-start"} items-end gap-1.5`}>
+                    {msg.from==="bot" && (
+                      <div className="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center text-[11px]"
+                           style={{ background:`linear-gradient(135deg,${BLUE},#091d6b)`,
+                                    boxShadow:`0 0 8px ${NEON}30` }}>🤖</div>
+                    )}
+                    <div className="max-w-[83%] px-3 py-2.5 rounded-2xl text-[11.5px] leading-relaxed whitespace-pre-line"
+                         style={msg.from==="bot"
+                           ? { background:"rgba(255,255,255,0.07)", color:"rgba(255,255,255,0.88)",
+                               border:`1px solid rgba(255,255,255,0.10)`,
+                               borderBottomLeftRadius:5, backdropFilter:"blur(4px)" }
+                           : { background:`linear-gradient(135deg,${BLUE}cc,#0d2d9c)`,
+                               color:"white",
+                               boxShadow:`0 4px 16px rgba(17,69,181,0.50), 0 0 0 1px ${NEON}25`,
+                               border:`1px solid ${NEON}30`,
+                               borderBottomRightRadius:5 }}>
+                      {msg.text}
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+
+              <AnimatePresence>
+                {thinking && (
+                  <motion.div initial={{ opacity:0, y:4 }} animate={{ opacity:1, y:0 }}
+                    exit={{ opacity:0 }} className="flex items-end gap-1.5">
+                    <div className="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center text-[11px]"
+                         style={{ background:`linear-gradient(135deg,${BLUE},#091d6b)`, boxShadow:`0 0 8px ${NEON}30` }}>🤖</div>
+                    <div className="px-3 py-2.5 rounded-2xl flex gap-1.5 items-center"
+                         style={{ background:"rgba(255,255,255,0.07)", border:`1px solid rgba(255,255,255,0.10)`, borderBottomLeftRadius:5 }}>
+                      {[0, 0.18, 0.36].map((d, k) => (
+                        <motion.div key={k} className="w-2 h-2 rounded-full"
+                          style={{ background:NEON }}
+                          animate={{ y:[0,-5,0], opacity:[0.3,1,0.3] }}
+                          transition={{ repeat:Infinity, duration:0.85, delay:d }}/>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+              <div ref={chatEndRef}/>
+            </div>
+
+            {/* Quick suggestions */}
+            <div className="flex-shrink-0 px-3 pt-2 pb-1.5"
+                 style={{ borderTop:`1px solid rgba(255,255,255,0.06)` }}>
+              <AnimatePresence mode="wait">
+                <motion.p key={"qlabel-"+lang}
+                  initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }}
+                  transition={{ duration:0.2 }}
+                  style={{ fontSize:9, color:`${NEON}80`, fontWeight:700, marginBottom:6,
+                           textTransform:"uppercase", letterSpacing:"0.08em" }}>
+                  {t.quickQuestions}
+                </motion.p>
+              </AnimatePresence>
+              <div className="flex gap-1.5 overflow-x-auto pb-1" style={{ scrollbarWidth:"none" }}>
+                <AnimatePresence mode="wait">
+                  <motion.div key={"sugg-"+lang}
+                    initial={{ opacity:0, y:4 }} animate={{ opacity:1, y:0 }}
+                    exit={{ opacity:0, y:-4 }} transition={{ duration:0.22 }}
+                    className="flex gap-1.5">
+                    {suggestions.map((text, idx) => {
+                      const icons = [<BookOpen size={11}/>, <Clock size={11}/>, <Trophy size={11}/>,
+                                     <MapPin size={11}/>, <Bus size={11}/>, <Phone size={11}/>,
+                                     <Image size={11}/>, <Sparkles size={11}/>];
+                      return (
+                        <motion.button key={text} onClick={()=>sendMessage(text)}
+                          whileHover={{ scale:1.05, y:-1 }} whileTap={{ scale:0.95 }}
+                          className="flex items-center gap-1.5 text-[10px] px-2.5 py-1.5 rounded-full font-semibold flex-shrink-0"
+                          style={{ background:"rgba(0,255,136,0.07)", color:NEON,
+                                   border:`1px solid rgba(0,255,136,0.22)` }}>
+                          <span style={{ opacity:0.8 }}>{icons[idx % icons.length]}</span>
+                          {text}
+                        </motion.button>
+                      );
+                    })}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </div>
+
+            {/* Input */}
+            <div className="px-3 py-3 flex gap-2 flex-shrink-0"
+                 style={{ borderTop:`1px solid rgba(255,255,255,0.06)` }}>
+              <div className="flex-1 flex items-center gap-2 px-3 py-2.5 rounded-[12px]"
+                   style={{ background:"rgba(255,255,255,0.05)",
+                            border:`1.5px solid rgba(0,255,136,0.20)` }}>
+                <input value={input} onChange={e=>setInput(e.target.value)}
+                       onKeyDown={e=>e.key==="Enter"&&sendMessage()}
+                       placeholder={t.placeholder}
+                       className="flex-1 text-[12px] outline-none bg-transparent"
+                       style={{ color:"rgba(255,255,255,0.85)", caretColor: NEON }}/>
+              </div>
+              <motion.button onClick={()=>sendMessage()}
+                whileHover={{ scale:1.1 }} whileTap={{ scale:0.9 }}
+                className="w-10 h-10 rounded-[12px] flex items-center justify-center flex-shrink-0 relative overflow-hidden"
+                style={{ background:`linear-gradient(135deg,${BLUE},#0d2d9c)`,
+                         boxShadow:`0 4px 16px rgba(17,69,181,0.50), 0 0 0 1px ${NEON}35` }}>
+                <motion.div className="absolute inset-0"
+                  style={{ background:`linear-gradient(135deg,transparent,${NEON}20,transparent)` }}
+                  animate={{ x:["-100%","100%"] }} transition={{ repeat:Infinity, duration:2, ease:"linear" }}/>
+                <Send size={14} color="white" className="relative z-10"/>
+              </motion.button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ══ IDLE BUTTONS + FLOATING ROBOT ════════════════════════ */}
+      <div className="flex flex-col items-end gap-2.5">
+        <AnimatePresence>
+          {mode === "idle" && (
+            <motion.div key="idle-btns"
+              initial={{ opacity:0, y:12, scale:0.93 }}
+              animate={{ opacity:1, y:0, scale:1 }}
+              exit={{ opacity:0, y:8, scale:0.93 }}
+              className="flex flex-col items-end gap-2">
+
+              {/* Start Tour button */}
+              <motion.button onClick={startTour}
+                initial={{ opacity:0, x:14 }} animate={{ opacity:1, x:0 }} transition={{ delay:0.06 }}
+                whileHover={{ scale:1.04, y:-2 }} whileTap={{ scale:0.96 }}
+                className={`flex items-center gap-2.5 rounded-2xl font-bold relative overflow-hidden ${isMobile ? "px-4 py-2.5 text-[11px]" : "px-5 py-3 text-[12px]"}`}
+                style={{
+                  background:`linear-gradient(135deg,#0d3d20,#0a2d42)`,
+                  backdropFilter:"blur(20px)",
+                  border:`1px solid ${NEON}50`,
+                  boxShadow:`0 0 0 1px ${NEON}15, 0 8px 28px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08)`,
+                  color:"white",
+                }}>
+                <div className="w-7 h-7 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{ background:`linear-gradient(135deg,${NEON}30,${CYAN}20)`, border:`1px solid ${NEON}40` }}>
+                  <span style={{ fontSize:14 }}>🗺️</span>
+                </div>
+                <div className="text-left">
+                  <AnimatePresence mode="wait">
+                    <motion.div key={"st-"+lang}
+                      initial={{ opacity:0, y:4 }} animate={{ opacity:1, y:0 }}
+                      exit={{ opacity:0, y:-4 }} transition={{ duration:0.18 }}>
+                      <div style={{ fontWeight:800, fontSize: isMobile ? 11 : 12, color:"white", lineHeight:1.2 }}>{t.startTour}</div>
+                      <div style={{ fontSize:9, color:`${NEON}cc`, fontWeight:600, letterSpacing:"0.04em", marginTop:1 }}>
+                        {lang === "hi" ? "स्कूल को एक्सप्लोर करें" : "Explore the school"}
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+                <ChevronRight size={14} style={{ color:`${NEON}99`, marginLeft:"auto" }}/>
+              </motion.button>
+
+              {/* Chat with AI button */}
+              <motion.button onClick={()=>setMode("chat")}
+                initial={{ opacity:0, x:14 }} animate={{ opacity:1, x:0 }} transition={{ delay:0.12 }}
+                whileHover={{ scale:1.04, y:-2 }} whileTap={{ scale:0.96 }}
+                className={`flex items-center gap-2.5 rounded-2xl font-bold relative overflow-hidden ${isMobile ? "px-4 py-2.5 text-[11px]" : "px-5 py-3 text-[12px]"}`}
+                style={{
+                  background:`linear-gradient(135deg,#0d1e4a,#091538)`,
+                  backdropFilter:"blur(20px)",
+                  border:`1px solid ${CYAN}50`,
+                  boxShadow:`0 0 0 1px ${CYAN}15, 0 8px 28px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08)`,
+                  color:"white",
+                }}>
+                <div className="w-7 h-7 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{ background:`linear-gradient(135deg,${CYAN}30,${BLUE}40)`, border:`1px solid ${CYAN}40` }}>
+                  <Sparkles size={13} color={CYAN}/>
+                </div>
+                <div className="text-left">
+                  <AnimatePresence mode="wait">
+                    <motion.div key={"ca-"+lang}
+                      initial={{ opacity:0, y:4 }} animate={{ opacity:1, y:0 }}
+                      exit={{ opacity:0, y:-4 }} transition={{ duration:0.18 }}>
+                      <div style={{ fontWeight:800, fontSize: isMobile ? 11 : 12, color:"white", lineHeight:1.2 }}>{t.chatWithAI}</div>
+                      <div style={{ fontSize:9, color:`${CYAN}cc`, fontWeight:600, letterSpacing:"0.04em", marginTop:1 }}>
+                        {lang === "hi" ? "कोई भी सवाल पूछें" : "Ask anything, anytime"}
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+                <ChevronRight size={14} style={{ color:`${CYAN}99`, marginLeft:"auto" }}/>
+              </motion.button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Floating Robot Orb */}
+        <motion.button
+          onClick={()=>{ if(mode==="tour") stopTour(); else if(mode==="chat") setMode("idle"); }}
+          animate={{ y:[0,-6,0] }} transition={{ repeat:Infinity, duration:3.2, ease:"easeInOut" }}
+          whileHover={{ scale:1.08 }} whileTap={{ scale:0.93 }}
+          className="relative cursor-pointer" title="Millie — AI Guide">
+
+          {/* Soft static glow */}
+          <div className="absolute -inset-3 rounded-full pointer-events-none"
+            style={{ background:`radial-gradient(circle,${NEON}22 0%,transparent 70%)` }}/>
+
+          <img src="/ai-robot.png" alt="Millie AI Guide"
+               className="relative z-10"
+               style={{ width: isMobile ? 66 : 86, height: isMobile ? 66 : 86, objectFit:"contain",
+                        filter:`drop-shadow(0 0 10px ${NEON}60) drop-shadow(0 4px 16px rgba(0,0,0,0.55))` }}/>
+        </motion.button>
+      </div>
+    </div>
+    </>
+  );
+}
+
+/* ── Section highlight overlay (glow ring around active section) */
+function SectionHighlight({ el }: { el: Element | null }) {
+  const divRef  = useRef<HTMLDivElement>(null);
+  const frameRef = useRef<number | null>(null);
+  const [vis, setVis] = useState(false);
+
+  useEffect(() => {
+    if (frameRef.current) cancelAnimationFrame(frameRef.current);
+    if (!el) { setVis(false); return; }
+    setVis(true);
+    const update = () => {
+      if (divRef.current) {
+        const r = el.getBoundingClientRect();
+        divRef.current.style.top    = `${r.top    - 8}px`;
+        divRef.current.style.left   = `${r.left   - 8}px`;
+        divRef.current.style.width  = `${r.width  + 16}px`;
+        divRef.current.style.height = `${r.height + 16}px`;
+      }
+      frameRef.current = requestAnimationFrame(update);
+    };
+    frameRef.current = requestAnimationFrame(update);
+    return () => { if (frameRef.current) cancelAnimationFrame(frameRef.current); };
+  }, [el]);
+
+  return (
+    <div ref={divRef} style={{
+      display:     vis ? "block" : "none",
+      position:    "fixed",
+      borderRadius: 14,
+      border:      "2px solid rgba(0,255,136,0.50)",
+      boxShadow:   "0 0 0 6px rgba(0,255,136,0.06), 0 0 40px rgba(0,217,255,0.14), inset 0 0 60px rgba(0,255,136,0.04)",
+      pointerEvents: "none",
+      zIndex:      9989,
+      transition:  "top 0.1s ease, left 0.1s ease, width 0.1s ease, height 0.1s ease",
+      background:  "rgba(0,255,136,0.015)",
+    }}/>
+  );
+}
+
+/* ── Typewriter with neon cursor ────────────────────────────── */
+function TypewriterText({ text, onScroll }: { text: string; onScroll?: () => void }) {
+  const [shown, setShown] = useState("");
+  const idx = useRef(0);
+  useEffect(() => {
+    setShown(""); idx.current = 0;
+    const iv = setInterval(() => {
+      if (idx.current < text.length) {
+        setShown(text.slice(0, ++idx.current));
+        onScroll?.();
+      } else clearInterval(iv);
+    }, 35);
+    return () => clearInterval(iv);
+  }, [text, onScroll]);
+  return (
+    <p style={{ color:"rgba(255,255,255,0.78)", fontSize:11.5, lineHeight:1.8, fontWeight:400 }}>
+      {shown}
+      <motion.span animate={{ opacity:[1,0] }} transition={{ repeat:Infinity, duration:0.55 }}
+        style={{ display:"inline-block", width:2, height:12, background:NEON,
+                 marginLeft:2, verticalAlign:"middle", borderRadius:1,
+                 boxShadow:`0 0 6px ${NEON}` }}/>
+    </p>
+  );
+}

@@ -1,0 +1,45 @@
+Task: Add Footer with Terms & Conditions, Privacy Policy, and Disclaimer pages to my website.
+Please do the following changes in my entire website project:
+
+1. FOOTER UPDATE (Every Page)
+Add the following 3 links in the footer section of every page of the website:
+
+Terms & Conditions
+Privacy Policy
+Disclaimer
+
+These links should be clearly visible, properly styled to match the existing footer design, and placed neatly (center or bottom of footer).
+
+2. CREATE 3 NEW SEPARATE PAGES
+Create the following 3 new pages. Each page should:
+
+Match the overall website design (same header, footer, colors, fonts)
+Open as a separate full page when clicked (not a popup or modal)
+Have a Back button or the site's normal navigation so user can return
+
+Page 1 — terms.html (or terms/ route if React/Next.js)
+Title: "Terms & Conditions"
+Content: Write full standard Terms & Conditions for a general website. Include sections like: Acceptance of Terms, Use of Website, Intellectual Property, Limitation of Liability, Changes to Terms, Contact Information.
+Page 2 — privacy.html (or privacy/ route)
+Title: "Privacy Policy"
+Content: Write full standard Privacy Policy. Include sections like: Information We Collect, How We Use Information, Cookies, Third-Party Links, Data Security, Your Rights, Contact Information.
+Page 3 — disclaimer.html (or disclaimer/ route)
+Title: "Disclaimer"
+Content: Write full standard Disclaimer. Include sections like: General Information, No Professional Advice, External Links Disclaimer, Errors and Omissions, Contact.
+
+3. LINKING
+
+Each footer link should correctly link to its respective new page
+All links should work from every page of the website
+Use relative paths so links work in both development and production
+
+
+4. STYLING
+
+Footer links should be styled nicely (e.g., separated by | or bullets)
+New pages should have clean, readable formatting with proper headings (H1, H2), paragraphs, and spacing
+Pages must be mobile responsive
+
+
+Please make these changes across the entire project. Do not break any existing functionality.
+

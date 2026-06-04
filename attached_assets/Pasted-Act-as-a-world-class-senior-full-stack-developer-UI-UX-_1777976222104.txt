@@ -1,0 +1,54 @@
+Act as a world-class senior full-stack developer, UI/UX designer, and product strategist.
+
+I have a website that is incomplete, unpolished, and not professional. Your task is to deeply analyze it and transform it into a highly professional, modern, fast, and user-friendly website that could compete with top global websites.
+
+Do the following:
+
+1. UI/UX Analysis:
+- Identify all design issues (fonts, spacing, colors, layout, alignment, responsiveness)
+- Suggest modern font combinations (Google Fonts preferred)
+- Improve visual hierarchy and readability
+- Add smooth animations and transitions (hover effects, scroll animations, micro-interactions)
+- Ensure mobile-first responsive design
+
+2. Structure & Layout:
+- Improve navbar (sticky, responsive, clean dropdowns)
+- Optimize sections (Hero, About, Services, Features, Contact, Footer)
+- Suggest better content structure and section order
+- Improve call-to-action (CTA) placement
+
+3. Performance Optimization:
+- Reduce load time
+- Optimize images and assets
+- Use lazy loading
+- Improve Lighthouse score (aim for 90+)
+
+4. Advanced Features to Add:
+- Smooth scrolling
+- Dark mode toggle
+- Loading animation
+- Interactive elements (cards, sliders, testimonials)
+- Contact form with validation
+- Google Maps integration (with correct location pin)
+- SEO optimization (meta tags, alt tags, headings)
+- Accessibility improvements (ARIA, contrast)
+
+5. Code Improvement:
+- Clean and refactor HTML, CSS, JS
+- Use modern best practices
+- Suggest frameworks if needed (React, Tailwind CSS, etc.)
+
+6. Branding & Professional Touch:
+- Suggest color palette
+- Suggest typography system
+- Make it look premium and trustworthy
+
+7. Provide:
+- Exact improved code (HTML/CSS/JS)
+- Step-by-step changes
+- Design suggestions with reasoning
+
+Important:
+Make the website look like a high-end professional product, similar to top company websites (clean, minimal, smooth, modern).
+
+Do not give generic advice — give specific, actionable improvements.
