@@ -87,9 +87,18 @@ export default function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="rounded-3xl overflow-hidden shadow-xl border-4 border-white bg-muted"
-            style={{ minHeight: "440px" }}
+            className="flex flex-col gap-3"
           >
+            <div className="flex items-center gap-2 px-1">
+              <MapPin className="w-5 h-5 text-primary shrink-0" />
+              <p className="text-base font-bold text-foreground tracking-wide uppercase">
+                The Milestone Sr. Sec. School, Kaithal
+              </p>
+            </div>
+            <p className="text-sm text-muted-foreground px-1">
+              Khurana Rd, Chiranjeev Colony, Kaithal, Haryana 136027, India
+            </p>
+            <div className="rounded-3xl overflow-hidden shadow-xl border-4 border-white bg-muted" style={{ minHeight: "440px" }}>
             <iframe
               src="https://maps.google.com/maps?q=Khurana+Rd+Chiranjeev+Colony+Kaithal+Haryana+136027&output=embed&z=16"
               width="100%"
@@ -101,6 +110,7 @@ export default function Contact() {
               title="The Milestone Sr. Sec. School — Kaithal Location"
               className="w-full h-full"
             />
+            </div>
           </motion.div>
 
         </div>
