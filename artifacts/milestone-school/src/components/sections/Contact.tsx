@@ -100,7 +100,7 @@ export default function Contact() {
             </p>
             <div className="rounded-3xl overflow-hidden shadow-xl border-4 border-white bg-muted" style={{ minHeight: "440px" }}>
             <iframe
-              src="https://maps.google.com/maps?q=Khurana+Rd+Chiranjeev+Colony+Kaithal+Haryana+136027&output=embed&z=16"
+              src="https://maps.google.com/maps?q=29.8020,76.3990&output=embed&z=17"
               width="100%"
               height="100%"
               style={{ border: 0, minHeight: "440px" }}
