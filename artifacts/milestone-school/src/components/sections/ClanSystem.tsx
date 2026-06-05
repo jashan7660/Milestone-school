@@ -148,7 +148,7 @@ export default function ClanSystem() {
 
                   {/* Logo */}
                   <motion.div
-                    className="w-28 h-28 rounded-full overflow-hidden mb-5 flex-shrink-0 border-2 shadow-md"
+                    className="w-40 h-40 rounded-full overflow-hidden mb-5 flex-shrink-0 border-2 shadow-md"
                     style={{
                       borderColor: clan.colorBorder,
                       boxShadow: `0 4px 20px ${clan.colorBorder}`,
