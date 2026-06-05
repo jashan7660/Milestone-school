@@ -7,7 +7,7 @@ onlyBuiltDependencies:
   - esbuild
 
 catalog:
-  "@replit/vite-plugin-cartographer": "^0.2.6"
+  "@replit/vite-plugin-cartographer": "^0.5.5"
   "@replit/vite-plugin-dev-banner": "^0.1.2"
   "@replit/vite-plugin-runtime-error-modal": "^0.0.3"
   "@tailwindcss/vite": "^4.1.6"
