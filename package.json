@@ -9,5 +9,8 @@
     "@types/node": "catalog:",
     "tsx": "catalog:",
     "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@replit/vite-plugin-cartographer": "0.5.5"
   }
 }
