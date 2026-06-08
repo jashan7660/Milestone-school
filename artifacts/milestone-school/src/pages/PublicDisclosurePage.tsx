@@ -122,7 +122,7 @@ export default function PublicDisclosurePage() {
 
   const documents = isHindi ? [
     { icon: <FileText size={20} color={BLUE}/>,    title: "संबद्धता / अपग्रेडेशन पत्र", desc: "CBSE द्वारा जारी नवीनतम संबद्धता या अपग्रेडेशन पत्र की प्रति।", status: "available" as const, color: BLUE, href: "/affiliation-letter.pdf"    },
-    { icon: <Landmark size={20} color={PURPLE}/>,  title: "ट्रस्ट / सोसायटी पंजीकरण प्रमाण पत्र", desc: "संस्था का कानूनी पंजीकरण दस्तावेज़।", status: "available" as const, color: PURPLE  },
+    { icon: <Landmark size={20} color={PURPLE}/>,  title: "ट्रस्ट / सोसायटी पंजीकरण प्रमाण पत्र", desc: "संस्था का कानूनी पंजीकरण दस्तावेज़।", status: "available" as const, color: PURPLE, href: "/society-registration.pdf"  },
     { icon: <ShieldCheck size={20} color={EMERALD}/>,title:"राज्य/केंद्र शासित प्रदेश की अनापत्ति प्रमाण पत्र",desc:"राज्य शिक्षा विभाग द्वारा जारी NOC।",status: "available" as const, color: EMERALD },
     { icon: <Award size={20} color={GOLD}/>,       title: "मान्यता प्रमाण पत्र",desc:"उचित प्राधिकरण द्वारा जारी विद्यालय मान्यता।",status: "available" as const, color: GOLD    },
     { icon: <Building2 size={20} color={CYAN}/>,   title: "भवन सुरक्षा प्रमाण पत्र", desc: "सक्षम प्राधिकरण द्वारा जारी भवन सुरक्षा स्थिति का प्रमाण पत्र।", status: "available" as const, color: CYAN, href: "/building-safety-certificate.pdf"    },
@@ -131,7 +131,7 @@ export default function PublicDisclosurePage() {
     { icon: <ClipboardList size={20} color={PURPLE}/>,title:"DEO स्व-प्रमाणन",desc:"DEO को स्व-प्रमाणन की प्रति — छात्र सुरक्षा आश्वासन।",status: "available" as const,color: PURPLE  },
   ] : [
     { icon: <FileText size={20} color={BLUE}/>,    title: "Affiliation / Upgradation Letter", desc: "Copy of latest affiliation or upgradation letter issued by CBSE.", status: "available" as const, color: BLUE, href: "/affiliation-letter.pdf"    },
-    { icon: <Landmark size={20} color={PURPLE}/>,  title: "Trust / Society Registration Certificate", desc: "Legal registration document of the managing institution.", status: "available" as const, color: PURPLE  },
+    { icon: <Landmark size={20} color={PURPLE}/>,  title: "Trust / Society Registration Certificate", desc: "Legal registration document of the managing institution.", status: "available" as const, color: PURPLE, href: "/society-registration.pdf"  },
     { icon: <ShieldCheck size={20} color={EMERALD}/>,title:"No Objection Certificate (State/UT)",desc:"NOC issued by the State Education Department.",status: "available" as const, color: EMERALD },
     { icon: <Award size={20} color={GOLD}/>,       title: "Recognition Certificate", desc: "School recognition issued by the competent authority.", status: "available" as const, color: GOLD    },
     { icon: <Building2 size={20} color={CYAN}/>,   title: "Building Safety Certificate", desc: "Certificate of structural safety issued by a competent authority.", status: "available" as const, color: CYAN, href: "/building-safety-certificate.pdf"    },
