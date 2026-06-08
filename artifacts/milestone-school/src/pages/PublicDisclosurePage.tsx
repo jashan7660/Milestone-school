@@ -128,7 +128,7 @@ export default function PublicDisclosurePage() {
     { icon: <Building2 size={20} color={CYAN}/>,   title: "भवन सुरक्षा प्रमाण पत्र", desc: "सक्षम प्राधिकरण द्वारा जारी भवन सुरक्षा स्थिति का प्रमाण पत्र।", status: "available" as const, color: CYAN, href: "/building-safety-certificate.pdf"    },
     { icon: <Flame size={20} color={RED}/>,        title: "अग्नि सुरक्षा प्रमाण पत्र", desc: "अग्निशमन विभाग द्वारा जारी वैध अग्नि सुरक्षा प्रमाण पत्र।", status: "available" as const, color: RED, href: "/fire-safety-certificate.pdf"     },
     { icon: <Droplets size={20} color={BLUE}/>,    title: "पेयजल एवं स्वास्थ्य प्रमाण पत्र", desc: "स्वास्थ्य विभाग से पेयजल एवं स्वच्छता अनुपालन।", status: "available" as const, color: BLUE, href: "/drinking-water-certificate.pdf"    },
-    { icon: <ClipboardList size={20} color={PURPLE}/>,title:"DEO स्व-प्रमाणन",desc:"DEO को स्व-प्रमाणन की प्रति — छात्र सुरक्षा आश्वासन।",status: "available" as const,color: PURPLE  },
+    { icon: <ClipboardList size={20} color={PURPLE}/>,title:"DEO स्व-प्रमाणन",desc:"DEO को स्व-प्रमाणन की प्रति — छात्र सुरक्षा आश्वासन।",status: "available" as const,color: PURPLE, href: "/deo-self-certification.pdf"  },
   ] : [
     { icon: <FileText size={20} color={BLUE}/>,    title: "Affiliation / Upgradation Letter", desc: "Copy of latest affiliation or upgradation letter issued by CBSE.", status: "available" as const, color: BLUE, href: "/affiliation-letter.pdf"    },
     { icon: <Landmark size={20} color={PURPLE}/>,  title: "Trust / Society Registration Certificate", desc: "Legal registration document of the managing institution.", status: "available" as const, color: PURPLE, href: "/society-registration.pdf"  },
@@ -137,7 +137,7 @@ export default function PublicDisclosurePage() {
     { icon: <Building2 size={20} color={CYAN}/>,   title: "Building Safety Certificate", desc: "Certificate of structural safety issued by a competent authority.", status: "available" as const, color: CYAN, href: "/building-safety-certificate.pdf"    },
     { icon: <Flame size={20} color={RED}/>,        title: "Fire Safety Certificate", desc: "Valid fire safety certificate issued by the Fire Department.", status: "available" as const, color: RED, href: "/fire-safety-certificate.pdf"     },
     { icon: <Droplets size={20} color={BLUE}/>,    title: "Drinking Water & Sanitation Certificate", desc: "Health department compliance for drinking water and sanitation.", status: "available" as const, color: BLUE, href: "/drinking-water-certificate.pdf"    },
-    { icon: <ClipboardList size={20} color={PURPLE}/>,title:"DEO Self-Certification",desc:"Copy of self-certification submitted to DEO — student safety assurance.",status: "available" as const,color: PURPLE  },
+    { icon: <ClipboardList size={20} color={PURPLE}/>,title:"DEO Self-Certification",desc:"Copy of self-certification submitted to DEO — student safety assurance.",status: "available" as const,color: PURPLE, href: "/deo-self-certification.pdf"  },
   ];
 
   const results = [
