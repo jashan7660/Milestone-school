@@ -3,7 +3,7 @@ import {
   School, MapPin, Phone, Mail, FileText, ShieldCheck, Flame,
   Droplets, Building2, Users, GraduationCap, BookOpen, BarChart3,
   CheckCircle2, Download, Landmark, Award, ClipboardList, Sparkles,
-  AlertCircle,
+  AlertCircle, ExternalLink,
 } from "lucide-react";
 import Footer from "@/components/layout/Footer";
 import { useLanguage } from "@/context/LanguageContext";
@@ -36,16 +36,30 @@ const LIGHT_CARD = {
   boxShadow: "0 2px 24px rgba(0,0,0,0.06)",
 };
 
-interface InfoRowProps { label: string; value: string; color?: string }
-function InfoRow({ label, value, color = CYAN }: InfoRowProps) {
+interface SectionHeaderProps { letter: string; title: string; color: string; icon: React.ReactNode }
+function SectionHeader({ letter, title, color, icon }: SectionHeaderProps) {
   return (
-    <div className="flex items-start gap-3 py-3.5 border-b border-black/5 last:border-0">
-      <div className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0" style={{ background: color }} />
-      <div className="flex-1 min-w-0">
-        <p className="text-xs font-semibold uppercase tracking-wider text-foreground/40 mb-0.5">{label}</p>
-        <p className="text-sm font-semibold text-foreground/85 leading-snug">{value}</p>
+    <div className="flex items-center gap-4 mb-6 pb-4 border-b-2" style={{ borderColor: color }}>
+      <div className="w-10 h-10 rounded-xl flex items-center justify-center font-extrabold text-lg text-white flex-shrink-0"
+        style={{ background: color }}>
+        {letter}
+      </div>
+      <div className="flex items-center gap-2">
+        <span style={{ color }}>{icon}</span>
+        <h3 className="text-xl font-extrabold text-foreground uppercase tracking-wide">{title}</h3>
       </div>
     </div>
+  );
+}
+
+interface TableRowProps { sno: string | number; info: string; detail: React.ReactNode; highlight?: boolean }
+function TableRow({ sno, info, detail, highlight }: TableRowProps) {
+  return (
+    <tr className="border-b border-black/5 last:border-0 hover:bg-blue-50/40 transition-colors">
+      <td className="px-4 py-3.5 text-sm font-bold text-foreground/50 w-12 text-center align-top">{sno}</td>
+      <td className="px-4 py-3.5 text-sm text-foreground/70 uppercase tracking-wide font-medium align-top">{info}</td>
+      <td className={`px-4 py-3.5 text-sm align-top font-semibold ${highlight ? "text-foreground" : "text-foreground/80"}`}>{detail}</td>
+    </tr>
   );
 }
 
@@ -92,34 +106,6 @@ export default function PublicDisclosurePage() {
   const { lang } = useLanguage();
   const isHindi = lang === "hi";
 
-  const generalInfo = isHindi ? [
-    { label: "विद्यालय का नाम", value: "द माइलस्टोन सीनियर सेकेंडरी स्कूल" },
-    { label: "संबद्धता बोर्ड", value: "CBSE, नई दिल्ली" },
-    { label: "संबद्धता संख्या", value: "530831" },
-    { label: "स्कूल कोड", value: "CBSE से सत्यापन करें" },
-    { label: "स्थापना वर्ष", value: "15+ वर्ष पूर्व" },
-    { label: "प्रिंसिपल", value: "संबंधित अधिकारी" },
-    { label: "पूरा पता", value: "ओप. पवन वाटिका, खुराना रोड, चिरंजीव कॉलोनी, कैथल, हरियाणा – 136027" },
-    { label: "फोन / व्हाट्सएप", value: "+91 98125-74766" },
-    { label: "ईमेल", value: "themilestoneKtl@gmail.com" },
-    { label: "विद्यालय की वेबसाइट", value: "milestonesch.in" },
-    { label: "कक्षाएं", value: "नर्सरी से कक्षा XII तक" },
-    { label: "माध्यम", value: "अंग्रेजी माध्यम" },
-  ] : [
-    { label: "School Name", value: "The Milestone Sr. Sec. School" },
-    { label: "Affiliation Board", value: "CBSE, New Delhi" },
-    { label: "Affiliation Number", value: "530831" },
-    { label: "School Code", value: "Verify with CBSE" },
-    { label: "Year of Establishment", value: "15+ years of excellence" },
-    { label: "Principal", value: "Concerned Authority" },
-    { label: "Full Address", value: "Opp. Pawan Vatika, Khurana Road, Chiranjeev Colony, Kaithal, Haryana – 136027" },
-    { label: "Phone / WhatsApp", value: "+91 98125-74766" },
-    { label: "Email", value: "themilestoneKtl@gmail.com" },
-    { label: "School Website", value: "milestonesch.in" },
-    { label: "Classes", value: "Nursery to Class XII" },
-    { label: "Medium", value: "English Medium" },
-  ];
-
   const documents = isHindi ? [
     { icon: <FileText size={20} color={BLUE}/>,    title: "संबद्धता / अपग्रेडेशन पत्र", desc: "CBSE द्वारा जारी नवीनतम संबद्धता या अपग्रेडेशन पत्र की प्रति।", status: "available" as const, color: BLUE    },
     { icon: <Landmark size={20} color={PURPLE}/>,  title: "ट्रस्ट / सोसायटी पंजीकरण प्रमाण पत्र", desc: "संस्था का कानूनी पंजीकरण दस्तावेज़।", status: "available" as const, color: PURPLE  },
@@ -140,55 +126,7 @@ export default function PublicDisclosurePage() {
     { icon: <ClipboardList size={20} color={PURPLE}/>,title:"DEO Self-Certification",desc:"Copy of self-certification submitted to DEO — student safety assurance.",status: "available" as const,color: PURPLE  },
   ];
 
-  const infrastructure = isHindi ? [
-    { icon: "🏫", label: "कुल भूमि क्षेत्र",      value: "स्कूल में उपलब्ध",     color: BLUE    },
-    { icon: "🏢", label: "निर्मित क्षेत्र",          value: "स्कूल में उपलब्ध",     color: PURPLE  },
-    { icon: "🏃", label: "खेल मैदान",              value: "हाँ — बड़ा आउटडोर",    color: EMERALD },
-    { icon: "🔬", label: "विज्ञान प्रयोगशालाएं",    value: "3 (भौतिकी, रसायन, जीव)", color: CYAN    },
-    { icon: "💻", label: "कंप्यूटर लैब",            value: "हाँ — आधुनिक",          color: GOLD    },
-    { icon: "📚", label: "पुस्तकालय",               value: "हाँ — समृद्ध संग्रह",   color: PURPLE  },
-    { icon: "🖥️", label: "स्मार्ट क्लासरूम",        value: "सभी कक्षाओं में",        color: BLUE    },
-    { icon: "🎨", label: "आर्ट रूम",                value: "हाँ",                    color: GOLD    },
-    { icon: "🎵", label: "म्यूजिक रूम",             value: "हाँ",                    color: RED     },
-    { icon: "🚌", label: "स्कूल बस परिवहन",         value: "हाँ — सुरक्षित रूट",   color: EMERALD },
-    { icon: "⛹️", label: "बास्केटबॉल / वॉलीबॉल",   value: "हाँ",                    color: CYAN    },
-    { icon: "🏥", label: "चिकित्सा कक्ष",           value: "हाँ",                    color: RED     },
-  ] : [
-    { icon: "🏫", label: "Total Land Area",         value: "Available at school",     color: BLUE    },
-    { icon: "🏢", label: "Built-up Area",           value: "Available at school",     color: PURPLE  },
-    { icon: "🏃", label: "Playground",              value: "Yes — large outdoor",     color: EMERALD },
-    { icon: "🔬", label: "Science Labs",            value: "3 (Physics, Chem, Bio)",  color: CYAN    },
-    { icon: "💻", label: "Computer Lab",            value: "Yes — modern setup",      color: GOLD    },
-    { icon: "📚", label: "Library",                 value: "Yes — well-stocked",      color: PURPLE  },
-    { icon: "🖥️", label: "Smart Classrooms",        value: "In every classroom",      color: BLUE    },
-    { icon: "🎨", label: "Art Room",                value: "Yes",                     color: GOLD    },
-    { icon: "🎵", label: "Music Room",              value: "Yes",                     color: RED     },
-    { icon: "🚌", label: "School Bus Transport",    value: "Yes — safe routes",       color: EMERALD },
-    { icon: "⛹️", label: "Basketball / Volleyball", value: "Yes",                     color: CYAN    },
-    { icon: "🏥", label: "Medical Room",            value: "Yes",                     color: RED     },
-  ];
-
-  const staffStats = isHindi ? [
-    { val: "80+",  label: "कुल शिक्षण स्टाफ",       color: BLUE    },
-    { val: "100%", label: "प्रशिक्षित एवं योग्य",    color: EMERALD },
-    { val: "15+",  label: "औसत अनुभव (वर्ष)",       color: GOLD    },
-    { val: "10+",  label: "कक्षा XII विशेषज्ञ",      color: PURPLE  },
-    { val: "5+",   label: "प्रशासनिक स्टाफ",         color: CYAN    },
-    { val: "Low",  label: "छात्र-शिक्षक अनुपात",     color: RED     },
-  ] : [
-    { val: "80+",  label: "Total Teaching Staff",   color: BLUE    },
-    { val: "100%", label: "Trained & Qualified",    color: EMERALD },
-    { val: "15+",  label: "Avg Experience (yrs)",   color: GOLD    },
-    { val: "10+",  label: "Class XII Specialists",  color: PURPLE  },
-    { val: "5+",   label: "Administrative Staff",   color: CYAN    },
-    { val: "Low",  label: "Student-Teacher Ratio",  color: RED     },
-  ];
-
-  const results = isHindi ? [
-    { year: "2024–25", passX: "100%", passXII: "100%", topperX: "—", topperXII: "—", color: EMERALD },
-    { year: "2023–24", passX: "100%", passXII: "100%", topperX: "—", topperXII: "—", color: BLUE    },
-    { year: "2022–23", passX: "100%", passXII: "100%", topperX: "—", topperXII: "—", color: PURPLE  },
-  ] : [
+  const results = [
     { year: "2024–25", passX: "100%", passXII: "100%", topperX: "—", topperXII: "—", color: EMERALD },
     { year: "2023–24", passX: "100%", passXII: "100%", topperX: "—", topperXII: "—", color: BLUE    },
     { year: "2022–23", passX: "100%", passXII: "100%", topperX: "—", topperXII: "—", color: PURPLE  },
@@ -203,11 +141,9 @@ export default function PublicDisclosurePage() {
       <section className="relative overflow-hidden min-h-[80vh] flex items-center"
         style={{ background: `linear-gradient(145deg,${NAVY} 0%,${NAVY2} 45%,#0a1f3a 75%,#0d1535 100%)` }}>
 
-        {/* Grid texture */}
         <div className="absolute inset-0 pointer-events-none opacity-[0.04]"
           style={{ backgroundImage:"linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px)", backgroundSize:"52px 52px" }}/>
 
-        {/* Animated orbs */}
         {[
           { w:520, h:520, x:"-8%",  y:"-18%", c:BLUE,    dur:12 },
           { w:380, h:380, x:"68%",  y:"46%",  c:EMERALD, dur:16 },
@@ -220,7 +156,6 @@ export default function PublicDisclosurePage() {
             transition={{ repeat:Infinity, duration:o.dur, ease:"easeInOut" }}/>
         ))}
 
-        {/* Floating dots */}
         {Array.from({ length: 22 }).map((_, i) => (
           <motion.div key={i} className="absolute w-1.5 h-1.5 rounded-full pointer-events-none hidden md:block"
             style={{ left:`${(i*4.4)%100}%`, top:`${(i*7.1+10)%90}%`, background:[CYAN,BLUE,PURPLE,EMERALD,GOLD][i%5] }}
@@ -228,7 +163,6 @@ export default function PublicDisclosurePage() {
             transition={{ repeat:Infinity, duration:3+(i%5), delay:i*0.2, ease:"easeInOut" }}/>
         ))}
 
-        {/* Floating emojis */}
         {floatingEmojis.map((emoji, i) => (
           <motion.div key={i} className="absolute text-2xl select-none pointer-events-none hidden lg:block"
             style={{ left:`${[5,88,12,82,46,68,22,58][i]}%`, top:`${[16,10,76,72,8,82,42,30][i]}%` }}
@@ -239,7 +173,6 @@ export default function PublicDisclosurePage() {
         ))}
 
         <div className="container relative z-10 mx-auto px-4 md:px-6 py-28 md:py-36 text-center">
-          {/* Badge */}
           <motion.div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest mb-8"
             style={{ background:`rgba(6,182,212,0.15)`, border:`1.5px solid rgba(6,182,212,0.4)`, color:"#67e8f9", backdropFilter:"blur(12px)" }}
             initial={{ opacity:0, y:-16 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.5 }}>
@@ -248,7 +181,6 @@ export default function PublicDisclosurePage() {
             <motion.span className="w-2 h-2 rounded-full bg-cyan-400" animate={{ opacity:[1,0.3,1] }} transition={{ repeat:Infinity, duration:0.9 }}/>
           </motion.div>
 
-          {/* Headline */}
           <motion.h1 className="font-serif font-extrabold text-white leading-tight tracking-tight mb-6"
             style={{ fontSize:"clamp(2.4rem,7vw,5rem)", textShadow:"0 4px 40px rgba(0,0,0,0.55)" }}
             initial={{ opacity:0, y:30 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.8, delay:0.15, ease:[0.22,1,0.36,1] }}>
@@ -266,14 +198,13 @@ export default function PublicDisclosurePage() {
               : "Mandatory public disclosure as per CBSE guidelines — full transparency on school details, staff, infrastructure, and academic records."}
           </motion.p>
 
-          {/* Quick info pills */}
           <motion.div className="flex flex-wrap items-center justify-center gap-3"
             initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ delay:0.45, duration:0.6 }}>
             {[
               { icon:<School size={13}/>,       label: isHindi ? "CBSE संबद्ध" : "CBSE Affiliated",    c: CYAN    },
               { icon:<MapPin size={13}/>,        label: isHindi ? "कैथल, हरियाणा" : "Kaithal, Haryana", c: EMERALD },
               { icon:<GraduationCap size={13}/>, label: isHindi ? "नर्सरी – XII" : "Nursery – XII",     c: GOLD    },
-              { icon:<Users size={13}/>,         label: isHindi ? "1200+ छात्र" : "1200+ Students",     c: PURPLE  },
+              { icon:<Users size={13}/>,         label: isHindi ? "संबद्धता: 531433" : "Affiliation: 531433", c: PURPLE  },
             ].map((p, i) => (
               <div key={i} className="flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold"
                 style={{ ...GLASS, color:"rgba(255,255,255,0.75)" }}>
@@ -283,7 +214,6 @@ export default function PublicDisclosurePage() {
           </motion.div>
         </div>
 
-        {/* Wave */}
         <div className="absolute bottom-0 left-0 right-0 pointer-events-none">
           <svg viewBox="0 0 1440 70" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
             <path d="M0 70L1440 70L1440 25C1200 70 960 5 720 25C480 45 240 5 0 25Z" fill="hsl(var(--background))"/>
@@ -291,53 +221,73 @@ export default function PublicDisclosurePage() {
         </div>
       </section>
 
-      {/* ══ GENERAL INFORMATION ════════════════════════════════ */}
+      {/* ══ A. GENERAL INFORMATION ══════════════════════════════ */}
       <section className="py-24 bg-background">
         <div className="container mx-auto px-4 md:px-6">
           <motion.div {...fadeUp()} className="text-center mb-14">
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-5"
               style={{ background:`rgba(6,182,212,0.1)`, color:"#0891b2", border:`1.5px solid rgba(6,182,212,0.3)` }}>
-              <School size={11}/> {isHindi ? "सामान्य जानकारी" : "General Information"}
+              <School size={11}/> {isHindi ? "अनुभाग A" : "Section A"}
             </span>
             <h2 className="text-3xl md:text-4xl font-serif font-extrabold text-foreground leading-tight">
-              {isHindi ? "विद्यालय की " : "School "}
+              {isHindi ? "सामान्य " : "General "}
               <span style={{ background:`linear-gradient(90deg,${CYAN},${BLUE})`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>
-                {isHindi ? "मूलभूत जानकारी" : "Basic Details"}
+                {isHindi ? "जानकारी" : "Information"}
               </span>
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            <motion.div {...fadeUp(0.1)} className="p-8 rounded-3xl" style={LIGHT_CARD}>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-2xl flex items-center justify-center" style={{ background:`${CYAN}15`, border:`1.5px solid ${CYAN}30` }}>
-                  <School size={18} color={CYAN}/>
-                </div>
-                <h3 className="font-bold text-foreground text-lg">{isHindi ? "पहचान" : "Identity"}</h3>
-              </div>
-              {generalInfo.slice(0, 6).map((r, i) => <InfoRow key={i} label={r.label} value={r.value} color={[CYAN,BLUE,EMERALD,GOLD,PURPLE,CYAN][i]}/>)}
-            </motion.div>
-
-            <motion.div {...fadeUp(0.2)} className="p-8 rounded-3xl" style={LIGHT_CARD}>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-2xl flex items-center justify-center" style={{ background:`${EMERALD}15`, border:`1.5px solid ${EMERALD}30` }}>
-                  <Phone size={18} color={EMERALD}/>
-                </div>
-                <h3 className="font-bold text-foreground text-lg">{isHindi ? "संपर्क एवं पहुंच" : "Contact & Access"}</h3>
-              </div>
-              {generalInfo.slice(6).map((r, i) => <InfoRow key={i} label={r.label} value={r.value} color={[EMERALD,GOLD,BLUE,PURPLE,CYAN,RED][i]}/>)}
-            </motion.div>
-          </div>
+          <motion.div {...fadeUp(0.1)} className="max-w-4xl mx-auto rounded-3xl overflow-hidden" style={LIGHT_CARD}>
+            <div className="p-6 md:p-8">
+              <SectionHeader letter="A" title={isHindi ? "सामान्य जानकारी" : "General Information"} color={BLUE} icon={<School size={18}/>}/>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr style={{ background:`#f1f5f9` }}>
+                    <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-foreground/50 w-12">S.NO.</th>
+                    <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-foreground/50">INFORMATION</th>
+                    <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-foreground/50">DETAILS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <TableRow sno="1" info={isHindi ? "विद्यालय का नाम" : "Name of the School"} detail={<span className="font-bold text-foreground">The Milestone Sr. Sec. School</span>} highlight />
+                  <TableRow sno="2" info={isHindi ? "संबद्धता संख्या" : "Affiliation No."} detail={<span className="font-bold" style={{ color: BLUE }}>531433</span>} />
+                  <TableRow sno="3" info={isHindi ? "स्कूल कोड" : "School Code"} detail={<span className="font-bold" style={{ color: BLUE }}>41410</span>} />
+                  <TableRow sno="4" info={isHindi ? "पिन कोड सहित पूरा पता" : "Complete Address with Pin Code"} detail={
+                    <span>The Milestone Sr. Sec. School, Bye-Pass,<br/>Khurana Road, Kaithal – 136027</span>
+                  } />
+                  <TableRow sno="5" info={isHindi ? "प्रिंसिपल का नाम एवं योग्यता" : "Principal Name & Qualification"} detail={
+                    <span><span className="font-bold text-foreground">Atul Sharma</span><br/><span className="text-foreground/60 text-xs">M.A., M.Phil., B.Ed. (English)</span></span>
+                  } />
+                  <TableRow sno="6" info={isHindi ? "स्कूल ईमेल आईडी" : "School Email ID"} detail={
+                    <a href="mailto:themilestonektl@gmail.com" className="font-semibold hover:underline" style={{ color: CYAN }}>
+                      themilestonektl@gmail.com
+                    </a>
+                  } />
+                  <TableRow sno="7" info={isHindi ? "संपर्क विवरण (लैंडलाइन/मोबाइल)" : "Contact Details (Landline/Mobile)"} detail={
+                    <span>
+                      <a href="tel:01746230294" className="hover:underline" style={{ color: EMERALD }}>01746-230294</a>
+                      {", "}
+                      <a href="tel:9812574766" className="hover:underline" style={{ color: EMERALD }}>9812574766</a>
+                      {", "}
+                      <a href="tel:9812308463" className="hover:underline" style={{ color: EMERALD }}>9812308463</a>
+                    </span>
+                  } />
+                </tbody>
+              </table>
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* ══ DOCUMENTS & CERTIFICATES ═══════════════════════════ */}
+      {/* ══ B. DOCUMENTS & CERTIFICATES ═══════════════════════════ */}
       <section className="py-24" style={{ background:"#f8fafc" }}>
         <div className="container mx-auto px-4 md:px-6">
           <motion.div {...fadeUp()} className="text-center mb-14">
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-5"
               style={{ background:`rgba(139,92,246,0.1)`, color:"#7c3aed", border:"1.5px solid rgba(139,92,246,0.3)" }}>
-              <FileText size={11}/> {isHindi ? "दस्तावेज़ एवं प्रमाण पत्र" : "Documents & Certificates"}
+              <FileText size={11}/> {isHindi ? "अनुभाग B" : "Section B"}
             </span>
             <h2 className="text-3xl md:text-4xl font-serif font-extrabold text-foreground leading-tight">
               {isHindi ? "अनिवार्य " : "Mandatory "}
@@ -361,108 +311,180 @@ export default function PublicDisclosurePage() {
         </div>
       </section>
 
-      {/* ══ INFRASTRUCTURE ════════════════════════════════════ */}
+      {/* ══ C. SCHOOL INFRASTRUCTURE ══════════════════════════ */}
       <section className="py-24 bg-background">
         <div className="container mx-auto px-4 md:px-6">
           <motion.div {...fadeUp()} className="text-center mb-14">
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-5"
               style={{ background:`rgba(16,185,129,0.1)`, color:"#059669", border:"1.5px solid rgba(16,185,129,0.3)" }}>
-              <Building2 size={11}/> {isHindi ? "बुनियादी ढांचा" : "Infrastructure"}
+              <Building2 size={11}/> {isHindi ? "अनुभाग C" : "Section C"}
             </span>
             <h2 className="text-3xl md:text-4xl font-serif font-extrabold text-foreground leading-tight">
-              {isHindi ? "विश्वस्तरीय " : "World-Class "}
+              {isHindi ? "विद्यालय का " : "School "}
               <span style={{ background:`linear-gradient(90deg,${EMERALD},${CYAN})`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>
-                {isHindi ? "सुविधाएं" : "Facilities"}
+                {isHindi ? "बुनियादी ढांचा" : "Infrastructure"}
               </span>
             </h2>
           </motion.div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
-            {infrastructure.map((item, i) => (
-              <motion.div key={i} {...fadeUp(i * 0.06)} whileHover={{ y:-6, scale:1.03 }}
-                className="relative text-center p-6 rounded-3xl overflow-hidden group cursor-default"
-                style={LIGHT_CARD}>
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"
-                  style={{ background:`radial-gradient(circle at center,${item.color}10,transparent 70%)` }}/>
-                <div className="absolute top-0 left-0 right-0 h-[2px] rounded-t-3xl"
-                  style={{ background:`linear-gradient(90deg,transparent,${item.color},transparent)`, opacity:0.6 }}/>
-                <div className="text-3xl mb-3">{item.icon}</div>
-                <div className="text-xs font-semibold uppercase tracking-wider mb-1" style={{ color:`${item.color}` }}>{item.label}</div>
-                <div className="text-sm font-bold text-foreground/80">{item.value}</div>
-              </motion.div>
-            ))}
-          </div>
+
+          <motion.div {...fadeUp(0.1)} className="max-w-4xl mx-auto rounded-3xl overflow-hidden" style={LIGHT_CARD}>
+            <div className="p-6 md:p-8">
+              <SectionHeader letter="C" title={isHindi ? "बुनियादी ढांचा एवं सुविधाएं" : "School Infrastructure"} color={EMERALD} icon={<Building2 size={18}/>}/>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr style={{ background:`#f1f5f9` }}>
+                    <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-foreground/50 w-12">S.NO.</th>
+                    <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-foreground/50">INFORMATION</th>
+                    <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-foreground/50">DETAILS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <TableRow sno="1"
+                    info={isHindi ? "विद्यालय का कुल परिसर क्षेत्र (वर्ग मीटर में)" : "Total Campus Area of the School (in Square Mtr)"}
+                    detail={<span className="font-bold text-foreground">8159 <span className="font-normal text-foreground/50 text-xs">sq. mtr.</span></span>}
+                    highlight />
+                  <TableRow sno="2"
+                    info={isHindi ? "कक्षाओं की संख्या एवं आकार" : "No. and Size of the Class Rooms"}
+                    detail={<span className="font-bold text-foreground">60</span>}
+                    highlight />
+                  <TableRow sno="3"
+                    info={isHindi ? "प्रयोगशालाओं की संख्या एवं आकार (कंप्यूटर लैब सहित, वर्ग मीटर में)" : "No. and Size of Laboratories including Computer Labs (in Sq Mtr)"}
+                    detail={
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: BLUE }}/><span>Physics Lab – 1</span></div>
+                        <div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: EMERALD }}/><span>Chemistry Lab – 1</span></div>
+                        <div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: CYAN }}/><span>Biology Lab – 1</span></div>
+                        <div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: PURPLE }}/><span>Computer Lab – 2</span></div>
+                        <div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: GOLD }}/><span>Psychology Lab – 1</span></div>
+                      </div>
+                    } />
+                  <TableRow sno="4"
+                    info={isHindi ? "इंटरनेट सुविधा (हाँ/नहीं)" : "Internet Facility (Y/N)"}
+                    detail={<span className="font-bold flex items-center gap-1.5" style={{ color: EMERALD }}><CheckCircle2 size={14}/> YES</span>} />
+                  <TableRow sno="5"
+                    info={isHindi ? "लड़कियों के शौचालयों की संख्या" : "No. of Girls Toilets"}
+                    detail={<span className="font-bold text-foreground">10</span>} />
+                  <TableRow sno="6"
+                    info={isHindi ? "लड़कों के शौचालयों की संख्या" : "No. of Boys Toilets"}
+                    detail={<span className="font-bold text-foreground">10</span>} />
+                  <TableRow sno="7"
+                    info={isHindi ? "विद्यालय के बुनियादी ढांचे को कवर करने वाले निरीक्षण वीडियो का YouTube लिंक" : "Link of YouTube Video of the Inspection of School covering the Infrastructure"}
+                    detail={
+                      <a href="https://www.youtube.com/@milestoneschool" target="_blank" rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 font-semibold hover:underline"
+                        style={{ color: BLUE }}>
+                        <ExternalLink size={13}/> {isHindi ? "देखने के लिए क्लिक करें" : "Click to View"}
+                      </a>
+                    } />
+                </tbody>
+              </table>
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* ══ STAFF DETAILS ════════════════════════════════════ */}
+      {/* ══ D. STAFF (TEACHING) ══════════════════════════════════ */}
       <section className="py-24" style={{ background:"#f8fafc" }}>
         <div className="container mx-auto px-4 md:px-6">
           <motion.div {...fadeUp()} className="text-center mb-14">
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-5"
               style={{ background:`rgba(245,158,11,0.1)`, color:"#b45309", border:"1.5px solid rgba(245,158,11,0.3)" }}>
-              <Users size={11}/> {isHindi ? "स्टाफ विवरण" : "Staff Details"}
+              <Users size={11}/> {isHindi ? "अनुभाग D" : "Section D"}
             </span>
             <h2 className="text-3xl md:text-4xl font-serif font-extrabold text-foreground leading-tight">
-              {isHindi ? "हमारी " : "Our "}
+              {isHindi ? "शिक्षण " : "Teaching "}
               <span style={{ background:`linear-gradient(90deg,${GOLD},${PURPLE})`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>
-                {isHindi ? "अनुभवी टीम" : "Expert Team"}
+                {isHindi ? "स्टाफ विवरण" : "Staff Details"}
               </span>
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 max-w-5xl mx-auto mb-10">
-            {staffStats.map((s, i) => (
-              <motion.div key={i} {...fadeUp(i*0.08)} whileHover={{ y:-6, scale:1.06 }}
-                className="text-center py-7 px-3 rounded-2xl relative overflow-hidden group cursor-default"
-                style={LIGHT_CARD}>
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"
-                  style={{ background:`radial-gradient(circle at center,${s.color}18,transparent 70%)` }}/>
-                <div className="text-2xl font-serif font-extrabold mb-1" style={{ color:s.color }}>{s.val}</div>
-                <p className="text-foreground/50 text-[11px] font-medium leading-tight">{s.label}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div {...fadeUp(0.2)} className="max-w-5xl mx-auto p-8 rounded-3xl" style={LIGHT_CARD}>
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-2xl flex items-center justify-center" style={{ background:`${GOLD}15`, border:`1.5px solid ${GOLD}30` }}>
-                <Sparkles size={18} color={GOLD}/>
+          <div className="max-w-4xl mx-auto space-y-6">
+            <motion.div {...fadeUp(0.1)} className="rounded-3xl overflow-hidden" style={LIGHT_CARD}>
+              <div className="p-6 md:p-8">
+                <SectionHeader letter="D" title={isHindi ? "शिक्षण स्टाफ" : "Staff (Teaching)"} color={GOLD} icon={<Users size={18}/>}/>
               </div>
-              <h3 className="font-bold text-foreground text-lg">{isHindi ? "स्टाफ योग्यता" : "Staff Qualifications"}</h3>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {(isHindi ? [
-                "सभी शिक्षक प्रासंगिक विषयों में स्नातक / स्नातकोत्तर डिग्री धारक",
-                "B.Ed / M.Ed प्रशिक्षित शिक्षण पेशेवर",
-                "CBSE के तहत नियमित पेशेवर विकास कार्यशालाएं",
-                "विशेषज्ञ संकाय — कक्षा XI और XII की प्रमुख विषयों के लिए",
-                "डिजिटल शिक्षण पद्धतियों में प्रशिक्षित स्टाफ",
-                "आत्मविश्वास से भरे, प्रेरित और अनुभवी शिक्षक",
-              ] : [
-                "All teachers hold graduate / post-graduate degrees in relevant subjects",
-                "B.Ed / M.Ed trained teaching professionals",
-                "Regular professional development workshops under CBSE",
-                "Specialist faculty for key subjects in Classes XI & XII",
-                "Staff trained in digital teaching methodologies",
-                "Confident, motivated, and experienced educators",
-              ]).map((item, i) => (
-                <div key={i} className="flex items-start gap-3">
-                  <CheckCircle2 size={15} className="flex-shrink-0 mt-0.5" style={{ color: EMERALD }}/>
-                  <span className="text-sm text-foreground/70">{item}</span>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr style={{ background:`#f1f5f9` }}>
+                      <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-foreground/50 w-12">S.NO.</th>
+                      <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-foreground/50">INFORMATION</th>
+                      <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-foreground/50">DETAILS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <TableRow sno="1" info={isHindi ? "प्रिंसिपल" : "Principal"} detail={<span className="font-bold text-foreground">1</span>} highlight />
+                    <TableRow sno="2" info={isHindi ? "शिक्षकों की कुल संख्या" : "Total No. of Teachers"} detail={
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                          <span className="font-extrabold text-lg" style={{ color: BLUE }}>85</span>
+                          <span className="text-xs text-foreground/50">{isHindi ? "(कुल)" : "(Total)"}</span>
+                        </div>
+                        <div className="flex flex-wrap gap-3 mt-1">
+                          <span className="px-3 py-1 rounded-full text-xs font-bold" style={{ background:`${CYAN}15`, color: CYAN, border:`1px solid ${CYAN}30` }}>
+                            PRT: 41
+                          </span>
+                          <span className="px-3 py-1 rounded-full text-xs font-bold" style={{ background:`${EMERALD}15`, color: EMERALD, border:`1px solid ${EMERALD}30` }}>
+                            PGT: 27
+                          </span>
+                          <span className="px-3 py-1 rounded-full text-xs font-bold" style={{ background:`${PURPLE}15`, color: PURPLE, border:`1px solid ${PURPLE}30` }}>
+                            TGT: 17
+                          </span>
+                        </div>
+                      </div>
+                    } />
+                    <TableRow sno="3" info={isHindi ? "शिक्षक अनुभाग अनुपात" : "Teachers Section Ratio"} detail={
+                      <span className="font-extrabold text-lg" style={{ color: GOLD }}>1:30</span>
+                    } />
+                  </tbody>
+                </table>
+              </div>
+            </motion.div>
+
+            <motion.div {...fadeUp(0.2)} className="p-8 rounded-3xl" style={LIGHT_CARD}>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-2xl flex items-center justify-center" style={{ background:`${GOLD}15`, border:`1.5px solid ${GOLD}30` }}>
+                  <Sparkles size={18} color={GOLD}/>
                 </div>
-              ))}
-            </div>
-          </motion.div>
+                <h3 className="font-bold text-foreground text-lg">{isHindi ? "स्टाफ योग्यता" : "Staff Qualifications"}</h3>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {(isHindi ? [
+                  "सभी शिक्षक प्रासंगिक विषयों में स्नातक / स्नातकोत्तर डिग्री धारक",
+                  "B.Ed / M.Ed प्रशिक्षित शिक्षण पेशेवर",
+                  "CBSE के तहत नियमित पेशेवर विकास कार्यशालाएं",
+                  "विशेषज्ञ संकाय — कक्षा XI और XII की प्रमुख विषयों के लिए",
+                  "डिजिटल शिक्षण पद्धतियों में प्रशिक्षित स्टाफ",
+                  "आत्मविश्वास से भरे, प्रेरित और अनुभवी शिक्षक",
+                ] : [
+                  "All teachers hold graduate / post-graduate degrees in relevant subjects",
+                  "B.Ed / M.Ed trained teaching professionals",
+                  "Regular professional development workshops under CBSE",
+                  "Specialist faculty for key subjects in Classes XI & XII",
+                  "Staff trained in digital teaching methodologies",
+                  "Confident, motivated, and experienced educators",
+                ]).map((item, i) => (
+                  <div key={i} className="flex items-start gap-3">
+                    <CheckCircle2 size={15} className="flex-shrink-0 mt-0.5" style={{ color: EMERALD }}/>
+                    <span className="text-sm text-foreground/70">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* ══ ACADEMIC RESULTS ═════════════════════════════════ */}
+      {/* ══ E. ACADEMIC RESULTS ══════════════════════════════════ */}
       <section className="py-24 bg-background">
         <div className="container mx-auto px-4 md:px-6">
           <motion.div {...fadeUp()} className="text-center mb-14">
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-5"
               style={{ background:`rgba(16,185,129,0.1)`, color:"#059669", border:"1.5px solid rgba(16,185,129,0.3)" }}>
-              <BarChart3 size={11}/> {isHindi ? "शैक्षणिक परिणाम" : "Academic Results"}
+              <BarChart3 size={11}/> {isHindi ? "अनुभाग E" : "Section E"}
             </span>
             <h2 className="text-3xl md:text-4xl font-serif font-extrabold text-foreground leading-tight">
               {isHindi ? "बोर्ड परीक्षा " : "Board Exam "}
@@ -555,12 +577,12 @@ export default function PublicDisclosurePage() {
                   : "Class-wise fee details, both monthly and annual, are available at the school office. Please contact us for complete information."}
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <a href="tel:+919812574766"
+                <a href="tel:9812574766"
                   className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full font-semibold text-sm transition-all duration-300 hover:-translate-y-1"
                   style={{ background:`linear-gradient(135deg,${EMERALD},#059669)`, color:"white", boxShadow:`0 6px 24px ${EMERALD}40` }}>
-                  <Phone size={14}/> {isHindi ? "+91 98125-74766 कॉल करें" : "Call +91 98125-74766"}
+                  <Phone size={14}/> {isHindi ? "9812574766 कॉल करें" : "Call 9812574766"}
                 </a>
-                <a href="mailto:themilestoneKtl@gmail.com"
+                <a href="mailto:themilestonektl@gmail.com"
                   className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full font-medium text-sm transition-all duration-300 hover:-translate-y-1"
                   style={{ ...GLASS, color:"rgba(255,255,255,0.75)" }}>
                   <Mail size={14}/> {isHindi ? "ईमेल करें" : "Email Us"}
