@@ -386,7 +386,7 @@ export default function PublicDisclosurePage() {
                   <TableRow sno="7"
                     info={isHindi ? "विद्यालय के बुनियादी ढांचे को कवर करने वाले निरीक्षण वीडियो का YouTube लिंक" : "Link of YouTube Video of the Inspection of School covering the Infrastructure"}
                     detail={
-                      <a href="https://www.youtube.com/@milestoneschool" target="_blank" rel="noopener noreferrer"
+                      <a href="https://www.youtube.com/watch?v=GprLzo8M0Qk" target="_blank" rel="noopener noreferrer"
                         className="inline-flex items-center gap-1.5 font-semibold hover:underline"
                         style={{ color: BLUE }}>
                         <ExternalLink size={13}/> {isHindi ? "देखने के लिए क्लिक करें" : "Click to View"}
