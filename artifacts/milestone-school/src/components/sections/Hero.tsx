@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, MapPin, Award } from "lucide-react";
+import { ArrowRight, MapPin, Award, Sparkles, FileText } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { SITE } from "@/i18n/translations";
 import { useLocation } from "wouter";
@@ -186,29 +186,57 @@ export default function Hero() {
                 transition={{ duration: 0.65, delay: 1.0 }}
                 className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto"
               >
-                <button
+                {/* Apply Now — primary CTA */}
+                <motion.button
                   onClick={() => { setLocation("/admissions"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-                  className="group inline-flex items-center justify-center gap-2 px-7 py-3.5 sm:px-9 sm:py-4 rounded-full font-semibold text-white text-sm sm:text-base transition-all duration-300 hover:-translate-y-1 hover:scale-[1.03] w-full sm:w-auto"
+                  whileHover={{ y: -3, scale: 1.04 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="group relative inline-flex items-center justify-center gap-2.5 px-8 py-4 sm:px-10 sm:py-4.5 rounded-full font-bold text-white text-sm sm:text-base overflow-hidden w-full sm:w-auto"
                   style={{
-                    background: "linear-gradient(135deg, #16a34a 0%, #22c55e 100%)",
-                    boxShadow: "0 6px 28px rgba(34,197,94,0.50)",
+                    background: "linear-gradient(135deg, #15803d 0%, #22c55e 55%, #4ade80 100%)",
+                    boxShadow: "0 8px 32px rgba(34,197,94,0.55), 0 0 0 1px rgba(74,222,128,0.3)",
                   }}
                 >
-                  {t.apply}
-                  <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
-                </button>
+                  {/* shimmer sweep */}
+                  <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"
+                    style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent)" }} />
+                  {/* pulsing outer glow */}
+                  <motion.span
+                    className="absolute inset-0 rounded-full pointer-events-none"
+                    animate={{ boxShadow: ["0 0 0 0px rgba(74,222,128,0.5)", "0 0 0 10px rgba(74,222,128,0)"] }}
+                    transition={{ repeat: Infinity, duration: 1.8, ease: "easeOut" }}
+                  />
+                  <Sparkles size={15} className="flex-shrink-0 transition-transform duration-300 group-hover:rotate-12" />
+                  <span className="relative z-10">{t.apply}</span>
+                  <ArrowRight size={15} className="flex-shrink-0 relative z-10 transition-transform duration-300 group-hover:translate-x-1.5" />
+                </motion.button>
 
-                <button
+                {/* Public Disclosure — secondary CTA */}
+                <motion.button
                   onClick={() => { setLocation("/public-disclosure"); window.scrollTo({ top: 0 }); }}
-                  className="inline-flex items-center justify-center gap-2 px-7 py-3.5 sm:px-9 sm:py-4 rounded-full font-medium text-white text-sm sm:text-base transition-all duration-300 hover:-translate-y-1 hover:scale-[1.03] w-full sm:w-auto"
+                  whileHover={{ y: -3, scale: 1.04 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="group relative inline-flex items-center justify-center gap-2.5 px-8 py-4 sm:px-10 sm:py-4.5 rounded-full font-semibold text-white text-sm sm:text-base overflow-hidden w-full sm:w-auto"
                   style={{
-                    border: "1.5px solid rgba(255,255,255,0.35)",
-                    background: "rgba(255,255,255,0.08)",
-                    backdropFilter: "blur(10px)",
+                    background: "rgba(255,255,255,0.07)",
+                    backdropFilter: "blur(14px)",
                   }}
                 >
-                  {t.discover}
-                </button>
+                  {/* animated border */}
+                  <span className="absolute inset-0 rounded-full pointer-events-none"
+                    style={{ border: "1.5px solid rgba(255,255,255,0.28)" }} />
+                  <motion.span
+                    className="absolute inset-0 rounded-full pointer-events-none"
+                    style={{ border: "1.5px solid rgba(96,165,250,0)" }}
+                    animate={{ borderColor: ["rgba(96,165,250,0)", "rgba(96,165,250,0.6)", "rgba(96,165,250,0)"] }}
+                    transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
+                  />
+                  {/* hover fill */}
+                  <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    style={{ background: "rgba(255,255,255,0.10)" }} />
+                  <FileText size={15} className="flex-shrink-0 relative z-10 opacity-80 group-hover:opacity-100 transition-opacity" style={{ color: "#93c5fd" }} />
+                  <span className="relative z-10">{t.discover}</span>
+                </motion.button>
               </motion.div>
             </div>
           </motion.div>
