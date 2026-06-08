@@ -3,7 +3,7 @@ import {
   School, MapPin, FileText, ShieldCheck, Flame,
   Droplets, Building2, Users, GraduationCap, BarChart3,
   CheckCircle2, Download, Landmark, Award, ClipboardList, Sparkles,
-  AlertCircle, ExternalLink,
+  AlertCircle, ExternalLink, CalendarDays, BookOpen, IndianRupee,
 } from "lucide-react";
 import Footer from "@/components/layout/Footer";
 import { useLanguage } from "@/context/LanguageContext";
