@@ -628,7 +628,7 @@ export default function PublicDisclosurePage() {
               <IndianRupee size={11}/> {isHindi ? "शुल्क संरचना" : "Fee Structure"}
             </span>
             <h2 className="text-3xl md:text-4xl font-serif font-extrabold text-foreground leading-tight">
-              {isHindi ? "सत्र 2025–26 " : "Session 2025–26 "}
+              {isHindi ? "सत्र 2026–27 " : "Session 2026–27 "}
               <span style={{ background:`linear-gradient(90deg,${GOLD},#f97316)`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>
                 {isHindi ? "शुल्क विवरण" : "Fee Structure"}
               </span>
