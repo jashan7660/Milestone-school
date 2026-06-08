@@ -189,59 +189,69 @@ export default function Hero() {
                 {/* ── Apply Now ── */}
                 <motion.button
                   onClick={() => { setLocation("/admissions"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-                  whileHover={{ scale: 1.07 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.96 }}
                   animate={{
                     boxShadow: [
-                      "0 0 18px 4px rgba(74,222,128,0.55), 0 6px 28px rgba(34,197,94,0.45)",
-                      "0 0 38px 12px rgba(74,222,128,0.80), 0 8px 40px rgba(34,197,94,0.65)",
-                      "0 0 18px 4px rgba(74,222,128,0.55), 0 6px 28px rgba(34,197,94,0.45)",
+                      "0 4px 18px rgba(34,197,94,0.40)",
+                      "0 4px 26px rgba(34,197,94,0.65)",
+                      "0 4px 18px rgba(34,197,94,0.40)",
                     ],
                   }}
                   transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
                   className="relative inline-flex items-center justify-center gap-3 px-9 py-4 rounded-full font-extrabold text-white text-base tracking-wide overflow-hidden w-full sm:w-auto"
                   style={{ background: "linear-gradient(135deg,#14532d 0%,#16a34a 40%,#4ade80 100%)" }}
                 >
-                  {/* sweeping shimmer — always running */}
+                  {/* sweeping shimmer */}
                   <motion.span
                     className="absolute inset-0 pointer-events-none"
-                    style={{ background: "linear-gradient(105deg,transparent 35%,rgba(255,255,255,0.28) 50%,transparent 65%)" }}
+                    style={{ background: "linear-gradient(105deg,transparent 35%,rgba(255,255,255,0.25) 50%,transparent 65%)" }}
                     animate={{ x: ["-120%", "200%"] }}
-                    transition={{ repeat: Infinity, duration: 2.4, ease: "linear", repeatDelay: 0.6 }}
+                    transition={{ repeat: Infinity, duration: 2.4, ease: "linear", repeatDelay: 0.8 }}
                   />
                   <motion.span
-                    animate={{ rotate: [0, 20, -10, 20, 0], scale: [1, 1.25, 1, 1.25, 1] }}
+                    animate={{ rotate: [0, 18, -8, 18, 0], scale: [1, 1.2, 1, 1.2, 1] }}
                     transition={{ repeat: Infinity, duration: 2.8, ease: "easeInOut" }}
+                    className="relative z-10"
                   >
                     <Sparkles size={18} />
                   </motion.span>
                   <span className="relative z-10 text-base sm:text-lg">{t.apply}</span>
                   <motion.span
-                    animate={{ x: [0, 5, 0] }}
+                    animate={{ x: [0, 4, 0] }}
                     transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
+                    className="relative z-10"
                   >
                     <ArrowRight size={18} />
                   </motion.span>
                 </motion.button>
 
-                {/* ── Public Disclosure — spinning gradient ring ── */}
+                {/* ── Public Disclosure — spinning gradient ring (clipped) ── */}
                 <motion.div
-                  whileHover={{ scale: 1.07 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="relative rounded-full p-[2px] cursor-pointer w-full sm:w-auto"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.96 }}
+                  className="relative rounded-full cursor-pointer w-full sm:w-auto"
                   onClick={() => { setLocation("/public-disclosure"); window.scrollTo({ top: 0 }); }}
-                  style={{ background: "conic-gradient(from 0deg,#3b82f6,#8b5cf6,#06b6d4,#3b82f6)" }}
+                  style={{ padding: "2px" }}
                 >
-                  {/* spinning ring */}
-                  <motion.span
-                    className="absolute inset-0 rounded-full pointer-events-none"
-                    style={{ background: "conic-gradient(from 0deg,#3b82f6,#8b5cf6,#06b6d4,#ec4899,#3b82f6)" }}
-                    animate={{ rotate: 360 }}
-                    transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
-                  />
+                  {/* clipping container — keeps the spinning gradient inside the pill */}
+                  <div className="absolute inset-0 rounded-full overflow-hidden">
+                    <motion.div
+                      className="absolute"
+                      style={{
+                        width: "200%",
+                        height: "200%",
+                        top: "-50%",
+                        left: "-50%",
+                        background: "conic-gradient(from 0deg,#3b82f6,#8b5cf6,#ec4899,#06b6d4,#3b82f6)",
+                      }}
+                      animate={{ rotate: 360 }}
+                      transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
+                    />
+                  </div>
                   {/* inner dark pill */}
                   <div className="relative z-10 inline-flex items-center justify-center gap-3 px-9 py-4 rounded-full font-bold text-white text-base w-full"
-                    style={{ background: "rgba(10,18,40,0.88)", backdropFilter: "blur(16px)" }}>
+                    style={{ background: "rgba(8,15,38,0.90)", backdropFilter: "blur(16px)" }}>
                     <motion.span
                       animate={{ y: [0, -3, 0] }}
                       transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
