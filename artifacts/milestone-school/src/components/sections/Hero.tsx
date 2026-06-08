@@ -199,7 +199,7 @@ export default function Hero() {
                 </button>
 
                 <button
-                  onClick={() => scrollTo("#about")}
+                  onClick={() => { setLocation("/public-disclosure"); window.scrollTo({ top: 0 }); }}
                   className="inline-flex items-center justify-center gap-2 px-7 py-3.5 sm:px-9 sm:py-4 rounded-full font-medium text-white text-sm sm:text-base transition-all duration-300 hover:-translate-y-1 hover:scale-[1.03] w-full sm:w-auto"
                   style={{
                     border: "1.5px solid rgba(255,255,255,0.35)",

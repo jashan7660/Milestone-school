@@ -177,7 +177,7 @@ export const SITE: Record<Lang, SiteT> = {
       location: "Kaithal, Haryana",
       classes:  "Nursery – Class XII",
       apply:    "Apply Now",
-      discover: "Discover More",
+      discover: "Public Disclosure",
     },
     about: {
       label:   "About The Milestone",
@@ -397,7 +397,7 @@ export const SITE: Record<Lang, SiteT> = {
       location: "कैथल, हरियाणा",
       classes:  "नर्सरी – कक्षा XII",
       apply:    "अभी आवेदन करें",
-      discover: "और जानें",
+      discover: "सार्वजनिक प्रकटीकरण",
     },
     about: {
       label:   "माइलस्टोन के बारे में",

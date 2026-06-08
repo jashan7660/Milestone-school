@@ -19,6 +19,7 @@ import AdmissionsPage from "@/pages/AdmissionsPage";
 import TermsPage from "@/pages/TermsPage";
 import PrivacyPage from "@/pages/PrivacyPage";
 import DisclaimerPage from "@/pages/DisclaimerPage";
+import PublicDisclosurePage from "@/pages/PublicDisclosurePage";
 import PageLoader from "@/components/ui/PageLoader";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import PhoneButton from "@/components/ui/PhoneButton";
@@ -46,6 +47,7 @@ function Router() {
       <Route path="/terms" component={TermsPage} />
       <Route path="/privacy" component={PrivacyPage} />
       <Route path="/disclaimer" component={DisclaimerPage} />
+      <Route path="/public-disclosure" component={PublicDisclosurePage} />
       <Route component={NotFound} />
     </Switch>
   );
