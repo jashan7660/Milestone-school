@@ -3,7 +3,7 @@ import {
   School, MapPin, FileText, ShieldCheck, Flame,
   Droplets, Building2, Users, GraduationCap, BarChart3,
   CheckCircle2, Download, Landmark, Award, ClipboardList, Sparkles,
-  AlertCircle, ExternalLink, CalendarDays, BookOpen, IndianRupee,
+  AlertCircle, ExternalLink, IndianRupee,
 } from "lucide-react";
 import Footer from "@/components/layout/Footer";
 import { useLanguage } from "@/context/LanguageContext";
@@ -619,68 +619,91 @@ export default function PublicDisclosurePage() {
         </div>
       </section>
 
-      {/* ══ F. DOWNLOADS ══════════════════════════════════════ */}
+      {/* ══ FEE STRUCTURE ═════════════════════════════════════ */}
       <section className="py-24" style={{ background:"#f8fafc" }}>
         <div className="container mx-auto px-4 md:px-6">
           <motion.div {...fadeUp()} className="text-center mb-14">
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-5"
-              style={{ background:`rgba(6,182,212,0.1)`, color:"#0891b2", border:`1.5px solid rgba(6,182,212,0.3)` }}>
-              <Download size={11}/> {isHindi ? "अनुभाग F" : "Section F"}
+              style={{ background:`rgba(245,158,11,0.1)`, color:"#b45309", border:`1.5px solid rgba(245,158,11,0.3)` }}>
+              <IndianRupee size={11}/> {isHindi ? "शुल्क संरचना" : "Fee Structure"}
             </span>
             <h2 className="text-3xl md:text-4xl font-serif font-extrabold text-foreground leading-tight">
-              {isHindi ? "डाउनलोड " : "Downloads & "}
-              <span style={{ background:`linear-gradient(90deg,${CYAN},${BLUE})`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>
-                {isHindi ? "एवं जानकारी" : "Information"}
+              {isHindi ? "सत्र 2025–26 " : "Session 2025–26 "}
+              <span style={{ background:`linear-gradient(90deg,${GOLD},#f97316)`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>
+                {isHindi ? "शुल्क विवरण" : "Fee Structure"}
               </span>
             </h2>
+            <p className="text-foreground/50 mt-4 text-base max-w-xl mx-auto">
+              {isHindi
+                ? "सभी शुल्क भारतीय रुपये (₹) में हैं। अधिक जानकारी के लिए कार्यालय से संपर्क करें।"
+                : "All fees are in Indian Rupees (₹). Contact the school office for further details."}
+            </p>
           </motion.div>
 
-          <motion.div {...fadeUp(0.1)} className="max-w-4xl mx-auto rounded-3xl overflow-hidden" style={LIGHT_CARD}>
-            <div className="p-6 md:p-8">
-              <SectionHeader letter="F" title={isHindi ? "डाउनलोड एवं जानकारी" : "Downloads & Information"} color={CYAN} icon={<Download size={18}/>}/>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr style={{ background:`#f1f5f9` }}>
-                    <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-foreground/50 w-16">S.NO.</th>
-                    <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-foreground/50">INFORMATION</th>
-                    <th className="px-4 py-3 text-center text-xs font-bold uppercase tracking-wider text-foreground/50 w-28">DOWNLOAD</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[
-                    {
-                      sno: 1,
-                      info: isHindi ? "वार्षिक शैक्षणिक कैलेंडर" : "Annual Academic Calendar",
-                      href: "/annual-academic-calendar.pdf",
-                    },
-                    {
-                      sno: 2,
-                      info: isHindi ? "विद्यालय प्रबंधन समिति (SMC) की सूची" : "List of School Management Committee (SMC)",
-                      href: "/smc-list.pdf",
-                    },
-                    {
-                      sno: 3,
-                      info: isHindi ? "अभिभावक शिक्षक संघ (PTA) सदस्यों की सूची" : "List of Parents Teachers Association (PTA) Members",
-                      href: "/pta-members.pdf",
-                    },
-                  ].map((row) => (
-                    <tr key={row.sno} className="border-b border-black/5 last:border-0 hover:bg-blue-50/40 transition-colors">
-                      <td className="px-4 py-4 text-sm font-bold text-foreground/50 text-center">{row.sno}.</td>
-                      <td className="px-4 py-4 text-sm text-foreground/70 uppercase tracking-wide font-medium">{row.info}</td>
-                      <td className="px-4 py-4 text-center">
-                        <a href={row.href} download
-                          className="inline-flex items-center justify-center w-10 h-10 rounded-full text-white transition-all duration-200 hover:scale-110 hover:shadow-lg"
-                          style={{ background:`linear-gradient(135deg,${NAVY},${NAVY2})`, boxShadow:`0 4px 14px rgba(7,27,58,0.35)` }}>
-                          <Download size={16}/>
-                        </a>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+          {(() => {
+            const feeData = [
+              { cls: "Playgroup", reg: 1000, monthly: 3200, admission: null },
+              { cls: "Nursery (NUR)", reg: 1000, monthly: 4200, admission: null },
+              { cls: "Jr KG / Sr KG", reg: 1000, monthly: 4400, admission: null },
+              { cls: "Class 1st", reg: 1000, monthly: 4600, admission: 7000 },
+              { cls: "Class 2nd – 5th", reg: 1000, monthly: 4800, admission: 7000 },
+              { cls: "Class 6th", reg: 1000, monthly: 4900, admission: 7000 },
+              { cls: "Class 7th & 8th", reg: 1000, monthly: 5100, admission: 7000 },
+              { cls: "Class 9th", reg: 1000, monthly: 5200, admission: 7000 },
+              { cls: "Class 10th", reg: 1000, monthly: 5400, admission: 7000 },
+              { cls: "Class 11–12 (Arts/Com.)", reg: 1000, monthly: 5500, admission: 7000 },
+              { cls: "Class 11–12 (Science)", reg: 1000, monthly: 5800, admission: 7000 },
+            ];
+            const colors = [CYAN, BLUE, PURPLE, EMERALD, GOLD, CYAN, BLUE, PURPLE, EMERALD, GOLD, RED];
+            return (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 max-w-6xl mx-auto">
+                {feeData.map((f, i) => (
+                  <motion.div key={i} {...fadeUp(i * 0.05)}
+                    className="relative rounded-3xl overflow-hidden group"
+                    style={LIGHT_CARD}
+                    whileHover={{ y: -4, scale: 1.015 }}>
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"
+                      style={{ background:`radial-gradient(ellipse at top left,${colors[i]}12,transparent 65%)` }}/>
+                    <div className="absolute top-0 left-0 right-0 h-[3px] rounded-t-3xl"
+                      style={{ background:`linear-gradient(90deg,transparent,${colors[i]},transparent)` }}/>
+                    <div className="p-5">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0"
+                          style={{ background:`${colors[i]}15`, border:`1.5px solid ${colors[i]}30` }}>
+                          <IndianRupee size={16} style={{ color: colors[i] }}/>
+                        </div>
+                        <h3 className="font-extrabold text-sm text-foreground leading-tight">{f.cls}</h3>
+                      </div>
+                      <div className="space-y-2.5">
+                        <div className="flex items-center justify-between py-2 border-b border-black/5">
+                          <span className="text-xs text-foreground/50 font-medium">{isHindi ? "पंजीकरण + प्रॉस्पेक्टस" : "Registration + Prospectus"}</span>
+                          <span className="text-xs font-bold text-foreground">₹{f.reg.toLocaleString()}</span>
+                        </div>
+                        <div className="flex items-center justify-between py-2 border-b border-black/5">
+                          <span className="text-xs text-foreground/50 font-medium">{isHindi ? "मासिक शुल्क" : "Composite Fee / Month"}</span>
+                          <span className="text-sm font-extrabold" style={{ color: colors[i] }}>₹{f.monthly.toLocaleString()}</span>
+                        </div>
+                        <div className="flex items-center justify-between py-2">
+                          <span className="text-xs text-foreground/50 font-medium">{isHindi ? "प्रवेश शुल्क (नया)" : "Admission (New)"}</span>
+                          {f.admission
+                            ? <span className="text-xs font-bold text-foreground">₹{f.admission.toLocaleString()}</span>
+                            : <span className="px-2 py-0.5 rounded-full text-[10px] font-bold"
+                                style={{ background:`${EMERALD}15`, color:EMERALD, border:`1px solid ${EMERALD}30` }}>N/A</span>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            );
+          })()}
+
+          <motion.div {...fadeUp(0.3)} className="mt-8 flex items-center gap-2 text-xs text-foreground/40 justify-center">
+            <AlertCircle size={12}/>
+            {isHindi
+              ? "शुल्क परिवर्तन के अधीन हैं। विस्तृत जानकारी के लिए स्कूल कार्यालय से संपर्क करें।"
+              : "Fees are subject to change. Contact the school office for complete and updated details."}
           </motion.div>
         </div>
       </section>
