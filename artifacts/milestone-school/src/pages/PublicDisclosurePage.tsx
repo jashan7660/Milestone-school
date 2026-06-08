@@ -519,51 +519,103 @@ export default function PublicDisclosurePage() {
             </p>
           </motion.div>
 
-          <motion.div {...fadeUp(0.1)} className="max-w-4xl mx-auto rounded-3xl overflow-hidden" style={LIGHT_CARD}>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr style={{ background:`linear-gradient(135deg,${NAVY},${NAVY2})` }}>
-                    {(isHindi
-                      ? ["शैक्षणिक वर्ष","कक्षा X पास %","कक्षा XII पास %","कक्षा X टॉपर","कक्षा XII टॉपर"]
-                      : ["Academic Year","Class X Pass %","Class XII Pass %","Class X Topper","Class XII Topper"]
-                    ).map((h, i) => (
-                      <th key={i} className="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-white/70">{h}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {results.map((r, i) => (
-                    <tr key={i} className="border-b border-black/5 last:border-0 hover:bg-black/[0.02] transition-colors">
-                      <td className="px-6 py-5">
-                        <span className="font-bold text-sm px-3 py-1 rounded-full"
-                          style={{ background:`${r.color}12`, color:r.color, border:`1px solid ${r.color}25` }}>
-                          {r.year}
-                        </span>
-                      </td>
-                      <td className="px-6 py-5">
-                        <span className="flex items-center gap-1.5 font-bold text-sm" style={{ color:EMERALD }}>
-                          <CheckCircle2 size={13}/> {r.passX}
-                        </span>
-                      </td>
-                      <td className="px-6 py-5">
-                        <span className="flex items-center gap-1.5 font-bold text-sm" style={{ color:EMERALD }}>
-                          <CheckCircle2 size={13}/> {r.passXII}
-                        </span>
-                      </td>
-                      <td className="px-6 py-5 text-foreground/50 text-xs">{r.topperX}</td>
-                      <td className="px-6 py-5 text-foreground/50 text-xs">{r.topperXII}</td>
+          <div className="max-w-4xl mx-auto space-y-6">
+            {/* Class X */}
+            <motion.div {...fadeUp(0.1)} className="rounded-3xl overflow-hidden" style={LIGHT_CARD}>
+              <div className="px-6 py-4 flex items-center gap-3" style={{ background:`linear-gradient(135deg,${NAVY},${NAVY2})` }}>
+                <GraduationCap size={18} color={CYAN}/>
+                <h3 className="font-bold text-white text-base">{isHindi ? "परिणाम — कक्षा X" : "Result Class: X"}</h3>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr style={{ background:"#f1f5f9" }}>
+                      {(isHindi
+                        ? ["क्र.सं.","वर्ष","पंजीकृत छात्र","उत्तीर्ण छात्र","उत्तीर्ण %"]
+                        : ["Sr. No.","Year","No. of Registered Students","No. of Students Passed","Pass %"]
+                      ).map((h, i) => (
+                        <th key={i} className="px-5 py-3 text-left text-xs font-bold uppercase tracking-wider text-foreground/50">{h}</th>
+                      ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <div className="px-6 py-4 flex items-center gap-2 text-xs text-foreground/40 border-t border-black/5">
+                  </thead>
+                  <tbody>
+                    {resultsX.map((r) => {
+                      const pct = Math.round((r.passed / r.registered) * 100);
+                      return (
+                        <tr key={r.sno} className="border-b border-black/5 last:border-0 hover:bg-black/[0.02] transition-colors">
+                          <td className="px-5 py-4 font-bold text-foreground/40 text-center">{r.sno}</td>
+                          <td className="px-5 py-4">
+                            <span className="font-bold text-sm px-3 py-1 rounded-full"
+                              style={{ background:`${r.color}12`, color:r.color, border:`1px solid ${r.color}25` }}>
+                              {r.year}
+                            </span>
+                          </td>
+                          <td className="px-5 py-4 font-semibold text-foreground/70">{r.registered}</td>
+                          <td className="px-5 py-4 font-semibold text-foreground/70">{r.passed}</td>
+                          <td className="px-5 py-4">
+                            <span className="flex items-center gap-1.5 font-bold text-sm" style={{ color: pct === 100 ? EMERALD : BLUE }}>
+                              <CheckCircle2 size={13}/> {pct}%
+                            </span>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </motion.div>
+
+            {/* Class XII */}
+            <motion.div {...fadeUp(0.2)} className="rounded-3xl overflow-hidden" style={LIGHT_CARD}>
+              <div className="px-6 py-4 flex items-center gap-3" style={{ background:`linear-gradient(135deg,${NAVY},${NAVY2})` }}>
+                <GraduationCap size={18} color={GOLD}/>
+                <h3 className="font-bold text-white text-base">{isHindi ? "परिणाम — कक्षा XII" : "Result Class: XII"}</h3>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr style={{ background:"#f1f5f9" }}>
+                      {(isHindi
+                        ? ["क्र.सं.","वर्ष","पंजीकृत छात्र","उत्तीर्ण छात्र","उत्तीर्ण %"]
+                        : ["Sr. No.","Year","No. of Registered Students","No. of Students Passed","Pass %"]
+                      ).map((h, i) => (
+                        <th key={i} className="px-5 py-3 text-left text-xs font-bold uppercase tracking-wider text-foreground/50">{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {resultsXII.map((r) => {
+                      const pct = Math.round((r.passed / r.registered) * 100);
+                      return (
+                        <tr key={r.sno} className="border-b border-black/5 last:border-0 hover:bg-black/[0.02] transition-colors">
+                          <td className="px-5 py-4 font-bold text-foreground/40 text-center">{r.sno}</td>
+                          <td className="px-5 py-4">
+                            <span className="font-bold text-sm px-3 py-1 rounded-full"
+                              style={{ background:`${r.color}12`, color:r.color, border:`1px solid ${r.color}25` }}>
+                              {r.year}
+                            </span>
+                          </td>
+                          <td className="px-5 py-4 font-semibold text-foreground/70">{r.registered}</td>
+                          <td className="px-5 py-4 font-semibold text-foreground/70">{r.passed}</td>
+                          <td className="px-5 py-4">
+                            <span className="flex items-center gap-1.5 font-bold text-sm" style={{ color: pct === 100 ? EMERALD : BLUE }}>
+                              <CheckCircle2 size={13}/> {pct}%
+                            </span>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </motion.div>
+
+            <div className="flex items-center gap-2 text-xs text-foreground/40 px-2">
               <AlertCircle size={12}/> {isHindi
                 ? "विस्तृत परिणाम विद्यालय कार्यालय में उपलब्ध हैं।"
                 : "Detailed result records available at the school office."}
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
