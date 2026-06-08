@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import {
-  School, MapPin, Phone, Mail, FileText, ShieldCheck, Flame,
-  Droplets, Building2, Users, GraduationCap, BookOpen, BarChart3,
+  School, MapPin, FileText, ShieldCheck, Flame,
+  Droplets, Building2, Users, GraduationCap, BarChart3,
   CheckCircle2, Download, Landmark, Award, ClipboardList, Sparkles,
   AlertCircle, ExternalLink,
 } from "lucide-react";
@@ -619,47 +619,67 @@ export default function PublicDisclosurePage() {
         </div>
       </section>
 
-      {/* ══ FEE DISCLOSURE NOTE ══════════════════════════════ */}
-      <section className="py-16" style={{ background:"#f8fafc" }}>
+      {/* ══ F. DOWNLOADS ══════════════════════════════════════ */}
+      <section className="py-24" style={{ background:"#f8fafc" }}>
         <div className="container mx-auto px-4 md:px-6">
-          <motion.div {...fadeUp()} className="max-w-4xl mx-auto p-8 md:p-10 rounded-3xl text-center relative overflow-hidden"
-            style={{ background:`linear-gradient(135deg,${NAVY} 0%,${NAVY2} 100%)` }}>
-            <div className="absolute inset-0 pointer-events-none opacity-[0.04]"
-              style={{ backgroundImage:"linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px)", backgroundSize:"40px 40px" }}/>
-            {[
-              { w:340,h:340, x:"-5%", y:"-30%", c:CYAN,   dur:10 },
-              { w:280,h:280, x:"70%", y:"40%",  c:EMERALD,dur:13 },
-            ].map((o,i) => (
-              <motion.div key={i} className="absolute rounded-full pointer-events-none"
-                style={{ width:o.w,height:o.h,left:o.x,top:o.y,background:`radial-gradient(circle,${o.c}20,transparent 70%)` }}
-                animate={{ scale:[1,1.2,1],opacity:[0.3,0.6,0.3] }}
-                transition={{ repeat:Infinity,duration:o.dur,ease:"easeInOut" }}/>
-            ))}
-            <div className="relative z-10">
-              <div className="w-16 h-16 mx-auto rounded-3xl flex items-center justify-center mb-5"
-                style={{ background:"rgba(255,255,255,0.08)", border:"1px solid rgba(255,255,255,0.15)" }}>
-                <BookOpen size={28} color={CYAN}/>
-              </div>
-              <h3 className="font-serif font-extrabold text-white text-2xl md:text-3xl mb-4">
-                {isHindi ? "शुल्क संरचना" : "Fee Structure"}
-              </h3>
-              <p className="text-white/55 text-base leading-relaxed mb-8 max-w-xl mx-auto">
-                {isHindi
-                  ? "कक्षा-वार शुल्क विवरण, मासिक और वार्षिक दोनों, स्कूल कार्यालय में उपलब्ध है। अधिक जानकारी के लिए हमसे संपर्क करें।"
-                  : "Class-wise fee details, both monthly and annual, are available at the school office. Please contact us for complete information."}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <a href="tel:9812574766"
-                  className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full font-semibold text-sm transition-all duration-300 hover:-translate-y-1"
-                  style={{ background:`linear-gradient(135deg,${EMERALD},#059669)`, color:"white", boxShadow:`0 6px 24px ${EMERALD}40` }}>
-                  <Phone size={14}/> {isHindi ? "9812574766 कॉल करें" : "Call 9812574766"}
-                </a>
-                <a href="mailto:themilestonektl@gmail.com"
-                  className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full font-medium text-sm transition-all duration-300 hover:-translate-y-1"
-                  style={{ ...GLASS, color:"rgba(255,255,255,0.75)" }}>
-                  <Mail size={14}/> {isHindi ? "ईमेल करें" : "Email Us"}
-                </a>
-              </div>
+          <motion.div {...fadeUp()} className="text-center mb-14">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-5"
+              style={{ background:`rgba(6,182,212,0.1)`, color:"#0891b2", border:`1.5px solid rgba(6,182,212,0.3)` }}>
+              <Download size={11}/> {isHindi ? "अनुभाग F" : "Section F"}
+            </span>
+            <h2 className="text-3xl md:text-4xl font-serif font-extrabold text-foreground leading-tight">
+              {isHindi ? "डाउनलोड " : "Downloads & "}
+              <span style={{ background:`linear-gradient(90deg,${CYAN},${BLUE})`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>
+                {isHindi ? "एवं जानकारी" : "Information"}
+              </span>
+            </h2>
+          </motion.div>
+
+          <motion.div {...fadeUp(0.1)} className="max-w-4xl mx-auto rounded-3xl overflow-hidden" style={LIGHT_CARD}>
+            <div className="p-6 md:p-8">
+              <SectionHeader letter="F" title={isHindi ? "डाउनलोड एवं जानकारी" : "Downloads & Information"} color={CYAN} icon={<Download size={18}/>}/>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr style={{ background:`#f1f5f9` }}>
+                    <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-foreground/50 w-16">S.NO.</th>
+                    <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-foreground/50">INFORMATION</th>
+                    <th className="px-4 py-3 text-center text-xs font-bold uppercase tracking-wider text-foreground/50 w-28">DOWNLOAD</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    {
+                      sno: 1,
+                      info: isHindi ? "वार्षिक शैक्षणिक कैलेंडर" : "Annual Academic Calendar",
+                      href: "/annual-academic-calendar.pdf",
+                    },
+                    {
+                      sno: 2,
+                      info: isHindi ? "विद्यालय प्रबंधन समिति (SMC) की सूची" : "List of School Management Committee (SMC)",
+                      href: "/smc-list.pdf",
+                    },
+                    {
+                      sno: 3,
+                      info: isHindi ? "अभिभावक शिक्षक संघ (PTA) सदस्यों की सूची" : "List of Parents Teachers Association (PTA) Members",
+                      href: "/pta-members.pdf",
+                    },
+                  ].map((row) => (
+                    <tr key={row.sno} className="border-b border-black/5 last:border-0 hover:bg-blue-50/40 transition-colors">
+                      <td className="px-4 py-4 text-sm font-bold text-foreground/50 text-center">{row.sno}.</td>
+                      <td className="px-4 py-4 text-sm text-foreground/70 uppercase tracking-wide font-medium">{row.info}</td>
+                      <td className="px-4 py-4 text-center">
+                        <a href={row.href} download
+                          className="inline-flex items-center justify-center w-10 h-10 rounded-full text-white transition-all duration-200 hover:scale-110 hover:shadow-lg"
+                          style={{ background:`linear-gradient(135deg,${NAVY},${NAVY2})`, boxShadow:`0 4px 14px rgba(7,27,58,0.35)` }}>
+                          <Download size={16}/>
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </motion.div>
         </div>
