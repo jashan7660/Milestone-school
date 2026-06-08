@@ -184,59 +184,73 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.65, delay: 1.0 }}
-                className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto"
+                className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
               >
-                {/* Apply Now — primary CTA */}
+                {/* ── Apply Now ── */}
                 <motion.button
                   onClick={() => { setLocation("/admissions"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-                  whileHover={{ y: -3, scale: 1.04 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="group relative inline-flex items-center justify-center gap-2.5 px-8 py-4 sm:px-10 sm:py-4.5 rounded-full font-bold text-white text-sm sm:text-base overflow-hidden w-full sm:w-auto"
-                  style={{
-                    background: "linear-gradient(135deg, #15803d 0%, #22c55e 55%, #4ade80 100%)",
-                    boxShadow: "0 8px 32px rgba(34,197,94,0.55), 0 0 0 1px rgba(74,222,128,0.3)",
+                  whileHover={{ scale: 1.07 }}
+                  whileTap={{ scale: 0.95 }}
+                  animate={{
+                    boxShadow: [
+                      "0 0 18px 4px rgba(74,222,128,0.55), 0 6px 28px rgba(34,197,94,0.45)",
+                      "0 0 38px 12px rgba(74,222,128,0.80), 0 8px 40px rgba(34,197,94,0.65)",
+                      "0 0 18px 4px rgba(74,222,128,0.55), 0 6px 28px rgba(34,197,94,0.45)",
+                    ],
                   }}
+                  transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
+                  className="relative inline-flex items-center justify-center gap-3 px-9 py-4 rounded-full font-extrabold text-white text-base tracking-wide overflow-hidden w-full sm:w-auto"
+                  style={{ background: "linear-gradient(135deg,#14532d 0%,#16a34a 40%,#4ade80 100%)" }}
                 >
-                  {/* shimmer sweep */}
-                  <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"
-                    style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent)" }} />
-                  {/* pulsing outer glow */}
+                  {/* sweeping shimmer — always running */}
                   <motion.span
-                    className="absolute inset-0 rounded-full pointer-events-none"
-                    animate={{ boxShadow: ["0 0 0 0px rgba(74,222,128,0.5)", "0 0 0 10px rgba(74,222,128,0)"] }}
-                    transition={{ repeat: Infinity, duration: 1.8, ease: "easeOut" }}
+                    className="absolute inset-0 pointer-events-none"
+                    style={{ background: "linear-gradient(105deg,transparent 35%,rgba(255,255,255,0.28) 50%,transparent 65%)" }}
+                    animate={{ x: ["-120%", "200%"] }}
+                    transition={{ repeat: Infinity, duration: 2.4, ease: "linear", repeatDelay: 0.6 }}
                   />
-                  <Sparkles size={15} className="flex-shrink-0 transition-transform duration-300 group-hover:rotate-12" />
-                  <span className="relative z-10">{t.apply}</span>
-                  <ArrowRight size={15} className="flex-shrink-0 relative z-10 transition-transform duration-300 group-hover:translate-x-1.5" />
+                  <motion.span
+                    animate={{ rotate: [0, 20, -10, 20, 0], scale: [1, 1.25, 1, 1.25, 1] }}
+                    transition={{ repeat: Infinity, duration: 2.8, ease: "easeInOut" }}
+                  >
+                    <Sparkles size={18} />
+                  </motion.span>
+                  <span className="relative z-10 text-base sm:text-lg">{t.apply}</span>
+                  <motion.span
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
+                  >
+                    <ArrowRight size={18} />
+                  </motion.span>
                 </motion.button>
 
-                {/* Public Disclosure — secondary CTA */}
-                <motion.button
+                {/* ── Public Disclosure — spinning gradient ring ── */}
+                <motion.div
+                  whileHover={{ scale: 1.07 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="relative rounded-full p-[2px] cursor-pointer w-full sm:w-auto"
                   onClick={() => { setLocation("/public-disclosure"); window.scrollTo({ top: 0 }); }}
-                  whileHover={{ y: -3, scale: 1.04 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="group relative inline-flex items-center justify-center gap-2.5 px-8 py-4 sm:px-10 sm:py-4.5 rounded-full font-semibold text-white text-sm sm:text-base overflow-hidden w-full sm:w-auto"
-                  style={{
-                    background: "rgba(255,255,255,0.07)",
-                    backdropFilter: "blur(14px)",
-                  }}
+                  style={{ background: "conic-gradient(from 0deg,#3b82f6,#8b5cf6,#06b6d4,#3b82f6)" }}
                 >
-                  {/* animated border */}
-                  <span className="absolute inset-0 rounded-full pointer-events-none"
-                    style={{ border: "1.5px solid rgba(255,255,255,0.28)" }} />
+                  {/* spinning ring */}
                   <motion.span
                     className="absolute inset-0 rounded-full pointer-events-none"
-                    style={{ border: "1.5px solid rgba(96,165,250,0)" }}
-                    animate={{ borderColor: ["rgba(96,165,250,0)", "rgba(96,165,250,0.6)", "rgba(96,165,250,0)"] }}
-                    transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
+                    style={{ background: "conic-gradient(from 0deg,#3b82f6,#8b5cf6,#06b6d4,#ec4899,#3b82f6)" }}
+                    animate={{ rotate: 360 }}
+                    transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
                   />
-                  {/* hover fill */}
-                  <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    style={{ background: "rgba(255,255,255,0.10)" }} />
-                  <FileText size={15} className="flex-shrink-0 relative z-10 opacity-80 group-hover:opacity-100 transition-opacity" style={{ color: "#93c5fd" }} />
-                  <span className="relative z-10">{t.discover}</span>
-                </motion.button>
+                  {/* inner dark pill */}
+                  <div className="relative z-10 inline-flex items-center justify-center gap-3 px-9 py-4 rounded-full font-bold text-white text-base w-full"
+                    style={{ background: "rgba(10,18,40,0.88)", backdropFilter: "blur(16px)" }}>
+                    <motion.span
+                      animate={{ y: [0, -3, 0] }}
+                      transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+                    >
+                      <FileText size={18} style={{ color: "#7dd3fc" }} />
+                    </motion.span>
+                    <span className="text-base sm:text-lg">{t.discover}</span>
+                  </div>
+                </motion.div>
               </motion.div>
             </div>
           </motion.div>
