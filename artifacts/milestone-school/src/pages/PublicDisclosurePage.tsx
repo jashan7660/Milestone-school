@@ -140,10 +140,16 @@ export default function PublicDisclosurePage() {
     { icon: <ClipboardList size={20} color={PURPLE}/>,title:"DEO Self-Certification",desc:"Copy of self-certification submitted to DEO — student safety assurance.",status: "available" as const,color: PURPLE, href: "/deo-self-certification.pdf"  },
   ];
 
-  const results = [
-    { year: "2024–25", passX: "100%", passXII: "100%", topperX: "—", topperXII: "—", color: EMERALD },
-    { year: "2023–24", passX: "100%", passXII: "100%", topperX: "—", topperXII: "—", color: BLUE    },
-    { year: "2022–23", passX: "100%", passXII: "100%", topperX: "—", topperXII: "—", color: PURPLE  },
+  const resultsX = [
+    { sno: 1, year: "2021-22", registered: 27, passed: 26, color: PURPLE  },
+    { sno: 2, year: "2022-23", registered: 35, passed: 35, color: BLUE    },
+    { sno: 3, year: "2023-24", registered: 49, passed: 49, color: EMERALD },
+  ];
+
+  const resultsXII = [
+    { sno: 1, year: "2021-22", registered: 47, passed: 43, color: PURPLE  },
+    { sno: 2, year: "2022-23", registered: 41, passed: 37, color: BLUE    },
+    { sno: 3, year: "2023-24", registered: 67, passed: 61, color: EMERALD },
   ];
 
   const floatingEmojis = ["📋","🏫","📜","🎓","🏆","📊","⚖️","🔍"];
