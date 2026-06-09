@@ -344,11 +344,21 @@ export default function Navbar() {
                 </div>
               </div>
 
-              <button onClick={() => navigate("/admissions")}
-                className="mt-3 w-full flex items-center justify-center gap-2 h-11 rounded-xl text-sm font-bold text-white relative overflow-hidden"
-                style={{ background: `linear-gradient(135deg, ${palette.primary}, ${palette.secondary})`, boxShadow: `0 4px 16px ${palette.primary}55` }}>
-                <GraduationCap size={16} /> {t.mobileAdmissions}
-              </button>
+              <motion.div onClick={() => navigate("/admissions")}
+                whileHover={{ scale:1.03 }} whileTap={{ scale:0.96 }}
+                className="mt-3 w-full relative rounded-xl cursor-pointer"
+                style={{ padding:"1.5px" }}>
+                <div className="absolute inset-0 rounded-xl overflow-hidden">
+                  <motion.div className="absolute"
+                    style={{ width:"200%", height:"200%", top:"-50%", left:"-50%",
+                      background:"conic-gradient(from 0deg,#16a34a,#4ade80,#f59e0b,#fbbf24,#22c55e,#16a34a)" }}
+                    animate={{ rotate:360 }} transition={{ repeat:Infinity, duration:3, ease:"linear" }}/>
+                </div>
+                <div className="relative z-10 w-full flex items-center justify-center gap-2 h-11 rounded-xl text-sm font-bold text-white"
+                  style={{ background:"rgba(6,10,28,0.92)", backdropFilter:"blur(16px)" }}>
+                  <GraduationCap size={16} /> {t.mobileAdmissions}
+                </div>
+              </motion.div>
 
               <div className="mt-4 pt-4 border-t border-border/50 flex flex-col gap-2 text-xs text-muted-foreground px-1">
                 <a href="tel:+919812574766" className="flex items-center gap-2 hover:text-foreground transition-colors"><Phone size={12} /> +91 98125-74766</a>
