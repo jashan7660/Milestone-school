@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Trophy, Medal, Star, Award, GraduationCap, Users,
-  X, ZoomIn, Sparkles, Target, Flame, Crown,
+  X, ZoomIn, Sparkles, Target, Flame, Crown, ArrowRight,
 } from "lucide-react";
 import Footer from "@/components/layout/Footer";
 import { useLanguage } from "@/context/LanguageContext";
@@ -460,10 +460,23 @@ export default function AchievementsPage() {
                 ? "माइलस्टोन में हर छात्र को उत्कृष्टता प्राप्त करने के लिए प्रेरित और समर्थित किया जाता है।"
                 : "At The Milestone, every student is inspired and supported to achieve their own excellence — academic or beyond."}
             </p>
-            <a href="/admissions"
-              className="inline-flex items-center gap-2.5 px-9 py-4 rounded-full font-bold text-white text-sm shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
-              style={{ background: "linear-gradient(135deg,#F59E0B,#EF4444)" }}>
-              🎓 {isHindi ? "आज ही प्रवेश लें" : "Enroll Your Child Today"} →
+            <a href="/admissions" style={{ textDecoration:"none" }}>
+              <motion.div whileHover={{ scale:1.05 }} whileTap={{ scale:0.96 }}
+                className="relative rounded-full cursor-pointer inline-block" style={{ padding:"2.5px" }}>
+                <div className="absolute inset-0 rounded-full overflow-hidden">
+                  <motion.div className="absolute"
+                    style={{ width:"200%", height:"200%", top:"-50%", left:"-50%",
+                      background:"conic-gradient(from 0deg,#F59E0B,#fbbf24,#EF4444,#f97316,#fbbf24,#F59E0B)" }}
+                    animate={{ rotate:360 }} transition={{ repeat:Infinity, duration:3, ease:"linear" }}/>
+                </div>
+                <div className="relative z-10 inline-flex items-center gap-2.5 px-9 py-4 rounded-full font-bold text-white text-sm"
+                  style={{ background:"rgba(6,10,28,0.92)", backdropFilter:"blur(16px)" }}>
+                  🎓 {isHindi ? "आज ही प्रवेश लें" : "Enroll Your Child Today"}
+                  <motion.span animate={{ x:[0,4,0] }} transition={{ repeat:Infinity, duration:1.3, ease:"easeInOut" }}>
+                    <ArrowRight size={15} style={{ color:"#fbbf24" }}/>
+                  </motion.span>
+                </div>
+              </motion.div>
             </a>
           </motion.div>
         </div>

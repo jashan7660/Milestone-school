@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Footer from "@/components/layout/Footer";
-import { X, ZoomIn, Play, Camera, Trophy, Users, Sparkles, Grid3X3, Video, Microscope } from "lucide-react";
+import { X, ZoomIn, Play, Camera, Trophy, Users, Sparkles, Grid3X3, Video, Microscope, ArrowRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
 import img1 from "@assets/image_1777545590594.png";
@@ -535,10 +535,23 @@ export default function GalleryPage() {
             <h2 className="text-2xl md:text-3xl font-serif font-extrabold text-slate-800 mb-6">
               {isHindi ? "आपके बच्चे की यादें यहाँ बनेंगी 🌟" : "Your child's best memories start here 🌟"}
             </h2>
-            <a href="/admissions"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-white text-sm shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
-              style={{ background: "linear-gradient(135deg, #2563EB, #10B981)" }}>
-              {isHindi ? "प्रवेश के लिए आवेदन करें" : "Apply for Admissions"} →
+            <a href="/admissions" style={{ textDecoration:"none" }}>
+              <motion.div whileHover={{ scale:1.05 }} whileTap={{ scale:0.96 }}
+                className="relative rounded-full cursor-pointer inline-block" style={{ padding:"2.5px" }}>
+                <div className="absolute inset-0 rounded-full overflow-hidden">
+                  <motion.div className="absolute"
+                    style={{ width:"200%", height:"200%", top:"-50%", left:"-50%",
+                      background:"conic-gradient(from 0deg,#2563eb,#06b6d4,#10b981,#22d3ee,#06b6d4,#2563eb)" }}
+                    animate={{ rotate:360 }} transition={{ repeat:Infinity, duration:3, ease:"linear" }}/>
+                </div>
+                <div className="relative z-10 inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full font-bold text-white text-sm"
+                  style={{ background:"rgba(6,10,28,0.92)", backdropFilter:"blur(16px)" }}>
+                  {isHindi ? "प्रवेश के लिए आवेदन करें" : "Apply for Admissions"}
+                  <motion.span animate={{ x:[0,4,0] }} transition={{ repeat:Infinity, duration:1.3, ease:"easeInOut" }}>
+                    <ArrowRight size={15} style={{ color:"#22d3ee" }}/>
+                  </motion.span>
+                </div>
+              </motion.div>
             </a>
           </motion.div>
         </div>

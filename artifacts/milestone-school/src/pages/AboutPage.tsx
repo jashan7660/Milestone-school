@@ -581,12 +581,22 @@ export default function AboutPage() {
 
             <motion.div {...fadeUp(0.4)} className="text-center">
               <Link href="/academics">
-                <Button size="lg"
-                  className="rounded-full px-12 py-6 text-base font-bold shadow-2xl hover:-translate-y-1 transition-all duration-300"
-                  style={{ background: "linear-gradient(135deg,#10B981,#059669)", color: "white", border: "1px solid rgba(16,185,129,0.4)" }}>
-                  {isHindi ? "शैक्षणिक देखें" : "Explore Academics"}
-                  <ArrowRight className="ml-2 h-5 w-5"/>
-                </Button>
+                <motion.div whileHover={{ scale:1.05 }} whileTap={{ scale:0.96 }}
+                  className="relative rounded-full cursor-pointer inline-block" style={{ padding:"2.5px" }}>
+                  <div className="absolute inset-0 rounded-full overflow-hidden">
+                    <motion.div className="absolute"
+                      style={{ width:"200%", height:"200%", top:"-50%", left:"-50%",
+                        background:"conic-gradient(from 0deg,#10b981,#34d399,#059669,#6ee7b7,#34d399,#10b981)" }}
+                      animate={{ rotate:360 }} transition={{ repeat:Infinity, duration:3, ease:"linear" }}/>
+                  </div>
+                  <div className="relative z-10 inline-flex items-center gap-2.5 px-12 py-4 rounded-full font-bold text-white text-base"
+                    style={{ background:"rgba(6,10,28,0.92)", backdropFilter:"blur(16px)" }}>
+                    {isHindi ? "शैक्षणिक देखें" : "Explore Academics"}
+                    <motion.span animate={{ x:[0,4,0] }} transition={{ repeat:Infinity, duration:1.3, ease:"easeInOut" }}>
+                      <ArrowRight size={18} style={{ color:"#34d399" }}/>
+                    </motion.span>
+                  </div>
+                </motion.div>
               </Link>
             </motion.div>
           </div>

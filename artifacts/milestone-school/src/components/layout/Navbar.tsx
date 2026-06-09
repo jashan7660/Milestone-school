@@ -231,18 +231,26 @@ export default function Navbar() {
           <div className="flex items-center gap-1.5">
 
             {/* Admissions CTA */}
-            <button onClick={() => navigate("/admissions")}
-              className="hidden md:flex items-center gap-2 px-5 h-9 rounded-full text-sm font-bold text-white relative overflow-hidden group"
-              style={{ background: `linear-gradient(135deg, ${palette.primary} 0%, ${palette.secondary} 100%)`, boxShadow: `0 4px 20px ${palette.primary}66` }}
-            >
-              <span className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-white/25 to-transparent" />
-              <GraduationCap size={14} />
-              {t.admissionsOpen}
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-white" />
-              </span>
-            </button>
+            <motion.div onClick={() => navigate("/admissions")}
+              whileHover={{ scale:1.06 }} whileTap={{ scale:0.95 }}
+              className="hidden md:flex relative rounded-full cursor-pointer"
+              style={{ padding:"1.5px" }}>
+              <div className="absolute inset-0 rounded-full overflow-hidden">
+                <motion.div className="absolute"
+                  style={{ width:"200%", height:"200%", top:"-50%", left:"-50%",
+                    background:"conic-gradient(from 0deg,#16a34a,#4ade80,#f59e0b,#fbbf24,#22c55e,#16a34a)" }}
+                  animate={{ rotate:360 }} transition={{ repeat:Infinity, duration:3, ease:"linear" }}/>
+              </div>
+              <div className="relative z-10 flex items-center gap-2 px-5 h-9 rounded-full text-sm font-bold text-white"
+                style={{ background:"rgba(6,10,28,0.92)", backdropFilter:"blur(16px)" }}>
+                <GraduationCap size={14} />
+                {t.admissionsOpen}
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400" />
+                </span>
+              </div>
+            </motion.div>
 
             {/* Hamburger */}
             <button className="lg:hidden p-2 rounded-lg text-foreground hover:bg-muted transition-colors"

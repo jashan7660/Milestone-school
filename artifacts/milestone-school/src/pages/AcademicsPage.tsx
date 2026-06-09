@@ -421,12 +421,22 @@ export default function AcademicsPage() {
               </div>
 
               <Link href="/achievements">
-                <motion.button whileHover={{ scale:1.04, y:-2 }} whileTap={{ scale:0.97 }}
-                  className="inline-flex items-center gap-2 px-10 py-4 rounded-full font-bold text-white shadow-lg relative overflow-hidden"
-                  style={{ background:`linear-gradient(135deg,${EMERALD},${BLUE})`, boxShadow:`0 8px 30px rgba(16,185,129,0.3)` }}>
-                  <span className="relative z-10">{isHindi ? "सभी उपलब्धियां देखें" : "See All Achievements"}</span>
-                  <ArrowRight size={16} className="relative z-10"/>
-                </motion.button>
+                <motion.div whileHover={{ scale:1.05 }} whileTap={{ scale:0.96 }}
+                  className="relative rounded-full cursor-pointer inline-block" style={{ padding:"2.5px" }}>
+                  <div className="absolute inset-0 rounded-full overflow-hidden">
+                    <motion.div className="absolute"
+                      style={{ width:"200%", height:"200%", top:"-50%", left:"-50%",
+                        background:`conic-gradient(from 0deg,${EMERALD},${CYAN},${BLUE},${EMERALD},${CYAN},${EMERALD})` }}
+                      animate={{ rotate:360 }} transition={{ repeat:Infinity, duration:3, ease:"linear" }}/>
+                  </div>
+                  <div className="relative z-10 inline-flex items-center gap-2.5 px-10 py-4 rounded-full font-bold text-white text-sm"
+                    style={{ background:"rgba(6,10,28,0.92)", backdropFilter:"blur(16px)" }}>
+                    {isHindi ? "सभी उपलब्धियां देखें" : "See All Achievements"}
+                    <motion.span animate={{ x:[0,4,0] }} transition={{ repeat:Infinity, duration:1.3, ease:"easeInOut" }}>
+                      <ArrowRight size={15} style={{ color:`${EMERALD}` }}/>
+                    </motion.span>
+                  </div>
+                </motion.div>
               </Link>
             </div>
           </motion.div>
