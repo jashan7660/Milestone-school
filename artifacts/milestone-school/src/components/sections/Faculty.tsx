@@ -155,85 +155,57 @@ export default function Faculty() {
           </div>
         </motion.div>
 
-        {/* ── Faculty Video ── */}
-        <motion.div {...fadeUp(0.08)} className="mb-12">
-          <div className="relative rounded-3xl overflow-hidden shadow-2xl"
-            style={{ border: "1.5px solid rgba(37,99,235,0.15)" }}>
-            <div className="h-1.5" style={{ background: "linear-gradient(90deg,#2563eb,#0891b2,#10b981)" }} />
-            <div className="relative bg-black" style={{ aspectRatio: "16/9", maxHeight: 480 }}>
-              <video
-                src="/faculty-video.mp4"
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="w-full h-full object-cover pointer-events-none select-none"
-                style={{ display: "block" }}
-              />
-            </div>
-          </div>
-          {/* Label — below the frame, lower-left */}
-          <div className="flex justify-start mt-3 pl-1">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest"
-              style={{ background: "rgba(37,99,235,0.10)", color: "#2563eb", border: "1px solid rgba(37,99,235,0.22)" }}>
-              <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse inline-block" />
-              {isHindi ? "हमारे शिक्षक" : "Our Faculty"}
-            </span>
-          </div>
-        </motion.div>
+        {/* ── Portrait cards row ── */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-14">
+          {t.team.slice(1).map((member, i) => {
+            const meta = MEMBERS[i + 1];
+            return (
+              <motion.div key={i} {...fadeUp(0.1 + i * 0.08)}
+                whileHover={{ y: -10, scale: 1.02 }}
+                className="group relative rounded-3xl overflow-hidden flex flex-col cursor-default"
+                style={{ background: "white", boxShadow: "0 4px 24px rgba(0,0,0,0.07)", border: "1px solid rgba(0,0,0,0.07)", transition: "box-shadow 0.3s, transform 0.3s" }}>
 
-        {/* ── Staff Name Cards ── */}
-        {(() => {
-          const staff = [
-            { name: "Ms. Ekta Sukhija",     role: "Coordinator Kindergarten",  initials: "ES", accent: "#2563eb", grad: "from-blue-600 to-indigo-600"    },
-            { name: "Ms. Anushila Pathak",  role: "Academic Head — Class 1–2", initials: "AP", accent: "#0891b2", grad: "from-cyan-600 to-blue-600"       },
-            { name: "Ms. Bhavana",          role: "Academic Head — Class 3–5", initials: "BH", accent: "#10b981", grad: "from-emerald-500 to-teal-600"    },
-            { name: "Ms. Sh",               role: "Academic Head — Class 6–8", initials: "SH", accent: "#7c3aed", grad: "from-violet-600 to-purple-600"   },
-            { name: "Ms. Poonam Vashisth",  role: "Academic Head — Class 9–12",initials: "PV", accent: "#db2777", grad: "from-pink-600 to-rose-600"       },
-            { name: "Ms. Shalu Grover",     role: "Event Head",                initials: "SG", accent: "#d97706", grad: "from-amber-500 to-orange-500"    },
-          ];
-          return (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-14">
-              {staff.map((s, i) => (
-                <motion.div key={i} {...fadeUp(0.1 + i * 0.07)}
-                  whileHover={{ y: -8, scale: 1.02 }}
-                  className="group relative rounded-3xl overflow-hidden cursor-default"
-                  style={{ background: "white", boxShadow: "0 4px 24px rgba(0,0,0,0.07)", border: `1px solid ${s.accent}22`, transition: "box-shadow 0.3s,transform 0.3s" }}>
+                {/* Colored top accent line */}
+                <div className="h-1 w-full" style={{ background: `linear-gradient(90deg,${meta.accentHex},${meta.accentHex}88)` }}/>
 
-                  {/* Top gradient bar */}
-                  <div className="h-1.5 w-full" style={{ background: `linear-gradient(90deg,${s.accent},${s.accent}77)` }} />
-
-                  <div className="p-7 flex flex-col items-center text-center">
-                    {/* Initials avatar */}
-                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${s.grad} flex items-center justify-center mb-5 shadow-lg`}>
-                      <span className="text-white font-extrabold text-xl tracking-wide">{s.initials}</span>
+                {/* Photo */}
+                <div className="relative overflow-hidden flex-shrink-0" style={{ height: 300 }}>
+                  <img src={meta.image} alt={member.name}
+                    className="w-full h-full transition-transform duration-700 group-hover:scale-105"
+                    style={{ objectFit: "cover", objectPosition: meta.pos }}/>
+                  {/* Bottom gradient */}
+                  <div className="absolute inset-0 pointer-events-none"
+                    style={{ background: "linear-gradient(to top,rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.15) 50%,transparent 100%)" }}/>
+                  {/* Role pill */}
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-white shadow-md"
+                      style={{ background: `linear-gradient(135deg,${meta.accentHex},${meta.accentHex}cc)`, backdropFilter: "blur(8px)" }}>
+                      <span className="w-1.5 h-1.5 rounded-full bg-white/80 inline-block"/>
+                      {member.role}
                     </div>
-
-                    {/* Name */}
-                    <h3 className="text-lg font-serif font-extrabold text-foreground mb-2 leading-snug group-hover:transition-colors duration-300"
-                      style={{ color: "var(--foreground)" }}>
-                      {s.name}
-                    </h3>
-
-                    {/* Role pill */}
-                    <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest"
-                      style={{ background: `${s.accent}12`, color: s.accent, border: `1px solid ${s.accent}30` }}>
-                      <span className="w-1.5 h-1.5 rounded-full inline-block" style={{ background: s.accent }} />
-                      {s.role}
-                    </span>
-
-                    {/* Bottom accent line */}
-                    <div className="mt-5 h-0.5 w-full rounded-full" style={{ background: `linear-gradient(to right,${s.accent}40,transparent)` }} />
                   </div>
+                </div>
 
-                  {/* Hover glow */}
-                  <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                    style={{ boxShadow: `inset 0 0 0 1.5px ${s.accent}35, 0 16px 48px ${s.accent}14` }} />
-                </motion.div>
-              ))}
-            </div>
-          );
-        })()}
+                {/* Info */}
+                <div className="p-5 flex flex-col flex-1">
+                  <h3 className="text-base font-serif font-extrabold text-foreground mb-2 group-hover:text-primary transition-colors duration-300 leading-snug">
+                    {member.name}
+                  </h3>
+                  <p className="text-foreground/50 text-sm leading-relaxed flex-1 font-light">{member.bio}</p>
+                  {/* Bottom accent bar */}
+                  <div className="mt-4 flex items-center gap-2">
+                    <div className="h-0.5 rounded-full flex-1" style={{ background: `linear-gradient(to right,${meta.accentHex}50,transparent)` }}/>
+                    <div className="w-2 h-2 rounded-full" style={{ background: meta.accentHex }}/>
+                  </div>
+                </div>
+
+                {/* Hover glow */}
+                <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none"
+                  style={{ boxShadow: `inset 0 0 0 1.5px ${meta.accentHex}40, 0 20px 60px ${meta.accentHex}18` }}/>
+              </motion.div>
+            );
+          })}
+        </div>
 
         {/* ── CTA ── */}
         <motion.div {...fadeUp(0.35)} className="text-center">

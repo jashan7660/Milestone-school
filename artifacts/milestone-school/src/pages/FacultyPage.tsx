@@ -201,25 +201,50 @@ export default function FacultyPage() {
               </div>
             </motion.div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {teachers.map((t, i) => (
-                <motion.div key={i} {...fadeUp(i * 0.08)} className="bg-card border border-border rounded-2xl overflow-hidden hover:shadow-xl transition-shadow group">
-                  <div className="relative h-56 overflow-hidden">
-                    <img src={t.image} alt={t.name} className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                    <div className="absolute top-3 right-3 bg-secondary text-white text-xs font-bold px-3 py-1 rounded-full">{t.dept}</div>
-                  </div>
-                  <div className="p-5 text-center">
-                    <h3 className="font-serif font-bold text-lg mb-0.5">{t.name}</h3>
-                    <p className="text-secondary font-semibold text-sm mb-1">{t.subject}</p>
-                    <p className="text-muted-foreground text-xs mb-2">{t.qual}</p>
-                    <div className="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full">
-                      <Star size={11} className="fill-primary" /> {t.exp} {isHindi ? "अनुभव" : "experience"}
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+            {(() => {
+              const staff = [
+                { name: "Ms. Ekta Sukhija",    role: isHindi ? "को-ऑर्डिनेटर किंडरगार्टन" : "Coordinator Kindergarten",  initials: "ES", accent: "#2563eb", grad: "from-blue-600 to-indigo-600"   },
+                { name: "Ms. Anushila Pathak", role: isHindi ? "अकादमिक हेड — कक्षा 1–2"  : "Academic Head — Class 1–2", initials: "AP", accent: "#0891b2", grad: "from-cyan-600 to-blue-600"      },
+                { name: "Ms. Bhavana",         role: isHindi ? "अकादमिक हेड — कक्षा 3–5"  : "Academic Head — Class 3–5", initials: "BH", accent: "#10b981", grad: "from-emerald-500 to-teal-600"   },
+                { name: "Ms. Sh",              role: isHindi ? "अकादमिक हेड — कक्षा 6–8"  : "Academic Head — Class 6–8", initials: "SH", accent: "#7c3aed", grad: "from-violet-600 to-purple-600"  },
+                { name: "Ms. Poonam Vashisth", role: isHindi ? "अकादमिक हेड — कक्षा 9–12" : "Academic Head — Class 9–12",initials: "PV", accent: "#db2777", grad: "from-pink-600 to-rose-600"      },
+                { name: "Ms. Shalu Grover",    role: isHindi ? "इवेंट हेड"                 : "Event Head",                initials: "SG", accent: "#d97706", grad: "from-amber-500 to-orange-500"   },
+              ];
+              return (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {staff.map((s, i) => (
+                    <motion.div key={i} {...fadeUp(i * 0.08)}
+                      whileHover={{ y: -8, scale: 1.02 }}
+                      className="group relative rounded-3xl overflow-hidden cursor-default"
+                      style={{ background: "white", boxShadow: "0 4px 24px rgba(0,0,0,0.07)", border: `1px solid ${s.accent}22`, transition: "box-shadow 0.3s,transform 0.3s" }}>
+
+                      <div className="h-1.5 w-full" style={{ background: `linear-gradient(90deg,${s.accent},${s.accent}77)` }} />
+
+                      <div className="p-8 flex flex-col items-center text-center">
+                        <div className={`w-18 h-18 w-[72px] h-[72px] rounded-2xl bg-gradient-to-br ${s.grad} flex items-center justify-center mb-5 shadow-lg`}>
+                          <span className="text-white font-extrabold text-2xl tracking-wide">{s.initials}</span>
+                        </div>
+
+                        <h3 className="text-lg font-serif font-extrabold text-foreground mb-3 leading-snug">
+                          {s.name}
+                        </h3>
+
+                        <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest"
+                          style={{ background: `${s.accent}12`, color: s.accent, border: `1px solid ${s.accent}30` }}>
+                          <span className="w-1.5 h-1.5 rounded-full inline-block flex-shrink-0" style={{ background: s.accent }} />
+                          {s.role}
+                        </span>
+
+                        <div className="mt-5 h-0.5 w-full rounded-full" style={{ background: `linear-gradient(to right,${s.accent}40,transparent)` }} />
+                      </div>
+
+                      <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                        style={{ boxShadow: `inset 0 0 0 1.5px ${s.accent}35, 0 16px 48px ${s.accent}14` }} />
+                    </motion.div>
+                  ))}
+                </div>
+              );
+            })()}
           </div>
         </section>
 
