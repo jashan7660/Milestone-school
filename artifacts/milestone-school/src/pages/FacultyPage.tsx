@@ -211,6 +211,8 @@ export default function FacultyPage() {
                 { name: "Ms. Sh",              role: isHindi ? "अकादमिक हेड — कक्षा 6–8"  : "Academic Head — Class 6–8", initials: "SH", accent: "#7c3aed", grad: "from-violet-600 to-purple-600"  },
                 { name: "Ms. Poonam Vashisth", role: isHindi ? "अकादमिक हेड — कक्षा 9–12" : "Academic Head — Class 9–12",initials: "PV", accent: "#db2777", grad: "from-pink-600 to-rose-600"      },
                 { name: "Ms. Shalu Grover",    role: isHindi ? "इवेंट हेड"                 : "Event Head",                initials: "SG", accent: "#d97706", grad: "from-amber-500 to-orange-500"   },
+                { name: "Ms. Ashima Sindhwani",role: isHindi ? "अकादमिक हेड"               : "Academic Head",              initials: "AS", accent: "#0891b2", grad: "from-sky-500 to-cyan-600"      },
+                { name: "Ms. Renu",            role: isHindi ? "लाइब्रेरी इंचार्ज"         : "Library Incharge",           initials: "RN", accent: "#16a34a", grad: "from-green-600 to-teal-600"    },
                 { name: "Mr. Sandeep",         role: isHindi ? "ट्रांसपोर्ट इंचार्ज"       : "Transport Incharge",         initials: "SD", accent: "#0f766e", grad: "from-teal-600 to-emerald-600"  },
               ];
               return (
