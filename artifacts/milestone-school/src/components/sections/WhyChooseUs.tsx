@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
-import { CheckCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { CheckCircle, ArrowRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { SITE } from "@/i18n/translations";
 
@@ -40,13 +39,28 @@ export default function WhyChooseUs() {
               ))}
             </div>
 
-            <Button
-              size="lg"
-              className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold rounded-full px-8 shadow-lg"
+            {/* Spinning ring CTA */}
+            <motion.div
+              whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }}
+              className="relative rounded-full cursor-pointer inline-block"
+              style={{ padding: "2.5px" }}
               onClick={() => document.querySelector("#admissions")?.scrollIntoView({ behavior: "smooth" })}
             >
-              {t.cta}
-            </Button>
+              <div className="absolute inset-0 rounded-full overflow-hidden">
+                <motion.div className="absolute"
+                  style={{ width: "200%", height: "200%", top: "-50%", left: "-50%",
+                    background: "conic-gradient(from 0deg,#4ade80,#22c55e,#16a34a,#86efac,#22c55e,#4ade80)" }}
+                  animate={{ rotate: 360 }}
+                  transition={{ repeat: Infinity, duration: 3, ease: "linear" }}/>
+              </div>
+              <div className="relative z-10 inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full font-bold text-white text-sm"
+                style={{ background: "rgba(6,10,28,0.92)", backdropFilter: "blur(16px)" }}>
+                {t.cta}
+                <motion.span animate={{ x: [0, 4, 0] }} transition={{ repeat: Infinity, duration: 1.3, ease: "easeInOut" }}>
+                  <ArrowRight size={15} style={{ color: "#4ade80" }}/>
+                </motion.span>
+              </div>
+            </motion.div>
           </motion.div>
 
           <motion.div
