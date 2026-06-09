@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { GraduationCap, Star, Users, BookOpen, Heart } from "lucide-react";
 import Footer from "@/components/layout/Footer";
 import { useLanguage } from "@/context/LanguageContext";
+import { Link } from "wouter";
 import principalImg from "@assets/image_1780557657354.png";
 import amazingEducatorsImg from "@assets/image_1780027878905.png";
 import activeParticipImg   from "@assets/image_1780027932559.png";
@@ -318,11 +319,14 @@ export default function FacultyPage() {
                   ? "हम हमेशा ऐसे भावुक, योग्य शिक्षकों की तलाश में रहते हैं जो छात्र उत्कृष्टता के प्रति हमारी प्रतिबद्धता साझा करते हैं।"
                   : "We are always looking for passionate, qualified educators who share our commitment to student excellence."}
               </p>
-              <a href="mailto:themilestoneKtl@gmail.com"
-                className="inline-flex items-center gap-2 font-bold px-8 py-3.5 rounded-full text-sm transition-all duration-300 hover:scale-105 hover:-translate-y-0.5"
-                style={{ background:"linear-gradient(135deg,#10B981,#059669)", color:"white", boxShadow:"0 8px 24px rgba(16,185,129,0.4)" }}>
-                {isHindi ? "अपना CV भेजें" : "Send Your CV"} <GraduationCap size={16} />
-              </a>
+                      <Link href="/faculty/apply">
+                <motion.button
+                  whileHover={{ scale:1.05, y:-2 }} whileTap={{ scale:0.97 }}
+                  className="inline-flex items-center gap-2 font-bold px-8 py-3.5 rounded-full text-sm"
+                  style={{ background:"linear-gradient(135deg,#10B981,#059669)", color:"white", boxShadow:"0 8px 24px rgba(16,185,129,0.4)" }}>
+                  {isHindi ? "अपना आवेदन करें" : "Apply Now"} <GraduationCap size={16} />
+                </motion.button>
+              </Link>
             </motion.div>
           </div>
         </section>

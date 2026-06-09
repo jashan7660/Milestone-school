@@ -20,6 +20,7 @@ import TermsPage from "@/pages/TermsPage";
 import PrivacyPage from "@/pages/PrivacyPage";
 import DisclaimerPage from "@/pages/DisclaimerPage";
 import PublicDisclosurePage from "@/pages/PublicDisclosurePage";
+import TeacherApplyPage from "@/pages/TeacherApplyPage";
 import PageLoader from "@/components/ui/PageLoader";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import PhoneButton from "@/components/ui/PhoneButton";
@@ -40,6 +41,7 @@ function Router() {
       <Route path="/about" component={OurStoryPage} />
       <Route path="/academics" component={AcademicsPage} />
       <Route path="/facilities" component={FacilitiesPage} />
+      <Route path="/faculty/apply" component={TeacherApplyPage} />
       <Route path="/faculty" component={FacultyPage} />
       <Route path="/achievements" component={AchievementsPage} />
       <Route path="/gallery" component={GalleryPage} />
