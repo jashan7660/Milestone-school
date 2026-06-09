@@ -166,7 +166,7 @@ export default function FacultyPage() {
         {/* Faculty Grid */}
         <section className="py-20 bg-background">
           <div className="container mx-auto px-4 md:px-6">
-            <motion.div {...fadeUp()} className="text-center max-w-2xl mx-auto mb-14">
+            <motion.div {...fadeUp()} className="text-center max-w-2xl mx-auto mb-10">
               <div className="inline-block px-4 py-1.5 rounded-full bg-secondary/10 text-secondary font-semibold text-sm mb-5 uppercase tracking-wider">
                 {isHindi ? "हमारे शिक्षक" : "Our Teachers"}
               </div>
@@ -174,6 +174,33 @@ export default function FacultyPage() {
                 {isHindi ? "अनुभवी शिक्षक, भावुक मेंटर" : "Experienced educators, passionate mentors"}
               </h2>
             </motion.div>
+
+            {/* ── Faculty Video ── */}
+            <motion.div {...fadeUp(0.1)} className="mb-14">
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl max-w-4xl mx-auto"
+                style={{ border: "1.5px solid rgba(37,99,235,0.18)" }}>
+                <div className="h-1.5" style={{ background: "linear-gradient(90deg,#2563eb,#0891b2,#10b981)" }} />
+                <div className="relative bg-black" style={{ aspectRatio: "16/9" }}>
+                  <video
+                    src="/faculty-video.mp4"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="w-full h-full object-cover pointer-events-none select-none"
+                    style={{ display: "block" }}
+                  />
+                  <div className="absolute bottom-4 left-4 pointer-events-none">
+                    <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest text-white"
+                      style={{ background: "rgba(37,99,235,0.80)", backdropFilter: "blur(10px)", border: "1px solid rgba(255,255,255,0.2)" }}>
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse inline-block" />
+                      {isHindi ? "हमारे शिक्षक" : "Our Teachers · The Milestone"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {teachers.map((t, i) => (
                 <motion.div key={i} {...fadeUp(i * 0.08)} className="bg-card border border-border rounded-2xl overflow-hidden hover:shadow-xl transition-shadow group">

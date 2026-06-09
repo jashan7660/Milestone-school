@@ -155,6 +155,32 @@ export default function Faculty() {
           </div>
         </motion.div>
 
+        {/* ── Faculty Video ── */}
+        <motion.div {...fadeUp(0.08)} className="mb-12">
+          <div className="relative rounded-3xl overflow-hidden shadow-2xl"
+            style={{ border: "1.5px solid rgba(37,99,235,0.15)" }}>
+            <div className="h-1.5" style={{ background: "linear-gradient(90deg,#2563eb,#0891b2,#10b981)" }} />
+            <div className="relative bg-black" style={{ aspectRatio: "16/9", maxHeight: 480 }}>
+              <video
+                src="/faculty-video.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover pointer-events-none select-none"
+                style={{ display: "block" }}
+              />
+              <div className="absolute bottom-4 left-4 pointer-events-none">
+                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest text-white"
+                  style={{ background: "rgba(37,99,235,0.75)", backdropFilter: "blur(10px)", border: "1px solid rgba(255,255,255,0.2)" }}>
+                  <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse inline-block" />
+                  {isHindi ? "हमारे शिक्षक" : "Our Faculty"}
+                </span>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
         {/* ── Portrait cards row ── */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-14">
           {t.team.slice(1).map((member, i) => {
