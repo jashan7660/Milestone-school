@@ -186,55 +186,14 @@ export default function Hero() {
                 transition={{ duration: 0.65, delay: 1.0 }}
                 className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
               >
-                {/* ── Apply Now ── */}
-                <motion.button
-                  onClick={() => { setLocation("/admissions"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.96 }}
-                  animate={{
-                    boxShadow: [
-                      "0 4px 18px rgba(34,197,94,0.40)",
-                      "0 4px 26px rgba(34,197,94,0.65)",
-                      "0 4px 18px rgba(34,197,94,0.40)",
-                    ],
-                  }}
-                  transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
-                  className="relative inline-flex items-center justify-center gap-3 px-9 py-4 rounded-full font-extrabold text-white text-base tracking-wide overflow-hidden w-full sm:w-auto"
-                  style={{ background: "linear-gradient(135deg,#14532d 0%,#16a34a 40%,#4ade80 100%)" }}
-                >
-                  {/* sweeping shimmer */}
-                  <motion.span
-                    className="absolute inset-0 pointer-events-none"
-                    style={{ background: "linear-gradient(105deg,transparent 35%,rgba(255,255,255,0.25) 50%,transparent 65%)" }}
-                    animate={{ x: ["-120%", "200%"] }}
-                    transition={{ repeat: Infinity, duration: 2.4, ease: "linear", repeatDelay: 0.8 }}
-                  />
-                  <motion.span
-                    animate={{ rotate: [0, 18, -8, 18, 0], scale: [1, 1.2, 1, 1.2, 1] }}
-                    transition={{ repeat: Infinity, duration: 2.8, ease: "easeInOut" }}
-                    className="relative z-10"
-                  >
-                    <Sparkles size={18} />
-                  </motion.span>
-                  <span className="relative z-10 text-base sm:text-lg">{t.apply}</span>
-                  <motion.span
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
-                    className="relative z-10"
-                  >
-                    <ArrowRight size={18} />
-                  </motion.span>
-                </motion.button>
-
-                {/* ── Public Disclosure — spinning gradient ring (clipped) ── */}
+                {/* ── Apply Now — gold/green spinning ring ── */}
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.96 }}
                   className="relative rounded-full cursor-pointer w-full sm:w-auto"
-                  onClick={() => { setLocation("/public-disclosure"); window.scrollTo({ top: 0 }); }}
-                  style={{ padding: "2px" }}
+                  onClick={() => { setLocation("/admissions"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                  style={{ padding: "2.5px" }}
                 >
-                  {/* clipping container — keeps the spinning gradient inside the pill */}
                   <div className="absolute inset-0 rounded-full overflow-hidden">
                     <motion.div
                       className="absolute"
@@ -243,22 +202,65 @@ export default function Hero() {
                         height: "200%",
                         top: "-50%",
                         left: "-50%",
-                        background: "conic-gradient(from 0deg,#3b82f6,#8b5cf6,#ec4899,#06b6d4,#3b82f6)",
+                        background: "conic-gradient(from 0deg,#16a34a,#4ade80,#f59e0b,#fbbf24,#22c55e,#16a34a)",
                       }}
                       animate={{ rotate: 360 }}
                       transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
                     />
                   </div>
-                  {/* inner dark pill */}
-                  <div className="relative z-10 inline-flex items-center justify-center gap-3 px-9 py-4 rounded-full font-bold text-white text-base w-full"
-                    style={{ background: "rgba(8,15,38,0.90)", backdropFilter: "blur(16px)" }}>
+                  <div
+                    className="relative z-10 inline-flex items-center justify-center gap-3 px-9 py-[14px] rounded-full font-bold text-white text-base sm:text-lg w-full"
+                    style={{ background: "rgba(6,10,28,0.92)", backdropFilter: "blur(16px)" }}
+                  >
+                    <motion.span
+                      animate={{ rotate: [0, 15, -8, 15, 0], scale: [1, 1.18, 1, 1.18, 1] }}
+                      transition={{ repeat: Infinity, duration: 2.6, ease: "easeInOut" }}
+                    >
+                      <Sparkles size={18} style={{ color: "#4ade80" }} />
+                    </motion.span>
+                    <span>{t.apply}</span>
+                    <motion.span
+                      animate={{ x: [0, 4, 0] }}
+                      transition={{ repeat: Infinity, duration: 1.3, ease: "easeInOut" }}
+                    >
+                      <ArrowRight size={17} style={{ color: "#86efac" }} />
+                    </motion.span>
+                  </div>
+                </motion.div>
+
+                {/* ── Public Disclosure — blue/purple spinning ring ── */}
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.96 }}
+                  className="relative rounded-full cursor-pointer w-full sm:w-auto"
+                  onClick={() => { setLocation("/public-disclosure"); window.scrollTo({ top: 0 }); }}
+                  style={{ padding: "2.5px" }}
+                >
+                  <div className="absolute inset-0 rounded-full overflow-hidden">
+                    <motion.div
+                      className="absolute"
+                      style={{
+                        width: "200%",
+                        height: "200%",
+                        top: "-50%",
+                        left: "-50%",
+                        background: "conic-gradient(from 0deg,#2563eb,#8b5cf6,#ec4899,#06b6d4,#3b82f6,#2563eb)",
+                      }}
+                      animate={{ rotate: 360 }}
+                      transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
+                    />
+                  </div>
+                  <div
+                    className="relative z-10 inline-flex items-center justify-center gap-3 px-9 py-[14px] rounded-full font-bold text-white text-base sm:text-lg w-full"
+                    style={{ background: "rgba(6,10,28,0.92)", backdropFilter: "blur(16px)" }}
+                  >
                     <motion.span
                       animate={{ y: [0, -3, 0] }}
                       transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
                     >
                       <FileText size={18} style={{ color: "#7dd3fc" }} />
                     </motion.span>
-                    <span className="text-base sm:text-lg">{t.discover}</span>
+                    <span>{t.discover}</span>
                   </div>
                 </motion.div>
               </motion.div>
