@@ -170,14 +170,15 @@ export default function Faculty() {
                 className="w-full h-full object-cover pointer-events-none select-none"
                 style={{ display: "block" }}
               />
-              <div className="absolute bottom-4 left-4 pointer-events-none">
-                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest text-white"
-                  style={{ background: "rgba(37,99,235,0.75)", backdropFilter: "blur(10px)", border: "1px solid rgba(255,255,255,0.2)" }}>
-                  <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse inline-block" />
-                  {isHindi ? "हमारे शिक्षक" : "Our Faculty"}
-                </span>
-              </div>
             </div>
+          </div>
+          {/* Label — below the frame, lower-left */}
+          <div className="flex justify-start mt-3 pl-1">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest"
+              style={{ background: "rgba(37,99,235,0.10)", color: "#2563eb", border: "1px solid rgba(37,99,235,0.22)" }}>
+              <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse inline-block" />
+              {isHindi ? "हमारे शिक्षक" : "Our Faculty"}
+            </span>
           </div>
         </motion.div>
 
