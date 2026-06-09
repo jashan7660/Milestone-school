@@ -117,10 +117,25 @@ export default function About() {
                 </div>
 
                 <Link href="/about">
-                  <button className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-semibold text-sm bg-primary text-primary-foreground hover:bg-primary/90 hover:-translate-y-0.5 transition-all duration-200 shadow-md hover:shadow-lg">
-                    {lang === "hi" ? "हमारे बारे में और जानें" : "Learn More About Us"}
-                    <ArrowRight size={16}/>
-                  </button>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }}
+                    className="relative rounded-full cursor-pointer inline-block"
+                    style={{ padding: "2.5px" }}>
+                    <div className="absolute inset-0 rounded-full overflow-hidden">
+                      <motion.div className="absolute"
+                        style={{ width: "200%", height: "200%", top: "-50%", left: "-50%",
+                          background: "conic-gradient(from 0deg,#f59e0b,#fbbf24,#f97316,#ea580c,#fbbf24,#f59e0b)" }}
+                        animate={{ rotate: 360 }}
+                        transition={{ repeat: Infinity, duration: 3, ease: "linear" }}/>
+                    </div>
+                    <div className="relative z-10 inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full font-bold text-white text-sm"
+                      style={{ background: "rgba(6,10,28,0.92)", backdropFilter: "blur(16px)" }}>
+                      {lang === "hi" ? "हमारे बारे में और जानें" : "Learn More About Us"}
+                      <motion.span animate={{ x: [0, 4, 0] }} transition={{ repeat: Infinity, duration: 1.3, ease: "easeInOut" }}>
+                        <ArrowRight size={15} style={{ color: "#fbbf24" }}/>
+                      </motion.span>
+                    </div>
+                  </motion.div>
                 </Link>
 
               </motion.div>

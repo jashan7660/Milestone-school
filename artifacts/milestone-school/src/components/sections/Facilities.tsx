@@ -105,10 +105,25 @@ export default function Facilities() {
         <motion.div className="text-center mt-12"
           initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.35 }}>
           <Link href="/facilities">
-            <button className="inline-flex items-center gap-2 px-10 py-4 rounded-full font-semibold text-sm bg-secondary text-secondary-foreground hover:bg-secondary/90 hover:-translate-y-0.5 shadow-md hover:shadow-lg transition-all duration-200">
-              {isHindi ? "सभी सुविधाएं देखें" : "Explore All Facilities"}
-              <ArrowRight size={16}/>
-            </button>
+            <motion.div
+              whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }}
+              className="relative rounded-full cursor-pointer inline-block"
+              style={{ padding: "2.5px" }}>
+              <div className="absolute inset-0 rounded-full overflow-hidden">
+                <motion.div className="absolute"
+                  style={{ width: "200%", height: "200%", top: "-50%", left: "-50%",
+                    background: "conic-gradient(from 0deg,#0891b2,#06b6d4,#10b981,#22d3ee,#06b6d4,#0891b2)" }}
+                  animate={{ rotate: 360 }}
+                  transition={{ repeat: Infinity, duration: 3, ease: "linear" }}/>
+              </div>
+              <div className="relative z-10 inline-flex items-center gap-2.5 px-10 py-4 rounded-full font-bold text-white text-sm"
+                style={{ background: "rgba(6,10,28,0.92)", backdropFilter: "blur(16px)" }}>
+                {isHindi ? "सभी सुविधाएं देखें" : "Explore All Facilities"}
+                <motion.span animate={{ x: [0, 4, 0] }} transition={{ repeat: Infinity, duration: 1.3, ease: "easeInOut" }}>
+                  <ArrowRight size={15} style={{ color: "#22d3ee" }}/>
+                </motion.span>
+              </div>
+            </motion.div>
           </Link>
         </motion.div>
 

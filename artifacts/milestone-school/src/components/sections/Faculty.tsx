@@ -210,15 +210,25 @@ export default function Faculty() {
         {/* ── CTA ── */}
         <motion.div {...fadeUp(0.35)} className="text-center">
           <Link href="/faculty">
-            <motion.button
-              whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center gap-3 px-10 py-4 rounded-full font-bold text-sm text-white shadow-lg"
-              style={{ background: "linear-gradient(135deg,#2563eb,#0891b2)", boxShadow: "0 8px 32px rgba(37,99,235,0.30)" }}>
-              {isHindi ? "पूरी टीम से मिलें" : "Meet The Full Team"}
-              <span className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center">
-                <ArrowRight size={14}/>
-              </span>
-            </motion.button>
+            <motion.div
+              whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }}
+              className="relative rounded-full cursor-pointer inline-block"
+              style={{ padding: "2.5px" }}>
+              <div className="absolute inset-0 rounded-full overflow-hidden">
+                <motion.div className="absolute"
+                  style={{ width: "200%", height: "200%", top: "-50%", left: "-50%",
+                    background: "conic-gradient(from 0deg,#2563eb,#8b5cf6,#0891b2,#06b6d4,#8b5cf6,#2563eb)" }}
+                  animate={{ rotate: 360 }}
+                  transition={{ repeat: Infinity, duration: 3, ease: "linear" }}/>
+              </div>
+              <div className="relative z-10 inline-flex items-center gap-3 px-10 py-4 rounded-full font-bold text-white text-sm"
+                style={{ background: "rgba(6,10,28,0.92)", backdropFilter: "blur(16px)" }}>
+                {isHindi ? "पूरी टीम से मिलें" : "Meet The Full Team"}
+                <motion.span animate={{ x: [0, 4, 0] }} transition={{ repeat: Infinity, duration: 1.3, ease: "easeInOut" }}>
+                  <ArrowRight size={15} style={{ color: "#818cf8" }}/>
+                </motion.span>
+              </div>
+            </motion.div>
           </Link>
         </motion.div>
 
