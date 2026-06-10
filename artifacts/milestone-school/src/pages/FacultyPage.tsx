@@ -304,36 +304,6 @@ export default function FacultyPage() {
           </div>
         </section>
 
-        {/* Join CTA */}
-        <section className="py-16 bg-background">
-          <div className="container mx-auto px-4 md:px-6 text-center">
-            <motion.div {...fadeUp()}
-              className="max-w-2xl mx-auto rounded-3xl p-10"
-              style={{ background:"linear-gradient(135deg,#071B3A 0%,#0A234A 100%)", boxShadow:"0 20px 60px rgba(7,27,58,0.25)" }}>
-              <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-5"
-                style={{ background:"rgba(255,255,255,0.12)", border:"1px solid rgba(255,255,255,0.2)" }}>
-                <GraduationCap size={26} className="text-white" />
-              </div>
-              <h2 className="text-2xl md:text-3xl font-serif font-bold text-white mb-4">
-                {isHindi ? "हमारे शिक्षक दल में शामिल होना चाहते हैं?" : "Want to join our faculty?"}
-              </h2>
-              <p className="text-white/65 text-base mb-7 max-w-lg mx-auto font-light">
-                {isHindi
-                  ? "हम हमेशा ऐसे भावुक, योग्य शिक्षकों की तलाश में रहते हैं जो छात्र उत्कृष्टता के प्रति हमारी प्रतिबद्धता साझा करते हैं।"
-                  : "We are always looking for passionate, qualified educators who share our commitment to student excellence."}
-              </p>
-                      <Link href="/faculty/apply">
-                <motion.button
-                  whileHover={{ scale:1.05, y:-2 }} whileTap={{ scale:0.97 }}
-                  className="inline-flex items-center gap-2 font-bold px-8 py-3.5 rounded-full text-sm"
-                  style={{ background:"linear-gradient(135deg,#10B981,#059669)", color:"white", boxShadow:"0 8px 24px rgba(16,185,129,0.4)" }}>
-                  {isHindi ? "अपना आवेदन करें" : "Apply Now"} <GraduationCap size={16} />
-                </motion.button>
-              </Link>
-            </motion.div>
-          </div>
-        </section>
-
       </main>
       <Footer />
     </div>
