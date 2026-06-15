@@ -143,7 +143,8 @@ export default function AIGuide() {
     const t0   = performance.now();
     const tick = (now: number) => {
       const p = Math.min((now - t0) / Math.max(dur, 1), 1);
-      const e = p < 0.5 ? 4*p*p*p : 1 - Math.pow(-2*p + 2, 3) / 2;
+      /* Quintic ease-in-out — much smoother, buttery start & end */
+      const e = p < 0.5 ? 16*p*p*p*p*p : 1 - Math.pow(-2*p + 2, 5) / 2;
       window.scrollTo(0, from + (to - from) * e);
       if (p < 1) {
         scrollRafRef.current = requestAnimationFrame(tick);
@@ -185,10 +186,10 @@ export default function AIGuide() {
         return;
       }
 
-      /* Time budget per section */
-      const scrollToMs   = Math.min(2000, (totalMs / sections.length) * 0.55);
+      /* Time budget per section — longer glide, generous pause */
+      const scrollToMs   = Math.min(3600, (totalMs / sections.length) * 0.65);
       const timePerSec   = totalMs / sections.length;
-      const pauseMs      = Math.max(timePerSec - scrollToMs, 500);
+      const pauseMs      = Math.max(timePerSec - scrollToMs, 800);
       let currentIdx     = 0;
 
       const visitSection = (idx: number) => {

@@ -32,6 +32,10 @@ router.post("/tts", async (req: Request, res: Response) => {
         voice: {
           mode: "id",
           id: VOICE_ID,
+          __experimental_controls: {
+            speed: "slow",
+            emotion: [],
+          },
         },
         output_format: {
           container: "mp3",
