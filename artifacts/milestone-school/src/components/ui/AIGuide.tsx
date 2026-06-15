@@ -533,7 +533,7 @@ export default function AIGuide() {
                            boxShadow:`0 0 14px ${NEON}50, 0 0 28px ${CYAN}25` }}
                   animate={{ boxShadow:[`0 0 12px ${NEON}40,0 0 24px ${CYAN}20`,`0 0 22px ${NEON}70,0 0 44px ${CYAN}35`,`0 0 12px ${NEON}40,0 0 24px ${CYAN}20`] }}
                   transition={{ repeat:Infinity, duration:2.2 }}>
-                  <img src="/ai-robot.png" alt="Millie" className="w-8 h-8 object-contain rounded-full"/>
+                  <img src="/ai-robot.png" alt="Milestone Mentor" className="w-8 h-8 object-contain rounded-full"/>
                   <motion.div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2"
                     style={{ background:NEON, borderColor:GLASS }}
                     animate={{ scale:[1,1.35,1], boxShadow:[`0 0 4px ${NEON}`,`0 0 10px ${NEON}`,`0 0 4px ${NEON}`] }}
@@ -799,13 +799,13 @@ export default function AIGuide() {
           onClick={()=>{ if(mode==="tour") stopTour(); else if(mode==="chat") setMode("idle"); }}
           animate={{ y:[0,-6,0] }} transition={{ repeat:Infinity, duration:3.2, ease:"easeInOut" }}
           whileHover={{ scale:1.08 }} whileTap={{ scale:0.93 }}
-          className="relative cursor-pointer" title="Millie — AI Guide">
+          className="relative cursor-pointer" title="MILESTONE MENTOR">
 
           {/* Soft static glow */}
           <div className="absolute -inset-3 rounded-full pointer-events-none"
             style={{ background:`radial-gradient(circle,${NEON}22 0%,transparent 70%)` }}/>
 
-          <img src="/ai-robot.png" alt="Millie AI Guide"
+          <img src="/ai-robot.png" alt="Milestone Mentor"
                className="relative z-10"
                style={{ width: isMobile ? 66 : 86, height: isMobile ? 66 : 86, objectFit:"contain",
                         filter:`drop-shadow(0 0 10px ${NEON}60) drop-shadow(0 4px 16px rgba(0,0,0,0.55))` }}/>

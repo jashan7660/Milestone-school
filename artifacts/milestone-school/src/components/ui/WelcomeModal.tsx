@@ -107,7 +107,7 @@ export default function WelcomeModal() {
               />
               <motion.img
                 src="/ai-robot.png"
-                alt="Millie"
+                alt="Milestone Mentor"
                 style={{
                   width: 80, height: 80, objectFit: "contain", position: "relative", zIndex: 2,
                   filter: `drop-shadow(0 0 16px ${NEON}80) drop-shadow(0 6px 20px rgba(0,0,0,0.6))`,
@@ -126,12 +126,12 @@ export default function WelcomeModal() {
               >
                 <span style={{ width: 6, height: 6, borderRadius: "50%", background: NEON, display: "inline-block", boxShadow: `0 0 6px ${NEON}` }} />
                 <span style={{ color: NEON, fontSize: 9.5, fontWeight: 700, letterSpacing: "0.13em", textTransform: "uppercase" }}>
-                  {hi ? "मिली — एआई गाइड" : "Millie — AI Guide"}
+                  {"MILESTONE MENTOR"}
                 </span>
               </div>
 
               <h2 style={{ color: "#fff", fontSize: 22, fontWeight: 800, lineHeight: 1.2, marginBottom: 8, letterSpacing: "-0.01em" }}>
-                {hi ? "नमस्ते! मैं मिली हूँ 👋" : "Hey there! I'm Millie 👋"}
+                {hi ? "नमस्ते! मैं Milestone Mentor हूँ 👋" : "Hey there! I'm Milestone Mentor! 👋"}
               </h2>
 
               <p style={{ color: "rgba(255,255,255,0.50)", fontSize: 12.5, lineHeight: 1.7, fontWeight: 400, marginBottom: 20 }}>
