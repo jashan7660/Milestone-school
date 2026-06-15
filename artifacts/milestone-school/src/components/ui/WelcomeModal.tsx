@@ -98,53 +98,22 @@ export default function WelcomeModal() {
               <X size={13} />
             </motion.button>
 
-            {/* ── Robot + orbital ring ── */}
+            {/* ── Robot ── */}
             <div className="relative flex items-center justify-center mt-8 mb-3">
-              {/* Outer orbit ring */}
-              <motion.div
-                className="absolute"
-                style={{ width: 118, height: 118, borderRadius: "50%", border: `1.5px dashed ${NEON}44` }}
-                animate={{ rotate: 360 }}
-                transition={{ repeat: Infinity, duration: 8, ease: "linear" }}
-              />
-              {/* Inner orbit ring */}
-              <motion.div
-                className="absolute"
-                style={{ width: 96, height: 96, borderRadius: "50%", border: `1px solid ${CYAN}30` }}
-                animate={{ rotate: -360 }}
-                transition={{ repeat: Infinity, duration: 5, ease: "linear" }}
-              />
-              {/* Glowing backdrop circle */}
+              {/* Glowing backdrop */}
               <div
-                style={{ width: 78, height: 78, borderRadius: "50%", background: `radial-gradient(circle,${NEON}28 0%,${CYAN}10 50%,transparent 75%)` }}
                 className="absolute"
+                style={{ width: 90, height: 90, borderRadius: "50%", background: `radial-gradient(circle,${NEON}28 0%,${CYAN}10 55%,transparent 75%)` }}
               />
-              {/* Robot image */}
               <motion.img
                 src="/ai-robot.png"
                 alt="Millie"
                 style={{
-                  width: 72, height: 72, objectFit: "contain", position: "relative", zIndex: 2,
-                  filter: `drop-shadow(0 0 14px ${NEON}80) drop-shadow(0 6px 20px rgba(0,0,0,0.6))`,
+                  width: 80, height: 80, objectFit: "contain", position: "relative", zIndex: 2,
+                  filter: `drop-shadow(0 0 16px ${NEON}80) drop-shadow(0 6px 20px rgba(0,0,0,0.6))`,
                 }}
-                animate={{ y: [0, -6, 0] }}
+                animate={{ y: [0, -7, 0] }}
                 transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
-              />
-              {/* Orbit dot (green) */}
-              <motion.div
-                className="absolute"
-                style={{ width: 8, height: 8, borderRadius: "50%", background: NEON, boxShadow: `0 0 8px ${NEON}`, zIndex: 3 }}
-                animate={{ rotate: 360 }}
-                transition={{ repeat: Infinity, duration: 8, ease: "linear" }}
-                transformTemplate={({ rotate }) => `rotate(${rotate}) translateX(59px)`}
-              />
-              {/* Orbit dot (cyan) */}
-              <motion.div
-                className="absolute"
-                style={{ width: 5, height: 5, borderRadius: "50%", background: CYAN, boxShadow: `0 0 6px ${CYAN}`, zIndex: 3 }}
-                animate={{ rotate: -360 }}
-                transition={{ repeat: Infinity, duration: 5, ease: "linear" }}
-                transformTemplate={({ rotate }) => `rotate(${rotate}) translateX(48px)`}
               />
             </div>
 
