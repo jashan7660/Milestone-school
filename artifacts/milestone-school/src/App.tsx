@@ -25,6 +25,7 @@ import PageLoader from "@/components/ui/PageLoader";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import PhoneButton from "@/components/ui/PhoneButton";
 import AIGuide from "@/components/ui/AIGuide";
+import WelcomeModal from "@/components/ui/WelcomeModal";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { PaletteProvider } from "@/context/PaletteContext";
 
@@ -69,6 +70,7 @@ function App() {
           </WouterRouter>
           <WhatsAppButton />
           <PhoneButton />
+          <WelcomeModal />
           <Toaster />
         </TooltipProvider>
       </LanguageProvider>

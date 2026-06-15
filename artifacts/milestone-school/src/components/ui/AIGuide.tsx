@@ -295,6 +295,19 @@ export default function AIGuide() {
   }, [navigate, playTourAudio, stopAudio, tourSteps, startSectionedScroll]);
 
   const startTour = useCallback(() => { setMode("tour"); startStep(0); }, [startStep]);
+
+  /* Listen for external triggers from WelcomeModal */
+  useEffect(() => {
+    const onTour = () => { setMode("tour"); startStep(0); };
+    const onChat = () => setMode("chat");
+    window.addEventListener("millie:start-tour", onTour);
+    window.addEventListener("millie:start-chat", onChat);
+    return () => {
+      window.removeEventListener("millie:start-tour", onTour);
+      window.removeEventListener("millie:start-chat", onChat);
+    };
+  }, [startStep]);
+
   const stopTour  = useCallback(() => {
     stopAudio(); setMode("idle"); setTourStep(0);
     window.scrollTo({ top:0, behavior:"smooth" });
