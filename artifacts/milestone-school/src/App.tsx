@@ -14,7 +14,7 @@ import AchievementsPage from "@/pages/AchievementsPage";
 import OurStoryPage from "@/pages/OurStoryPage";
 import OurDirectorsPage from "@/pages/OurDirectorsPage";
 import DivisionsPage from "@/pages/DivisionsPage";
-import TieupsPage from "@/pages/TieupsPage";
+
 import AdmissionsPage from "@/pages/AdmissionsPage";
 import TermsPage from "@/pages/TermsPage";
 import PrivacyPage from "@/pages/PrivacyPage";
@@ -38,7 +38,7 @@ function Router() {
       <Route path="/about/story" component={OurStoryPage} />
       <Route path="/about/directors" component={OurDirectorsPage} />
       <Route path="/about/divisions" component={DivisionsPage} />
-      <Route path="/about/tieups" component={TieupsPage} />
+
       <Route path="/about" component={OurStoryPage} />
       <Route path="/academics" component={AcademicsPage} />
       <Route path="/facilities" component={FacilitiesPage} />

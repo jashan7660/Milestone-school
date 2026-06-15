@@ -7,7 +7,7 @@ export const TOUR_STEPS: Record<Lang, { path: string; icon: string; title: strin
     { path: "/about/story",     icon:"📖", title:"Our Story",    message:"Every great school starts with a vision! Founded with a deep commitment to quality education and character building, Milestone has grown into one of the most trusted CBSE schools in Kaithal district. Our story is one of dedication – to our students, their families, and the community." },
     { path: "/about/directors", icon:"🎓", title:"Directors",    message:"Meet the visionary leaders behind The Milestone School! Our directors bring decades of experience in education. Under their leadership the school has achieved outstanding CBSE results, expanded infrastructure, and introduced smart classrooms and modern teaching methods." },
     { path: "/about/divisions", icon:"🏫", title:"Divisions",    message:"The Milestone School has well-defined academic divisions: Pre-Primary & Primary wings nurture curiosity through play-based learning; Middle School bridges childhood and adolescence; Senior Secondary (XI–XII) offers Science, Commerce, and Arts streams." },
-    { path: "/about/tieups",    icon:"🤝", title:"Tie-Ups",      message:"Education thrives through collaboration! Our Tie-Ups page showcases partnerships with leading organizations, coaching institutes, tech providers, and community bodies. Career counseling, sports academy partnerships, and CBSE resource center connections keep students and teachers updated." },
+
     { path: "/academics",       icon:"📚", title:"Academics",    message:"The Academics section is the core of what we do! CBSE curriculum from Nursery to Class XII, NCERT textbooks supplemented with digital resources and practical experiments. Board exam preparation is our special strength!" },
     { path: "/facilities",      icon:"🏗️", title:"Facilities",  message:"Best-equipped school in Kaithal! Physics, Chemistry & Biology labs; Computer lab with latest tech; Smart classrooms with interactive whiteboards; Well-stocked library; Sports ground, basketball & volleyball courts; Art room, music room, and safe school bus transport." },
     { path: "/faculty",         icon:"👩‍🏫", title:"Faculty",  message:"Our incredible educators are selected for subject expertise and passion! Specialist teachers for every subject, great faculty-to-student ratio, and personalized attention ensure no child falls behind. Our teachers are mentors, role models, and friends!" },
@@ -19,7 +19,7 @@ export const TOUR_STEPS: Record<Lang, { path: string; icon: string; title: strin
     { path: "/about/story",     icon:"📖", title:"हमारी कहानी", message:"हर महान स्कूल की शुरुआत एक सपने से होती है! गुणवत्तापूर्ण शिक्षा और चरित्र निर्माण की प्रतिबद्धता के साथ स्थापित, माइलस्टोन कैथल जिले के सबसे विश्वसनीय CBSE स्कूलों में से एक बन गया है। हमारी कहानी समर्पण की है – हमारे छात्रों, उनके परिवारों और समुदाय के प्रति।" },
     { path: "/about/directors", icon:"🎓", title:"निदेशक",       message:"माइलस्टोन स्कूल के दूरदर्शी नेताओं से मिलें! हमारे निदेशकों के पास शिक्षा में दशकों का अनुभव है। उनके नेतृत्व में स्कूल ने उत्कृष्ट CBSE परिणाम प्राप्त किए, बुनियादी ढांचे का विस्तार किया, और स्मार्ट क्लासरूम व आधुनिक शिक्षण पद्धतियां शुरू कीं।" },
     { path: "/about/divisions", icon:"🏫", title:"विभाग",        message:"माइलस्टोन स्कूल में सुव्यवस्थित शैक्षणिक विभाग हैं: प्री-प्राइमरी और प्राइमरी विंग खेल-आधारित शिक्षा से जिज्ञासा जगाते हैं; मिडिल स्कूल बचपन और किशोरावस्था को जोड़ता है; सीनियर सेकेंडरी (XI–XII) में विज्ञान, वाणिज्य और कला स्ट्रीम हैं।" },
-    { path: "/about/tieups",    icon:"🤝", title:"टाई-अप्स",     message:"शिक्षा सहयोग से फलती-फूलती है! हमारा टाई-अप्स पेज प्रमुख संगठनों, कोचिंग संस्थानों और टेक प्रदाताओं के साथ साझेदारी दिखाता है। करियर काउंसलिंग, स्पोर्ट्स एकेडमी पार्टनरशिप और CBSE संसाधन केंद्र के संबंध छात्रों और शिक्षकों को अपडेट रखते हैं।" },
+
     { path: "/academics",       icon:"📚", title:"शैक्षणिक",     message:"शैक्षणिक अनुभाग हमारे काम का मूल है! नर्सरी से कक्षा XII तक CBSE पाठ्यक्रम, NCERT पाठ्यपुस्तकें, डिजिटल संसाधन और व्यावहारिक प्रयोग। बोर्ड परीक्षा तैयारी हमारी विशेष ताकत है!" },
     { path: "/facilities",      icon:"🏗️", title:"सुविधाएं",    message:"कैथल का सर्वश्रेष्ठ सुसज्जित स्कूल! भौतिकी, रसायन और जीव विज्ञान लैब; नवीनतम तकनीक के साथ कंप्यूटर लैब; इंटरैक्टिव व्हाइटबोर्ड के साथ स्मार्ट क्लासरूम; अच्छी तरह से भंडारित पुस्तकालय; खेल का मैदान, बास्केटबॉल और वॉलीबॉल कोर्ट; कला कक्ष, संगीत कक्ष और सुरक्षित स्कूल बस।" },
     { path: "/faculty",         icon:"👩‍🏫", title:"शिक्षक",   message:"हमारे अद्भुत शिक्षक विषय विशेषज्ञता और जुनून के लिए चुने जाते हैं! हर विषय के लिए विशेषज्ञ शिक्षक, अच्छा शिक्षक-छात्र अनुपात और व्यक्तिगत ध्यान सुनिश्चित करते हैं कि कोई बच्चा पीछे न रहे। हमारे शिक्षक मेंटर, आदर्श और मित्र हैं!" },
@@ -165,7 +165,6 @@ export const SITE: Record<Lang, SiteT> = {
         { name: "Our Directors", desc: "Leadership & management" },
         { name: "Our Faculty",   desc: "Meet our dedicated teachers" },
         { name: "Divisions",     desc: "Academic sections & wings" },
-        { name: "Tie-ups",       desc: "Partnerships & collaborations" },
       ],
     },
     hero: {

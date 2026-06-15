@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef, memo } from "react";
 import { useLocation } from "wouter";
 import {
   Menu, X, Phone, MapPin, ChevronDown, ChevronRight,
-  BookText, Users, LayoutGrid, Handshake, User2,
+  BookText, Users, LayoutGrid, User2,
   Home, BookOpen, Building2, Trophy, Image,
   GraduationCap, Palette, Check,
 } from "lucide-react";
@@ -33,7 +33,6 @@ const ABOUT_HREFS = [
   { href: "/about/directors", icon: User2      },
   { href: "/faculty",         icon: Users      },
   { href: "/about/divisions", icon: LayoutGrid },
-  { href: "/about/tieups",    icon: Handshake  },
 ];
 
 const NAV_HREFS = [
