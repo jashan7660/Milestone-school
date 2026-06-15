@@ -175,93 +175,76 @@ export default function Navbar() {
               <AnimatePresence>
                 {desktopAbout && (
                   <motion.div
-                    initial={{ opacity: 0, y: 14, scale: 0.95 }}
+                    initial={{ opacity: 0, y: 10, scale: 0.96 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 10, scale: 0.96 }}
-                    transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                    className="absolute top-[calc(100%+12px)] left-0 z-50 overflow-hidden"
+                    exit={{ opacity: 0, y: 8, scale: 0.97 }}
+                    transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                    className="absolute top-[calc(100%+10px)] left-0 z-50 overflow-hidden"
                     style={{
-                      width: 480,
-                      borderRadius: 20,
-                      boxShadow: "0 24px 80px rgba(0,0,0,0.18), 0 4px 24px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.06)",
+                      width: 278,
+                      borderRadius: 18,
+                      boxShadow: "0 20px 60px rgba(0,0,0,0.16), 0 4px 16px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.07)",
                       background: "white",
                     }}
                     onMouseEnter={handleAboutEnter} onMouseLeave={handleAboutLeave}
                   >
-                    {/* ── Rich header ── */}
-                    <div className="relative px-5 pt-5 pb-4 overflow-hidden"
+                    {/* ── Slim gradient accent bar ── */}
+                    <div className="relative px-4 py-3 overflow-hidden"
                       style={{ background: `linear-gradient(135deg, ${palette.primary} 0%, ${palette.secondary} 100%)` }}>
-                      {/* decorative circles */}
-                      <div className="absolute -top-6 -right-6 w-28 h-28 rounded-full opacity-20"
-                        style={{ background: "rgba(255,255,255,0.35)" }}/>
-                      <div className="absolute top-2 right-8 w-14 h-14 rounded-full opacity-10"
-                        style={{ background: "rgba(255,255,255,0.5)" }}/>
-                      <div className="absolute -bottom-4 -left-4 w-20 h-20 rounded-full opacity-10"
-                        style={{ background: "rgba(255,255,255,0.4)" }}/>
-                      <p className="text-[10px] font-bold tracking-[0.18em] uppercase text-white/70 mb-0.5">Explore</p>
-                      <h3 className="text-[17px] font-extrabold text-white leading-tight tracking-tight">{t.aboutHeader}</h3>
-                      <p className="text-[11px] text-white/65 mt-1">
-                        {lang === "hi" ? "माइलस्टोन स्कूल के बारे में जानें" : "Discover the Milestone School story"}
-                      </p>
+                      <div className="absolute -top-3 -right-3 w-16 h-16 rounded-full opacity-20" style={{ background: "rgba(255,255,255,0.5)" }}/>
+                      <div className="absolute -bottom-5 -left-2 w-12 h-12 rounded-full opacity-15" style={{ background: "rgba(255,255,255,0.4)" }}/>
+                      <p className="relative text-[9px] font-bold tracking-[0.2em] uppercase text-white/60 mb-0.5">Explore</p>
+                      <p className="relative text-[13px] font-extrabold text-white leading-tight">{t.aboutHeader}</p>
                     </div>
 
-                    {/* ── Menu items — 2 column grid ── */}
-                    <div className="p-3 grid grid-cols-2 gap-2">
+                    {/* ── Items ── */}
+                    <div className="p-2">
                       {ABOUT_ITEMS.map(({ name, href, icon: Icon, desc }, i) => {
                         const active = isActive(href);
-                        const gradients = [
+                        const iconGrads = [
                           "linear-gradient(135deg,#3b82f6,#06b6d4)",
-                          "linear-gradient(135deg,#8b5cf6,#ec4899)",
+                          "linear-gradient(135deg,#8b5cf6,#a855f7)",
                           "linear-gradient(135deg,#f59e0b,#ef4444)",
-                          "linear-gradient(135deg,#10b981,#3b82f6)",
+                          "linear-gradient(135deg,#10b981,#059669)",
                         ];
                         return (
                           <motion.button key={name}
-                            initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: i * 0.05 }}
+                            initial={{ opacity: 0, x: -6 }} animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: i * 0.045 }}
                             onClick={() => navigate(href)}
-                            whileHover={{ y: -2 }}
-                            className="relative group text-left rounded-2xl p-3.5 transition-all duration-200 overflow-hidden"
+                            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-[13px] text-left group transition-all duration-150 relative overflow-hidden"
                             style={{
-                              background: active ? `${palette.primary}0f` : "#f8fafc",
-                              border: `1.5px solid ${active ? palette.primary + "50" : "transparent"}`,
-                              boxShadow: active ? `0 0 0 1px ${palette.primary}20` : "none",
+                              background: active ? `${palette.primary}10` : "transparent",
+                              border: `1px solid ${active ? palette.primary + "30" : "transparent"}`,
                             }}
                           >
-                            {/* hover bg */}
-                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-2xl"
-                              style={{ background: "linear-gradient(135deg,#f0f7ff,#e8f4fd)" }}/>
-                            <div className="relative z-10">
-                              {/* icon */}
-                              <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-2.5 shadow-sm"
-                                style={{ background: active ? palette.primary : gradients[i] }}>
-                                <Icon size={16} color="white" strokeWidth={2.2}/>
-                              </div>
-                              <div className="text-[13px] font-bold text-slate-800 leading-tight">{name}</div>
-                              <div className="text-[11px] text-slate-400 mt-0.5 leading-snug">{desc}</div>
+                            {/* hover shimmer */}
+                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-150 rounded-[13px]"
+                              style={{ background: "linear-gradient(135deg,#f8faff,#eef4ff)" }}/>
+                            {/* coloured icon */}
+                            <div className="relative z-10 w-8 h-8 rounded-xl flex-shrink-0 flex items-center justify-center shadow-sm transition-transform duration-150 group-hover:scale-110"
+                              style={{ background: active ? palette.primary : iconGrads[i] }}>
+                              <Icon size={14} color="white" strokeWidth={2.3}/>
                             </div>
-                            <ChevronRight size={11}
-                              className="absolute bottom-3 right-3 text-slate-300 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-200"/>
+                            <div className="relative z-10 flex-1 min-w-0">
+                              <div className={`text-[12.5px] font-bold leading-tight transition-colors duration-150 ${active ? "" : "text-slate-700 group-hover:text-slate-900"}`}
+                                style={ active ? { color: palette.primary } : undefined }>{name}</div>
+                              <div className="text-[10.5px] text-slate-400 mt-0.5 truncate">{desc}</div>
+                            </div>
+                            <ChevronRight size={11} className="relative z-10 flex-shrink-0 text-slate-300 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-150"/>
                           </motion.button>
                         );
                       })}
                     </div>
 
-                    {/* ── Footer badge ── */}
-                    <div className="mx-3 mb-3 rounded-2xl px-4 py-2.5 flex items-center justify-between"
-                      style={{ background: `linear-gradient(135deg, ${palette.primary}12, ${palette.secondary}18)`, border: `1px solid ${palette.primary}20` }}>
-                      <div className="flex items-center gap-2">
-                        <div className="w-7 h-7 rounded-full flex items-center justify-center"
-                          style={{ background: `linear-gradient(135deg, ${palette.primary}, ${palette.secondary})` }}>
-                          <Trophy size={12} color="white"/>
-                        </div>
-                        <span className="text-[12px] font-bold" style={{ color: palette.primary }}>{t.trusted}</span>
+                    {/* ── Footer trust strip ── */}
+                    <div className="mx-2.5 mb-2.5 rounded-[13px] px-3 py-2 flex items-center gap-2"
+                      style={{ background: `linear-gradient(135deg,${palette.primary}10,${palette.secondary}18)`, border: `1px solid ${palette.primary}22` }}>
+                      <div className="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center"
+                        style={{ background: `linear-gradient(135deg,${palette.primary},${palette.secondary})` }}>
+                        <Trophy size={10} color="white"/>
                       </div>
-                      <div className="flex gap-1">
-                        {["#22c55e","#3b82f6","#f59e0b"].map(c => (
-                          <div key={c} className="w-2 h-2 rounded-full" style={{ background: c }}/>
-                        ))}
-                      </div>
+                      <span className="text-[11px] font-semibold leading-tight" style={{ color: palette.primary }}>{t.trusted}</span>
                     </div>
                   </motion.div>
                 )}
