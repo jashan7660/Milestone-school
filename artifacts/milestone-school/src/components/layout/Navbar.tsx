@@ -175,44 +175,93 @@ export default function Navbar() {
               <AnimatePresence>
                 {desktopAbout && (
                   <motion.div
-                    initial={{ opacity: 0, y: 10, scale: 0.96 }}
+                    initial={{ opacity: 0, y: 14, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 10, scale: 0.96 }}
-                    transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-                    className="absolute top-[calc(100%+10px)] left-0 rounded-2xl shadow-2xl border border-border/60 overflow-hidden z-50"
-                    style={{ width: 272, background: "rgba(255,255,255,0.95)", backdropFilter: "blur(20px)" }}
+                    transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                    className="absolute top-[calc(100%+12px)] left-0 z-50 overflow-hidden"
+                    style={{
+                      width: 480,
+                      borderRadius: 20,
+                      boxShadow: "0 24px 80px rgba(0,0,0,0.18), 0 4px 24px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.06)",
+                      background: "white",
+                    }}
                     onMouseEnter={handleAboutEnter} onMouseLeave={handleAboutLeave}
                   >
-                    <div className="px-4 py-3 text-xs font-bold uppercase tracking-widest text-white"
-                      style={{ background: `linear-gradient(135deg, ${palette.primary}, ${palette.primary}cc)` }}>
-                      {t.aboutHeader}
+                    {/* ── Rich header ── */}
+                    <div className="relative px-5 pt-5 pb-4 overflow-hidden"
+                      style={{ background: `linear-gradient(135deg, ${palette.primary} 0%, ${palette.secondary} 100%)` }}>
+                      {/* decorative circles */}
+                      <div className="absolute -top-6 -right-6 w-28 h-28 rounded-full opacity-20"
+                        style={{ background: "rgba(255,255,255,0.35)" }}/>
+                      <div className="absolute top-2 right-8 w-14 h-14 rounded-full opacity-10"
+                        style={{ background: "rgba(255,255,255,0.5)" }}/>
+                      <div className="absolute -bottom-4 -left-4 w-20 h-20 rounded-full opacity-10"
+                        style={{ background: "rgba(255,255,255,0.4)" }}/>
+                      <p className="text-[10px] font-bold tracking-[0.18em] uppercase text-white/70 mb-0.5">Explore</p>
+                      <h3 className="text-[17px] font-extrabold text-white leading-tight tracking-tight">{t.aboutHeader}</h3>
+                      <p className="text-[11px] text-white/65 mt-1">
+                        {lang === "hi" ? "माइलस्टोन स्कूल के बारे में जानें" : "Discover the Milestone School story"}
+                      </p>
                     </div>
-                    <div className="p-2">
-                      {ABOUT_ITEMS.map(({ name, href, icon: Icon, desc }, i) => (
-                        <motion.button key={name}
-                          initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}
-                          onClick={() => navigate(href)}
-                          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all duration-150 group
-                            ${isActive(href) ? "bg-blue-50 text-blue-700" : "hover:bg-slate-50 text-slate-700"}`}
-                        >
-                          <div className={`p-1.5 rounded-lg transition-all duration-150 flex-shrink-0
-                            ${isActive(href) ? "text-white" : "bg-blue-50 text-blue-600 group-hover:text-white"}`}
-                            style={ isActive(href) || undefined
-                              ? { background: palette.primary }
-                              : undefined }>
-                            <Icon size={13} />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="text-[13px] font-semibold leading-tight">{name}</div>
-                            <div className="text-[11px] text-slate-400 mt-0.5">{desc}</div>
-                          </div>
-                          <ChevronRight size={12} className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-slate-300" />
-                        </motion.button>
-                      ))}
+
+                    {/* ── Menu items — 2 column grid ── */}
+                    <div className="p-3 grid grid-cols-2 gap-2">
+                      {ABOUT_ITEMS.map(({ name, href, icon: Icon, desc }, i) => {
+                        const active = isActive(href);
+                        const gradients = [
+                          "linear-gradient(135deg,#3b82f6,#06b6d4)",
+                          "linear-gradient(135deg,#8b5cf6,#ec4899)",
+                          "linear-gradient(135deg,#f59e0b,#ef4444)",
+                          "linear-gradient(135deg,#10b981,#3b82f6)",
+                        ];
+                        return (
+                          <motion.button key={name}
+                            initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: i * 0.05 }}
+                            onClick={() => navigate(href)}
+                            whileHover={{ y: -2 }}
+                            className="relative group text-left rounded-2xl p-3.5 transition-all duration-200 overflow-hidden"
+                            style={{
+                              background: active ? `${palette.primary}0f` : "#f8fafc",
+                              border: `1.5px solid ${active ? palette.primary + "50" : "transparent"}`,
+                              boxShadow: active ? `0 0 0 1px ${palette.primary}20` : "none",
+                            }}
+                          >
+                            {/* hover bg */}
+                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-2xl"
+                              style={{ background: "linear-gradient(135deg,#f0f7ff,#e8f4fd)" }}/>
+                            <div className="relative z-10">
+                              {/* icon */}
+                              <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-2.5 shadow-sm"
+                                style={{ background: active ? palette.primary : gradients[i] }}>
+                                <Icon size={16} color="white" strokeWidth={2.2}/>
+                              </div>
+                              <div className="text-[13px] font-bold text-slate-800 leading-tight">{name}</div>
+                              <div className="text-[11px] text-slate-400 mt-0.5 leading-snug">{desc}</div>
+                            </div>
+                            <ChevronRight size={11}
+                              className="absolute bottom-3 right-3 text-slate-300 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-200"/>
+                          </motion.button>
+                        );
+                      })}
                     </div>
-                    <div className="mx-3 mb-3 rounded-xl px-3 py-2 text-[11px] font-semibold flex items-center gap-1.5"
-                      style={{ background: "linear-gradient(135deg, #eff6ff, #dbeafe)", color: palette.primary }}>
-                      <Trophy size={11} /> {t.trusted}
+
+                    {/* ── Footer badge ── */}
+                    <div className="mx-3 mb-3 rounded-2xl px-4 py-2.5 flex items-center justify-between"
+                      style={{ background: `linear-gradient(135deg, ${palette.primary}12, ${palette.secondary}18)`, border: `1px solid ${palette.primary}20` }}>
+                      <div className="flex items-center gap-2">
+                        <div className="w-7 h-7 rounded-full flex items-center justify-center"
+                          style={{ background: `linear-gradient(135deg, ${palette.primary}, ${palette.secondary})` }}>
+                          <Trophy size={12} color="white"/>
+                        </div>
+                        <span className="text-[12px] font-bold" style={{ color: palette.primary }}>{t.trusted}</span>
+                      </div>
+                      <div className="flex gap-1">
+                        {["#22c55e","#3b82f6","#f59e0b"].map(c => (
+                          <div key={c} className="w-2 h-2 rounded-full" style={{ background: c }}/>
+                        ))}
+                      </div>
                     </div>
                   </motion.div>
                 )}
