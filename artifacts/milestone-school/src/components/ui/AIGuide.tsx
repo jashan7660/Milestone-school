@@ -689,67 +689,93 @@ export default function AIGuide() {
               exit={{ opacity:0, y:8, scale:0.93 }}
               className="flex flex-col items-end gap-2">
 
-              {/* Start Tour button */}
-              <motion.button onClick={startTour}
+              {/* Start Tour button — spinning ring */}
+              <motion.div
                 initial={{ opacity:0, x:14 }} animate={{ opacity:1, x:0 }} transition={{ delay:0.06 }}
                 whileHover={{ scale:1.04, y:-2 }} whileTap={{ scale:0.96 }}
-                className={`flex items-center rounded-2xl font-bold relative overflow-hidden ${isMobile ? "gap-2 px-3 py-2 text-[9px]" : "gap-2.5 px-5 py-3 text-[12px]"}`}
-                style={{
-                  background:`linear-gradient(135deg,#0d3d20,#0a2d42)`,
-                  backdropFilter:"blur(20px)",
-                  border:`1px solid ${NEON}50`,
-                  boxShadow:`0 0 0 1px ${NEON}15, 0 8px 28px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08)`,
-                  color:"white",
-                }}>
-                <div className={`${isMobile ? "w-6 h-6 rounded-lg" : "w-7 h-7 rounded-xl"} flex items-center justify-center flex-shrink-0`}
-                  style={{ background:`linear-gradient(135deg,${NEON}30,${CYAN}20)`, border:`1px solid ${NEON}40` }}>
-                  <span style={{ fontSize: isMobile ? 11 : 14 }}>🗺️</span>
+                className="relative cursor-pointer rounded-2xl"
+                style={{ padding:"2px" }}
+                onClick={startTour}>
+                <div className="absolute inset-0 rounded-2xl overflow-hidden">
+                  <motion.div
+                    className="absolute"
+                    style={{
+                      width:"200%", height:"200%", top:"-50%", left:"-50%",
+                      background:`conic-gradient(from 0deg,${NEON},${CYAN},#0d3d20,${NEON})`,
+                    }}
+                    animate={{ rotate:360 }}
+                    transition={{ repeat:Infinity, duration:3, ease:"linear" }}/>
                 </div>
-                <div className="text-left">
-                  <AnimatePresence mode="wait">
-                    <motion.div key={"st-"+lang}
-                      initial={{ opacity:0, y:4 }} animate={{ opacity:1, y:0 }}
-                      exit={{ opacity:0, y:-4 }} transition={{ duration:0.18 }}>
-                      <div style={{ fontWeight:800, fontSize: isMobile ? 9 : 12, color:"white", lineHeight:1.2 }}>{t.startTour}</div>
-                      <div style={{ fontSize: isMobile ? 7.5 : 9, color:`${NEON}cc`, fontWeight:600, letterSpacing:"0.04em", marginTop:1 }}>
-                        {lang === "hi" ? "स्कूल को एक्सप्लोर करें" : "Explore the school"}
-                      </div>
-                    </motion.div>
-                  </AnimatePresence>
+                <div className={`relative z-10 flex items-center rounded-2xl font-bold ${isMobile ? "gap-2 px-3 py-2 text-[9px]" : "gap-2.5 px-5 py-3 text-[12px]"}`}
+                  style={{
+                    background:`linear-gradient(135deg,#0d3d20,#0a2d42)`,
+                    backdropFilter:"blur(20px)",
+                    boxShadow:`0 8px 28px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08)`,
+                    color:"white",
+                  }}>
+                  <div className={`${isMobile ? "w-6 h-6 rounded-lg" : "w-7 h-7 rounded-xl"} flex items-center justify-center flex-shrink-0`}
+                    style={{ background:`linear-gradient(135deg,${NEON}30,${CYAN}20)`, border:`1px solid ${NEON}40` }}>
+                    <span style={{ fontSize: isMobile ? 11 : 14 }}>🗺️</span>
+                  </div>
+                  <div className="text-left">
+                    <AnimatePresence mode="wait">
+                      <motion.div key={"st-"+lang}
+                        initial={{ opacity:0, y:4 }} animate={{ opacity:1, y:0 }}
+                        exit={{ opacity:0, y:-4 }} transition={{ duration:0.18 }}>
+                        <div style={{ fontWeight:800, fontSize: isMobile ? 9 : 12, color:"white", lineHeight:1.2 }}>{t.startTour}</div>
+                        <div style={{ fontSize: isMobile ? 7.5 : 9, color:`${NEON}cc`, fontWeight:600, letterSpacing:"0.04em", marginTop:1 }}>
+                          {lang === "hi" ? "स्कूल को एक्सप्लोर करें" : "Explore the school"}
+                        </div>
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
+                  <ChevronRight size={isMobile ? 11 : 14} style={{ color:`${NEON}99`, marginLeft:"auto" }}/>
                 </div>
-                <ChevronRight size={isMobile ? 11 : 14} style={{ color:`${NEON}99`, marginLeft:"auto" }}/>
-              </motion.button>
+              </motion.div>
 
-              {/* Chat with AI button */}
-              <motion.button onClick={()=>setMode("chat")}
+              {/* Chat with AI button — spinning ring */}
+              <motion.div
                 initial={{ opacity:0, x:14 }} animate={{ opacity:1, x:0 }} transition={{ delay:0.12 }}
                 whileHover={{ scale:1.04, y:-2 }} whileTap={{ scale:0.96 }}
-                className={`flex items-center rounded-2xl font-bold relative overflow-hidden ${isMobile ? "gap-2 px-3 py-2 text-[9px]" : "gap-2.5 px-5 py-3 text-[12px]"}`}
-                style={{
-                  background:`linear-gradient(135deg,#0d1e4a,#091538)`,
-                  backdropFilter:"blur(20px)",
-                  border:`1px solid ${CYAN}50`,
-                  boxShadow:`0 0 0 1px ${CYAN}15, 0 8px 28px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08)`,
-                  color:"white",
-                }}>
-                <div className={`${isMobile ? "w-6 h-6 rounded-lg" : "w-7 h-7 rounded-xl"} flex items-center justify-center flex-shrink-0`}
-                  style={{ background:`linear-gradient(135deg,${CYAN}30,${BLUE}40)`, border:`1px solid ${CYAN}40` }}>
-                  <Sparkles size={isMobile ? 10 : 13} color={CYAN}/>
+                className="relative cursor-pointer rounded-2xl"
+                style={{ padding:"2px" }}
+                onClick={()=>setMode("chat")}>
+                <div className="absolute inset-0 rounded-2xl overflow-hidden">
+                  <motion.div
+                    className="absolute"
+                    style={{
+                      width:"200%", height:"200%", top:"-50%", left:"-50%",
+                      background:`conic-gradient(from 0deg,${CYAN},${BLUE},#091538,${CYAN})`,
+                    }}
+                    animate={{ rotate:360 }}
+                    transition={{ repeat:Infinity, duration:3, ease:"linear" }}/>
                 </div>
-                <div className="text-left">
-                  <AnimatePresence mode="wait">
-                    <motion.div key={"ca-"+lang}
-                      initial={{ opacity:0, y:4 }} animate={{ opacity:1, y:0 }}
-                      exit={{ opacity:0, y:-4 }} transition={{ duration:0.18 }}>
-                      <div style={{ fontWeight:800, fontSize: isMobile ? 9 : 12, color:"white", lineHeight:1.2 }}>{t.chatWithAI}</div>
-                      <div style={{ fontSize: isMobile ? 7.5 : 9, color:`${CYAN}cc`, fontWeight:600, letterSpacing:"0.04em", marginTop:1 }}>
-                        {lang === "hi" ? "कोई भी सवाल पूछें" : "Ask anything, anytime"}
-                      </div>
-                    </motion.div>
-                  </AnimatePresence>
+                <div className={`relative z-10 flex items-center rounded-2xl font-bold ${isMobile ? "gap-2 px-3 py-2 text-[9px]" : "gap-2.5 px-5 py-3 text-[12px]"}`}
+                  style={{
+                    background:`linear-gradient(135deg,#0d1e4a,#091538)`,
+                    backdropFilter:"blur(20px)",
+                    boxShadow:`0 8px 28px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08)`,
+                    color:"white",
+                  }}>
+                  <div className={`${isMobile ? "w-6 h-6 rounded-lg" : "w-7 h-7 rounded-xl"} flex items-center justify-center flex-shrink-0`}
+                    style={{ background:`linear-gradient(135deg,${CYAN}30,${BLUE}40)`, border:`1px solid ${CYAN}40` }}>
+                    <Sparkles size={isMobile ? 10 : 13} color={CYAN}/>
+                  </div>
+                  <div className="text-left">
+                    <AnimatePresence mode="wait">
+                      <motion.div key={"ca-"+lang}
+                        initial={{ opacity:0, y:4 }} animate={{ opacity:1, y:0 }}
+                        exit={{ opacity:0, y:-4 }} transition={{ duration:0.18 }}>
+                        <div style={{ fontWeight:800, fontSize: isMobile ? 9 : 12, color:"white", lineHeight:1.2 }}>{t.chatWithAI}</div>
+                        <div style={{ fontSize: isMobile ? 7.5 : 9, color:`${CYAN}cc`, fontWeight:600, letterSpacing:"0.04em", marginTop:1 }}>
+                          {lang === "hi" ? "कोई भी सवाल पूछें" : "Ask anything, anytime"}
+                        </div>
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
+                  <ChevronRight size={isMobile ? 11 : 14} style={{ color:`${CYAN}99`, marginLeft:"auto" }}/>
                 </div>
-                <ChevronRight size={isMobile ? 11 : 14} style={{ color:`${CYAN}99`, marginLeft:"auto" }}/>
-              </motion.button>
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
