@@ -1,6 +1,6 @@
 {
   "buildCommand": "pnpm --filter @workspace/milestone-school run build",
-  "outputDirectory": "artifacts/milestone-school/dist/public",
+  "outputDirectory": "dist/public",
   "installCommand": "pnpm install --no-frozen-lockfile",
   "framework": null,
   "rewrites": [
