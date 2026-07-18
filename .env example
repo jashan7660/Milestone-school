@@ -1,0 +1,27 @@
+# Copy this file to .env and fill in the values.
+# In Replit: add these as Deployment Secrets (Tools → Secrets).
+
+# ── Required ────────────────────────────────────────────────────────────────
+PORT=8080
+NODE_ENV=production
+
+# Groq API key — powers the AI chatbot (Millie)
+# Get one free at https://console.groq.com
+GROQ_API_KEY=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
+
+# ── Optional ─────────────────────────────────────────────────────────────────
+# Cartesia API key — enables text-to-speech (voice for the chatbot)
+# Get one at https://cartesia.ai
+CARTESIA_API_KEY=
+
+# Comma-separated list of allowed frontend origins for CORS.
+# Leave empty to allow all origins (fine for development; set in production).
+# Example: https://your-app.replit.app,https://yourdomain.com
+ALLOWED_ORIGINS=
+
+# Log level: trace | debug | info | warn | error | fatal  (default: info)
+LOG_LEVEL=info
+
+# Path to the pre-built frontend static files (relative to repo root).
+# Only relevant in production. Default: artifacts/milestone-school/dist/public
+# FRONTEND_DIST=artifacts/milestone-school/dist/public
